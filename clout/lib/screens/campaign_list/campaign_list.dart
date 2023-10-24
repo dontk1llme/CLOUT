@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
+import '../../widgets/category_list.dart';
+import '../../widgets/header/header.dart';
+import '../../style.dart' as style;
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+class CampaignList extends StatefulWidget {
+  const CampaignList({super.key});
 
   @override
-  State<MyWidget> createState() => _MyWidgetState();
+  State<CampaignList> createState() => _MyCampaignList();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _MyCampaignList extends State<CampaignList> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100),
+          child: Header(
+            header: 1,
+            headerTitle: '캠페인 목록',
+          )),
+      body: Column(
+        children: [
+          // Category 위젯 추가
+          CategoryList(),
+        ],
+      ),
+    );
   }
 }
