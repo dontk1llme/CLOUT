@@ -37,3 +37,12 @@ var colors = {
   'category': Color(0xFFD4CCFF),
 };
 
+var shadows = {
+  'shadow': [
+                BoxShadow(
+                  color: Colors.grey, // 그림자 색상
+                  offset: Offset(1, 2), // 그림자의 X 및 Y 오프셋
+                  blurRadius: 10, // 그림자의 흐릿함 정도
+                ),
+            ],
+};
