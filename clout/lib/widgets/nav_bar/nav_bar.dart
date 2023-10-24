@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../style.dart' as style;
+import '../../screens/campaign_list/campaign_list.dart';
 
 class NavBar extends StatelessWidget {
   NavBar({super.key, this.tab, this.setTab, this.setHeader});
@@ -26,9 +28,10 @@ class NavBar extends StatelessWidget {
         child: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          selectedIconTheme: IconThemeData(
-              color: style.colors['main1'], size: 30),
-          unselectedIconTheme: IconThemeData(color: style.colors['gray'], size: 27), //
+          selectedIconTheme:
+              IconThemeData(color: style.colors['main1'], size: 30),
+          unselectedIconTheme:
+              IconThemeData(color: style.colors['gray'], size: 27), //
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
@@ -45,6 +48,11 @@ class NavBar extends StatelessWidget {
             print(value);
             setTab(value);
             setHeader(value);
+
+            if (value == 1) {
+              Get.to(
+                  () => CampaignList()); // '목록' 아이콘을 눌렀을 때 CampaignList 페이지로 이동
+            }
           },
         ));
   }

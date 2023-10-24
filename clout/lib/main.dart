@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'widgets/nav_bar/nav_bar.dart';
 import 'widgets/header/header.dart';
 import 'style.dart' as style;
 
 void main() {
-  runApp(MaterialApp(
+  runApp(GetMaterialApp(
     theme: ThemeData(
       fontFamily: 'NotoSansKR',
     ),
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
               headerTitle: headerTitle,
               // 헤더 원하는거 번호를 header 변수에 넣고 headerTitle엔 메뉴명이나 채널명이 있을경우 넣어주면 나옴
             )),
+        // body: ,
         bottomNavigationBar:
             NavBar(tab: tab, setTab: setTab, setHeader: setHeader));
   }
