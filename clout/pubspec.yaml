@@ -72,6 +72,10 @@ flutter:
     - assets/images/money.png
     - assets/images/more.png
     - assets/images/paw.png
+    - assets/images/Instagram.png
+    - assets/images/TikTok.png
+    - assets/images/YouTube.png
+
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
 
