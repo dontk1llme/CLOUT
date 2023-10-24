@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/category_list.dart';
+import '../../widgets/search_bar.dart';
 import '../../widgets/header/header.dart';
 import '../../style.dart' as style;
 
@@ -22,8 +23,8 @@ class _MyCampaignList extends State<CampaignList> {
           )),
       body: Column(
         children: [
-          // Category 위젯 추가
-          CategoryList(),
+          MySearchBar(),
+          CategoryList(), // Category 위젯 추가
         ],
       ),
     );
