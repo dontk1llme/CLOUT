@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+export 'package:flutter/material.dart' show Color; // Color 클래스를 export
+
 // 사용법
 // import 'style.dart' as style;
 
@@ -17,6 +19,10 @@ var textTheme = TextTheme(
     bodySmall: TextStyle(fontSize: 11, fontWeight: FontWeight.normal),
   );
 
+//일반 컬러
+// backgroundColor: style.colors['main2'], 
+
+// 텍스트
 //style: textStyles?.copyWith(color: textColors['red'])
 // 물음표 없으면 에러
 var colors = {
@@ -30,3 +36,4 @@ var colors = {
   'white': Color(0xFFFFFFFF),
   'category': Color(0xFFD4CCFF),
 };
+
