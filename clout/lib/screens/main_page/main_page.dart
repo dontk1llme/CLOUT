@@ -8,6 +8,8 @@ import 'package:clout/providers/nav_bar_controller.dart';
 
 // screens
 import 'package:clout/screens/home/home.dart';
+import 'package:clout/screens/campaign_list/campaign_list.dart';
+import 'package:clout/screens/clouter_list/clouter_list.dart';
 
 // widgets
 import 'package:clout/widgets/header/header.dart';
@@ -20,19 +22,15 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(NavBarController());
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
-        child: Header(
-          header: 0,
-        ),
-      ),
+      
       body: GetBuilder<NavBarController>(builder: (controller) {
         if (controller.tab == 0) {
           return Home();
           // 아래 controll.tab에 따라 보여주는 화면 다르게 하기
-        } else {
+        } else if (controller.tab == 1) {
+          return CampaignList();
+        } else
           return Home();
-        }
       }),
       bottomNavigationBar: NavBar(),
     );
