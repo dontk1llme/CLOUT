@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../style.dart' as style;
 import 'package:get/get.dart';
 import '../../providers/nav_bar_controller.dart';
+import '../../screens/campaign_list/campaign_list.dart';
 
 class NavBar extends StatelessWidget {
   NavBar({super.key, this.tab, this.setTab});
