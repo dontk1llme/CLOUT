@@ -1,5 +1,7 @@
+import 'package:clout/screens/review_register/review_register.dart';
 import 'package:flutter/material.dart';
 import '../../../style.dart' as style;
+import 'package:get/get.dart';
 
 class NotificationItem extends StatefulWidget {
   const NotificationItem({super.key});
@@ -47,7 +49,7 @@ class _NotificationItemState extends State<NotificationItem> {
                   width: 195,
                   child: ElevatedButton(
                     onPressed: () {
-                      // 버튼이 눌렸을 때 수행
+                      Get.to(() => ReviewRegister());
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(

@@ -149,7 +149,7 @@ class _LoginState extends State<Login> {
                     padding: EdgeInsets.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  onPressed: () {},
+                  onPressed: ()=> {Get.toNamed('/join')},
                   child: Text(' 회원가입하기',
                       style: style.textTheme.bodyMedium
                           ?.copyWith(color: style.colors['main1'])))
