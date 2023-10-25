@@ -10,7 +10,7 @@ import 'widgets/sns/sns3.dart';
 import 'style.dart' as style;
 
 // Screens
-import 'package:clout/screens/clouter_list/clouter_list.dart';
+import 'package:clout/screens/clouter/clouter_list.dart';
 import 'screens/landing/landing.dart';
 import 'package:clout/screens/login/login.dart';
 import 'package:clout/screens/join/join.dart';
