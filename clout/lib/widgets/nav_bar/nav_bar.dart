@@ -6,9 +6,6 @@ import '../../style.dart' as style;
 // providers
 import '../../providers/nav_bar_controller.dart';
 
-// screens
-import '../../screens/campaign_list/campaign_list.dart';
-
 class NavBar extends StatelessWidget {
   NavBar({super.key, this.tab, this.setTab});
 
@@ -45,7 +42,9 @@ class NavBar extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.content_paste_search_outlined), label: '목록'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.chat_bubble_outline), label: '찜'),
+                  icon: Icon(Icons.add_box_outlined), label: '캠페인 등록'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.chat_bubble_outline), label: '채팅'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person_2_outlined), label: '마이페이지'),
             ],
