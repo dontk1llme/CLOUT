@@ -321,6 +321,7 @@ class _CampaignRegisterState extends State<CampaignRegister> {
                       SizedBox(height: 10),
                       DataTitle(text: '희망 최소 팔로워 수'),
                       SizedBox(
+<<<<<<< HEAD
                           height: 50,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -366,6 +367,19 @@ class _CampaignRegisterState extends State<CampaignRegister> {
                           function: register,
                         ),
                       )
+=======
+                          height: 55,
+                          child: InputElement(
+                            placeholder: '희망 최소 팔로워수(최대 1억)',
+                            elementType: 'text',
+                            setData: setMinimumFollowers,
+                            value: minimumFollowers,
+                            keyboardType: TextInputType.number,
+                            maxValue: 1000000000,
+                            maxLength: 20,
+                          )),
+                      DataTitle(text: '지역 선택')
+>>>>>>> 8f5b1ec3d573ea13f24c36d9f36da23f5e377faf
                     ]),
               ),
             ])));

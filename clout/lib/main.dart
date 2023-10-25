@@ -2,23 +2,16 @@
 import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:clout/style.dart' as style;
-
-// Widgets
-
-//
-import 'widgets/sns/sns3.dart';
-import 'style.dart' as style;
 
 // Screens
-import 'package:clout/screens/clouter/clouter_list.dart';
 import 'screens/landing/landing.dart';
 import 'package:clout/screens/login/login.dart';
 import 'package:clout/screens/join/join.dart';
 import 'package:clout/screens/main_page/main_page.dart';
 import 'package:clout/screens/notification/notification.dart';
-import 'package:clout/screens/point/point_list.dart';
 import 'package:clout/screens/review_register/review_complete.dart';
+import 'package:clout/screens/chatting/chatting_list.dart';
+import 'package:clout/screens/point/clouter_point_list.dart';
 
 void main() {
   runApp(GetMaterialApp(
@@ -32,8 +25,9 @@ void main() {
       GetPage(name: '/home', page: () => MainPage()),
       GetPage(name: '/campaignRegister', page: () => CampaignRegister()),
       GetPage(name: '/notification', page: () => NotificationPage()),
-      GetPage(name: '/pointlist', page: () => PointList()),
       GetPage(name: '/reviewcomplete', page: () => ReviewComplete()),
+      GetPage(name: '/chattinglist', page: () => ChattingList()),
+      GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
     ],
   ));
 }
