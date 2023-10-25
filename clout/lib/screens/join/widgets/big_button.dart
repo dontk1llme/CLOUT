@@ -30,9 +30,8 @@ class BigButton extends StatelessWidget {
         width: double.infinity,
         height: 50,
         child: ElevatedButton(
-          onPressed: () => {
-            if (notJustRoute != null && notJustRoute) {function(destination)}
-            else {Get.toNamed(destination)}
+          onPressed: () {
+            function();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: buttonColor,
