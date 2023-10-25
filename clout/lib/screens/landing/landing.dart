@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
-import 'package:clout/widgets/buttons/big_button/big_button.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
 
 class Landing extends StatelessWidget {
   const Landing({super.key});
