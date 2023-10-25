@@ -32,7 +32,8 @@ class _LikeButtonState extends State<LikeButton> {
         padding: EdgeInsets.all(5),
         child: Icon(
           isLiked ? Icons.favorite : Icons.favorite_border,
-          color: isLiked ? Colors.red : Colors.white,
+          color:
+              isLiked ? Colors.red : const Color.fromARGB(255, 225, 225, 225),
           size: 25,
         ),
       ),
