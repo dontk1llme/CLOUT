@@ -29,8 +29,6 @@ class MainPage extends StatelessWidget {
           // 아래 controll.tab에 따라 보여주는 화면 다르게 하기
         } else if (controller.tab == 1) {
           return CampaignList();
-        } else if (controller.tab == 2) {
-          return CampaignRegister();
         } else if (controller.tab == 3) {
           return ChattingList();
         } else if (controller.tab == 4) {
