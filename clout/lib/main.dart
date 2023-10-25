@@ -15,6 +15,7 @@ import 'screens/landing/landing.dart';
 import 'package:clout/screens/login/login.dart';
 import 'package:clout/screens/join/join.dart';
 import 'package:clout/screens/main_page/main_page.dart';
+import 'package:clout/screens/notification/notification.dart';
 
 
 void main() {
@@ -27,6 +28,7 @@ void main() {
       GetPage(name: '/login', page: () => Login()),
       GetPage(name: '/join', page: () => Join()),
       GetPage(name: '/home', page: () => MainPage()),
+      GetPage(name: '/notification', page: () => NotificationPage()),
     ],
   ));
 }
@@ -41,6 +43,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(body: Text('asdfasdf'));
   }
 }
