@@ -13,13 +13,6 @@ import 'package:get/get.dart';
 class Join extends StatelessWidget {
   const Join({super.key});
 
-  // void doAdvertiserJoin() {
-  //   Get.toNamed('AdvertiserJoin'); 
-  // }
-
-  // void doClouterJoin(){
-  //   Get.toNamed('ClouterJoin');
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +69,7 @@ class Join extends StatelessWidget {
                         textColor: style.colors['main1'],
                         buttonColor: style.colors['white'],
                         function: () {
-                          Get.to(()=>AdvertiserJoin()); // AdvertiserJoin 클래스의 인스턴스를 전달
+                          Get.to(()=>AdvertiserJoin()); 
                         },
                       ),
                     ),
