@@ -10,7 +10,8 @@ import 'package:clout/providers/nav_bar_controller.dart';
 import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:clout/screens/home/home.dart';
 import 'package:clout/screens/campaign_list/campaign_list.dart';
-import 'package:clout/screens/clouter/clouter_list.dart';
+import 'package:clout/screens/chatting/chatting_list.dart';
+import 'package:clout/screens/point/clouter_point_list.dart';
 
 // widgets
 import 'package:clout/widgets/nav_bar/nav_bar.dart';
@@ -29,7 +30,11 @@ class MainPage extends StatelessWidget {
         } else if (controller.tab == 1) {
           return CampaignList();
         } else if (controller.tab == 2) {
-          return CampagignRegister();
+          return CampaignRegister();
+        } else if (controller.tab == 3) {
+          return ChattingList();
+        } else if (controller.tab == 4) {
+          return ClouterPointList();
         }
         return Home();
       }),

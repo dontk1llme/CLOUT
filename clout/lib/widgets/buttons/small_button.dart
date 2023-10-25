@@ -22,7 +22,7 @@ class SmallButton extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: SizedBox(
         width: double.infinity,
-        height: 35,
+        height: 38,
         child: ElevatedButton(
             // null Check
             onPressed: () => {
