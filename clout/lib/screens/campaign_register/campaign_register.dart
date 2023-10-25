@@ -12,14 +12,14 @@ import 'package:clout/screens/home/widgets/number_picker_dialog.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/input/input_elements/input_element.dart';
 
-class CampagignRegister extends StatefulWidget {
-  CampagignRegister({super.key});
+class CampaignRegister extends StatefulWidget {
+  CampaignRegister({super.key});
 
   @override
-  State<CampagignRegister> createState() => _CampagignRegisterState();
+  State<CampaignRegister> createState() => _CampaignRegisterState();
 }
 
-class _CampagignRegisterState extends State<CampagignRegister> {
+class _CampaignRegisterState extends State<CampaignRegister> {
   var category,
       productName,
       startDate,
@@ -208,16 +208,16 @@ class _CampagignRegisterState extends State<CampagignRegister> {
                       Sns3(),
                       DataTitle(text: '희망 최수 팔로워 수'),
                       SizedBox(
-                        height: 55,
+                          height: 55,
                           child: InputElement(
-                        placeholder: '희망 최소 팔로워수(최대 1억)',
-                        elementType: 'text',
-                        setData: setMinimumFollowers,
-                        value: minimumFollowers,
-                        keyboardType: TextInputType.number,
-                        maxValue: 1000000000,
-                        maxLength: 20,
-                      )),
+                            placeholder: '희망 최소 팔로워수(최대 1억)',
+                            elementType: 'text',
+                            setData: setMinimumFollowers,
+                            value: minimumFollowers,
+                            keyboardType: TextInputType.number,
+                            maxValue: 1000000000,
+                            maxLength: 20,
+                          )),
                       DataTitle(text: '지역 선택')
                     ]),
               ),
