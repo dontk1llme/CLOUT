@@ -47,21 +47,22 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 8, 0, 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
+              child: SizedBox(
+                width: 70,
+                height: 25,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: style.colors['category'],
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
                     child: Text('카테고리',
                         style: TextStyle(
-                          backgroundColor: style.colors['category'],
-                          height: 2,
+                          color: style.colors['white'],
+                          fontWeight: FontWeight.w700,
                         )),
                   ),
-                  Text('2명 / 3명',
-                      style: TextStyle(
-                        fontSize: 15,
-                      )),
-                ],
+                ),
               ),
             ),
             Text('제품명',
