@@ -15,22 +15,6 @@ class CampaignList extends StatefulWidget {
 }
 
 class _MyCampaignList extends State<CampaignList> {
-  var tab = 0;
-  var header = 0;
-  var headerTitle = '채널명/메뉴명';
-
-  setTab(tabIndex) {
-    setState(() {
-      tab = tabIndex;
-    });
-  }
-
-  setHeader(headerType) {
-    setState(() {
-      header = headerType;
-      print('header : ${header}');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
