@@ -4,7 +4,6 @@ import '../../widgets/input/search_bar.dart';
 import '../../widgets/buttons/search_detail_button.dart';
 import '../../widgets/list/campaign_item_box.dart';
 import '../../widgets/header/header.dart';
-import '../../widgets/nav_bar/nav_bar.dart';
 import '../../style.dart' as style;
 
 class CampaignList extends StatefulWidget {

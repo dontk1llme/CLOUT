@@ -4,7 +4,7 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // widgets
-import 'package:clout/widgets/input/input.dart';
+import 'package:clout/widgets/input/login_input.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'widgets/title_text.dart';
 
@@ -52,7 +52,8 @@ class _LoginState extends State<Login> {
   }
 
   doLogin(destination) {
-    // 유저가 맞는지 확인하는 api 여기에 두고 맞으면 maind으로 이동하게
+    // 유저가 맞는지 확인하는 api 여기에 두고 맞으면 main으로 이동하게
+    // Get.ofAllNamed('/home')이걸로 바꾸기 => 이전으로 눌렀을때 로그인 페이지로 안돌아가게
     Get.toNamed('/home');
   }
 
