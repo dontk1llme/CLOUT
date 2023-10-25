@@ -19,7 +19,7 @@ class Header extends StatelessWidget {
       leading: header == 0 || header == 1
           ? IconButton(onPressed: () {}, icon: Icon(Icons.menu_outlined))
           : IconButton(
-              onPressed: () {}, icon: Icon(Icons.arrow_back_ios_new_outlined)),
+              onPressed: () => Get.back(), icon: Icon(Icons.arrow_back_ios_new_outlined)),
       title: header == 0
           ? Image.asset(
               'assets/images/Clout_Logo.png',
@@ -28,7 +28,7 @@ class Header extends StatelessWidget {
           : headerTitle != null
               ? Text(headerTitle,
                   style: style.textTheme.titleSmall?.copyWith(
-                      color: style.colors['text'], fontWeight: FontWeight.w700))
+                      color: style.colors['text'], fontWeight: FontWeight.w700, height: 1))
               : null,
       actions: header != 3 && header != 4
           ? [
