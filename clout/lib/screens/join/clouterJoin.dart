@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:get/get.dart';
 
-import '../../widgets/input/input.dart';
 import '../../style.dart' as style;
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/small_button.dart';

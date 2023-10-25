@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../widgets/input/input.dart';
+import 'package:clout/widgets/input/input.dart';
 import '../../style.dart' as style;
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/small_button.dart';
