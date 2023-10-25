@@ -1,12 +1,12 @@
-// widgets
-import 'package:clout/widgets/input/input.dart';
-import 'package:clout/widgets/buttons/big_button.dart';
-import 'widgets/title_text.dart';
-
 // global
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
+
+// widgets
+import 'package:clout/widgets/input/input.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
+import 'widgets/title_text.dart';
 
 class Login extends StatefulWidget {
   Login({super.key});
