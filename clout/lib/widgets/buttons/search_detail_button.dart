@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../style.dart' as style;
+import '../../style.dart' as style;
 
 // TextButton에서 Icon이 Text 우측으로 가게 하기 위해서 추가함
 class TextButtonWithSubfixIconChild extends StatelessWidget {

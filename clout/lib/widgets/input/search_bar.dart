@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../style.dart' as style;
+import '../../style.dart' as style;
 
 class MySearchBar extends StatelessWidget {
   MySearchBar({super.key});
