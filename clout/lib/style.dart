@@ -36,10 +36,9 @@ var colors = {
   'category': Color(0xFFD4CCFF),
 };
 
+
 // boxdecoration 예시
 // Container( decoration: BoxDecoration(
-//               color: style.colors['white'], // 박스의 배경색
-//               borderRadius: BorderRadius.circular(10), // 박스의 모서리 둥글게
 //               boxShadow: style.shadows['shadow'], //박스 스타일 예시
 //             ),
 var shadows = {
