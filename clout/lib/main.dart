@@ -1,10 +1,10 @@
+// Global
+import 'package:clout/screens/clouter_list/clouter_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
 // Widgets
-import 'widgets/nav_bar/nav_bar.dart';
-import 'widgets/header/header.dart';
 
 // 
 import 'widgets/sns/sns3.dart';
