@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../style.dart' as style;
 
+
 class Sns3 extends StatelessWidget {
   const Sns3({super.key});
 

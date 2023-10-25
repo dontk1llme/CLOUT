@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 export 'package:flutter/material.dart' show Color; // Color 클래스를 export
 
 // 사용법
