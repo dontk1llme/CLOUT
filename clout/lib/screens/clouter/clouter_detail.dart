@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/sns/sns3.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/buttons/like_button.dart';
 
 // screen
 import 'package:clout/screens/chatting/chatting_list.dart';
@@ -23,6 +24,14 @@ class _ClouterDetailState extends State<ClouterDetail> {
     Get.to(() => ChattingList());
   }
 
+  bool isItemLiked = false;
+
+  void handleItemTap() {
+    setState(() {
+      isItemLiked = !isItemLiked;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,22 +46,27 @@ class _ClouterDetailState extends State<ClouterDetail> {
         padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: 5),
-              child: Row(
-                children: [
-                  Icon(Icons.star, color: Colors.amber),
-                  SizedBox(width: 3),
-                  Text('20.5', style: TextStyle(fontWeight: FontWeight.w800)),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.star, color: Colors.amber),
+                    SizedBox(width: 3),
+                    Text('20.5', style: TextStyle(fontWeight: FontWeight.w800)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text('찜할래요'),
+                    LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
+                  ],
+                )
+              ],
             ),
             Container(
               margin: EdgeInsets.only(bottom: 12),
               decoration: BoxDecoration(
-                // border: Border.all(
-                //   color: Colors.grey,
-                // ),
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(7),
               ),
