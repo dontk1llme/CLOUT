@@ -73,6 +73,9 @@ flutter:
     - assets/images/money.png
     - assets/images/more.png
     - assets/images/paw.png
+    - assets/images/Instagram.png
+    - assets/images/TikTok.png
+    - assets/images/YouTube.png
     - assets/images/itemImage.jpg
     - assets/images/landingPage.jpeg
     - assets/images/clouterImage.jpg

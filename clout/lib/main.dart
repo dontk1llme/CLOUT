@@ -6,10 +6,16 @@ import 'package:clout/style.dart' as style;
 import 'widgets/nav_bar/nav_bar.dart';
 import 'widgets/header/header.dart';
 
+// 
+import 'widgets/sns/sns3.dart';
+
+import 'style.dart' as style;
 // Screens
 import 'screens/landing/landing.dart';
 import 'package:clout/screens/login/login.dart';
+import 'package:clout/screens/join/join.dart';
 import 'package:clout/screens/main_page/main_page.dart';
+
 
 void main() {
   runApp(GetMaterialApp(
@@ -19,6 +25,7 @@ void main() {
     getPages: [
       GetPage(name: '/', page: () => Landing()),
       GetPage(name: '/login', page: () => Login()),
+      GetPage(name: '/join', page: () => Join()),
       GetPage(name: '/home', page: () => MainPage()),
     ],
   ));
