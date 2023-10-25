@@ -1,6 +1,6 @@
 // widgets
 import 'package:clout/widgets/input/input.dart';
-import 'package:clout/widgets/buttons/big_button/big_button.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
 import 'widgets/title_text.dart';
 
 // global
