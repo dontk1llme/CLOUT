@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:clout/style.dart' as style;
+
+// Widgets
 import 'widgets/nav_bar/nav_bar.dart';
 import 'widgets/header/header.dart';
 
@@ -6,13 +10,24 @@ import 'widgets/header/header.dart';
 import 'widgets/sns/sns3.dart';
 
 import 'style.dart' as style;
+// Screens
+import 'screens/landing/landing.dart';
+import 'package:clout/screens/login/login.dart';
+import 'package:clout/screens/join/join.dart';
+import 'package:clout/screens/main_page/main_page.dart';
+
 
 void main() {
-  runApp(MaterialApp(
+  runApp(GetMaterialApp(
     theme: ThemeData(
       fontFamily: 'NotoSansKR',
     ),
-    home: MyApp(),
+    getPages: [
+      GetPage(name: '/', page: () => Landing()),
+      GetPage(name: '/login', page: () => Login()),
+      GetPage(name: '/join', page: () => Join()),
+      GetPage(name: '/home', page: () => MainPage()),
+    ],
   ));
 }
 
@@ -24,36 +39,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var tab = 0;
-  var header = 0;
-  var headerTitle = '채널명/메뉴명';
-
-  setTab(tabIndex) {
-    setState(() {
-      tab = tabIndex;
-    });
-  }
-
-  setHeader(headerType) {
-    setState(() {
-      header = headerType;
-      print('header : ${header}');
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(100),
-            child: Header(
-              header: header,
-              headerTitle: headerTitle,
-              // 헤더 원하는거 번호를 header 변수에 넣고 headerTitle엔 메뉴명이나 채널명이 있을경우 넣어주면 나옴
-            )),
-        body: Sns3(),
-        bottomNavigationBar:
-            NavBar(tab: tab, setTab: setTab, setHeader: setHeader));
+    return Scaffold();
   }
 }
