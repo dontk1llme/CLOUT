@@ -30,6 +30,7 @@ class TextInput extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+        counterText: maxLength < 200 ? "" : null,
         hintText: placeholder,
       ),
     );
