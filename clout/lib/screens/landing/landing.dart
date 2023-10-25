@@ -7,6 +7,7 @@ class Landing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -58,11 +59,16 @@ class Landing extends StatelessWidget {
                     destination: '/login',
                   ),
                   TextButton(
-                      onPressed: () {},
-                      child: Text('회원가입',
-                          style: style.textTheme.headlineSmall?.copyWith(
-                              color: style.colors['main1'],
-                              fontWeight: FontWeight.w600)))
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/join'); 
+                    },
+                    onHover:(isHovered) {
+                      //색깔 바뀌게 추가해야 함
+                    },
+                    child: Text('회원가입',
+                        style: style.textTheme.headlineSmall?.copyWith(
+                            color: style.colors['main1'],
+                            fontWeight: FontWeight.w600)))
                 ]),
               ),
             ))
