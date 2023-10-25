@@ -48,7 +48,13 @@ class NavBar extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.person_2_outlined), label: '마이페이지'),
             ],
-            onTap: (value) => controller.setTab(value),
+            onTap: (value) {
+              if (value == 2) {
+                Get.toNamed('campaignRegister');
+              } else {
+                controller.setTab(value);
+              }
+            },
             currentIndex: controller.tab,
           );
         }));

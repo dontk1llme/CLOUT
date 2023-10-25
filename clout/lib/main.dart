@@ -1,4 +1,5 @@
 // Global
+import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +23,7 @@ void main() {
       GetPage(name: '/login', page: () => Login()),
       GetPage(name: '/join', page: () => Join()),
       GetPage(name: '/home', page: () => MainPage()),
+      GetPage(name: '/campaignRegister', page: () => CampaignRegister()),
       GetPage(name: '/notification', page: () => NotificationPage()),
       GetPage(name: '/reviewcomplete', page: () => ReviewComplete()),
       GetPage(name: '/chattinglist', page: () => ChattingList()),
