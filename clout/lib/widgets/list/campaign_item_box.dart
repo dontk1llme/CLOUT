@@ -36,7 +36,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
               alignment: Alignment.topRight, // 아이콘을 오른쪽 상단에 배치
               children: [
                 Image.asset(
-                  'assets/images/clouterImage.jpg',
+                  'assets/images/itemImage.jpg',
                   width: 180,
                   height: 140,
                   fit: BoxFit

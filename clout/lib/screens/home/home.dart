@@ -90,7 +90,7 @@ class Home extends StatelessWidget {
                         for (num i = 0; i < 10; i++)
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                            child: CampaignItemBox(),
+                            child: ClouterItemBox(),
                           )
                       ]),
                     )
