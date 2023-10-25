@@ -5,7 +5,7 @@ import 'package:clout/style.dart' as style;
 
 // Screen
 import 'package:clout/screens/campaign_list/campaign_list.dart';
-import 'package:clout/screens/clouter_list/clouter_list.dart';
+import 'package:clout/screens/clouter/clouter_list.dart';
 
 class MenuTitle extends StatelessWidget {
   MenuTitle({super.key, this.text, this.destination});
