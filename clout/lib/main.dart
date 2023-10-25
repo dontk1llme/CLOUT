@@ -18,6 +18,7 @@ import 'package:clout/screens/main_page/main_page.dart';
 import 'package:clout/screens/notification/notification.dart';
 import 'package:clout/screens/point/point_list.dart';
 import 'package:clout/screens/review_register/review_complete.dart';
+import 'package:clout/screens/chatting/chatting_list.dart';
 
 void main() {
   runApp(GetMaterialApp(
@@ -32,6 +33,7 @@ void main() {
       GetPage(name: '/notification', page: () => NotificationPage()),
       GetPage(name: '/pointlist', page: () => PointList()),
       GetPage(name: '/reviewcomplete', page: () => ReviewComplete()),
+      GetPage(name: '/chattinglist', page: () => ChattingList()),
     ],
   ));
 }
