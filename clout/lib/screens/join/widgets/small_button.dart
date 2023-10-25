@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
-class BigButton extends StatelessWidget {
-  BigButton(
+class SmallButton extends StatelessWidget {
+  SmallButton(
       {super.key,
       this.title,
       this.destination,
@@ -27,12 +27,11 @@ class BigButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: SizedBox(
-        width: double.infinity,
-        height: 50,
+        width: 55,
+        height: 40,
         child: ElevatedButton(
-          onPressed: () => {
-            if (notJustRoute != null && notJustRoute) {function(destination)}
-            else {Get.toNamed(destination)}
+          onPressed: () {
+            function();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: buttonColor,
@@ -42,7 +41,7 @@ class BigButton extends StatelessWidget {
           ),
           child: Text(
             title,
-            style: style.textTheme.headlineLarge?.copyWith(
+            style: style.textTheme.bodySmall?.copyWith(
               color: textColor,
               fontWeight: FontWeight.w600,
             ),
