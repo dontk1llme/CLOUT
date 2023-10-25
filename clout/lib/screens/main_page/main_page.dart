@@ -10,7 +10,7 @@ import 'package:clout/providers/nav_bar_controller.dart';
 import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:clout/screens/home/home.dart';
 import 'package:clout/screens/campaign_list/campaign_list.dart';
-import 'package:clout/screens/clouter_list/clouter_list.dart';
+import 'package:clout/screens/clouter/clouter_list.dart';
 
 // widgets
 import 'package:clout/widgets/nav_bar/nav_bar.dart';
