@@ -12,10 +12,10 @@ class MySearchBar extends StatelessWidget {
           decoration: InputDecoration(
             contentPadding: EdgeInsets.all(15),
             hintText: "검색어를 입력하세요..",
-            // ⛔ 아래 아이콘 focus 되었을 때 style.colors['main2'] 색상으로 변경되게 구현해야함.
             prefixIcon: Icon(
               Icons.search,
               size: 32,
+              color: style.colors['main1'],
             ),
             // border: OutlineInputBorder(
             //   borderRadius: BorderRadius.circular(50),
