@@ -22,6 +22,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
   var checkPassword;
   var buisnessName;
   var buisnessNumber;
+  var buisnessAddress;
 
   // 추가 변수와 함수
   var obscured = true; // 예시 값
@@ -78,6 +79,12 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
   setBuisnessNumber(input){
     setState((){
       buisnessNumber=input;
+    });
+  }
+
+  setBuisnessAddress(input){
+    setState((){
+      buisnessAddress=input();
     });
   }
 
@@ -212,24 +219,28 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                       placeholder: '사업자등록번호  입력',
                       setText: setBuisnessNumber,
                     ),
-                    SizedBox(
-                      height: 25,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onPressed: () {
-                          // 원하는 동작을 구현
-                        },
-                        child: Text('사기치면 혼납니다',
-                            style: style.textTheme.bodyMedium?.copyWith(
-                                color: style.colors['gray'], height: 2)),
-                      ),
+                    Input(
+                      placeholder: '업체 주소 입력',
+                      setText: setBuisnessAddress,
                     ),
+                    // SizedBox(
+                    //   height: 25,
+                    //   child: TextButton(
+                    //     style: TextButton.styleFrom(
+                    //       minimumSize: Size.zero,
+                    //       padding: EdgeInsets.zero,
+                    //       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //     ),
+                    //     onPressed: () {
+                    //       // 원하는 동작을 구현
+                    //     },
+                    //     child: Text('사기치면 혼납니다',
+                    //         style: style.textTheme.bodyMedium?.copyWith(
+                    //             color: style.colors['gray'], height: 2)),
+                    //   ),
+                    // ),
                     Padding(
-                        padding: const EdgeInsets.only(top: 30),
+                        padding: const EdgeInsets.only(top: 20),
                         child: BigButton(
                           title: '회원가입',
                           function: () {
