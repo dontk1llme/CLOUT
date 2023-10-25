@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../style.dart' as style;
 
 class Header extends StatelessWidget {
@@ -26,13 +27,14 @@ class Header extends StatelessWidget {
             )
           : headerTitle != null
               ? Text(headerTitle,
-                  style: style.textTheme.titleSmall
-                      ?.copyWith(color: style.colors['text'], fontWeight: FontWeight.w700))
+                  style: style.textTheme.titleSmall?.copyWith(
+                      color: style.colors['text'], fontWeight: FontWeight.w700))
               : null,
       actions: header != 3 && header != 4
           ? [
               IconButton(
-                  onPressed: () {}, icon: Icon(Icons.notifications_outlined))
+                  onPressed: () => Get.toNamed('/notification'),
+                  icon: Icon(Icons.notifications_outlined))
             ]
           : null,
     );
