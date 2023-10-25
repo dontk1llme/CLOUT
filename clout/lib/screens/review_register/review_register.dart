@@ -7,6 +7,7 @@ import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/screens/review_register/widgets/information_box.dart';
 import 'package:clout/screens/review_register/widgets/star_rating.dart';
+import 'package:clout/screens/review_register/review_complete.dart';
 
 class ReviewRegister extends StatefulWidget {
   const ReviewRegister({super.key});
@@ -21,8 +22,8 @@ class _ReviewRegisterState extends State<ReviewRegister> {
   int userRating = 0; // 사용자의 평가 점수
 
   doRegister(destination) {
-    Get.toNamed('/home');
     // 완료버튼 눌렀을 때 실행할 함수
+    Get.to(() => ReviewComplete());
   }
 
   void onRatingChanged(int rating) {
@@ -72,7 +73,7 @@ class _ReviewRegisterState extends State<ReviewRegister> {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
         child: BigButton(
           title: '완료',
-          destination: "",
+          destination: 'reviewcomplete',
           notJustRoute: true,
           function: doRegister,
         ),
