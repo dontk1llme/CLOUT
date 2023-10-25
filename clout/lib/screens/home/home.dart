@@ -1,6 +1,7 @@
 // Global
 import 'package:clout/screens/home/widgets/menu_title.dart';
-import 'package:clout/widgets/campaign_item_box.dart';
+import 'package:clout/widgets/list/campaign_item_box.dart';
+import 'package:clout/widgets/list/clouter_item_box.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/buttons/big_button.dart';

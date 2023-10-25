@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
-import '../style.dart' as style;
+import '../../style.dart' as style;
 
-class CampaignItemBox extends StatelessWidget {
+import '../buttons/like_button.dart';
+
+class CampaignItemBox extends StatefulWidget {
   const CampaignItemBox({super.key});
+
+  @override
+  State<CampaignItemBox> createState() => _CampaignItemBoxState();
+}
+
+class _CampaignItemBoxState extends State<CampaignItemBox> {
+  bool isItemLiked = false;
+
+  void handleItemTap() {
+    setState(() {
+      isItemLiked = !isItemLiked;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +32,18 @@ class CampaignItemBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/images/itemImage.jpg',
-              width: 180,
-              height: 140,
-              fit: BoxFit.cover, // 이미지를 화면에 맞춤(이 코드 없애면 기존 사진 사이즈대로 보임)
+            Stack(
+              alignment: Alignment.topRight, // 아이콘을 오른쪽 상단에 배치
+              children: [
+                Image.asset(
+                  'assets/images/clouterImage.jpg',
+                  width: 180,
+                  height: 140,
+                  fit: BoxFit
+                      .cover, // 이미지 화면에 맞춤(이거 없애면 기존 사진 사이즈대로 보임.. 원하는대로!)
+                ),
+                LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
+              ],
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 8, 0, 4),
