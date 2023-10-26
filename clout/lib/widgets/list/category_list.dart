@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class CategoryList extends StatelessWidget {
   CategoryList({super.key});
 
-  // 이미지 파일 경로, 제목 리스트
   final List<Map<String, String>> categoryData = [
     {'path': 'assets/images/all.png', 'name': '전체보기'},
     {'path': 'assets/images/cosmetics.png', 'name': '패션/뷰티'},
@@ -21,6 +20,9 @@ class CategoryList extends StatelessWidget {
 
   @override
   build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double buttonSize = screenWidth / 7; // 이미지 버튼 크기를 화면 너비에 따라 조정
+
     return Container(
       width: double.infinity,
       height: 225,
@@ -30,27 +32,29 @@ class CategoryList extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            // 첫 번째 행의 이미지 버튼
-            children: _categoryButtons(0, 5),
+            children: _categoryButtons(context, 0, 5, buttonSize),
           ),
           SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            // 두 번째 행 이미지 버튼
-            children: _categoryButtons(6, 11),
+            children: _categoryButtons(context, 6, 11, buttonSize),
           )
         ],
       ),
     );
   }
 
-  List<Widget> _categoryButtons(int startIndex, int lastIndex) {
-    // 이미지 버튼 위젯 리스트 생성
+  List<Widget> _categoryButtons(
+      BuildContext context, int startIndex, int lastIndex, double buttonSize) {
     return List.generate(
       lastIndex - startIndex + 1,
       (index) => Column(
         children: [
-          _categoryButton(categoryData[startIndex + index]['path']!),
+          _categoryButton(
+            context,
+            categoryData[startIndex + index]['path']!,
+            buttonSize,
+          ),
           Text(categoryData[startIndex + index]['name']!,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -60,21 +64,29 @@ class CategoryList extends StatelessWidget {
     );
   }
 
-  Widget _categoryButton(String imagePath) {
+  Widget _categoryButton(
+      BuildContext context, String imagePath, double buttonSize) {
+    final double imageSize = buttonSize;
+    final double paddingSize = imageSize / 6;
+
     return InkWell(
       onTap: () {
         // 버튼 눌렀을 때 실행
       },
       child: Container(
-        width: 60, // 이미지버튼 너비
-        height: 60, // 이미지버튼 높이
-        padding: EdgeInsets.all(10),
+        width: imageSize,
+        height: imageSize,
+        padding: EdgeInsets.all(paddingSize),
         margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
         decoration: BoxDecoration(
-          color: Colors.white, // 버튼 배경색
-          borderRadius: BorderRadius.circular(13), // 버튼 모서리
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(13),
         ),
-        child: Image.asset(imagePath), // 이미지 불러오기
+        child: Image.asset(
+          imagePath,
+          width: imageSize - 2 * paddingSize,
+          height: imageSize - 2 * paddingSize,
+        ),
       ),
     );
   }
