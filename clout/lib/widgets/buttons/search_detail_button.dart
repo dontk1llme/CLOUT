@@ -64,13 +64,17 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
       mainAxisAlignment: MainAxisAlignment.end, // 가장 오른쪽으로 정렬
       children: <Widget>[
         InkWell(
-          child: Row(children: [
-            Text(
-              '검색 조건 설정',
-              style: TextStyle(fontWeight: FontWeight.w800),
-            ),
-            Icon(Icons.chevron_right, size: 20)
-          ]),
+          child: Padding(
+            padding: EdgeInsets.only(top: 5),
+            child: Row(children: [
+              Text(
+                '검색 조건 설정',
+                style: TextStyle(
+                    fontWeight: FontWeight.w600, color: style.colors['main1']),
+              ),
+              Icon(Icons.chevron_right, size: 20, color: style.colors['main1']),
+            ]),
+          ),
           onTap: () {
             showModalBottomSheet<void>(
               context: context,
