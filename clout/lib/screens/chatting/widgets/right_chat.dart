@@ -31,7 +31,7 @@ class RightChat extends StatelessWidget {
                 message,
                 style: TextStyle(
                   color: style.colors['white'],
-                  fontSize: 19,
+                  fontSize: 15,
                 ),
                 softWrap: true, // 줄바꿈 활성화
                 maxLines: null,
@@ -44,7 +44,7 @@ class RightChat extends StatelessWidget {
           child: Text(
             '11:17',
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 11,
               color: style.colors['gray'],
             ),
           ),
