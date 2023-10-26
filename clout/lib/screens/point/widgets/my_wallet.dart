@@ -5,10 +5,48 @@ import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/buttons/small_button.dart';
 
 class MyWallet extends StatelessWidget {
-  const MyWallet({super.key});
+  final String userType; // clouter 인지 advertiser 인지
+
+  const MyWallet({super.key, required this.userType});
 
   @override
   Widget build(BuildContext context) {
+    Widget buttons;
+    if (userType == 'advertiser') {
+      buttons = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            flex: 1,
+            child: SmallButton(
+              title: '충전하기',
+              destination: 'withdraw',
+              function: () {},
+            ),
+          ),
+          SizedBox(width: 5),
+          Flexible(
+            flex: 1,
+            child: SmallButton(
+              title: '출금하기',
+              destination: 'withdraw',
+              function: () {},
+            ),
+          ),
+        ],
+      );
+    } else if (userType == 'clouter') {
+      buttons = Flexible(
+        flex: 1,
+        child: SmallButton(
+          title: '출금하기',
+          destination: 'withdraw',
+          function: () {},
+        ),
+      );
+    } else {
+      buttons = Text('로그인 후 이용가능합니다');
+    }
     return Container(
       padding: EdgeInsets.fromLTRB(25, 20, 25, 20),
       margin: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
@@ -48,13 +86,7 @@ class MyWallet extends StatelessWidget {
                 ))
           ],
         ),
-        SmallButton(
-          title: '출금하기',
-          destination: 'withdraw',
-          function: () {},
-          notJustRoute: '',
-        )
-        // ElevatedButton(onPressed: () {}, child: Text('출금하기')),
+        buttons,
       ]),
     );
   }
