@@ -98,6 +98,7 @@ class _LoginState extends State<Login> {
                         placeholder: '이메일 입력',
                         setText: setEmail,
                       ),
+                      SizedBox(height: 15),
                       Input(
                         placeholder: '패스워드 입력',
                         setText: setPassword,
@@ -134,23 +135,21 @@ class _LoginState extends State<Login> {
                   ))),
           SizedBox(
             height: 50,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('계정이 아직 없다면?',
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text('계정이 아직 없다면?',
+                  style: style.textTheme.bodyMedium
+                      ?.copyWith(color: style.colors['gray'])),
+              TextButton(
+                  style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: EdgeInsets.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  onPressed: () => {Get.toNamed('/join')},
+                  child: Text(' 회원가입하기',
                       style: style.textTheme.bodyMedium
-                          ?.copyWith(color: style.colors['gray'])),
-                  TextButton(
-                      style: TextButton.styleFrom(
-                        minimumSize: Size.zero,
-                        padding: EdgeInsets.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      onPressed: () => {Get.toNamed('/join')},
-                      child: Text(' 회원가입하기',
-                          style: style.textTheme.bodyMedium
-                              ?.copyWith(color: style.colors['main1'])))
-                ]),
+                          ?.copyWith(color: style.colors['main1'])))
+            ]),
           ),
         ],
       ),
