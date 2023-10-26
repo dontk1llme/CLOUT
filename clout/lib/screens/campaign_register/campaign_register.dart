@@ -6,7 +6,7 @@ import 'package:clout/screens/campaign_register/widgets/minimumfollowers_dialog.
 import 'package:clout/screens/campaign_register/widgets/offeringitem_textinput.dart';
 import 'package:clout/screens/campaign_register/widgets/product_textinput.dart';
 import 'package:clout/screens/campaign_register/widgets/recruit_input.dart';
-import 'package:clout/screens/campaign_register/widgets/region_dropdown.dart';
+import 'package:clout/screens/campaign_register/widgets/region_multiselect.dart';
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/sns/sns3.dart';
@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 // Screens
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
@@ -43,8 +44,15 @@ class _CampaignRegisterState extends State<CampaignRegister> {
       minAge = 0,
       maxAge = 100,
       minimumFollowers,
-      minimumFollowersString = '0',
-      region;
+      minimumFollowersString = '0';
+
+  var selectedRegions = [];
+
+  setSelectedRegions(input) {
+    setState(() {
+      selectedRegions = input;
+    });
+  }
 
   SfRangeValues ageRanges = SfRangeValues(0, 100);
 
@@ -116,12 +124,6 @@ class _CampaignRegisterState extends State<CampaignRegister> {
     });
   }
 
-  setRegion(input) {
-    setState(() {
-      region = input;
-    });
-  }
-
   register(destination) {
     if (category != null &&
         productName != null &&
@@ -131,8 +133,7 @@ class _CampaignRegisterState extends State<CampaignRegister> {
         offeringItems != null &&
         itemDetail != null &&
         // age != null &&
-        minimumFollowers != null &&
-        region != null) {
+        minimumFollowers != null) {
       //등록하는 api 요청 들어가야 함
     } else {
       Get.offNamed(destination);
@@ -191,7 +192,9 @@ class _CampaignRegisterState extends State<CampaignRegister> {
                         setMinimumFollowers: setMinimumFollowers,
                         setMinimumFollowersString: setMinimumFollowersString),
                     DataTitle(text: '지역 선택'),
-                    RegionDropdown(region: region, setRegion: setRegion),
+                    RegionMultiSelect(
+                        selectedRegions: selectedRegions,
+                        setSelectedRegions: setSelectedRegions),
                     Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 20),
                       child: BigButton(
