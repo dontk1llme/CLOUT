@@ -1,6 +1,6 @@
 import 'package:clout/widgets/input/input_elements/utilities/numeric_range_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:clout/style.dart' as style;
 
 class TextInput extends StatelessWidget {
   const TextInput(
@@ -28,11 +28,17 @@ class TextInput extends StatelessWidget {
       maxLines: 5,
       maxLength: maxLength,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-        counterText: maxLength < 200 ? "" : null,
-        hintText: placeholder,
-      ),
+          contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+          counterText: maxLength < 200 ? "" : null,
+          hintText: placeholder,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+            borderSide: BorderSide(
+              width: 2,
+              color: style.colors['main1']!,
+            ),
+          )),
     );
   }
 }
