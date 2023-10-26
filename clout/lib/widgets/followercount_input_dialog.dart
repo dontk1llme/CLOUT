@@ -1,6 +1,6 @@
 // Global
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:clout/style.dart' as style;
 
 // Widgets
 import 'package:clout/widgets/input/input_elements/utilities/numeric_range_formatter.dart';
@@ -39,8 +39,11 @@ class FollowercountInputDialog extends StatelessWidget {
                     ],
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      hintText: '희망 최소 팔로워수(최대 10억)',
-                    ),
+                        hintText: '희망 최소 팔로워수(최대 10억)',
+                        contentPadding: EdgeInsets.only(left: 15, right: 15),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: style.colors['main1']!, width: 2))),
                     initialValue: value,
                     onChanged: (newVal) {
                       setData(newVal);
@@ -68,6 +71,8 @@ class FollowercountInputDialog extends StatelessWidget {
               setValueString(valueString);
               Navigator.of(context).pop(); //창 닫기
             },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: style.colors['main1']),
             child: Text("확인"),
           ),
         ),

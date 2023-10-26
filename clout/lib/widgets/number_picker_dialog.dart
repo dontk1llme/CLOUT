@@ -2,6 +2,7 @@
 import 'package:clout/utilities/my_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:clout/style.dart' as style;
 
 class NumberPickerDialog extends StatelessWidget {
   NumberPickerDialog({
@@ -31,6 +32,10 @@ class NumberPickerDialog extends StatelessWidget {
               onChanged: (newVal) {
                 setState(() => value = newVal);
               },
+              selectedTextStyle: TextStyle(
+                  color: style.colors['main1'],
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: Colors.black26),
@@ -45,6 +50,8 @@ class NumberPickerDialog extends StatelessWidget {
               setData(value);
               Navigator.of(context).pop(); //창 닫기
             },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: style.colors['main1']),
             child: Text("확인"),
           ),
         ),
