@@ -1,6 +1,7 @@
 // global
 import 'package:clout/screens/home/widgets/followercount_input_dialog.dart';
 import 'package:clout/screens/join/widgets/big_button.dart';
+import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/sns/sns3.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -200,174 +201,172 @@ class _CampaignRegisterState extends State<CampaignRegister> {
             child: Header(header: 4, headerTitle: '캠페인 작성')),
         body: SizedBox(
             width: double.infinity,
-            child: ListView(children: [
-              FractionallySizedBox(
-                widthFactor: 0.9,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DataTitle(text: '카테고리'),
-                      InputElement(
-                        elementType: 'dropdown',
-                        data: categories,
-                        value: category,
-                        placeholder: '--카테고리 선택--',
-                        setData: setCategory,
-                      ),
-                      SizedBox(height: 10),
-                      DataTitle(text: '제품명'),
-                      SizedBox(
-                          height: 55,
-                          child: InputElement(
-                            elementType: 'text',
-                            placeholder: '제품명',
-                            setData: setProductName,
-                            maxLength: 50,
-                          )),
-                      SizedBox(height: 10),
-                      DataTitle(text: '모집 인원(최대 100명)'),
-                      SizedBox(
-                          height: 50,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                  onPressed: () => showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      builder: ((context) {
-                                        return NumberPickerDialog(
-                                          value: recruitCount,
-                                          minValue: 1,
-                                          maxValue: 100,
-                                          setData: setRecruitCount,
-                                        );
-                                      })),
-                                  child: Text(
-                                    recruitCount.toString(),
-                                    style: style.textTheme.titleMedium
-                                        ?.copyWith(
-                                            color: style.colors['main1'],
-                                            fontWeight: FontWeight.bold,
-                                            height: 1.1),
-                                  )),
-                              DataTitle(
-                                text: '명',
-                              )
-                            ],
-                          )),
-                      SizedBox(height: 10),
-                      DataTitle(text: '게시 기간'),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          DataTitle(text: '제공 내역'),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 75,
+            child: BouncingListview(
+                child: FractionallySizedBox(
+              widthFactor: 0.9,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DataTitle(text: '카테고리'),
+                    InputElement(
+                      elementType: 'dropdown',
+                      data: categories,
+                      value: category,
+                      placeholder: '카테고리 선택',
+                      setData: setCategory,
+                    ),
+                    SizedBox(height: 10),
+                    DataTitle(text: '제품명'),
+                    SizedBox(
+                        height: 55,
                         child: InputElement(
                           elementType: 'text',
-                          placeholder: '제공내역(제공할 물품 또는 서비스)',
-                          setData: setOfferingItems,
-                          maxLength: 300,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      DataTitle(text: '제품 배송 여부'),
-                      InputElement(
+                          placeholder: '제품명',
+                          setData: setProductName,
+                          maxLength: 50,
+                        )),
+                    SizedBox(height: 10),
+                    DataTitle(text: '모집 인원(최대 100명)'),
+                    SizedBox(
+                        height: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                                onPressed: () => showDialog(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    builder: ((context) {
+                                      return NumberPickerDialog(
+                                        value: recruitCount,
+                                        minValue: 1,
+                                        maxValue: 100,
+                                        setData: setRecruitCount,
+                                      );
+                                    })),
+                                child: Text(
+                                  recruitCount.toString(),
+                                  style: style.textTheme.titleMedium?.copyWith(
+                                      color: style.colors['main1'],
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.1),
+                                )),
+                            DataTitle(
+                              text: '명',
+                            )
+                          ],
+                        )),
+                    SizedBox(height: 10),
+                    DataTitle(text: '게시 기간'),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        DataTitle(text: '제공 내역'),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 75,
+                      child: InputElement(
                         elementType: 'text',
-                        placeholder: '제품 또는 서비스 상세 내용',
-                        setData: setItemDetail,
-                        maxLength: 500,
-                        keyboardType: TextInputType.multiline,
+                        placeholder: '제공내역(제공할 물품 또는 서비스)',
+                        setData: setOfferingItems,
+                        maxLength: 300,
                       ),
-                      SizedBox(height: 10),
-                      DataTitle(text: '제품 사진 첨부'),
-                      DataTitle(text: '광고 희망 플랫폼'),
-                      Sns3(),
-                      DataTitle(text: '희망 클라우터 나이'),
-                      SfRangeSliderTheme(
-                          data: SfRangeSliderThemeData(
-                            tooltipBackgroundColor: style.colors['main2'],
-                            thumbColor: style.colors['white'],
-                            thumbStrokeWidth: 1,
-                            thumbStrokeColor: Colors.black,
-                            activeTrackColor: style.colors['main1'],
-                            inactiveTrackColor: style.colors['category'],
-                            activeLabelStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            inactiveLabelStyle:
-                                TextStyle(color: Colors.black, fontSize: 10),
+                    ),
+                    SizedBox(height: 10),
+                    DataTitle(text: '제품 배송 여부'),
+                    InputElement(
+                      elementType: 'text',
+                      placeholder: '제품 또는 서비스 상세 내용',
+                      setData: setItemDetail,
+                      maxLength: 500,
+                      keyboardType: TextInputType.multiline,
+                    ),
+                    SizedBox(height: 10),
+                    DataTitle(text: '제품 사진 첨부'),
+                    DataTitle(text: '광고 희망 플랫폼'),
+                    Sns3(),
+                    DataTitle(text: '희망 클라우터 나이'),
+                    SfRangeSliderTheme(
+                        data: SfRangeSliderThemeData(
+                          tooltipBackgroundColor: style.colors['main2'],
+                          thumbColor: style.colors['white'],
+                          thumbStrokeWidth: 1,
+                          thumbStrokeColor: Colors.black,
+                          activeTrackColor: style.colors['main1'],
+                          inactiveTrackColor: style.colors['category'],
+                          activeLabelStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
                           ),
-                          child: SfRangeSlider(
-                            enableTooltip: true,
-                            min: 0.0,
-                            max: 100.0,
-                            values: ageRanges,
-                            showTicks: true,
-                            showLabels: true,
-                            // minorTicksPerInterval: 1,
-                            stepSize: 1,
-                            interval: 20,
-                            numberFormat: NumberFormat("###세"),
-                            onChanged: (SfRangeValues values) {
-                              setAge(values);
-                            },
-                          )),
-                      SizedBox(height: 10),
-                      DataTitle(text: '희망 최소 팔로워 수'),
-                      SizedBox(
-                          height: 50,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                  onPressed: () => showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      builder: ((context) {
-                                        return FollowercountInputDialog(
-                                          value: minimumFollowers,
-                                          setData: setMinimumFollowers,
-                                          setValueString:
-                                              setMinimumFollowersString,
-                                          valueString: minimumFollowersString,
-                                          converter: converter,
-                                        );
-                                      })),
-                                  child: Text(
-                                    minimumFollowersString,
-                                    style: style.textTheme.titleMedium
-                                        ?.copyWith(
-                                            color: style.colors['main1'],
-                                            fontWeight: FontWeight.bold,
-                                            height: 1.1),
-                                  )),
-                              DataTitle(
-                                text: '명',
-                              )
-                            ],
-                          )),
-                      DataTitle(text: '지역 선택'),
-                      InputElement(
-                        elementType: 'dropdown',
-                        setData: setRegion,
-                        data: regions,
-                        value: region,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 20),
-                        child: BigButton(
-                          title: '게시글 등록',
-                          function: register,
+                          inactiveLabelStyle:
+                              TextStyle(color: Colors.black, fontSize: 10),
                         ),
-                      )
-                    ]),
-              ),
-            ])));
+                        child: SfRangeSlider(
+                          enableTooltip: true,
+                          min: 0.0,
+                          max: 100.0,
+                          values: ageRanges,
+                          showTicks: true,
+                          showLabels: true,
+                          // minorTicksPerInterval: 1,
+                          stepSize: 1,
+                          interval: 20,
+                          numberFormat: NumberFormat("###세"),
+                          onChanged: (SfRangeValues values) {
+                            setAge(values);
+                          },
+                        )),
+                    SizedBox(height: 10),
+                    DataTitle(text: '희망 최소 팔로워 수'),
+                    SizedBox(
+                        height: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                                onPressed: () => showDialog(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    builder: ((context) {
+                                      return FollowercountInputDialog(
+                                        value: minimumFollowers,
+                                        setData: setMinimumFollowers,
+                                        setValueString:
+                                            setMinimumFollowersString,
+                                        valueString: minimumFollowersString,
+                                        converter: converter,
+                                      );
+                                    })),
+                                child: Text(
+                                  minimumFollowersString,
+                                  style: style.textTheme.titleMedium?.copyWith(
+                                      color: style.colors['main1'],
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.1),
+                                )),
+                            DataTitle(
+                              text: '명',
+                            )
+                          ],
+                        )),
+                    DataTitle(text: '지역 선택'),
+                    InputElement(
+                      elementType: 'dropdown',
+                      setData: setRegion,
+                      data: regions,
+                      value: region,
+                      placeholder: '지역 선택',
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      child: BigButton(
+                        title: '게시글 등록',
+                        function: register,
+                      ),
+                    )
+                  ]),
+            ))));
   }
 }
