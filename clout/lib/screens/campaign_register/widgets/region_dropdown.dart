@@ -35,6 +35,7 @@ class RegionDropdown extends StatelessWidget {
       data: regions,
       value: region,
       placeholder: '지역 선택',
+      offset: Offset(0, 355),
     );
   }
 }
