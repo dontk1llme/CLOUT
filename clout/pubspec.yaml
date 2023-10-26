@@ -43,6 +43,7 @@ dependencies:
   syncfusion_flutter_core: ^23.1.42
   flutter_launcher_icons: ^0.13.1
   syncfusion_flutter_datepicker: ^23.1.42
+  image_picker: ^1.0.4
 
 flutter_icons:
   android: "clout"
@@ -94,6 +95,7 @@ flutter:
     - assets/images/clouterImage.jpg
     - assets/images/clouter.png
     - assets/images/advertiser.png
+    - assets/images/addPhoto.png
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
 
