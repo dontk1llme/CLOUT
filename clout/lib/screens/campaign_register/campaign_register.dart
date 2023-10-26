@@ -1,15 +1,20 @@
 // global
+import 'dart:math';
+
 import 'package:clout/screens/campaign_register/widgets/age_slider.dart';
 import 'package:clout/screens/campaign_register/widgets/category_dropdown.dart';
 import 'package:clout/screens/campaign_register/widgets/itemdetail_textinput.dart';
 import 'package:clout/screens/campaign_register/widgets/minimumfollowers_dialog.dart';
 import 'package:clout/screens/campaign_register/widgets/offeringitem_textinput.dart';
+import 'package:clout/screens/campaign_register/widgets/pay_dialog.dart';
 import 'package:clout/screens/campaign_register/widgets/product_textinput.dart';
 import 'package:clout/screens/campaign_register/widgets/recruit_input.dart';
 import 'package:clout/screens/campaign_register/widgets/region_multiselect.dart';
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/followercount_input_dialog.dart';
 import 'package:clout/widgets/sns/sns3.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -17,6 +22,8 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:flutter/gestures.dart';
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
 // Screens
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
@@ -39,6 +46,7 @@ class _CampaignRegisterState extends State<CampaignRegister> {
       endDate,
       recruitCount = 1,
       pay,
+      payString = '0',
       offeringItems,
       itemDetail,
       minAge = 0,
@@ -46,7 +54,7 @@ class _CampaignRegisterState extends State<CampaignRegister> {
       minimumFollowers,
       minimumFollowersString = '0';
 
-  var selectedRegions = [];
+  List<String?> selectedRegions = [];
 
   setSelectedRegions(input) {
     setState(() {
@@ -89,6 +97,12 @@ class _CampaignRegisterState extends State<CampaignRegister> {
   setPay(input) {
     setState(() {
       pay = input;
+    });
+  }
+
+  setPayString(input) {
+    setState(() {
+      payString = input;
     });
   }
 
@@ -140,6 +154,8 @@ class _CampaignRegisterState extends State<CampaignRegister> {
     }
   }
 
+  bool positive = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,35 +172,126 @@ class _CampaignRegisterState extends State<CampaignRegister> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DataTitle(text: '카테고리'),
+                    SizedBox(height: 10),
                     CategoryDropdown(
                         category: category, setCategory: setCategory),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     DataTitle(text: '제품명'),
-                    ProductTextinput(setProductName: setProductName),
                     SizedBox(height: 10),
+                    ProductTextinput(setProductName: setProductName),
+                    SizedBox(height: 20),
                     DataTitle(text: '모집 인원(최대 100명)'),
                     RecruitInput(
                         recruitCount: recruitCount,
                         setRecruitCount: setRecruitCount),
-                    SizedBox(height: 10),
-                    DataTitle(text: '게시 기간'),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         DataTitle(text: '제공 내역'),
+                        Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                '광고비 ',
+                                style: TextStyle(height: 1.3),
+                              ),
+                              SizedBox(
+                                width: 45,
+                                child: DefaultTextStyle.merge(
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold),
+                                  child: IconTheme.merge(
+                                    data: IconThemeData(color: Colors.white),
+                                    child: AnimatedToggleSwitch<bool>.dual(
+                                      current: positive,
+                                      first: false,
+                                      second: true,
+                                      spacing: 0.0,
+                                      animationDuration:
+                                          const Duration(milliseconds: 200),
+                                      style: ToggleStyle(
+                                        borderColor: Colors.transparent,
+                                        indicatorColor: Colors.white,
+                                        backgroundColor:
+                                            style.colors['category'],
+                                      ),
+                                      customStyleBuilder:
+                                          (context, local, global) {
+                                        if (global.position <= 0.0) {
+                                          return ToggleStyle();
+                                        }
+                                        return ToggleStyle(
+                                            backgroundGradient: LinearGradient(
+                                          colors: [
+                                            style.colors['main1']!,
+                                            style.colors['category']!
+                                          ],
+                                          stops: [
+                                            global.position -
+                                                (1 -
+                                                        2 *
+                                                            max(
+                                                                0,
+                                                                global.position -
+                                                                    0.5)) *
+                                                    0.7,
+                                            global.position +
+                                                max(
+                                                        0,
+                                                        2 *
+                                                            (global.position -
+                                                                0.5)) *
+                                                    0.7,
+                                          ],
+                                        ));
+                                      },
+                                      height: 25.0,
+                                      onChanged: (b) =>
+                                          setState(() => positive = b),
+                                      iconBuilder: (value) => value
+                                          ? Icon(Icons.attach_money_outlined,
+                                              color: style.colors['main1'],
+                                              size: 20.0)
+                                          : Icon(Icons.money_off_outlined,
+                                              color: style.colors['main1'],
+                                              size: 20.0),
+                                      textBuilder: (value) => value
+                                          ? Center(child: Text(''))
+                                          : Center(child: Text('')),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ]),
                       ],
                     ),
+                    positive
+                        ? PayDialog(
+                            pay: pay,
+                            payString: payString,
+                            setPay: setPay,
+                            setPayString: setPayString)
+                        : Container(),
+                    SizedBox(height: 10),
                     OfferingitemTextinput(setOfferingItems: setOfferingItems),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     DataTitle(text: '제품 배송 여부'),
-                    ItemdetailTextinput(setItemDetail: setItemDetail),
                     SizedBox(height: 10),
+                    ItemdetailTextinput(setItemDetail: setItemDetail),
+                    SizedBox(height: 20),
                     DataTitle(text: '제품 사진 첨부'),
+                    SizedBox(height: 10),
                     DataTitle(text: '광고 희망 플랫폼'),
+                    SizedBox(height: 10),
                     Sns3(),
+                    SizedBox(height: 20),
                     DataTitle(text: '희망 클라우터 나이'),
                     AgeSlider(ageRanges: ageRanges, setAge: setAge),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     DataTitle(text: '희망 최소 팔로워 수'),
                     MinimumfollowersDialog(
                         minimumFollowers: minimumFollowers,
@@ -192,6 +299,7 @@ class _CampaignRegisterState extends State<CampaignRegister> {
                         setMinimumFollowers: setMinimumFollowers,
                         setMinimumFollowersString: setMinimumFollowersString),
                     DataTitle(text: '지역 선택'),
+                    SizedBox(height: 10),
                     RegionMultiSelect(
                         selectedRegions: selectedRegions,
                         setSelectedRegions: setSelectedRegions),
