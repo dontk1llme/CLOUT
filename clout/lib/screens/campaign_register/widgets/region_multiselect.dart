@@ -1,5 +1,6 @@
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:flutter/material.dart';
+import 'package:clout/style.dart' as style;
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class RegionMultiSelect extends StatefulWidget {
@@ -12,8 +13,8 @@ class RegionMultiSelect extends StatefulWidget {
 }
 
 class _RegionMultiSelectState extends State<RegionMultiSelect> {
-  var valuesHere = [];
-  final regions = [
+  List<String?> valuesHere = [];
+  static List<String> regions = [
     '전체',
     '서울',
     '부산',
@@ -33,53 +34,61 @@ class _RegionMultiSelectState extends State<RegionMultiSelect> {
     '경남',
     '제주',
   ];
+  final items = regions.map((e) => MultiSelectItem<String>(e, e)).toList();
 
   @override
   Widget build(BuildContext context) {
-    return MultiSelectBottomSheetField(
-      initialChildSize: 0.7,
-      maxChildSize: 0.9,
-      minChildSize: 0.5,
-      isDismissible: true,
-      title: DataTitle(text: '지역 선택'),
-      buttonText: Text("지역 선택"),
-      separateSelectedItems: true,
-      searchable: true,
-      items: regions.map((e) => MultiSelectItem(e, e)).toList(),
-      onSelectionChanged: (value) {
-        if (value.contains('전체') && value.length != regions.length) {
-          setState(() {
-            valuesHere = regions;
-          });
-          widget.setSelectedRegions(regions);
-        }
-      },
-      // validator: (values) {
-      //   if (values == null || values.isEmpty) {
-      //     return "Required";
-      //   }
-      //   var names = [];
-      //   names = values;
-      //   if (names.contains('전체')) {
-      //     return '전체';
-      //   }
-      // },
-      onConfirm: (values) {
-        setState(() {
-          valuesHere = values;
-        });
-        // widget.setSelectedRegions(values);
-        // widget.selectedRegions.currentState.validate();
-      },
-      chipDisplay: MultiSelectChipDisplay(
-        onTap: (item) {
-          setState(() {
-            valuesHere.remove(item);
-          });
-          // widget.setSelectedRegions(item);
-          // widget.selectedRegions.currentState.validate();
-        },
-      ),
-    );
+    return Container(
+        decoration: BoxDecoration(
+            border: Border.all(width: 1, color: style.colors['gray']!),
+            borderRadius: BorderRadius.circular(5)),
+        child: MultiSelectBottomSheetField<String?>(
+          initialChildSize: 0.7,
+          maxChildSize: 0.9,
+          minChildSize: 0.5,
+          isDismissible: true,
+          buttonIcon: Icon(Icons.place_outlined),
+          title: Padding(
+            padding: EdgeInsets.fromLTRB(10, 20, 0, 5),
+            child: Row(
+              children: [Icon(Icons.place_outlined), Text(' 지역 선택', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, height: 1.3),)],            ),
+          ),
+          buttonText: Text(
+            "여러 지역 선택 가능(항목 터치시 삭제)",
+            style: TextStyle(fontSize: 14, height: 1.5),
+          ),
+          // searchable: true,
+          items: items,
+          decoration: BoxDecoration(),
+          cancelText: Text(
+            "취소",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, color: style.colors['main1']),
+          ),
+          confirmText: Text(
+            "확인",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, color: style.colors['main1']),
+          ),
+          // decoration: BoxDecoration(),
+          onConfirm: (values) {
+            setState(() {
+              valuesHere = values;
+            });
+            widget.setSelectedRegions(values);
+          },
+          chipDisplay: MultiSelectChipDisplay(
+            chipColor: style.colors['main1'],
+            textStyle: TextStyle(color: style.colors['white'], fontSize: 15),
+            height: 20.0,
+            icon: Icon(Icons.close, color: Colors.white),
+            onTap: (item) {
+              setState(() {
+                valuesHere.remove(item);
+              });
+              widget.setSelectedRegions(valuesHere);
+            },
+          ),
+        ));
   }
 }
