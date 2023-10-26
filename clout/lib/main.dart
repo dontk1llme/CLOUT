@@ -1,5 +1,6 @@
 // Global
 import 'package:clout/screens/campaign_register/campaign_register.dart';
+import 'package:clout/utilities/my_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
