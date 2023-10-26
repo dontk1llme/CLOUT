@@ -1,4 +1,5 @@
 // Global
+import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -24,7 +25,8 @@ class Home extends StatelessWidget {
             header: 0,
           ),
         ),
-        body: ListView(
+        body: BouncingListview(
+            child: Column(
           children: [
             // 여기 아래 컨테이너에 캐러셀 넣어야 함(아래 컨테이너 전체를 캐러셀에 포함시켜야 함)
             Container(
@@ -84,8 +86,7 @@ class Home extends StatelessWidget {
                       text: '인기있는 클라우터',
                       destination: 1,
                     ),
-                    SingleChildScrollView(
-                      // physics: NeverScrollableScrollPhysics(),
+                    BouncingListview(
                       scrollDirection: Axis.horizontal,
                       child: Row(children: [
                         for (num i = 0; i < 10; i++)
@@ -102,7 +103,7 @@ class Home extends StatelessWidget {
                   ),
                   Column(children: [
                     MenuTitle(text: '인기있는 캠페인', destination: 2),
-                    SingleChildScrollView(
+                    BouncingListview(
                       // physics: NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       child: Row(children: [
@@ -118,6 +119,6 @@ class Home extends StatelessWidget {
               ),
             )
           ],
-        ));
+        )));
   }
 }
