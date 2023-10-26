@@ -35,9 +35,9 @@ class ClouterJoin extends StatelessWidget {
               padding: EdgeInsets.zero,
               percent: percent,
               lineHeight: 10,
-              backgroundColor: Colors.black38,
-              progressColor: Colors.indigo.shade900,
-              width: MediaQuery.of(context).size.width,
+              backgroundColor: style.colors['category'],
+              progressColor: style.colors['logo'],
+              width: 320,
             )
           ],
         ),
