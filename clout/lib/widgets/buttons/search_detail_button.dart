@@ -1,3 +1,6 @@
+import 'package:clout/widgets/input/input.dart';
+import 'package:clout/widgets/input/input_elements/widgets/dropdown_input.dart';
+import 'package:clout/widgets/sns/sns3.dart';
 import 'package:flutter/material.dart';
 import '../../style.dart' as style;
 
@@ -17,7 +20,43 @@ class TextButtonWithSubfixIconChild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: () {
+        showModalBottomSheet<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return SizedBox(
+              height: 600,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    ElevatedButton(
+                      child: const Text('Close BottomSheet'),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('상세 조건 설정'),
+                          Icon(Icons.close),
+                        ]),
+                    Text('광고 희망 플랫폼'),
+                    Sns3(),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text('다중 선택 가능'),
+                    ),
+                    Text('희망 클라우터 나이'),
+                    // slider 추가
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
       style: ButtonStyle(
         foregroundColor: MaterialStateProperty.all<Color>(
           Color(0xFF6B4EFF),

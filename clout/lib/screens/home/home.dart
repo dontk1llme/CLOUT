@@ -88,13 +88,16 @@ class Home extends StatelessWidget {
                     ),
                     BouncingListview(
                       scrollDirection: Axis.horizontal,
-                      child: Row(children: [
-                        for (num i = 0; i < 10; i++)
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                            child: ClouterItemBox(),
-                          )
-                      ]),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 5, right: 5),
+                        child: Row(children: [
+                          for (num i = 0; i < 10; i++)
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                              child: ClouterItemBox(),
+                            )
+                        ]),
+                      ),
                     )
                   ]),
                   Container(
@@ -104,15 +107,17 @@ class Home extends StatelessWidget {
                   Column(children: [
                     MenuTitle(text: '인기있는 캠페인', destination: 2),
                     BouncingListview(
-                      // physics: NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      child: Row(children: [
-                        for (num i = 0; i < 10; i++)
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                            child: ClouterItemBox(),
-                          )
-                      ]),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 5, right: 5),
+                        child: Row(children: [
+                          for (num i = 0; i < 10; i++)
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                              child: CampaignItemBox(),
+                            )
+                        ]),
+                      ),
                     )
                   ])
                 ],
