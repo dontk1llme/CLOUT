@@ -102,159 +102,135 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(left:25, top:15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('가입하고', style: style.textTheme.titleMedium),
-            Row(
+      return Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(left: 25, top: 15, right:25, bottom:15),
+            child: ListView(
+              shrinkWrap: true,
               children: <Widget>[
-                Text('CLOUT', style: style.textTheme.titleMedium?.copyWith(
-                  color: style.colors['main1'])),
-                Text('와 함께', style: style.textTheme.titleMedium),
-              ],
-            ),
-            Text('매칭해요', style: style.textTheme.titleMedium),
-            Expanded(
-              flex: 4,
-              child: FractionallySizedBox(
-                widthFactor: 0.9,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Input(
-                      placeholder: '담당자명 입력',
-                      setText: setName,
-                    ),
-                    Stack( // Stack 위젯을 추가
-                        children: [
-                          Input(
-                            placeholder: '전화번호 입력',
-                            setText: setPhoneNumber,
-                          ),
-                          Positioned( // Positioned 위젯을 추가하여 버튼의 위치 지정
-                            right: 10, // 우측 정렬
-                            top: 22, // 상단 정렬
-                            child: SmallButton(
-                              title: '인증',
-                              function: () {
-                                Get.to(()=>NumberVerify()); 
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    Stack( // Stack 위젯을 추가
-                        children: [
-                          Input(
-                            placeholder: '아이디 입력',
-                            setText: setEmail,
-                          ),
-                          Positioned( // Positioned 위젯을 추가하여 버튼의 위치 지정
-                            right: 10, // 우측 정렬
-                            top: 22, // 상단 정렬
-                            child: SmallButton(
-                              title: '중복 확인',
-                              function: setDoubleId,
-                            ),
-                          ),
-                        ],
-                      ),
-                    SizedBox(
-                      height: 25,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onPressed: () {
-                        },
-                        child: doubleId == 1
-                          ? Text(
-                              '아이디 중복 확인이 필요해요',
-                              style: style.textTheme.bodyMedium?.copyWith(
-                                color: style.colors['gray'],
-                                height: 2,
-                              ),
-                            )
-                          : doubleId == 2
-                              ? Text(
-                                  '사용 가능한 아이디입니다',
-                                  style: style.textTheme.bodyMedium?.copyWith(
-                                    color: style.colors['main1'],
-                                    height: 2,
-                                  ),
-                                )
-                              : Text(
-                                  '이미 사용 중인 아이디입니다',
-                                  style: style.textTheme.bodyMedium?.copyWith(
-                                    color: style.colors['Darkgray'],
-                                    height: 2,
-                                  ),
-                                ),
-                    ),
-                    ),
-                    Input(
-                      placeholder: '패스워드 입력',
-                      setText: setPassword,
-                      obscure: obscured,
-                      suffixIcon: suffixIcon,
-                      setObscured: setObscured,
-                      ),
-                    Input(
-                      placeholder: '패스워드 확인',
-                      setText: setCheckPassword,
-                      obscure: obscured,
-                      suffixIcon: suffixIcon,
-                    ),
-                    Input(
-                      placeholder: '업체명 입력',
-                      setText: setBuisnessName,
-                    ),
-                    Input(
-                      placeholder: '사업자등록번호  입력',
-                      setText: setBuisnessNumber,
-                    ),
-                    Input(
-                      placeholder: '업체 주소 입력',
-                      setText: setBuisnessAddress,
-                    ),
-                    // SizedBox(
-                    //   height: 25,
-                    //   child: TextButton(
-                    //     style: TextButton.styleFrom(
-                    //       minimumSize: Size.zero,
-                    //       padding: EdgeInsets.zero,
-                    //       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    //     ),
-                    //     onPressed: () {
-                    //       // 원하는 동작을 구현
-                    //     },
-                    //     child: Text('사기치면 혼납니다',
-                    //         style: style.textTheme.bodyMedium?.copyWith(
-                    //             color: style.colors['gray'], height: 2)),
-                    //   ),
-                    // ),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: BigButton(
-                          title: '회원가입',
-                          function: () {
-                            Get.toNamed('/login'); // AdvertiserJoin 클래스의 인스턴스를 전달
-                          },
-                        ),
-                      )
+                Text('가입하고', style: style.textTheme.titleMedium),
+                Row(
+                  children: <Widget>[
+                    Text('CLOUT', style: style.textTheme.titleMedium?.copyWith(
+                      color: style.colors['main1'])),
+                    Text('와 함께', style: style.textTheme.titleMedium),
                   ],
                 ),
-              ),
+                Text('매칭해요', style: style.textTheme.titleMedium),
+                Input(
+                  placeholder: '담당자명 입력',
+                  setText: setName,
+                ),
+                Stack(
+                  children: [
+                    Input(
+                      placeholder: '전화번호 입력',
+                      setText: setPhoneNumber,
+                    ),
+                    Positioned(
+                      right: 10,
+                      top: 22,
+                      child: SmallButton(
+                        title: '인증',
+                        function: () {
+                          Get.to(() => NumberVerify());
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: [
+                    Input(
+                      placeholder: '아이디 입력',
+                      setText: setEmail,
+                    ),
+                    Positioned(
+                      right: 10,
+                      top: 22,
+                      child: SmallButton(
+                        title: '중복 확인',
+                        function: setDoubleId,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 25,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      alignment: Alignment.centerRight,
+                    ),
+                    onPressed: () {
+                      // 원하는 동작을 구현
+                    },
+                    child: doubleId == 1
+                        ? Text(
+                            '아이디 중복 확인이 필요해요',
+                            style: style.textTheme.bodyMedium?.copyWith(
+                              color: style.colors['gray'],
+                              height: 2,
+                            ),
+                          )
+                        : doubleId == 2
+                            ? Text(
+                                '사용 가능한 아이디입니다',
+                                style: style.textTheme.bodyMedium?.copyWith(
+                                  color: style.colors['main1'],
+                                  height: 2,
+                                ),
+                              )
+                            : Text(
+                                '이미 사용 중인 아이디입니다',
+                                style: style.textTheme.bodyMedium?.copyWith(
+                                  color: style.colors['Darkgray'],
+                                  height: 2,
+                                ),
+                              ),
+                  ),
+                ),
+                Input(
+                  placeholder: '패스워드 입력',
+                  setText: setPassword,
+                  obscure: obscured,
+                  suffixIcon: suffixIcon,
+                  setObscured: setObscured,
+                ),
+                Input(
+                  placeholder: '패스워드 확인',
+                  setText: setCheckPassword,
+                  obscure: obscured,
+                  suffixIcon: suffixIcon,
+                ),
+                Input(
+                  placeholder: '업체명 입력',
+                  setText: setBuisnessName,
+                ),
+                Input(
+                  placeholder: '사업자등록번호 입력',
+                  setText: setBuisnessNumber,
+                ),
+                Input(
+                  placeholder: '업체 주소 입력',
+                  setText: setBuisnessAddress,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: BigButton(
+                    title: '회원가입',
+                    function: () {
+                      Get.toNamed('/login');
+                    },
+                  ),
+                )
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
-}
