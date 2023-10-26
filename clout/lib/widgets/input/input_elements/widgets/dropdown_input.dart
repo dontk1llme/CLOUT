@@ -25,8 +25,9 @@ class DropdownInput extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
               underline: SizedBox.shrink(),
               alignment: Alignment.centerLeft,
+              hint: Text(placeholder),
               isExpanded: true,
-              value: value ?? data[0],
+              value: value,
               items: data.map<DropdownMenuItem<String>>((e) {
                 return DropdownMenuItem<String>(
                   value: e,
