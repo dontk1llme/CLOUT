@@ -24,8 +24,8 @@ class _Sns3State extends State<Sns3> {
       borderColor: Color(0xFFF7F8F9), // 선택되지 않았을 때의 테두리 색상
       children: <Widget>[
         Container(
-          width: 120,
-          height: 72,
+          width: 112,
+          height: 60,
           decoration: BoxDecoration(
             color: _selections1[0] ? style.colors['category'] : Color(0xFFE8ECF4),
             borderRadius: BorderRadius.only(
@@ -35,14 +35,14 @@ class _Sns3State extends State<Sns3> {
           child: Image.asset('assets/images/Instagram.png'),
         ),
         Container(
-          width: 120,
-          height: 72,
+          width: 112,
+          height: 60,
           color: _selections1[1] ? style.colors['category'] : Color(0xFFE8ECF4), 
           child: Image.asset('assets/images/TikTok.png'),
         ),
         Container(
-          width: 120,
-          height: 72,
+          width: 112,
+          height: 60,
           decoration: BoxDecoration(
             color: _selections1[2] ? style.colors['category'] : Color(0xFFE8ECF4),
             borderRadius: BorderRadius.only(

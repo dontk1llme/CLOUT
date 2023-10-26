@@ -18,7 +18,9 @@ class InputElement extends StatelessWidget {
       this.keyboardType,
       this.maxLength,
       this.maxValue,
-      this.minValue}) {
+      this.minValue,
+      this.offset
+      }) {
     keyboardType ??= TextInputType.text;
     maxLength ??= 600;
     maxValue ??= -1;
@@ -30,6 +32,7 @@ class InputElement extends StatelessWidget {
   final data;
   final setData;
   final value;
+  final offset;
   TextInputType? keyboardType;
   int? maxLength;
   int? maxValue;
@@ -51,6 +54,7 @@ class InputElement extends StatelessWidget {
         data: data,
         setData: setData,
         value: value,
+        offset: offset,
       );
     } else {
       return Text('elementType 속성 확인 바람');

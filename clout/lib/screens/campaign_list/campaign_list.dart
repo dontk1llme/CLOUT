@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../../widgets/list/category_list.dart';
 import '../../widgets/input/search_bar.dart';
 import '../../widgets/buttons/search_detail_button.dart';
@@ -14,6 +15,18 @@ class CampaignList extends StatefulWidget {
 }
 
 class _MyCampaignList extends State<CampaignList> {
+  SfRangeValues ageRanges = SfRangeValues(0, 100);
+
+  var minAge;
+  var maxAge;
+
+  setAge(input) {
+    setState(() {
+      ageRanges = input;
+      minAge = input.start.toInt();
+      maxAge = input.end.toInt();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +43,10 @@ class _MyCampaignList extends State<CampaignList> {
         children: [
           MySearchBar(), // 검색바 위젯 추가
           CategoryList(), // Category 위젯 추가
-          SearchDetailButton(), // 검색 조건 설정 버튼
+          SearchDetailButton(
+            ageRanges: ageRanges,
+            setAge: setAge,
+          ), // 검색 조건 설정 버튼
           Padding(
             padding: EdgeInsets.only(left: 20),
             child: Row(
