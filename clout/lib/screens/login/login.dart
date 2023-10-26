@@ -129,31 +129,30 @@ class _LoginState extends State<Login> {
                           notJustRoute: true,
                           function: doLogin,
                         ),
-                      )
+                      ),
                     ],
                   ))),
-        ],
-      ),
-      bottomSheet: SizedBox(
-        height: 50,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('계정이 아직 없다면?',
-                  style: style.textTheme.bodyMedium
-                      ?.copyWith(color: style.colors['gray'])),
-              TextButton(
-                  style: TextButton.styleFrom(
-                    minimumSize: Size.zero,
-                    padding: EdgeInsets.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: ()=> {Get.toNamed('/join')},
-                  child: Text(' 회원가입하기',
+          SizedBox(
+            height: 50,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('계정이 아직 없다면?',
                       style: style.textTheme.bodyMedium
-                          ?.copyWith(color: style.colors['main1'])))
-            ]),
+                          ?.copyWith(color: style.colors['gray'])),
+                  TextButton(
+                      style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      onPressed: () => {Get.toNamed('/join')},
+                      child: Text(' 회원가입하기',
+                          style: style.textTheme.bodyMedium
+                              ?.copyWith(color: style.colors['main1'])))
+                ]),
+          ),
+        ],
       ),
     );
   }

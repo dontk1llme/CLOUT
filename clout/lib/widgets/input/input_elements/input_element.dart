@@ -1,5 +1,4 @@
 // Global
-import 'package:clout/screens/home/widgets/number_picker_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -54,7 +53,7 @@ class InputElement extends StatelessWidget {
         value: value,
       );
     } else {
-      return placeholder();
+      return Text('elementType 속성 확인 바람');
     }
   }
 }

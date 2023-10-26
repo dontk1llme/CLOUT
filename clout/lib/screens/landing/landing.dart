@@ -12,7 +12,7 @@ class Landing extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Flexible(
-            flex: 5,
+            flex: 8,
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                   padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
@@ -47,11 +47,12 @@ class Landing extends StatelessWidget {
               Image.asset('assets/images/landingPage.jpeg')
             ])),
         Flexible(
-            flex: 1,
+            flex: 2,
             child: Padding(
               padding: EdgeInsets.only(bottom: 50),
               child: FractionallySizedBox(
                 widthFactor: 0.9,
+                // heightFactor: 1.3,
                 child:
                     Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                   BigButton(
