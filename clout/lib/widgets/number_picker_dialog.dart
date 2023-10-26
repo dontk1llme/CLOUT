@@ -1,4 +1,5 @@
 // Global
+import 'package:clout/utilities/my_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -21,18 +22,20 @@ class NumberPickerDialog extends StatelessWidget {
     return AlertDialog(
       title: Text("모집인원"),
       content: StatefulBuilder(builder: (context, setState) {
-        return NumberPicker(
-          value: value,
-          minValue: minValue,
-          maxValue: maxValue,
-          onChanged: (newVal) {
-            setState(() => value = newVal);
-          },
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.black26),
-          ),
-        );
+        return ScrollConfiguration(
+            behavior: MyScroll(),
+            child: NumberPicker(
+              value: value,
+              minValue: minValue,
+              maxValue: maxValue,
+              onChanged: (newVal) {
+                setState(() => value = newVal);
+              },
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.black26),
+              ),
+            ));
       }),
       actions: <Widget>[
         Container(

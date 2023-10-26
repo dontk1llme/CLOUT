@@ -41,6 +41,13 @@ dependencies:
   intl: ^0.18.1
   syncfusion_flutter_sliders: ^23.1.42
   syncfusion_flutter_core: ^23.1.42
+  flutter_launcher_icons: ^0.13.1
+  syncfusion_flutter_datepicker: ^23.1.42
+
+flutter_icons:
+  android: "clout"
+  ios: true
+  image_path: "assets/icons/clout_icon.jpg"
 
 dev_dependencies:
   flutter_test:
