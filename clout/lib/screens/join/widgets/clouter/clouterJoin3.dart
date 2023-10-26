@@ -5,7 +5,7 @@ import 'package:clout/widgets/input/input.dart';
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/small_button.dart';
 import 'package:clout/screens/join/numberVerify.dart';
-import 'package:clout/screens/campaign_register/widgets/region_dropdown.dart';
+import 'package:clout/screens/campaign_register/widgets/region_multiselect.dart';
 
 class ClouterJoin3 extends StatefulWidget {
   ClouterJoin3({Key? key}) : super(key: key);
@@ -87,7 +87,7 @@ class _ClouterJoin3State extends State<ClouterJoin3> {
             textAlign: TextAlign.left, 
           ),
           SizedBox(height: 8), // 20픽셀의 공백
-          RegionDropdown(region: region, setRegion: setRegion)
+          // RegionDropdown(region: region, setRegion: setRegion)
 
         ],
       );
