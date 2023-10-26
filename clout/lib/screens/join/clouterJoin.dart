@@ -55,12 +55,16 @@ class _ClouterJoinState extends State<ClouterJoin> {
                 ClouterJoin2(),
               if (pageNum == 3) // Page 2
                 ClouterJoin3(),
+                SizedBox(height: 20), // 20픽셀의 공백
               BigButton(
                 title: pageNum == 3 ? '완료' : '다음', // pageNum에 따라 버튼 텍스트 변경
                 function: () {
                   // 페이지 번호 업데이트
-                  if (pageNum < 3) {
+                  if (pageNum <= 3) {
                     setPageNum(pageNum + 1);
+                  }
+                  if (pageNum==4){
+                    Get.toNamed('/login');
                   }
                 }
               ),
