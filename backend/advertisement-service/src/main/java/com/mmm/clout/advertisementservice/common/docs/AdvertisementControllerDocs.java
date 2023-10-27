@@ -1,7 +1,7 @@
 package com.mmm.clout.advertisementservice.common.docs;
 
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateAdRequest;
-import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateAdResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -29,10 +29,10 @@ public interface AdvertisementControllerDocs {
         @ApiResponse(responseCode = "200", description = "광고 캠페인 등록 성공",
             content =
             @Content(mediaType="application/json",
-                schema=@Schema(implementation= CreateAdResponse.class))
+                schema=@Schema(implementation= CreateCampaignResponse.class))
         )
     )
-    ResponseEntity<CreateAdResponse> create(
+    ResponseEntity<CreateCampaignResponse> createCampaign(
         CreateAdRequest request
     );
 }

@@ -6,12 +6,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CreateAdResponse {
+public class CreateCampaignResponse {
 
     private Long createdAdId;
 
 
-    public static CreateAdResponse from(Campaign campaign) {
-        return new CreateAdResponse(campaign.getId());
+    public static CreateCampaignResponse from(Campaign campaign) {
+        return new CreateCampaignResponse(campaign.getId());
     }
 }

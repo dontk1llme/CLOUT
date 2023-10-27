@@ -14,12 +14,6 @@ public class CreateAdvertisementProcessor {
 
     @Transactional
     public Campaign execute(CreateAdCommand command) {
-        Campaign campaign = Campaign.create(
-            command.getTitle(),
-            command.getAdStartDate(),
-            command.getAdEndDate()
-        );
-
-        return advertisementRepository.save(campaign);
+        return advertisementRepository.save(null);
     }
 }

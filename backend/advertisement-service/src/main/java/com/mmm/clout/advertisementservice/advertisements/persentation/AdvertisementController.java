@@ -2,7 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.persentation;
 
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateAdRequest;
-import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateAdResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +21,11 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     private final AdvertisementFacade advertisementFacade;
 
     @PostMapping
-    public ResponseEntity<CreateAdResponse> create(
-        @RequestBody @Valid CreateAdRequest createAdRequest
+    public ResponseEntity<CreateCampaignResponse> createCampaign(
+        @RequestBody @Valid CreateAdRequest createCampaignRequest
     ) {
-        CreateAdResponse result = CreateAdResponse.from(
-            advertisementFacade.create(createAdRequest.toCommand())
+        CreateCampaignResponse result = CreateCampaignResponse.from(
+            advertisementFacade.create(createCampaignRequest.toCommand())
         );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
