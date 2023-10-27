@@ -1,3 +1,4 @@
+import 'package:clout/widgets/common/nametag.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -62,29 +63,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                 LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 8, 0, 4),
-              child: SizedBox(
-                width: categoryNameWidth,
-                height: categoryNameHeight,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: style.colors['category'],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '카테고리',
-                      style: TextStyle(
-                        color: style.colors['white'],
-                        fontWeight: FontWeight.w700,
-                        fontSize: categoryNameHeight - 10,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            NameTag(title: '카테고리'),
             Text(
               '계정명',
               style: TextStyle(
