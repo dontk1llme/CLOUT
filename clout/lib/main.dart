@@ -2,6 +2,7 @@
 import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:clout/utilities/my_scroll.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
 // Screens
@@ -15,7 +16,8 @@ import 'package:clout/screens/chatting/chatting_list.dart';
 import 'package:clout/screens/point/clouter_point_list.dart';
 
 void main() {
-  runApp(GetMaterialApp(
+  runApp(ProviderScope(
+      child: GetMaterialApp(
     theme: ThemeData(
       fontFamily: 'NotoSansKR',
     ),
@@ -30,7 +32,7 @@ void main() {
       GetPage(name: '/chattinglist', page: () => ChattingList()),
       GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
     ],
-  ));
+  )));
 }
 
 class MyApp extends StatefulWidget {
