@@ -15,6 +15,8 @@ import 'package:clout/screens/chatting/chatting_list.dart';
 import 'package:clout/screens/point/clouter_point_list.dart';
 import 'package:clout/screens/mypage/clouter_mypage.dart';
 import 'package:clout/screens/mypage/advertiser_mypage.dart';
+import 'package:clout/screens/mypage/advertiser_detail.dart';
+import 'package:clout/screens/mypage/clouter_detail.dart';
 
 void main() {
   runApp(GetMaterialApp(
@@ -33,6 +35,8 @@ void main() {
       GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
       GetPage(name: '/cloutermypage', page: () => ClouterMyPage()),
       GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
+      GetPage(name: '/advertiserdetail', page: () => AdvertiserDetail()),
+      GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
     ],
   ));
 }

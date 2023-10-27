@@ -21,7 +21,9 @@ class MyPageList extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            DataTitle(text: title),
+            DataTitle(
+              text: title,
+            ),
             SmallOutlinedButton(title: btnTitle)
           ],
         ));
