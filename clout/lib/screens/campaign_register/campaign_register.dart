@@ -12,11 +12,13 @@ import 'package:clout/screens/campaign_register/widgets/recruit_input.dart';
 import 'package:clout/screens/campaign_register/widgets/region_multiselect.dart';
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/buttons/toggle_button.dart';
 import 'package:clout/widgets/followercount_input_dialog.dart';
+import 'package:clout/widgets/image_picker.dart';
 import 'package:clout/widgets/sns/sns3.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -24,6 +26,11 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 // Screens
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
@@ -156,6 +163,12 @@ class _CampaignRegisterState extends State<CampaignRegister> {
 
   bool positive = false;
 
+  setPositive(input) {
+    setState(() {
+      positive = input;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,75 +210,11 @@ class _CampaignRegisterState extends State<CampaignRegister> {
                                 '광고비 ',
                                 style: TextStyle(height: 1.3),
                               ),
-                              SizedBox(
-                                width: 45,
-                                child: DefaultTextStyle.merge(
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold),
-                                  child: IconTheme.merge(
-                                    data: IconThemeData(color: Colors.white),
-                                    child: AnimatedToggleSwitch<bool>.dual(
-                                      current: positive,
-                                      first: false,
-                                      second: true,
-                                      spacing: 0.0,
-                                      animationDuration:
-                                          const Duration(milliseconds: 200),
-                                      style: ToggleStyle(
-                                        borderColor: Colors.transparent,
-                                        indicatorColor: Colors.white,
-                                        backgroundColor:
-                                            style.colors['category'],
-                                      ),
-                                      customStyleBuilder:
-                                          (context, local, global) {
-                                        if (global.position <= 0.0) {
-                                          return ToggleStyle();
-                                        }
-                                        return ToggleStyle(
-                                            backgroundGradient: LinearGradient(
-                                          colors: [
-                                            style.colors['main1']!,
-                                            style.colors['category']!
-                                          ],
-                                          stops: [
-                                            global.position -
-                                                (1 -
-                                                        2 *
-                                                            max(
-                                                                0,
-                                                                global.position -
-                                                                    0.5)) *
-                                                    0.7,
-                                            global.position +
-                                                max(
-                                                        0,
-                                                        2 *
-                                                            (global.position -
-                                                                0.5)) *
-                                                    0.7,
-                                          ],
-                                        ));
-                                      },
-                                      height: 25.0,
-                                      onChanged: (b) =>
-                                          setState(() => positive = b),
-                                      iconBuilder: (value) => value
-                                          ? Icon(Icons.attach_money_outlined,
-                                              color: style.colors['main1'],
-                                              size: 20.0)
-                                          : Icon(Icons.money_off_outlined,
-                                              color: style.colors['main1'],
-                                              size: 20.0),
-                                      textBuilder: (value) => value
-                                          ? Center(child: Text(''))
-                                          : Center(child: Text('')),
-                                    ),
-                                  ),
-                                ),
-                              )
+                              ToggleButton(
+                                  parentPositive: positive,
+                                  setPositive: setPositive,
+                                  leftIcon: Icons.money_off_outlined,
+                                  rightIcon: Icons.attach_money_outlined)
                             ]),
                       ],
                     ),
@@ -284,6 +233,9 @@ class _CampaignRegisterState extends State<CampaignRegister> {
                     ItemdetailTextinput(setItemDetail: setItemDetail),
                     SizedBox(height: 20),
                     DataTitle(text: '제품 사진 첨부'),
+                    Container(
+                        // width: 100,
+                        child: ImageWidget()),
                     SizedBox(height: 10),
                     DataTitle(text: '광고 희망 플랫폼'),
                     SizedBox(height: 10),
