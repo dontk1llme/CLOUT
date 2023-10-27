@@ -2,14 +2,16 @@ package com.mmm.clout.advertisementservice.advertisements.persentation.request;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.CreateAdCommand;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
-import java.time.LocalDate;
+import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
+import com.mmm.clout.advertisementservice.advertisements.domain.Region;
 import java.util.List;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.hibernate.validator.constraints.Length;
 
 @Getter
 @AllArgsConstructor
@@ -17,22 +19,71 @@ public class CreateAdRequest {
 
     @NotNull
     private AdCategory adCategory;
+
     @NotBlank
     @Size(min = 1, max = 20)
     private String title;
-    @NotBlank
-    private LocalDate adStartDate;
-    @NotBlank
-    private LocalDate adEndDate;
+
     @NotNull
+    @Min(1)
+    @Max(100)
     private Integer numberOfRecruiter;
+
+    @NotNull
+    private Boolean isPriceChangeable;
+
+    @NotNull
+    private Long price;
+
+    @NotBlank
+    @Size(max = 500)
+    private String offeringDetails;
+
+    private String sellingLink;
+
+    @NotNull
+    private Boolean isDeliveryRequired;
+
+    @NotBlank
+    @Size(max = 800)
+    private String details;
+
+    @NotNull
+    private List<AdPlatform> adPlatformList;
+
+    @NotNull
+    @Min(0)
+    @Max(100)
+    private Integer minClouterAge;
+
+    @NotNull
+    @Min(0)
+    @Max(100)
+    private Integer maxClouterAge;
+
+    @NotNull
+    private Integer minFollower;
+
+    @NotNull
+    private List<Region> regionList;
 
 
     public CreateAdCommand toCommand() {
         return new CreateAdCommand(
+            this.adCategory,
             this.title,
-            this.adStartDate,
-            this.adEndDate
+            this.numberOfRecruiter,
+            this.isPriceChangeable,
+            this.price,
+            this.offeringDetails,
+            this.sellingLink,
+            this.isDeliveryRequired,
+            this.details,
+            this.adPlatformList,
+            this.minClouterAge,
+            this.maxClouterAge,
+            this.minFollower,
+            this.regionList
         );
     }
 }

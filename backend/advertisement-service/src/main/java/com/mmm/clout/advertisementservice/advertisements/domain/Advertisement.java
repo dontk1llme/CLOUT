@@ -46,8 +46,6 @@ public abstract class Advertisement extends BaseEntity {
     @Column(name = "advertisement_id")
     private Long id;
 
-    private String title;
-
     @Embedded
     private Register register;
 
@@ -61,24 +59,22 @@ public abstract class Advertisement extends BaseEntity {
 
     private String details;
 
-    private LocalDate adStartDate;
-
-    private LocalDate adEndDate;
-
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-
-    public boolean validDate(LocalDate inputEndDate) {
-        return !inputEndDate.isBefore(LocalDate.now());
+    public Advertisement(
+        Register register,
+        List<AdPlatform> adPlatformList,
+        Long price,
+        String details
+    ) {
+        this.register = register;
+        this.adPlatformList = adPlatformList;
+        this.price = price;
+        this.details = details;
     }
 
-    public Advertisement(String title, LocalDate adStartDate, LocalDate adEndDate) {
-        if (validDate(adEndDate)) throw new RuntimeException();
-        this.title = title;
-        this.adStartDate = adStartDate;
-        this.adEndDate = adEndDate;
-    }
+    public abstract void create();
 
 
 }
