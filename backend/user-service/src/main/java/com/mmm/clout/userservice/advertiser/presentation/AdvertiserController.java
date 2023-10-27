@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/member/advertiser")
+@RequestMapping("/advertisers")
 @RequiredArgsConstructor
 public class AdvertiserController {
 
