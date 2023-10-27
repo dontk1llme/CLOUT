@@ -1,16 +1,20 @@
-import 'package:clout/screens/campaign_register/widgets/data_title.dart';
-import 'package:clout/screens/mypage/widgets/mypage_list.dart';
-import 'package:clout/screens/point/widgets/my_wallet.dart';
+import 'package:flutter/material.dart';
+import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
+
+// widgets
 import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
-import 'package:flutter/material.dart';
-import 'package:clout/style.dart' as style;
-
-// widgets
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/buttons/small_outlined_button.dart';
+import 'package:clout/screens/point/widgets/my_wallet.dart';
+
+// screens
+import 'package:clout/screens/mypage/advertiser_detail.dart';
+import 'package:clout/screens/mypage/widgets/mypage_list.dart';
+import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 
 class AdvertiserMyPage extends StatelessWidget {
   const AdvertiserMyPage({super.key});
@@ -19,7 +23,7 @@ class AdvertiserMyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70),
+          preferredSize: Size.fromHeight(80),
           child: Header(
             header: 1,
             headerTitle: '마이페이지',
@@ -38,7 +42,10 @@ class AdvertiserMyPage extends StatelessWidget {
                         Text('업체명(담당자명)',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
-                        SmallOutlinedButton(title: '프로필 보기')
+                        SmallOutlinedButton(
+                          title: '프로필 보기',
+                          onPressed: () => Get.toNamed('/clouterdetail'),
+                        ),
                       ],
                     ),
                     MyWallet(userType: 'clouter'),

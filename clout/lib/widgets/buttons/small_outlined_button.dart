@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 class SmallOutlinedButton extends StatelessWidget {
-  const SmallOutlinedButton({super.key, required this.title});
+  const SmallOutlinedButton({super.key, required this.title, this.onPressed});
 
   final String title;
+  final onPressed;
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
-      onPressed: () {},
+      onPressed: onPressed,
       icon: Icon(Icons.add, size: 18),
       label: Text(title),
       style: ButtonStyle(
