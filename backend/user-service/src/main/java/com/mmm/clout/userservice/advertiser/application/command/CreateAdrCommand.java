@@ -1,5 +1,8 @@
 package com.mmm.clout.userservice.advertiser.application.command;
 
+import com.mmm.clout.userservice.advertiser.domain.Advertiser;
+import com.mmm.clout.userservice.advertiser.domain.CompanyInfo;
+import com.mmm.clout.userservice.common.entity.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,29 +18,14 @@ public class CreateAdrCommand {
 
     private CompanyInfoCommand companyInfoCommand;
 
-    @Getter
-    @AllArgsConstructor
-    public static class AddressCommand {
-
-        private String zipCode;
-
-        private String mainAddress;
-
-        private String detailAddress;
-
+    public Advertiser toEntity() {
+        return Advertiser.create(
+            this.advertiserId,
+            this.pwd,
+            this.addressCommand.toValueType(),
+            this.companyInfoCommand.toValueType()
+        );
     }
 
-    @Getter
-    @AllArgsConstructor
-    public static class CompanyInfoCommand {
-
-        private String companyName;
-
-        private String regNum;
-
-        private String managerName;
-
-        private String managerPhoneNumber;
-    }
 }
 
