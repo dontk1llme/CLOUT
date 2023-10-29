@@ -1,6 +1,6 @@
 package com.mmm.clout.userservice.advertiser.domain;
 
-import com.mmm.clout.userservice.common.entity.Address;
+import com.mmm.clout.userservice.common.entity.address.Address;
 import com.mmm.clout.userservice.member.domain.Member;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

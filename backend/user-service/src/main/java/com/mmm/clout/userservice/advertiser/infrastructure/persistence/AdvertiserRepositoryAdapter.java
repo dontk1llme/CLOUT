@@ -3,7 +3,6 @@ package com.mmm.clout.userservice.advertiser.infrastructure.persistence;
 import com.mmm.clout.userservice.advertiser.domain.Advertiser;
 import com.mmm.clout.userservice.advertiser.domain.repository.AdvertiserRepository;
 import com.mmm.clout.userservice.advertiser.infrastructure.persistence.jpa.JpaAdvertiserRepository;
-import com.mmm.clout.userservice.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

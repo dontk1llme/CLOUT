@@ -1,7 +1,7 @@
 package com.mmm.clout.userservice.advertiser.presentation.request;
 
-import com.mmm.clout.userservice.advertiser.application.command.CreateAdrCommand;
 import com.mmm.clout.userservice.advertiser.application.command.UpdateAdrCommand;
+import com.mmm.clout.userservice.common.entity.address.request.AddressRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
