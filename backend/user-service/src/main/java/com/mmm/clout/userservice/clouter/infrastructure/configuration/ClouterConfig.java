@@ -5,6 +5,7 @@ import com.mmm.clout.userservice.advertiser.application.SelectAdvertiserProcesso
 import com.mmm.clout.userservice.advertiser.application.UpdateAdvertiserProcessor;
 import com.mmm.clout.userservice.advertiser.domain.repository.AdvertiserRepository;
 import com.mmm.clout.userservice.clouter.application.CreateClouterProcessor;
+import com.mmm.clout.userservice.clouter.application.SelectClouterProcessor;
 import com.mmm.clout.userservice.clouter.application.UpdateClouterProcessor;
 import com.mmm.clout.userservice.clouter.domain.repository.ClouterRepository;
 import com.mmm.clout.userservice.member.domain.repository.MemberRepository;
@@ -31,10 +32,10 @@ public class ClouterConfig {
         return new UpdateClouterProcessor(clouterRepository, encoder);
     }
 
-//    @Bean
-//    public SelectClouterProcessor selectClouterProcessor(
-//            ClouterRepository clouterRepository
-//    ) {
-//        return new SelectClouterProcessor(clouterRepository);
-//    }
+    @Bean
+    public SelectClouterProcessor selectClouterProcessor(
+            ClouterRepository clouterRepository
+    ) {
+        return new SelectClouterProcessor(clouterRepository);
+    }
 }

@@ -13,6 +13,6 @@ public class SelectAdvertiserProcessor {
     @Transactional
     public Advertiser execute(Long advertiserId) {
         Advertiser advertiser = advertisementRepository.findById(advertiserId);
-        return advertisementRepository.save(advertiser);
+        return advertiser;
     }
 }

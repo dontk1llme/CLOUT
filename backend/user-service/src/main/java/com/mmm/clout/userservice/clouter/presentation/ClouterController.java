@@ -4,6 +4,7 @@ import com.mmm.clout.userservice.clouter.application.facade.ClouterFacade;
 import com.mmm.clout.userservice.clouter.presentation.request.CreateClrRequest;
 import com.mmm.clout.userservice.clouter.presentation.request.UpdateClrRequest;
 import com.mmm.clout.userservice.clouter.presentation.response.CreateClrResponse;
+import com.mmm.clout.userservice.clouter.presentation.response.SelectClrResponse;
 import com.mmm.clout.userservice.clouter.presentation.response.UpdateClrResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,16 @@ public class ClouterController {
     ) {
         UpdateClrResponse result = UpdateClrResponse.from(
                 clouterFacade.update(updateClrRequest.toCommand(clouterId))
+        );
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/{clouterId}")
+    public ResponseEntity<SelectClrResponse> select(
+            @PathVariable("clouterId") Long clouterId
+    ) {
+        SelectClrResponse result = SelectClrResponse.from(
+                clouterFacade.select(clouterId)
         );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
