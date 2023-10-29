@@ -16,7 +16,7 @@ public class SelectAdrResponse {
     private String pwd;
 
     private AddressResponse address;
-    @Embedded
+
     private CompanyInfoResponse companyInfo;
 
 
