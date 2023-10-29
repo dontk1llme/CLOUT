@@ -12,19 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CreateAdvertiserProcessor {
 
-    private final AdvertiserRepository advertisementRepository;
+    private final AdvertiserRepository advertiserRepository;
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
 
     @Transactional
-    public Advertiser excute(CreateAdrCommand command) {
+    public Advertiser execute(CreateAdrCommand command) {
         if (!checkUserId(command.getUserId())) {
             //나중에 에러처리
             throw new RuntimeException("중복 에러염 이거 어드바이스 에러처리 해주셈 나중에");
         }
         Advertiser advertiser = command.toEntity();
         advertiser.changePwd(encoder.encode(advertiser.getPwd()));
-        return advertisementRepository.save(advertiser);
+        return advertiserRepository.save(advertiser);
     }
 
     private boolean checkUserId(String userId) {

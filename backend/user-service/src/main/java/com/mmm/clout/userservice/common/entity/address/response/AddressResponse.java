@@ -1,12 +1,8 @@
-package com.mmm.clout.userservice.advertiser.presentation.response;
+package com.mmm.clout.userservice.common.address.response;
 
-import com.mmm.clout.userservice.advertiser.application.command.AddressCommand;
-import com.mmm.clout.userservice.advertiser.domain.Advertiser;
-import com.mmm.clout.userservice.common.entity.Address;
+import com.mmm.clout.userservice.common.address.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @AllArgsConstructor
