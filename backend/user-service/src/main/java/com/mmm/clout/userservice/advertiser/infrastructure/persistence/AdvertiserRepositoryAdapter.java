@@ -17,4 +17,9 @@ public class AdvertiserRepositoryAdapter implements AdvertiserRepository {
     public Advertiser save(Advertiser advertiser) {
         return jpaAdvertisementRepository.save(advertiser);
     }
+
+    @Override
+    public Advertiser findById(Long userId) {
+        return jpaAdvertisementRepository.findById(userId).orElseThrow();
+    }
 }

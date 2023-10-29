@@ -6,4 +6,5 @@ public interface AdvertiserRepository {
 
     Advertiser save(Advertiser advertiser);
 
+    Advertiser findById(Long userId);
 }

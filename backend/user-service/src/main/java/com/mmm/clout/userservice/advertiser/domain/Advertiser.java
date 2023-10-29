@@ -31,9 +31,16 @@ public class Advertiser extends Member {
         this.companyInfo = companyInfo;
     }
 
-    public static Advertiser create(String advertiserId, String pwd, Address address, CompanyInfo companyInfo) {
-        Advertiser advertiser = new Advertiser(advertiserId, pwd, address, companyInfo);
+    public static Advertiser create(String userId, String pwd, Address address, CompanyInfo companyInfo) {
+        Advertiser advertiser = new Advertiser(userId, pwd, address, companyInfo);
         return advertiser;
+    }
+
+    public Advertiser update(String userId, String pwd, Address address, CompanyInfo companyInfo) {
+        super.update(userId, pwd);
+        this.address = address;
+        this.companyInfo = companyInfo;
+        return this;
     }
 
     public Advertiser changePassword(String pwd) {

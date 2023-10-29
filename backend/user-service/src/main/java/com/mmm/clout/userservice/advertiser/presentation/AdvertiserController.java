@@ -2,14 +2,14 @@ package com.mmm.clout.userservice.advertiser.presentation;
 
 import com.mmm.clout.userservice.advertiser.application.facade.AdvertiserFacade;
 import com.mmm.clout.userservice.advertiser.presentation.request.CreateAdrRequest;
+import com.mmm.clout.userservice.advertiser.presentation.request.UpdateAdrRequest;
 import com.mmm.clout.userservice.advertiser.presentation.response.CreateAdrResponse;
+import com.mmm.clout.userservice.advertiser.presentation.response.UpdateAdrResponse;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -30,4 +30,14 @@ public class AdvertiserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PutMapping("/{advertiserId}")
+    public ResponseEntity<UpdateAdrResponse> update(
+            @PathVariable("advertiserId") Long advertiserId,
+            @RequestBody @Valid UpdateAdrRequest updateAdrRequest
+    ) {
+        UpdateAdrResponse result = UpdateAdrResponse.from(
+                advertiserFacade.update(updateAdrRequest.toCommand(advertiserId))
+        );
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

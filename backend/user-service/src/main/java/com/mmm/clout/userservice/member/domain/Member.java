@@ -32,7 +32,12 @@ public abstract class Member {
 
     private Role role;
 
-    public Long update(String newPassword) {
+    public Member update(String userId, String pwd) {
+        this.userId = userId;
+        this.pwd = pwd;
+        return this;
+    }
+    public Long passwordUpdate(String newPassword) {
         this.pwd = newPassword;
         return this.id;
     }
