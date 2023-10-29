@@ -1,6 +1,7 @@
 package com.mmm.clout.userservice.advertiser.infrastructure.configuration;
 
 import com.mmm.clout.userservice.advertiser.application.CreateAdvertiserProcessor;
+import com.mmm.clout.userservice.advertiser.application.SelectAdvertiserProcessor;
 import com.mmm.clout.userservice.advertiser.application.UpdateAdvertiserProcessor;
 import com.mmm.clout.userservice.advertiser.domain.repository.AdvertiserRepository;
 import org.springframework.context.annotation.Bean;
@@ -22,5 +23,12 @@ public class AdvertiserConfig {
             AdvertiserRepository advertiserRepository, BCryptPasswordEncoder encoder
     ) {
         return new UpdateAdvertiserProcessor(advertiserRepository, encoder);
+    }
+
+    @Bean
+    public SelectAdvertiserProcessor selectAdvertiserProcessor(
+            AdvertiserRepository advertiserRepository, BCryptPasswordEncoder encoder
+    ) {
+        return new SelectAdvertiserProcessor(advertiserRepository);
     }
 }

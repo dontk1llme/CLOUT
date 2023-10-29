@@ -4,9 +4,9 @@ import com.mmm.clout.userservice.advertiser.application.facade.AdvertiserFacade;
 import com.mmm.clout.userservice.advertiser.presentation.request.CreateAdrRequest;
 import com.mmm.clout.userservice.advertiser.presentation.request.UpdateAdrRequest;
 import com.mmm.clout.userservice.advertiser.presentation.response.CreateAdrResponse;
+import com.mmm.clout.userservice.advertiser.presentation.response.SelectAdrResponse;
 import com.mmm.clout.userservice.advertiser.presentation.response.UpdateAdrResponse;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +39,13 @@ public class AdvertiserController {
                 advertiserFacade.update(updateAdrRequest.toCommand(advertiserId))
         );
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/{advertiserId}")
+    public ResponseEntity<SelectAdrResponse> select(
+            @PathVariable("advertiserId") Long advertiserId
+    ) {
+        SelectAdrResponse result = SelectAdrResponse.from(advertiserFacade.select(advertiserId));
+        return new ResponseEntity<SelectAdrResponse>(result, HttpStatus.OK);
     }
 }
