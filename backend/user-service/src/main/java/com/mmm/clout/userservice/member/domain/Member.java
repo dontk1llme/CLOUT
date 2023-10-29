@@ -44,4 +44,9 @@ public abstract class Member {
         this.avgScore = 0L;
         this.totalPoint = 0L;
     }
+
+    public Member changePwd(String pwd) {
+        this.pwd = pwd;
+        return this;
+    }
 }

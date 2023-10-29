@@ -4,14 +4,15 @@ import com.mmm.clout.userservice.advertiser.application.CreateAdvertiserProcesso
 import com.mmm.clout.userservice.advertiser.domain.repository.AdvertiserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class AdvertiserConfig {
 
     @Bean
     public CreateAdvertiserProcessor createAdvertiserProcessor(
-        AdvertiserRepository advertiserRepository
+        AdvertiserRepository advertiserRepository, BCryptPasswordEncoder encoder
     ) {
-        return new CreateAdvertiserProcessor(advertiserRepository);
+        return new CreateAdvertiserProcessor(advertiserRepository, encoder);
     }
 }
