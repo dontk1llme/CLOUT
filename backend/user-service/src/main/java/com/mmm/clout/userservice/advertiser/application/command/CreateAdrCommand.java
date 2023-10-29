@@ -10,7 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateAdrCommand {
 
-    private String advertiserId;
+    private String userId;
 
     private String pwd;
 
@@ -20,7 +20,7 @@ public class CreateAdrCommand {
 
     public Advertiser toEntity() {
         return Advertiser.create(
-            this.advertiserId,
+            this.userId,
             this.pwd,
             this.addressCommand.toValueType(),
             this.companyInfoCommand.toValueType()
