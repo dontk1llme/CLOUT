@@ -35,4 +35,9 @@ public class Advertiser extends Member {
         Advertiser advertiser = new Advertiser(advertiserId, pwd, address, companyInfo);
         return advertiser;
     }
+
+    public Advertiser changePassword(String pwd) {
+        super.changePwd(pwd);
+        return this;
+    }
 }

@@ -3,12 +3,13 @@ package com.mmm.clout.userservice.advertiser.presentation.request;
 import com.mmm.clout.userservice.advertiser.application.command.CreateAdrCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @AllArgsConstructor
 public class CreateAdrRequest {
-
     @NotBlank
     private String userId;
 
@@ -28,3 +29,4 @@ public class CreateAdrRequest {
         );
     }
 }
+
