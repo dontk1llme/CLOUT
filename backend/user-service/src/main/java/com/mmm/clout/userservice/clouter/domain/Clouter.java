@@ -1,6 +1,6 @@
 package com.mmm.clout.userservice.clouter.domain;
 
-import com.mmm.clout.userservice.common.entity.Address;
+import com.mmm.clout.userservice.common.entity.address.Address;
 import com.mmm.clout.userservice.common.entity.Category;
 import com.mmm.clout.userservice.common.entity.FollowerScale;
 import com.mmm.clout.userservice.common.entity.Platform;
@@ -42,4 +42,31 @@ public class Clouter extends Member {
 
     private Integer age;
 
+    public Clouter(String userid, String pwd, String name, Address address, Category selectedCategory, FollowerScale followerScale, Platform platForm, LocalDate birthday, Integer age) {
+        super(userid, pwd);
+        this.name = name;
+        this.address = address;
+        this.selectedCategory = selectedCategory;
+        this.followerScale = followerScale;
+        this.platForm = platForm;
+        this.birthday = birthday;
+        this.age = age;
+    }
+
+    public static Clouter create(String userId, String pwd, String name,Address address, Category selectedCategory, FollowerScale followerScale, Platform platForm, LocalDate birthday, Integer age) {
+        Clouter clouter = new Clouter(userId, pwd, name, address, selectedCategory, followerScale, platForm, birthday, age);
+        return clouter;
+    }
+
+    public Clouter update(String userId, String pwd, String name, Address address, Category selectedCategory, FollowerScale followerScale, Platform platForm, LocalDate birthday, Integer age) {
+        super.update(userId, pwd);
+        this.name = name;
+        this.address = address;
+        this.selectedCategory = selectedCategory;
+        this.followerScale = followerScale;
+        this.platForm = platForm;
+        this.birthday = birthday;
+        this.age = age;
+        return this;
+    }
 }
