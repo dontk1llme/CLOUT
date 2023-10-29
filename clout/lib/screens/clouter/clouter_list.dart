@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../widgets/list/category_list.dart';
-import '../../widgets/list/clouter_item_box.dart';
-import '../../widgets/input/search_bar.dart';
-import '../../widgets/buttons/search_detail_button.dart';
-import '../../widgets/header/header.dart';
-import '../../style.dart' as style;
+import 'package:clout/style.dart' as style;
+
+// widgets
+import 'package:clout/widgets/list/category_list.dart';
+import 'package:clout/widgets/list/clouter_item_box.dart';
+import 'package:clout/widgets/input/search_bar.dart';
+import 'package:clout/widgets/buttons/search_detail_button.dart';
+import 'package:clout/widgets/header/header.dart';
 
 class ClouterList extends StatefulWidget {
   const ClouterList({super.key});
@@ -45,14 +47,21 @@ class _MyClouterList extends State<ClouterList> {
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ClouterItemBox(),
-                ClouterItemBox(),
-              ],
+          Container(
+            padding: EdgeInsets.all(15), // 가로 패딩 설정
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // 한 행에 2개의 아이템 배치
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 1 / 1.45,
+              ),
+              itemCount: 20, // 아이템의 개수
+              itemBuilder: (BuildContext context, int index) {
+                return ClouterItemBox();
+              },
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
             ),
           ),
         ],

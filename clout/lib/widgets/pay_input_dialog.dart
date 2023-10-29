@@ -6,15 +6,15 @@ import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/input/input_elements/utilities/numeric_range_formatter.dart';
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 
-class FollowercountInputDialog extends StatelessWidget {
-  FollowercountInputDialog(
+class PayInputDialog extends StatelessWidget {
+  PayInputDialog(
       {super.key,
       this.setData,
       this.value,
       this.valueString,
       this.setValueString,
       this.converter}) {
-    valueString ??= '0명';
+    valueString ??= '0원';
   }
 
   var value;
@@ -26,7 +26,7 @@ class FollowercountInputDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("모집인원"),
+      title: Text("희망 광고비"),
       content: StatefulBuilder(builder: (context, setState) {
         return SizedBox(
             height: 75,
@@ -39,7 +39,7 @@ class FollowercountInputDialog extends StatelessWidget {
                     ],
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                        hintText: '희망 최소 팔로워수(최대 10억)',
+                        hintText: '희망 광고비 입력',
                         contentPadding: EdgeInsets.only(left: 15, right: 15),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -57,7 +57,7 @@ class FollowercountInputDialog extends StatelessWidget {
                     children: [
                       Text(valueString),
                       DataTitle(
-                        text: '명',
+                        text: '원',
                       )
                     ],
                   )
