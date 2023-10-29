@@ -3,6 +3,7 @@ package com.mmm.clout.userservice.advertiser.infrastructure.persistence;
 import com.mmm.clout.userservice.advertiser.domain.Advertiser;
 import com.mmm.clout.userservice.advertiser.domain.repository.AdvertiserRepository;
 import com.mmm.clout.userservice.advertiser.infrastructure.persistence.jpa.JpaAdvertiserRepository;
+import com.mmm.clout.userservice.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Repository;
 public class AdvertiserRepositoryAdapter implements AdvertiserRepository {
 
     private final JpaAdvertiserRepository jpaAdvertisementRepository;
-
 
     @Override
     public Advertiser save(Advertiser advertiser) {
