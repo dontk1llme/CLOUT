@@ -1,6 +1,6 @@
 // global
+import 'package:clout/screens/mypage/advertiser_mypage.dart';
 import 'package:flutter/material.dart';
-import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // providers
@@ -12,6 +12,7 @@ import 'package:clout/screens/home/home.dart';
 import 'package:clout/screens/campaign_list/campaign_list.dart';
 import 'package:clout/screens/chatting/chatting_list.dart';
 import 'package:clout/screens/point/clouter_point_list.dart';
+import 'package:clout/screens/mypage/clouter_mypage.dart';
 
 // widgets
 import 'package:clout/widgets/nav_bar/nav_bar.dart';
@@ -32,7 +33,7 @@ class MainPage extends StatelessWidget {
         } else if (controller.tab == 3) {
           return ChattingList();
         } else if (controller.tab == 4) {
-          return ClouterPointList();
+          return AdvertiserMyPage();
         }
         return Home();
       }),
