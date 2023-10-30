@@ -1,4 +1,5 @@
 // 계약서 목록
+import 'package:clout/screens/mypage/widgets/contract_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -38,17 +39,7 @@ class ContractList extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // 정렬 대신에 카테고리 넣어야 함
-                                    Text(''),
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.filter_list, size: 20),
-                                          Text('정렬'),
-                                        ],
-                                      ),
-                                    ),
+                          children: [ContractToggle()
                                   ],
                         ),
                       ),
