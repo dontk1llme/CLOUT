@@ -9,10 +9,12 @@ class MyPageList extends StatelessWidget {
     super.key,
     required this.title,
     required this.btnTitle,
+    required this.onButtonPressed,
   });
 
   final String title;
   final String btnTitle;
+  final VoidCallback onButtonPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class MyPageList extends StatelessWidget {
             DataTitle(
               text: title,
             ),
-            SmallOutlinedButton(title: btnTitle)
+            SmallOutlinedButton(title: btnTitle, onPressed: onButtonPressed,)
           ],
         ));
   }
