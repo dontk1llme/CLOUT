@@ -1,5 +1,3 @@
-import 'package:clout/widgets/image_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,8 +7,43 @@ final imagePickerProvider =
   return ImageState();
 });
 
+class ImagePickerService {
+  static final ImagePickerService _imagePickerService =
+      ImagePickerService._internal();
+
+  factory ImagePickerService() {
+    return _imagePickerService;
+  }
+
+  ImagePickerService._internal();
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<List<XFile>> pickImage() async {
+    try {
+      final pickedFile = await _picker.pickMultiImage();
+      return pickedFile;
+    } catch (e) {
+      print('ImagePickerService: $e');
+      return [];
+    }
+  }
+
+  Future<XFile?> pickSingleImage() async {
+    try {
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      return pickedFile;
+    } catch (e) {
+      print('ImagePickerService: $e');
+      return null;
+    }
+  }
+}
+
+//// 여기가 메인 /////////////////////////////////////////
 class ImageState extends StateNotifier<List<XFile>> {
   ImageState() : super(<XFile>[]);
+
   final ImagePickerService picker = ImagePickerService();
 
   @override

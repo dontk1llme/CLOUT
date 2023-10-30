@@ -4,6 +4,7 @@ import 'package:clout/style.dart' as style;
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
+import 'package:get/get.dart';
 
 class CampaignItemBox extends StatefulWidget {
   const CampaignItemBox({super.key});
@@ -31,7 +32,10 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
     final categoryNameWidth = screenWidth > 400 ? 70.0 : 55.0;
     final categoryNameHeight = screenWidth > 400 ? 30.0 : 20.0;
 
-    return Container(
+    return InkWell(
+      // 여기 arguments에 해당 캠페인의 id를 넣어야 함 
+      onTap: ()=>Get.toNamed('/campaignDetail', arguments: 1),
+        child: Container(
       width: boxWidth,
       padding: EdgeInsets.all(boxPadding),
       decoration: BoxDecoration(
@@ -87,6 +91,6 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
           )
         ],
       ),
-    );
+    ));
   }
 }

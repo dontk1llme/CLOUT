@@ -1,6 +1,7 @@
 // global
 import 'dart:ui';
 
+import 'package:clout/providers/image_picker_provider.dart';
 import 'package:clout/screens/campaign_register/widgets/age_slider.dart';
 import 'package:clout/screens/campaign_register/widgets/category_dropdown.dart';
 import 'package:clout/screens/campaign_register/widgets/itemdetail_textinput.dart';
@@ -23,6 +24,7 @@ import 'dart:ui' as ui;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -53,7 +55,8 @@ class _CampaignRegisterState extends State<CampaignRegister> {
       minAge = 0,
       maxAge = 100,
       minimumFollowers,
-      minimumFollowersString = '0';
+      minimumFollowersString = '0',
+      images;
 
   List<String?> selectedRegions = [];
 
@@ -139,6 +142,13 @@ class _CampaignRegisterState extends State<CampaignRegister> {
     });
   }
 
+  setImages(input) {
+    print('이미지 설정됨');
+    setState(() {
+      images = ImageState().getImage();
+    });
+  }
+
   register(destination) {
     if (category != null &&
         productName != null &&
@@ -151,6 +161,7 @@ class _CampaignRegisterState extends State<CampaignRegister> {
         minimumFollowers != null) {
       //등록하는 api 요청 들어가야 함
     } else {
+      print(images);
       handleSaveButtonPressed(); // 서명 갤러리 저장함수
       Get.offNamed(destination);
     }
