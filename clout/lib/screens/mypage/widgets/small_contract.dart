@@ -1,6 +1,6 @@
 // 계약서 리스트에 들어갈 컴포넌트
 import 'package:clout/screens/join/widgets/small_button.dart';
-import 'package:clout/screens/mypage/widgets/contract.dart';
+import 'package:clout/screens/mypage/contract.dart';
 import 'package:clout/widgets/common/nametag.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
