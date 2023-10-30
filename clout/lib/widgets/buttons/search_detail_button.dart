@@ -27,6 +27,14 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
   var minimumFollowers;
   var minimumFollowersString = '0';
   var selectedRegions = [];
+  var modalAge;
+
+  setModalAge(input) {
+    setState(() {
+      modalAge = input;
+    });
+    print(modalAge);
+  }
 
   setMaxFee(input) {
     setState(() {
@@ -119,7 +127,11 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
                       DataTitleThin(text: '희망 클라우터 나이', pdtop: 10),
                       // slider 추가
                       AgeSlider(
-                          setAge: widget.setAge, ageRanges: widget.ageRanges),
+                        setAge: widget.setAge,
+                        ageRanges: widget.ageRanges,
+                        modalAge: modalAge,
+                        setModalAge: setModalAge,
+                      ),
                       // dropdown 추가
                       DataTitleThin(text: '희망 최소 팔로워 수', pdtop: 25),
                       MinimumfollowersDialog(
