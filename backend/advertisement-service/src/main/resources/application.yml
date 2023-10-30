@@ -10,3 +10,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+
+springdoc:
+  swagger-ui:
+    path: /api/swagger-ui
+    use-root-path: true
