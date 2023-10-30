@@ -12,8 +12,8 @@ public class UpdateCampaignProcessor {
 
     private final CampaignRepository campaignRepository;
     @Transactional
-    public Campaign execute(UpdateCampaignCommand command) {
-        Campaign campaign = campaignRepository.findById(command.getAdvertisementId())
+    public Campaign execute(Long advertisementId, UpdateCampaignCommand command) {
+        Campaign campaign = campaignRepository.findById(advertisementId)
             .orElseThrow(CampaignNotFoundException::new);
 
         campaign.update(

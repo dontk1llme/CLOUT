@@ -12,8 +12,6 @@ import lombok.Getter;
 public class UpdateCampaignCommand {
 
 
-    private Long advertisementId;
-
     private AdCategory adCategory;
 
     private String title;

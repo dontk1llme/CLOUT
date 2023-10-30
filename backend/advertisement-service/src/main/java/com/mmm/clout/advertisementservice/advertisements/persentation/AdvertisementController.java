@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,11 +38,12 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     }
 
 
-    @PutMapping
+    @PutMapping("/{advertisementId}")
     public ResponseEntity<UpdateCampaignResponse> updateCampaign(
+        @PathVariable Long advertisementId,
         @RequestBody @Valid UpdateCampaignRequest updateCampaignRequest
     ) {
-        UpdateCampaignResponse result = UpdateCampaignResponse.from(advertisementFacade.update(updateCampaignRequest.toCommand()));
+        UpdateCampaignResponse result = UpdateCampaignResponse.from(advertisementFacade.update(advertisementId, updateCampaignRequest.toCommand()));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
