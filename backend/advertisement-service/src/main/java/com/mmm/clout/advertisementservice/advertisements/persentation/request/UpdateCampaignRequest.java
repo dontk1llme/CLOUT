@@ -19,10 +19,6 @@ import lombok.Getter;
 public class UpdateCampaignRequest {
 
     @NotNull
-    @Schema(description = "수정할 광고(캠페인) id")
-    private Long advertisementId;
-
-    @NotNull
     @Schema(description = "광고 카테고리")
     private AdCategory adCategory;
 
@@ -89,7 +85,6 @@ public class UpdateCampaignRequest {
 
     public UpdateCampaignCommand toCommand() {
         return new UpdateCampaignCommand(
-            this.advertisementId,
             this.adCategory,
             this.title,
             this.numberOfRecruiter,

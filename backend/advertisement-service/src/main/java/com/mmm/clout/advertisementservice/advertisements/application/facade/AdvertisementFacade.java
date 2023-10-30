@@ -19,7 +19,7 @@ public class AdvertisementFacade {
         return createCampaignProcessor.execute(command);
     }
 
-    public Campaign update(UpdateCampaignCommand command) {
-        return updateCampaignProcessor.execute(command);
+    public Campaign update(Long advertisementId, UpdateCampaignCommand command) {
+        return updateCampaignProcessor.execute(advertisementId, command);
     }
 }
