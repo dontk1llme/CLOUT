@@ -19,7 +19,13 @@ public enum ErrorCode {
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "GLOBAL_METHOD_NOT_ALLOWED",
         "잘못된 HTTP 메서드를 호출했습니다."),
     UN_AUTHENTICATED(HttpStatus.UNAUTHORIZED, "UN_AUTHENTICATED", "로그인 인증이 안된 유저입니다."),
-    UN_AUTHORIZATION(HttpStatus.FORBIDDEN, "UN_AUTHORIZATION", "접근 권한이 없습니다.");
+    UN_AUTHORIZATION(HttpStatus.FORBIDDEN, "UN_AUTHORIZATION", "접근 권한이 없습니다."),
+
+    /*
+     * Advertisement - campaign
+     */
+
+    CAMPAIGN_NOT_FOUND(HttpStatus.NOT_FOUND, "CAMPAIGN_ENTITY_NOT_FOUND", "등록되지 않은 광고 캠페인입니다.");
 
 
     private final HttpStatus status;

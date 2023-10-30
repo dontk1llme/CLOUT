@@ -2,13 +2,16 @@ package com.mmm.clout.advertisementservice.advertisements.persentation;
 
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
+import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +36,13 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+
+    @PutMapping
+    public ResponseEntity<UpdateCampaignResponse> updateCampaign(
+        @RequestBody @Valid UpdateCampaignRequest updateCampaignRequest
+    ) {
+        UpdateCampaignResponse result = UpdateCampaignResponse.from(advertisementFacade.update(updateCampaignRequest.toCommand()));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }
