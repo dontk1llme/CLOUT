@@ -56,14 +56,24 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 fit: BoxFit.cover,
               ),
               Positioned(
-                bottom: 5, // 아래 여백
-                right: 5, // 오른쪽 여백
-                child: Sns2(), // 배치할 위젯
+                bottom: 5,
+                right: 5,
+                child: Sns2(),
               ),
               LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
             ],
           ),
-          NameTag(title: '카테고리'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              NameTag(title: '카테고리'),
+              Text('2명 / 3명',
+                  style: TextStyle(
+                    fontSize: 12,
+                  )),
+            ],
+          ),
           Text('제품명',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
