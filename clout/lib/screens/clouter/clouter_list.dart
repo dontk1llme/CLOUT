@@ -12,10 +12,10 @@ class ClouterList extends StatefulWidget {
   const ClouterList({super.key});
 
   @override
-  State<ClouterList> createState() => _MyClouterList();
+  State<ClouterList> createState() => _ClouterList();
 }
 
-class _MyClouterList extends State<ClouterList> {
+class _ClouterList extends State<ClouterList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
