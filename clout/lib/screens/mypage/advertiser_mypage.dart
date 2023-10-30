@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -10,6 +11,8 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/buttons/small_outlined_button.dart';
 import 'package:clout/screens/point/widgets/my_wallet.dart';
+import 'package:clout/screens/mypage/advertiser_mycampaign.dart';
+import 'package:clout/screens/mypage/advertiser_likedclouters.dart';
 
 // screens
 import 'package:clout/screens/mypage/advertiser_detail.dart';
@@ -48,18 +51,22 @@ class AdvertiserMyPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    MyWallet(userType: 'advertiser'),
-                    MyPageList(title: '내 계약서', btnTitle: '더보기'),
+                    MyWallet(userType: 'clouter'),
+                    MyPageList(title: '내 계약서', btnTitle: '더보기', 
+                      onButtonPressed: () => Get.toNamed('/clouterdetail')), //
                     Divider(
                         thickness: 1,
                         height: 1,
                         color: style.colors['lightgray']),
-                    MyPageList(title: '내 캠페인', btnTitle: '더보기'),
+                    MyPageList(title: '내 캠페인', btnTitle: '더보기', 
+                      onButtonPressed: () => Get.to(AdvertiserMycampaign())), //
                     Divider(
                         thickness: 1,
                         height: 1,
                         color: style.colors['lightgray']),
-                    MyPageList(title: '관심있는 클라우터', btnTitle: '더보기'),
+                    MyPageList(title: '관심있는 클라우터', btnTitle: '더보기', 
+                        onButtonPressed: () => Get.to(AdvertiserLikedclouters())), //
+                    
                     Divider(
                         thickness: 1,
                         height: 1,
