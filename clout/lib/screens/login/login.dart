@@ -1,4 +1,5 @@
 // global
+import 'package:clout/screens/join/find_password.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -115,7 +116,7 @@ class _LoginState extends State<Login> {
                               padding: EdgeInsets.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            onPressed: () {},
+                            onPressed: () {Get.to(FindPassword());},
                             child: Text('패스워드가 기억이 안나요',
                                 style: style.textTheme.bodyMedium?.copyWith(
                                     color: style.colors['gray'], height: 2))),
