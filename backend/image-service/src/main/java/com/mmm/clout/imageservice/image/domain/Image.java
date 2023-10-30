@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter
@@ -32,9 +33,10 @@ public class Image {
     @Column(name = "path")
     private String path;
 
-    @NotNull
+    @NotBlank
     @Column(name = "image_name")
     private String imageName;
+    //시간 + 난수생성 + 오리지널
 
     @NotNull
     @Column(name = "type")
@@ -44,6 +46,4 @@ public class Image {
     @Column(name = "target_id")
     private Long targetId;
 
-    @Column(name = "deleted_at") // 기본값 null
-    private LocalDateTime deletedAt;
 }
