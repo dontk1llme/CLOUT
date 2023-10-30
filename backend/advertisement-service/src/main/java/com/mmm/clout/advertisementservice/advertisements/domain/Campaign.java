@@ -1,5 +1,6 @@
 package com.mmm.clout.advertisementservice.advertisements.domain;
 
+import com.mmm.clout.advertisementservice.advertisements.domain.exception.AlreadyEndedException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
-import org.springframework.transaction.annotation.Transactional;
 
 @Getter
 @ToString
@@ -41,19 +41,21 @@ public class Campaign extends Advertisement {
 
     private Integer numberOfApplicants; // 신청인원
 
+    private Integer numberOfSelectedMembers; // 채택 인원
+
     private String offeringDetails; // 제공 내역 설명
 
-    private String sellingLink;
+    private String sellingLink; // 판매처 링크 (선택사항)
 
     private LocalDate applyStartDate; // 모집 시작 날짜
 
     private LocalDate applyEndDate; // 모집 종료 날짜
 
-    private Integer minClouterAge;
+    private Integer minClouterAge; // 최소 클라우터 나이
 
-    private Integer maxClouterAge;
+    private Integer maxClouterAge; // 최대 클라우터 나이
 
-    private Integer minFollower;
+    private Integer minFollower; // 최소 팔로워 수
 
     @ElementCollection(targetClass = Region.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "advertisement_region", joinColumns = @JoinColumn(name = "advertisement_id"))
@@ -63,6 +65,16 @@ public class Campaign extends Advertisement {
 
     protected Campaign() {
         super();
+    }
+
+    public void apply() {
+        if (this.applyEndDate.isBefore(LocalDate.now())) {
+            throw new AlreadyEndedException();
+        }
+        if (this.numberOfRecruiter - this.numberOfSelectedMembers <= 0) {
+            throw new AlreadyEndedException();
+        }
+        this.numberOfApplicants++;
     }
 
     public Campaign(

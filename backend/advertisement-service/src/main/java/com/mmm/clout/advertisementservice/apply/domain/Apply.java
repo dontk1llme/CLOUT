@@ -49,8 +49,6 @@ public class Apply extends BaseEntity {
 
     private LocalDateTime appliedAt;
 
-    private Boolean privacyAgree;
-
     @Enumerated(EnumType.STRING)
     private ApplyStatus applyStatus;
 
