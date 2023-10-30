@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
+
 class BigButton extends StatelessWidget {
   BigButton(
       {super.key,
@@ -31,8 +32,10 @@ class BigButton extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           onPressed: () => {
-            if (notJustRoute != null && notJustRoute) {function(destination)}
-            else {Get.offAllNamed(destination)}
+            if (notJustRoute != null && notJustRoute)
+              {function(destination)}
+            else
+              {Get.offAllNamed(destination)}
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: buttonColor,
