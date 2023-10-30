@@ -27,7 +27,7 @@ public class AdvertiserController {
         CreateAdrResponse result = CreateAdrResponse.from(
             advertiserFacade.create(createAdrRequest.toCommand())
         );
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/{advertiserId}")
