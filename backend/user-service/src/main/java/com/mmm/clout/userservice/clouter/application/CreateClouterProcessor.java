@@ -3,6 +3,8 @@ package com.mmm.clout.userservice.clouter.application;
 import com.mmm.clout.userservice.clouter.application.command.CreateClrCommand;
 import com.mmm.clout.userservice.clouter.domain.Clouter;
 import com.mmm.clout.userservice.clouter.domain.repository.ClouterRepository;
+import com.mmm.clout.userservice.clouter.infrastructure.exceptuion.ClrIdDuplicateException;
+import com.mmm.clout.userservice.common.exception.ErrorCode;
 import com.mmm.clout.userservice.member.domain.Member;
 import com.mmm.clout.userservice.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +20,7 @@ public class CreateClouterProcessor {
 
     @Transactional
     public Clouter execute(CreateClrCommand command) {
-        if (!checkUserId(command.getUserId())) {
-            //나중에 에러처리
-            throw new RuntimeException("클라우터 중복 에러염 이거 어드바이스 에러처리 해주셈 나중에");
-        }
+        checkUserId(command.getUserId());
         Clouter clouter = command.toEntity();
         clouter.changePwd(encoder.encode(clouter.getPwd()));
         return clouterRepository.save(clouter);
@@ -32,7 +31,7 @@ public class CreateClouterProcessor {
         if (findMember == null) {
             return true;
         } else {
-            return false;
+            throw new ClrIdDuplicateException(ErrorCode.CLOUTER_ID_DUPLICATE);
         }
     }
 }
