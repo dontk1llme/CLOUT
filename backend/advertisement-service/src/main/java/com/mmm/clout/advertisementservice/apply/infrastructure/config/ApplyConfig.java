@@ -1,5 +1,6 @@
 package com.mmm.clout.advertisementservice.apply.infrastructure.config;
 
+import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import org.springframework.context.annotation.Bean;

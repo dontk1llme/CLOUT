@@ -22,7 +22,7 @@ public class ApplyController {
     public ResponseEntity<CreateApplyResponse> createApply(
         @RequestBody @Valid CreateApplyRequest createApplyRequest
     ) {
-
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        CreateApplyResponse result = CreateApplyResponse.from(applyFacade.create(createApplyRequest.toCommand()));
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }
