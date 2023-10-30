@@ -36,21 +36,26 @@ class ChattingItemBox extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('모카우유',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
-                  SizedBox(height: 3),
-                  Text('혹시 어떤 장난감인지 사이트나 사진인지 볼 수 있을까요~~?~~?~',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: style.colors['gray'],
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                ]),
+                SizedBox(
+                  width: 240,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('모카우유',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 15)),
+                        SizedBox(height: 3),
+                        Text('혹시 어떤 장난감인지 사이트나 사진인지 볼 수 있을까요~~?~~?~',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: style.colors['gray'],
+                              overflow: TextOverflow.ellipsis,
+                            )),
+                      ]),
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
