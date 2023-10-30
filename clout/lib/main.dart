@@ -1,5 +1,6 @@
 // Global
 import 'package:clout/screens/campaign_register/campaign_register.dart';
+import 'package:clout/screens/campaing_detail/campaign_detail.dart';
 import 'package:clout/utilities/my_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,6 +39,7 @@ void main() {
       GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
       GetPage(name: '/cloutermypage', page: () => ClouterMyPage()),
       GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
+      GetPage(name: '/campaignDetail', page: () => CampaignDetail()),
       GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
       GetPage(name: '/advertiserdetail', page: () => AdvertiserDetail()),
       GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
