@@ -5,8 +5,11 @@ import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
 
 // widgets
+import 'package:clout/screens/mypage/clouter_mycampaign.dart';
+import 'package:clout/screens/mypage/clouter_likedcampaign.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/buttons/small_outlined_button.dart';
@@ -61,43 +64,21 @@ class ClouterMyPage extends StatelessWidget {
                       ],
                     ),
                     MyWallet(userType: 'clouter'),
-                    MyPageList(title: '내 계약서', btnTitle: '더보기'),
+                    MyPageList(title: '내 계약서', btnTitle: '더보기'
+                    ,onButtonPressed: () => Get.toNamed('/clouterdetail')), //
                     Divider(
                         thickness: 1,
                         height: 1,
                         color: style.colors['lightgray']),
-                    MyPageList(title: '신청한 캠페인', btnTitle: '더보기'),
-                    BouncingListview(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5, right: 5),
-                        child: Row(children: [
-                          for (num i = 0; i < 10; i++)
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                              child: CampaignItemBox(),
-                            )
-                        ]),
-                      ),
-                    ),
+                    MyPageList(title: '신청한 캠페인', btnTitle: '더보기',
+                    onButtonPressed: () => Get.to(ClouterMyCampaign())), //
+                    
                     Divider(
                         thickness: 1,
                         height: 1,
                         color: style.colors['lightgray']),
-                    MyPageList(title: '관심있는 캠페인', btnTitle: '더보기'),
-                    BouncingListview(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5, right: 5),
-                        child: Row(children: [
-                          for (num i = 0; i < 10; i++)
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                              child: CampaignItemBox(),
-                            )
-                        ]),
-                      ),
-                    ),
+                    MyPageList(title: '관심있는 캠페인', btnTitle: '더보기',
+                    onButtonPressed: () => Get.to(ClouterLikedCampaign())), //
                     Divider(
                         thickness: 1,
                         height: 1,
