@@ -46,7 +46,7 @@ public abstract class Advertisement extends BaseEntity {
 
     private Long registerId; // 광고 등록자 (광고주)
 
-    @ElementCollection(targetClass = AdPlatform.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = AdPlatform.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "advertisement_platform", joinColumns = @JoinColumn(name = "advertisement_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "platform")
