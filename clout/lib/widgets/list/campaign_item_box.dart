@@ -1,9 +1,10 @@
-import 'package:clout/widgets/common/nametag.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
+import 'package:clout/widgets/common/nametag.dart';
+import 'package:clout/widgets/sns/sns2.dart';
 
 class CampaignItemBox extends StatefulWidget {
   const CampaignItemBox({super.key});
@@ -53,6 +54,11 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 width: boxWidth,
                 height: imageSize,
                 fit: BoxFit.cover,
+              ),
+              Positioned(
+                bottom: 5, // 아래 여백
+                right: 5, // 오른쪽 여백
+                child: Sns2(), // 배치할 위젯
               ),
               LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
             ],
