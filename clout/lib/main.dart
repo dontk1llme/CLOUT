@@ -20,8 +20,7 @@ import 'package:clout/screens/mypage/advertiser_detail.dart';
 import 'package:clout/screens/mypage/clouter_detail.dart';
 
 void main() {
-  runApp(ProviderScope(
-      child: GetMaterialApp(
+  runApp(GetMaterialApp(
     theme: ThemeData(
       fontFamily: 'NotoSansKR',
     ),
@@ -40,7 +39,7 @@ void main() {
       GetPage(name: '/advertiserdetail', page: () => AdvertiserDetail()),
       GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
     ],
-  )));
+  ));
 }
 
 class MyApp extends StatefulWidget {

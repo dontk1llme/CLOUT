@@ -52,6 +52,9 @@ dependencies:
   multi_image_picker: ^4.8.01
   flutter_riverpod: ^2.4.4
   fluttertoast: ^8.2.2
+  signature: ^5.4.0
+  syncfusion_flutter_signaturepad: ^23.1.42
+  image_gallery_saver: ^2.0.3
 
 flutter_icons:
   android: "clout"
