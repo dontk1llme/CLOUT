@@ -12,7 +12,7 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/buttons/small_outlined_button.dart';
 import 'package:clout/screens/point/widgets/my_wallet.dart';
 import 'package:clout/screens/mypage/advertiser_mycampaign.dart';
-import 'package:clout/screens/mypage/advertiser_myclouters.dart';
+import 'package:clout/screens/mypage/advertiser_likedclouters.dart';
 
 // screens
 import 'package:clout/screens/mypage/advertiser_detail.dart';
@@ -78,7 +78,7 @@ class AdvertiserMyPage extends StatelessWidget {
                         height: 1,
                         color: style.colors['lightgray']),
                     MyPageList(title: '관심있는 클라우터', btnTitle: '더보기', 
-                        onButtonPressed: () => Get.to(AdvertiserMyClouters())), //
+                        onButtonPressed: () => Get.to(AdvertiserLikedclouters())), //
                     BouncingListview(
                       scrollDirection: Axis.horizontal,
                       child: Padding(
