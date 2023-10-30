@@ -71,5 +71,10 @@ public abstract class Advertisement extends BaseEntity {
         this.details = details;
     }
 
+    protected void update(List<AdPlatform> adPlatformList, long price, String details) {
+        this.adPlatformList = adPlatformList;
+        this.price = price;
+        this.details = details;
+    }
 }
 

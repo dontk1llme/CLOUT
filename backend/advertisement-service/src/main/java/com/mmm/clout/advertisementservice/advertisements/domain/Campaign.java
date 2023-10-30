@@ -133,4 +133,32 @@ public class Campaign extends Advertisement {
             minFollower
         );
     }
+
+    public void update(
+        List<AdPlatform> adPlatformList,
+        long price,
+        String details,
+        String title,
+        AdCategory adCategory,
+        boolean priceChangeable,
+        boolean deliveryRequired,
+        int numberOfRecruiter,
+        String offeringDetails,
+        String sellingLink,
+        int minClouterAge,
+        int maxClouterAge,
+        int minFollower
+    ) {
+        super.update(adPlatformList, price, details);
+        this.title = title;
+        this.adCategory = adCategory;
+        this.isPriceChangeable = priceChangeable;
+        this.isDeliveryRequired = deliveryRequired;
+        this.numberOfRecruiter = numberOfRecruiter;
+        this.offeringDetails = offeringDetails;
+        this.sellingLink = sellingLink;
+        this.minClouterAge = minClouterAge;
+        this.maxClouterAge = maxClouterAge;
+        this.minFollower = minFollower;
+    }
 }
