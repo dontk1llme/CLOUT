@@ -29,69 +29,76 @@ class _NotificationItemState extends State<NotificationItem> {
           screenWidth * 0.05, screenWidth * 0.0125),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20), // 10% of screen width
+        borderRadius: BorderRadius.circular(15),
       ),
       child: SizedBox(
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10), // 5% of screen width
-              child: Image.asset(
-                'assets/images/itemImage.jpg',
-                width: itemImageSize,
-                height: itemImageSize,
-                fit: BoxFit.cover,
+            Flexible(
+              flex: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5), // 5% of screen width
+                child: Image.asset(
+                  'assets/images/itemImage.jpg',
+                  width: itemImageSize,
+                  height: itemImageSize,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             SizedBox(
               width: textSpacing,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('업체명',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: fontSize1,
-                    )),
-                Text('계약서가 도착했어요!',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: fontSize2,
-                    )),
-                Text('계약내용을 확인해보세요',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: style.colors['gray'],
-                      fontSize: fontSize3,
-                    )),
-                SizedBox(
-                  width: buttonWidth,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => ReviewRegister());
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        Color(0xFF6B4EFF),
-                      ), // 원하는 색상으로 변경
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              screenWidth * 0.1), // 10% of screen width
+            Flexible(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('업체명',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: fontSize1,
+                      )),
+                  Text('계약서가 도착했어요!',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: fontSize2,
+                      )),
+                  Text('계약내용을 확인해보세요',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: style.colors['gray'],
+                        fontSize: fontSize3,
+                      )),
+                  SizedBox(
+                    width: buttonWidth,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.to(() => ReviewRegister());
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color(0xFF6B4EFF),
+                        ), // 원하는 색상으로 변경
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                screenWidth * 0.1), // 10% of screen width
+                          ),
                         ),
                       ),
+                      child: Text('계약서 확인하기'),
                     ),
-                    child: Text('계약서 확인하기'),
-                  ),
-                )
-              ],
-            ),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
