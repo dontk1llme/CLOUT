@@ -9,7 +9,7 @@ class ContractToggle extends StatefulWidget {
 }
 
 class _ContractToggleState extends State<ContractToggle> {
-  List<bool> _selections1 = [false, false, false];
+  List<bool> _selections1 = [false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -20,36 +20,43 @@ class _ContractToggleState extends State<ContractToggle> {
         });
       },
       isSelected: _selections1,
-      // selectedBorderColor: style.colors['category'], // 선택되었을 때의 테두리 색상
-      borderColor: Color(0xFFF7F8F9), // 선택되지 않았을 때의 테두리 색상
+      selectedBorderColor: Color(0x00ff0000), // 선택되었을 때의 테두리 색상
+      borderColor: Color(0x00ff0000), // 선택되지 않았을 때의 테두리 색상
+      fillColor: Color(0x00ff0000),
       children: <Widget>[
         Container(
-          width: 112,
-          height: 60,
+          width: 80,
+          height: 24,
           decoration: BoxDecoration(
             color: _selections1[0] ? style.colors['category'] : Color(0xFFE8ECF4),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8),  
-              bottomLeft: Radius.circular(8),
-                  ),),
-          child: Image.asset('assets/images/Instagram.png'),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: Text('    전체 내역'),
         ),
         Container(
-          width: 112,
-          height: 60,
-          color: _selections1[1] ? style.colors['category'] : Color(0xFFE8ECF4), 
-          child: Image.asset('assets/images/TikTok.png'),
-        ),
-        Container(
-          width: 112,
-          height: 60,
+          width: 80,
+          height: 24,
           decoration: BoxDecoration(
-            color: _selections1[2] ? style.colors['category'] : Color(0xFFE8ECF4),
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(8),   
-              bottomRight: Radius.circular(8), 
-            ),),
-          child: Image.asset('assets/images/YouTube.png'),
+            color: _selections1[1] ? style.colors['category'] : Color(0xFFE8ECF4), 
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+      
+          child: Text('        완료'),
+        ),
+        Container(
+          width: 80,
+          height: 24,
+         decoration: BoxDecoration(
+            color: _selections1[2] ? style.colors['category'] : Color(0xFFE8ECF4), 
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: Text('      진행 중'),
+        ),
+        Container(
+          width: 80,
+          height: 24,
+          decoration: BoxDecoration(
+            color: _selections1[3] ? style.colors['category'] : Color(0xFFE8ECF4), 
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+            
+          child: Text('         예정'),
         ),
       ],
     );
