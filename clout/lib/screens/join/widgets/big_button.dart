@@ -32,7 +32,7 @@ class BigButton extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           onPressed: () {
-            function(destination);
+            function();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: buttonColor,
