@@ -55,37 +55,11 @@ class AdvertiserMyPage extends StatelessWidget {
                         height: 1,
                         color: style.colors['lightgray']),
                     MyPageList(title: '내 캠페인', btnTitle: '더보기'),
-                    BouncingListview(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5, right: 5),
-                        child: Row(children: [
-                          for (num i = 0; i < 10; i++)
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                              child: CampaignItemBox(),
-                            )
-                        ]),
-                      ),
-                    ),
                     Divider(
                         thickness: 1,
                         height: 1,
                         color: style.colors['lightgray']),
                     MyPageList(title: '관심있는 클라우터', btnTitle: '더보기'),
-                    BouncingListview(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5, right: 5),
-                        child: Row(children: [
-                          for (num i = 0; i < 10; i++)
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                              child: ClouterItemBox(),
-                            )
-                        ]),
-                      ),
-                    ),
                     Divider(
                         thickness: 1,
                         height: 1,
