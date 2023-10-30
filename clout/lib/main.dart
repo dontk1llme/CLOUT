@@ -22,8 +22,7 @@ import 'package:clout/screens/point/withdraw/withdraw_first.dart';
 import 'package:clout/screens/point/withdraw/withdraw_second.dart';
 
 void main() {
-  runApp(ProviderScope(
-      child: GetMaterialApp(
+  runApp(GetMaterialApp(
     theme: ThemeData(
       fontFamily: 'NotoSansKR',
     ),
@@ -45,7 +44,7 @@ void main() {
       GetPage(name: '/withdrawfirst', page: () => WithdrawFirst()),
       GetPage(name: '/withdrawsecond', page: () => WithdrawSecond()),
     ],
-  )));
+  ));
 }
 
 class MyApp extends StatefulWidget {

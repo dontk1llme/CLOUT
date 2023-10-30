@@ -36,7 +36,7 @@ class ImageState extends StateNotifier<List<XFile>> {
     }
     if (super.state.length > 4) {
       state = super.state.sublist(0, 4);
-      Fluttertoast.showToast(msg: 'You can only upload 4 images');
+      Fluttertoast.showToast(msg: '사진은 최대 4장까지만 등록가능합니다.');
     }
   }
 
