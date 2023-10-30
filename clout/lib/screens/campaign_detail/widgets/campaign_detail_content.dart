@@ -19,6 +19,7 @@ class CampaignDetailContent extends StatelessWidget {
       SizedBox(height:5),
       content,
       SizedBox(height: 10)
+      //asdf
     ]);
   }
 }
