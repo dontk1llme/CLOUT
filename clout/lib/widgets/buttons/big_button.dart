@@ -1,8 +1,10 @@
+import 'package:clout/providers/image_picker_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
-class BigButton extends StatelessWidget {
+class BigButton extends ConsumerStatefulWidget {
   BigButton(
       {super.key,
       this.title,
@@ -24,6 +26,11 @@ class BigButton extends StatelessWidget {
   Color? buttonColor;
 
   @override
+  BigButtonState createState() => BigButtonState();
+}
+
+class BigButtonState extends ConsumerState<BigButton> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -32,27 +39,28 @@ class BigButton extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           onPressed: () => {
-            if (destination != null)
+            ref.invalidate(imagePickerProvider),
+            if (widget.destination != null)
               {
                 // destination이 null이 아닌 경우에만 실행
-                if (notJustRoute != null && notJustRoute)
-                  {function(destination)}
+                if (widget.notJustRoute != null && widget.notJustRoute)
+                  {widget.function(widget.destination)}
                 else
-                  {Get.offAllNamed(destination)}
+                  {Get.offAllNamed(widget.destination)}
               }
             else
-              {function()}
+              {widget.function(widget.destination)}
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: buttonColor,
+            backgroundColor: widget.buttonColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
           child: Text(
-            title,
+            widget.title,
             style: style.textTheme.headlineLarge?.copyWith(
-              color: textColor,
+              color: widget.textColor,
               fontWeight: FontWeight.w600,
             ),
           ),
