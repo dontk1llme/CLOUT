@@ -1,5 +1,6 @@
 package com.mmm.clout.userservice.clouter.domain;
 
+import com.mmm.clout.userservice.common.entity.Region;
 import com.mmm.clout.userservice.common.entity.address.Address;
 import com.mmm.clout.userservice.common.entity.Category;
 import com.mmm.clout.userservice.common.entity.FollowerScale;
@@ -11,6 +12,8 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ToString
@@ -22,51 +25,80 @@ import java.time.LocalDate;
 @Entity
 public class Clouter extends Member {
 
+    private String nickName;
+
     private String name;
-
-    @Embedded
-    private Address address;
-
-    @Enumerated(EnumType.STRING)
-    private Category selectedCategory;
-
-    @Column(name="follower_scale")
-    @Enumerated(EnumType.STRING)
-    private FollowerScale followerScale;
-
-    @Column(name="platform")
-    @Enumerated(EnumType.STRING)
-    private Platform platForm;
 
     private LocalDate birthday;
 
     private Integer age;
 
-    public Clouter(String userid, String pwd, String name, Address address, Category selectedCategory, FollowerScale followerScale, Platform platForm, LocalDate birthday, Integer age) {
+    private String phoneNumber;
+
+    @ElementCollection
+    @CollectionTable(name = "channel", joinColumns = @JoinColumn(name = "member_id"))
+    private List<Channel> channelList = new ArrayList<>();
+
+    @Embedded
+    private HopeCost hopeCost;
+
+    private boolean negoable;
+
+    @ElementCollection(targetClass = Category.class, fetch = FetchType.LAZY)
+    @JoinTable(name="clouter_categories", joinColumns = @JoinColumn(name = "member_id"))
+    @Column(name = "category", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<Category> categoryList = new ArrayList<>();
+
+    @ElementCollection(targetClass = Region.class, fetch = FetchType.LAZY)
+    @JoinTable(name="clouter_regions", joinColumns = @JoinColumn(name = "member_id"))
+    @Column(name = "region", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<Region> regioinList = new ArrayList<>();
+
+    @Embedded
+    private Address address;
+
+    public Clouter(String userid, String pwd, String nickName, String name, LocalDate birthday, Integer age,
+                   String phoneNumber,List<Channel> channelList, HopeCost hopeCost, boolean negoable,
+                   List<Category> categoryList,List<Region> regioinList, Address address) {
         super(userid, pwd);
+        this.nickName = nickName;
         this.name = name;
-        this.address = address;
-        this.selectedCategory = selectedCategory;
-        this.followerScale = followerScale;
-        this.platForm = platForm;
         this.birthday = birthday;
         this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.channelList = channelList;
+        this.hopeCost = hopeCost;
+        this.negoable = negoable;
+        this.categoryList = categoryList;
+        this.regioinList = regioinList;
+        this.address = address;
     }
 
-    public static Clouter create(String userId, String pwd, String name,Address address, Category selectedCategory, FollowerScale followerScale, Platform platForm, LocalDate birthday, Integer age) {
-        Clouter clouter = new Clouter(userId, pwd, name, address, selectedCategory, followerScale, platForm, birthday, age);
+    public static Clouter create(String userid, String pwd, String nickName, String name, LocalDate birthday, Integer age,
+                                  String phoneNumber,List<Channel> channelList, HopeCost hopeCost, boolean negoable,
+                                  List<Category> categoryList,List<Region> regioinList, Address address) {
+        Clouter clouter = new Clouter(userid,pwd,nickName,name,birthday,age,phoneNumber,channelList,hopeCost,negoable,
+                                     categoryList, regioinList, address);
         return clouter;
     }
 
-    public Clouter update(String pwd, String name, Address address, Category selectedCategory, FollowerScale followerScale, Platform platForm, LocalDate birthday, Integer age) {
+    public Clouter update(String pwd, String nickName, String name, LocalDate birthday, Integer age,
+                          String phoneNumber,List<Channel> channelList, HopeCost hopeCost, boolean negoable,
+                          List<Category> categoryList,List<Region> regioinList, Address address) {
         super.update(pwd);
+        this.nickName = nickName;
         this.name = name;
-        this.address = address;
-        this.selectedCategory = selectedCategory;
-        this.followerScale = followerScale;
-        this.platForm = platForm;
         this.birthday = birthday;
         this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.channelList = channelList;
+        this.hopeCost = hopeCost;
+        this.negoable = negoable;
+        this.categoryList = categoryList;
+        this.regioinList = regioinList;
+        this.address = address;
         return this;
     }
 }

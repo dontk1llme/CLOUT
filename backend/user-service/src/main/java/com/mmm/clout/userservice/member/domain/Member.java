@@ -14,7 +14,7 @@ import javax.persistence.*;
 @SuperBuilder
 @DynamicInsert
 @DiscriminatorColumn(name = "DTYPE")
-@Entity
+@Entity(name = "members")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Member {
 
