@@ -190,10 +190,10 @@ class _AdvertiserUpdateState extends State<AdvertiserUpdate> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: BigButton(
-                    title: '회원 정보 수정',
+                    title: '수정 완료',
                     function: () {
                       // 업데이트 로직 추가할 것
-                      Get.toNamed('/login');
+                      Get.toNamed('/advertiserdetail');
                     },
                   ),
                 )
