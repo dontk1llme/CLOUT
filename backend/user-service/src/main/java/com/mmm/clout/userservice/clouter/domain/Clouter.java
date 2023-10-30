@@ -85,8 +85,8 @@ public class Clouter extends Member {
     }
 
     public Clouter update(String pwd, String nickName, String name, LocalDate birthday, Integer age,
-                          String phoneNumber,List<Channel> channelList, HopeCost hopeCost, boolean negoable,
-                          List<Category> categoryList,List<Region> regioinList, Address address) {
+                                 String phoneNumber, List<Channel> channelList, HopeCost hopeCost, boolean negoable,
+                                 List<Category> categoryList, List<Region> regioinList, Address address) {
         super.update(pwd);
         this.nickName = nickName;
         this.name = name;
