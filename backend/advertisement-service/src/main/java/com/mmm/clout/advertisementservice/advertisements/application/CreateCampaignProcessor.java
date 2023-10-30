@@ -27,7 +27,8 @@ public class CreateCampaignProcessor {
             command.getSellingLink(),
             command.getMinClouterAge(),
             command.getMaxClouterAge(),
-            command.getMinFollower()
+            command.getMinFollower(),
+            command.getRegionList()
         );
         return campaignRepository.save(campaign);
     }

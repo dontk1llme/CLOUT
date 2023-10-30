@@ -1,8 +1,10 @@
 package com.mmm.clout.advertisementservice.advertisements.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -53,10 +55,11 @@ public class Campaign extends Advertisement {
 
     private Integer minFollower;
 
-    @ElementCollection(targetClass = Region.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "advertisement_platform", joinColumns = @JoinColumn(name = "advertisement_id"))
+    @ElementCollection(targetClass = Region.class, fetch = FetchType.LAZY)
+    @CollectionTable(name = "advertisement_region", joinColumns = @JoinColumn(name = "advertisement_id"))
     @Enumerated(EnumType.STRING)
-    private List<Region> regionList;
+    @Column(name = "region")
+    private List<Region> regionList = new ArrayList<>();
 
     protected Campaign() {
         super();
@@ -76,7 +79,8 @@ public class Campaign extends Advertisement {
         String sellingLink,
         Integer minClouterAge,
         Integer maxClouterAge,
-        Integer minFollower
+        Integer minFollower,
+        List<Region> regionList
     ) {
         super(
             registerId,
@@ -98,6 +102,7 @@ public class Campaign extends Advertisement {
         this.minFollower = minFollower;
         this.applyStartDate = LocalDate.now();
         this.applyEndDate = this.applyStartDate.plusMonths(1);
+        this.regionList = regionList;
     }
 
     public static Campaign create(
@@ -114,7 +119,8 @@ public class Campaign extends Advertisement {
         String sellingLink,
         Integer minClouterAge,
         Integer maxClouterAge,
-        Integer minFollower
+        Integer minFollower,
+        List<Region> regionList
     ) {
         return new Campaign(
             registerId,
@@ -130,7 +136,8 @@ public class Campaign extends Advertisement {
             sellingLink,
             minClouterAge,
             maxClouterAge,
-            minFollower
+            minFollower,
+            regionList
         );
     }
 
@@ -147,7 +154,8 @@ public class Campaign extends Advertisement {
         String sellingLink,
         int minClouterAge,
         int maxClouterAge,
-        int minFollower
+        int minFollower,
+        List<Region> regionList
     ) {
         super.update(adPlatformList, price, details);
         this.title = title;
@@ -160,5 +168,6 @@ public class Campaign extends Advertisement {
         this.minClouterAge = minClouterAge;
         this.maxClouterAge = maxClouterAge;
         this.minFollower = minFollower;
+        this.regionList = regionList;
     }
 }
