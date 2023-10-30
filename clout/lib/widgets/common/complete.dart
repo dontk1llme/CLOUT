@@ -38,7 +38,6 @@ class CompletePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Container로 감싸서 배경색 설정
       body: Container(
         height: double.infinity,
         width: double.infinity,

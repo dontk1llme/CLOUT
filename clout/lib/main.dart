@@ -17,6 +17,7 @@ import 'package:clout/screens/mypage/clouter_mypage.dart';
 import 'package:clout/screens/mypage/advertiser_mypage.dart';
 import 'package:clout/screens/mypage/advertiser_detail.dart';
 import 'package:clout/screens/mypage/clouter_detail.dart';
+import 'package:clout/screens/point/withdraw/withdraw_first.dart';
 
 void main() {
   runApp(GetMaterialApp(
@@ -37,6 +38,7 @@ void main() {
       GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
       GetPage(name: '/advertiserdetail', page: () => AdvertiserDetail()),
       GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
+      GetPage(name: '/withdrawfirst', page: () => WithdrawFirst()),
     ],
   ));
 }
