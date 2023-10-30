@@ -44,6 +44,18 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   syncfusion_flutter_datepicker: ^23.1.42
   dropdown_button2: ^2.3.9
+  multi_select_flutter: ^4.1.3
+  animated_toggle_switch: ^0.8.0
+  image_picker: ^1.0.4
+  multiple_images_picker: ^1.0.1
+  permission_handler: ^11.0.1
+  multi_image_picker: ^4.8.01
+  flutter_riverpod: ^2.4.4
+  fluttertoast: ^8.2.2
+  signature: ^5.4.0
+  syncfusion_flutter_signaturepad: ^23.1.42
+  image_gallery_saver: ^2.0.3
+  change_app_package_name: ^1.1.0
 
 flutter_icons:
   android: "clout"

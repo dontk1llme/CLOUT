@@ -47,7 +47,7 @@ class FollowercountInputDialog extends StatelessWidget {
                     initialValue: value,
                     onChanged: (newVal) {
                       setData(newVal);
-                      setValueString(newVal);
+                      setValueString(converter(newVal));
                       setState(() => value = newVal);
                       setState(() => valueString = converter(newVal));
                     },

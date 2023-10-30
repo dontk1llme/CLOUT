@@ -2,6 +2,7 @@
 import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:clout/utilities/my_scroll.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
 // Screens
@@ -13,6 +14,13 @@ import 'package:clout/screens/notification/notification.dart';
 import 'package:clout/screens/review_register/review_complete.dart';
 import 'package:clout/screens/chatting/chatting_list.dart';
 import 'package:clout/screens/point/clouter_point_list.dart';
+import 'package:clout/screens/mypage/clouter_mypage.dart';
+import 'package:clout/screens/mypage/advertiser_mypage.dart';
+import 'package:clout/screens/mypage/advertiser_detail.dart';
+import 'package:clout/screens/mypage/clouter_detail.dart';
+import 'package:clout/screens/point/withdraw/withdraw_first.dart';
+import 'package:clout/screens/point/withdraw/withdraw_second.dart';
+// import 'package:clout/screens/point/charge/charge_message.dart';
 
 void main() {
   runApp(GetMaterialApp(
@@ -29,6 +37,13 @@ void main() {
       GetPage(name: '/reviewcomplete', page: () => ReviewComplete()),
       GetPage(name: '/chattinglist', page: () => ChattingList()),
       GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
+      GetPage(name: '/cloutermypage', page: () => ClouterMyPage()),
+      GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
+      GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
+      GetPage(name: '/advertiserdetail', page: () => AdvertiserDetail()),
+      GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
+      GetPage(name: '/withdrawfirst', page: () => WithdrawFirst()),
+      GetPage(name: '/withdrawsecond', page: () => WithdrawSecond()),
     ],
   ));
 }
