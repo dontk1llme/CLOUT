@@ -6,6 +6,8 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/screens/point/widgets/main_text.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
+import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
 
 class WithdrawSecond extends StatefulWidget {
   const WithdrawSecond({super.key});
@@ -15,6 +17,135 @@ class WithdrawSecond extends StatefulWidget {
 }
 
 class _WithdrawSecondState extends State<WithdrawSecond> {
+  void _showModal() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              BoldText(text: '수수료 7% 차감 후'),
+              SizedBox(height: 3),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('11월 15일',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: style.colors['main1'])),
+                  SizedBox(width: 5),
+                  MediumText(text: '지급됩니다.'),
+                ],
+              ),
+              SizedBox(height: 25),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MediumText(text: '출금 신청 금액'),
+                      SizedBox(height: 5),
+                      MediumText(text: '수수료'),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      BoldText(text: '100,000 원'),
+                      SizedBox(height: 5),
+                      BoldText(text: '- 7,000 원'),
+                    ],
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: Divider(
+                  color: style.colors['lightgray'],
+                  height: 1,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BoldText(text: '실 지급 금액'),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text('93,000원',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: style.colors['main1'])),
+                    ],
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 25),
+                child: SizedBox(
+                  height: 30,
+                  width: 230,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: style.colors['category'],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
+                      children: [
+                        Icon(Icons.check, color: style.colors['main1']),
+                        SizedBox(width: 3),
+                        Text('내용을 확인했습니다.'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: BigButton(
+                        title: '아니요',
+                        textColor: Colors.black,
+                        buttonColor: style.colors['lightgray'],
+                        function: () {
+                          Navigator.of(context).pop();
+                        }),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Flexible(
+                      flex: 1,
+                      child: BigButton(
+                        title: '출금하기',
+                      )),
+                ],
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +193,7 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
             padding: const EdgeInsets.all(20),
             child: BigButton(
               title: '출금',
-              destination: '/withdrawsecond',
+              function: _showModal,
             ),
           ),
         ));
