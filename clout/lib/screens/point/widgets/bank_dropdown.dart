@@ -67,6 +67,7 @@ class _BankDropdownState extends State<BankDropdown> {
       underline: Container(
         height: 1,
         color: Color.fromARGB(255, 131, 132, 133),
+        margin: EdgeInsets.only(top: 3),
       ),
       onChanged: (String? value) {
         setState(() {
