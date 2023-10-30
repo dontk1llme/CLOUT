@@ -1,4 +1,4 @@
-package com.mmm.clout.userservice.clouter.infrastructure.exceptuion;
+package com.mmm.clout.userservice.clouter.domain.exceptuion;
 
 import com.mmm.clout.userservice.common.exception.CustomBaseException;
 import com.mmm.clout.userservice.common.exception.ErrorCode;
@@ -9,7 +9,7 @@ public class ClrIdDuplicateException extends CustomBaseException {
         super(message, errorCode);
     }
 
-    public ClrIdDuplicateException(ErrorCode errorCode) {
-        super(errorCode);
+    public ClrIdDuplicateException() {
+        super(ErrorCode.CLOUTER_ID_DUPLICATE);
     }
 }
