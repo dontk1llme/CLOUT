@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UpdateAdrResponse {
 
-    private Long createdAdrId;
+    private Long updatedAdrId;
 
     public static UpdateAdrResponse from(Advertiser advertiser) {
         return new UpdateAdrResponse(advertiser.getId());

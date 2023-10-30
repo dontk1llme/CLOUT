@@ -58,8 +58,8 @@ public class Clouter extends Member {
         return clouter;
     }
 
-    public Clouter update(String userId, String pwd, String name, Address address, Category selectedCategory, FollowerScale followerScale, Platform platForm, LocalDate birthday, Integer age) {
-        super.update(userId, pwd);
+    public Clouter update(String pwd, String name, Address address, Category selectedCategory, FollowerScale followerScale, Platform platForm, LocalDate birthday, Integer age) {
+        super.update(pwd);
         this.name = name;
         this.address = address;
         this.selectedCategory = selectedCategory;

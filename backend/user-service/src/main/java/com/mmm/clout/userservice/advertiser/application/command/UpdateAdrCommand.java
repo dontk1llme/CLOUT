@@ -10,8 +10,6 @@ public class UpdateAdrCommand {
 
     private Long advertiserId;
 
-    private String userId;
-
     private String pwd;
 
     private AddressCommand addressCommand;

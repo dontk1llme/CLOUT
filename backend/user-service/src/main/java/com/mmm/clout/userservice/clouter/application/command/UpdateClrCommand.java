@@ -15,8 +15,6 @@ import java.time.LocalDate;
 public class UpdateClrCommand {
     private Long clouterId;
 
-    private String userId;
-
     private String pwd;
 
     private String name;

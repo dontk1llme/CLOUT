@@ -37,8 +37,8 @@ public class Advertiser extends Member {
         return advertiser;
     }
 
-    public Advertiser update(String userId, String pwd, Address address, CompanyInfo companyInfo) {
-        super.update(userId, pwd);
+    public Advertiser update(String pwd, Address address, CompanyInfo companyInfo) {
+        super.update(pwd);
         this.address = address;
         this.companyInfo = companyInfo;
         return this;

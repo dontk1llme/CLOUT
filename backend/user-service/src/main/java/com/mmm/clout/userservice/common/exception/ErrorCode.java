@@ -21,7 +21,9 @@ public enum ErrorCode {
     UN_AUTHENTICATED(HttpStatus.UNAUTHORIZED, "UN_AUTHENTICATED", "로그인 인증이 안된 유저입니다."),
     UN_AUTHORIZATION(HttpStatus.FORBIDDEN, "UN_AUTHORIZATION", "접근 권한이 없습니다."),
     ADVERTISER_ID_DUPLICATE(HttpStatus.CONFLICT, "ADVERTISER_ID_DUPLICATE", "현재 아이디는 다른 유저가 사용하고 있습니다."),
-    CLOUTER_ID_DUPLICATE(HttpStatus.CONFLICT, "CLOUTER_ID_DUPLICATE", "현재 아이디는 다른 유저가 사용하고 있습니다.");
+    CLOUTER_ID_DUPLICATE(HttpStatus.CONFLICT, "CLOUTER_ID_DUPLICATE", "현재 아이디는 다른 유저가 사용하고 있습니다."),
+    NOT_F0UND_ADVERTISER(HttpStatus.NOT_FOUND, "NOT_F0UND_ADVERTISER", "존재하지 않는 유저 입니다."),
+    NOT_F0UND_CLOUTER(HttpStatus.NOT_FOUND, "NOT_F0UND_CLOUTER", "존재하지 않는 유저 입니다.");;
 
 
     private final HttpStatus status;

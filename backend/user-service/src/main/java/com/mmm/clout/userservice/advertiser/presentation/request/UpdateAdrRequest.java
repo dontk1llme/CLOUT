@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
 public class UpdateAdrRequest {
 
     @NotBlank
-    private String userId;
 
     @NotBlank
     private String pwd;
@@ -24,7 +23,6 @@ public class UpdateAdrRequest {
     public UpdateAdrCommand toCommand(Long advertiserId) {
         return new UpdateAdrCommand(
                 advertiserId,
-                this.userId,
                 this.pwd,
                 this.address.toCommand(),
                 this.companyInfo.toCommand()
