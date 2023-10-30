@@ -11,18 +11,12 @@ import javax.persistence.Embedded;
 @AllArgsConstructor
 public class SelectAdrResponse {
 
-    private String userId;
-
-    private String pwd;
-
     private AddressResponse address;
 
     private CompanyInfoResponse companyInfo;
 
 
     public SelectAdrResponse(Advertiser advertiser) {
-        this.userId = advertiser.getUserId();
-        this.pwd = advertiser.getPwd();
         this.address = new AddressResponse(advertiser.getAddress());
         this.companyInfo = new CompanyInfoResponse(advertiser.getCompanyInfo());
     }

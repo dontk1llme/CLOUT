@@ -19,9 +19,6 @@ import java.time.LocalDate;
 public class UpdateClrRequest {
 
     @NotBlank
-    private String userId;
-
-    @NotBlank
     private String pwd;
 
     @NotBlank
@@ -47,7 +44,6 @@ public class UpdateClrRequest {
     public UpdateClrCommand toCommand(Long clouterId) {
         return new UpdateClrCommand(
                 clouterId,
-                this.userId,
                 this.pwd,
                 this.name,
                 this.address.toCommand(),

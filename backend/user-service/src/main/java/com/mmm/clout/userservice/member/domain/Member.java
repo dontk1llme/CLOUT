@@ -32,8 +32,7 @@ public abstract class Member {
 
     private Role role;
 
-    public Member update(String userId, String pwd) {
-        this.userId = userId;
+    public Member update(String pwd) {
         this.pwd = pwd;
         return this;
     }

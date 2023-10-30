@@ -17,7 +17,6 @@ public class UpdateAdvertiserProcessor {
     public Advertiser execute(UpdateAdrCommand command) {
         Advertiser advertiser = advertiserRepository.findById(command.getAdvertiserId());
         advertiser.update(
-                command.getUserId(),
                 command.getPwd(),
                 command.getAddressCommand().toValueType(),
                 command.getCompanyInfoCommand().toValueType());

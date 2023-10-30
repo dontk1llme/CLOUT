@@ -3,13 +3,13 @@ package com.mmm.clout.userservice.advertiser.infrastructure.exceptuion;
 import com.mmm.clout.userservice.common.exception.CustomBaseException;
 import com.mmm.clout.userservice.common.exception.ErrorCode;
 
-public class AdrIdDuplicateException extends CustomBaseException {
+public class NotFoundAdvertiser extends CustomBaseException{
 
-    public AdrIdDuplicateException(String message, ErrorCode errorCode) {
+    public NotFoundAdvertiser(String message, ErrorCode errorCode) {
         super(message, errorCode);
     }
 
-    public AdrIdDuplicateException() {
-        super(ErrorCode.ADVERTISER_ID_DUPLICATE);
+    public NotFoundAdvertiser() {
+        super(ErrorCode.NOT_F0UND_ADVERTISER);
     }
 }

@@ -22,7 +22,6 @@ public class UpdateClouterProcessor {
     public Clouter execute(UpdateClrCommand command) {
         Clouter clouter = clouterRepository.findById(command.getClouterId());
         clouter.update(
-                command.getUserId(),
                 command.getPwd(),
                 command.getName(),
                 command.getAddressCommand().toValueType(),
