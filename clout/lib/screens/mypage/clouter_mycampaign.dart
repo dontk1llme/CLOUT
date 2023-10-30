@@ -14,7 +14,7 @@ import 'package:clout/widgets/list/campaign_item_box.dart';
 class ClouterMyCampaign extends StatelessWidget {
   const ClouterMyCampaign({super.key});
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
@@ -39,25 +39,23 @@ class ClouterMyCampaign extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             // 정렬 대신에 카테고리 넣어야 함
-                                    Text(''),
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.filter_list, size: 20),
-                                          Text('정렬'),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                            Text(''),
+                            Container(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.filter_list, size: 20),
+                                  Text('정렬'),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Divider(
-                          thickness: 1,
-                          height: 1,
-                          color: style.colors['lightgray']),
-                     Container(
-                      padding: EdgeInsets.all(15), // 가로 패딩 설정
-                      child: GridView.builder(
+                      // Divider(
+                      //     thickness: 1,
+                      //     height: 1,
+                      //     color: style.colors['lightgray']),
+                      GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2, // 한 행에 2개의 아이템 배치
                           mainAxisSpacing: 10,
@@ -71,7 +69,6 @@ class ClouterMyCampaign extends StatelessWidget {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                       ),
-                    ),
                     ],
                   )),
             )));

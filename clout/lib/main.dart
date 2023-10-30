@@ -20,7 +20,6 @@ import 'package:clout/screens/mypage/advertiser_detail.dart';
 import 'package:clout/screens/mypage/clouter_detail.dart';
 import 'package:clout/screens/point/withdraw/withdraw_first.dart';
 import 'package:clout/screens/point/withdraw/withdraw_second.dart';
-// import 'package:clout/screens/point/charge/charge_message.dart';
 
 void main() {
   runApp(GetMaterialApp(
