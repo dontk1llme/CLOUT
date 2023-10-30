@@ -170,4 +170,8 @@ public class Campaign extends Advertisement {
         this.minFollower = minFollower;
         this.regionList = regionList;
     }
+
+    public void softDelete() {
+        super.softDelete();
+    }
 }

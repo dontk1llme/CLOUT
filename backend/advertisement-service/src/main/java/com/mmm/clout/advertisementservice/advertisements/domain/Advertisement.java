@@ -1,6 +1,7 @@
 package com.mmm.clout.advertisementservice.advertisements.domain;
 
 import com.mmm.clout.advertisementservice.common.entity.BaseEntity;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,10 @@ public abstract class Advertisement extends BaseEntity {
         this.adPlatformList = adPlatformList;
         this.price = price;
         this.details = details;
+    }
+
+    protected void softDelete() {
+        this.deletedAt = LocalDateTime.now();
     }
 }
 
