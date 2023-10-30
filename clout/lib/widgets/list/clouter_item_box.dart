@@ -66,6 +66,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
             NameTag(title: '카테고리'),
             Text(
               '계정명',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: nameFontSize,
@@ -73,6 +75,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
             ),
             Text(
               '광고비',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: style.colors['main1'],
                 fontWeight: FontWeight.w500,
@@ -89,6 +93,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                 ),
                 Text(
                   'N',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: contractInfoFontSize,

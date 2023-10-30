@@ -59,11 +59,15 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
           ),
           NameTag(title: '카테고리'),
           Text('제품명',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: titleFontSize,
               )),
           Text('광고비',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: style.colors['main1'],
                 fontWeight: FontWeight.w500,
@@ -73,6 +77,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text('업체명',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: companyInfoFontSize,
                   )),
