@@ -63,6 +63,7 @@ public class CreateCampaignRequest {
     private String details;
 
     @NotNull
+    @Size(min=1, message="희망 플랫폼 리스트는 최소한 한 개의 요소를 포함해야 합니다.")
     @Schema(description = "광고 희망 플랫폼 리스트")
     private List<AdPlatform> adPlatformList;
 
@@ -83,6 +84,7 @@ public class CreateCampaignRequest {
     private Integer minFollower;
 
     @NotNull
+    @Size(min=1, message="희망 지역 리스트는 최소한 한 개의 요소를 포함해야 합니다.")
     @Schema(description = "지역 선택 (다중선택 가능)")
     private List<Region> regionList;
 
