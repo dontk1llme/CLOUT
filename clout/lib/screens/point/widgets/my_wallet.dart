@@ -5,9 +5,6 @@ import 'package:get/get.dart';
 // widgets
 import 'package:clout/widgets/buttons/small_button.dart';
 
-// screens
-import 'package:clout/screens/point/withdraw/withdraw_first.dart';
-
 class MyWallet extends StatelessWidget {
   final String userType; // clouter 인지 advertiser 인지
 
@@ -34,7 +31,6 @@ class MyWallet extends StatelessWidget {
             child: SmallButton(
               title: '출금하기',
               destination: 'withdrawfirst',
-              function: () {},
             ),
           ),
         ],
@@ -44,8 +40,7 @@ class MyWallet extends StatelessWidget {
         flex: 1,
         child: SmallButton(
           title: '출금하기',
-          destination: 'withdraw',
-          function: () {},
+          destination: 'withdrawfirst',
         ),
       );
     } else {
