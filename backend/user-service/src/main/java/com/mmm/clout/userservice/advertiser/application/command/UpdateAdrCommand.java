@@ -1,6 +1,6 @@
 package com.mmm.clout.userservice.advertiser.application.command;
 
-import com.mmm.clout.userservice.advertiser.domain.Advertiser;
+import com.mmm.clout.userservice.common.entity.address.command.AddressCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,8 +9,6 @@ import lombok.Getter;
 public class UpdateAdrCommand {
 
     private Long advertiserId;
-
-    private String userId;
 
     private String pwd;
 

@@ -3,6 +3,9 @@ package com.mmm.clout.userservice.advertiser.application;
 import com.mmm.clout.userservice.advertiser.application.command.CreateAdrCommand;
 import com.mmm.clout.userservice.advertiser.domain.Advertiser;
 import com.mmm.clout.userservice.advertiser.domain.repository.AdvertiserRepository;
+import com.mmm.clout.userservice.advertiser.infrastructure.exceptuion.AdrIdDuplicateException;
+import com.mmm.clout.userservice.clouter.domain.exceptuion.ClrIdDuplicateException;
+import com.mmm.clout.userservice.common.exception.ErrorCode;
 import com.mmm.clout.userservice.member.domain.Member;
 import com.mmm.clout.userservice.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,19 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CreateAdvertiserProcessor {
 
-    private final AdvertiserRepository advertisementRepository;
+    private final AdvertiserRepository advertiserRepository;
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
 
     @Transactional
-    public Advertiser excute(CreateAdrCommand command) {
-        if (!checkUserId(command.getUserId())) {
-            //나중에 에러처리
-            throw new RuntimeException("중복 에러염 이거 어드바이스 에러처리 해주셈 나중에");
-        }
+    public Advertiser execute(CreateAdrCommand command) {
+        checkUserId(command.getUserId());
         Advertiser advertiser = command.toEntity();
         advertiser.changePwd(encoder.encode(advertiser.getPwd()));
-        return advertisementRepository.save(advertiser);
+        return advertiserRepository.save(advertiser);
     }
 
     private boolean checkUserId(String userId) {
@@ -32,7 +32,7 @@ public class CreateAdvertiserProcessor {
         if (findMember == null) {
             return true;
         } else {
-            return false;
+            throw new AdrIdDuplicateException();
         }
     }
 }
