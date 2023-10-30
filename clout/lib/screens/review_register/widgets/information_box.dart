@@ -43,6 +43,8 @@ class InformationBox extends StatelessWidget {
             children: [
               Text(
                 '모카우유',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: fontSize1,
@@ -56,6 +58,8 @@ class InformationBox extends StatelessWidget {
               ),
               Text(
                 '80만 포인트',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: fontSize3,
