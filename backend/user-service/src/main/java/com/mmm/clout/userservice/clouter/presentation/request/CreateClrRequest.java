@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class CreateClrRequest {
 
     @NotBlank
-    @Schema(description = "클라우터 아이디")
+    @Schema(description = "클라우터 아이디", defaultValue = "clouter1")
     private String userId;
 
     @NotBlank
