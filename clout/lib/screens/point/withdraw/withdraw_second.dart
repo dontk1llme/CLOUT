@@ -26,12 +26,25 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
       ),
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
+          padding: EdgeInsets.symmetric(vertical: 30, horizontal: 40),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    child: Icon(
+                      Icons.close,
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
               BoldText(text: '수수료 7% 차감 후'),
               SizedBox(height: 3),
               Row(

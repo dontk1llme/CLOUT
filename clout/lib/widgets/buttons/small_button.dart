@@ -26,10 +26,17 @@ class SmallButton extends StatelessWidget {
         child: ElevatedButton(
             // null Check
             onPressed: () => {
-                  if (notJustRoute != null && notJustRoute)
-                    {function(destination)}
+                  if (destination != null)
+                    {
+                      if (notJustRoute != null && notJustRoute)
+                        {function(destination)}
+                      else
+                        {Get.toNamed(destination)}
+                    }
                   else
-                    {Get.toNamed(destination)}
+                    {
+                      function(),
+                    }
                 },
             style: ElevatedButton.styleFrom(
                 backgroundColor: style.colors['main1'],
