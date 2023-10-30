@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -52,22 +51,30 @@ class AdvertiserMyPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    MyWallet(userType: 'clouter'),
-                    MyPageList(title: '내 계약서', btnTitle: '더보기', 
-                      onButtonPressed: () => Get.to(ContractList())), //
+                    MyWallet(userType: 'advertiser'),
+                    MyPageList(
+                        title: '내 계약서',
+                        btnTitle: '더보기',
+                        onButtonPressed: () => Get.to(ContractList())), //
                     Divider(
                         thickness: 1,
                         height: 1,
                         color: style.colors['lightgray']),
-                    MyPageList(title: '내 캠페인', btnTitle: '더보기', 
-                      onButtonPressed: () => Get.to(AdvertiserMycampaign())), //
+                    MyPageList(
+                        title: '내 캠페인',
+                        btnTitle: '더보기',
+                        onButtonPressed: () =>
+                            Get.to(AdvertiserMycampaign())), //
                     Divider(
                         thickness: 1,
                         height: 1,
                         color: style.colors['lightgray']),
-                    MyPageList(title: '관심있는 클라우터', btnTitle: '더보기', 
-                        onButtonPressed: () => Get.to(AdvertiserLikedclouters())), //
-                    
+                    MyPageList(
+                        title: '관심있는 클라우터',
+                        btnTitle: '더보기',
+                        onButtonPressed: () =>
+                            Get.to(AdvertiserLikedclouters())), //
+
                     Divider(
                         thickness: 1,
                         height: 1,
