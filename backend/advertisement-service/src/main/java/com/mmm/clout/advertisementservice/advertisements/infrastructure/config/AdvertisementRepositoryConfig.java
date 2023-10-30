@@ -1,8 +1,8 @@
 package com.mmm.clout.advertisementservice.advertisements.infrastructure.config;
 
-import com.mmm.clout.advertisementservice.advertisements.domain.repository.AdvertisementRepository;
-import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.AdvertisementRepositoryAdapter;
-import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.jpa.JpaAdvertisementRepository;
+import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
+import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.CampaignRepositoryAdapter;
+import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.jpa.JpaCampaignRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class AdvertisementRepositoryConfig {
 
     @Bean
-    public AdvertisementRepository AdvertisementRepository(JpaAdvertisementRepository jpaAdvertisementRepository) {
-        return new AdvertisementRepositoryAdapter(jpaAdvertisementRepository);
+    public CampaignRepository CampaignRepository(JpaCampaignRepository jpaCampaignRepository) {
+        return new CampaignRepositoryAdapter(jpaCampaignRepository);
     }
 
 }

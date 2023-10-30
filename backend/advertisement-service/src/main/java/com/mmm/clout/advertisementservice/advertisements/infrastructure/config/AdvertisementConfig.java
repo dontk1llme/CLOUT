@@ -1,7 +1,8 @@
 package com.mmm.clout.advertisementservice.advertisements.infrastructure.config;
 
-import com.mmm.clout.advertisementservice.advertisements.application.CreateAdvertisementProcessor;
-import com.mmm.clout.advertisementservice.advertisements.domain.repository.AdvertisementRepository;
+import com.mmm.clout.advertisementservice.advertisements.application.CreateCampaignProcessor;
+import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
 public class AdvertisementConfig {
 
     @Bean
-    public CreateAdvertisementProcessor createAdvertisementProcessor(
-        AdvertisementRepository advertisementRepository
+    public CreateCampaignProcessor createAdvertisementProcessor(
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
     ) {
-        return new CreateAdvertisementProcessor(
-            advertisementRepository
+        return new CreateCampaignProcessor(
+            campaignRepository
         );
     }
 

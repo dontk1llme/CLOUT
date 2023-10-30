@@ -1,15 +1,15 @@
 package com.mmm.clout.advertisementservice.advertisements.application;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
-import com.mmm.clout.advertisementservice.advertisements.domain.repository.AdvertisementRepository;
+import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-public class CreateAdvertisementProcessor {
+public class CreateCampaignProcessor {
 
-    private final AdvertisementRepository advertisementRepository;
+    private final CampaignRepository campaignRepository;
 
     @Transactional
     public Campaign execute(CreateCampaignCommand command) {
@@ -29,6 +29,6 @@ public class CreateAdvertisementProcessor {
             command.getMaxClouterAge(),
             command.getMinFollower()
         );
-        return advertisementRepository.save(campaign);
+        return campaignRepository.save(campaign);
     }
 }
