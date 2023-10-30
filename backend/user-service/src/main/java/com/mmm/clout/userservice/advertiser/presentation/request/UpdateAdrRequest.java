@@ -2,6 +2,7 @@ package com.mmm.clout.userservice.advertiser.presentation.request;
 
 import com.mmm.clout.userservice.advertiser.application.command.UpdateAdrCommand;
 import com.mmm.clout.userservice.common.entity.address.request.AddressRequest;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,8 +13,7 @@ import javax.validation.constraints.NotBlank;
 public class UpdateAdrRequest {
 
     @NotBlank
-
-    @NotBlank
+    @Schema(description = "비밀번호")
     private String pwd;
 
     private AddressRequest address;
