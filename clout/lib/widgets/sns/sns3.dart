@@ -27,29 +27,33 @@ class _Sns3State extends State<Sns3> {
           width: 112,
           height: 60,
           decoration: BoxDecoration(
-            color: _selections1[0] ? style.colors['category'] : Color(0xFFE8ECF4),
+            color:
+                _selections1[0] ? style.colors['category'] : Color(0xFFE8ECF4),
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8),  
+              topLeft: Radius.circular(8),
               bottomLeft: Radius.circular(8),
-                  ),),
-          child: Image.asset('assets/images/Instagram.png'),
+            ),
+          ),
+          child: Image.asset('assets/images/instagram.png'),
         ),
         Container(
           width: 112,
           height: 60,
-          color: _selections1[1] ? style.colors['category'] : Color(0xFFE8ECF4), 
-          child: Image.asset('assets/images/TikTok.png'),
+          color: _selections1[1] ? style.colors['category'] : Color(0xFFE8ECF4),
+          child: Image.asset('assets/images/tiktok.png'),
         ),
         Container(
           width: 112,
           height: 60,
           decoration: BoxDecoration(
-            color: _selections1[2] ? style.colors['category'] : Color(0xFFE8ECF4),
+            color:
+                _selections1[2] ? style.colors['category'] : Color(0xFFE8ECF4),
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(8),   
-              bottomRight: Radius.circular(8), 
-            ),),
-          child: Image.asset('assets/images/YouTube.png'),
+              topRight: Radius.circular(8),
+              bottomRight: Radius.circular(8),
+            ),
+          ),
+          child: Image.asset('assets/images/youtube.png'),
         ),
       ],
     );
