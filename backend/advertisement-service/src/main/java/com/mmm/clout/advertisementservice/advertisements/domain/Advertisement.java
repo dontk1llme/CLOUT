@@ -1,9 +1,6 @@
 package com.mmm.clout.advertisementservice.advertisements.domain;
 
-import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
-import com.mmm.clout.advertisementservice.advertisements.domain.Register;
 import com.mmm.clout.advertisementservice.common.entity.BaseEntity;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +8,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -48,8 +44,7 @@ public abstract class Advertisement extends BaseEntity {
     @Column(name = "advertisement_id")
     private Long id;
 
-    @Embedded
-    private Register register;
+    private Long registerId; // 광고 등록자 (광고주)
 
     @ElementCollection(targetClass = AdPlatform.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "advertisement_platform", joinColumns = @JoinColumn(name = "advertisement_id"))
@@ -65,19 +60,16 @@ public abstract class Advertisement extends BaseEntity {
     private LocalDateTime deletedAt;
 
     public Advertisement(
-        Register register,
+        Long registerId,
         List<AdPlatform> adPlatformList,
         Long price,
         String details
     ) {
-        this.register = register;
+        this.registerId = registerId;
         this.adPlatformList = adPlatformList;
         this.price = price;
         this.details = details;
     }
-
-    public abstract void create();
-
 
 }
 
