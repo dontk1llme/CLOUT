@@ -3,6 +3,7 @@ import 'package:clout/style.dart' as style;
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
+import 'package:get/get.dart';
 import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 
@@ -35,7 +36,10 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
     final starIconSize = screenWidth * 0.04;
     final ratingFontSize = screenWidth * 0.03;
 
-    return Container(
+    return InkWell(
+      // 여기 arguments에 해당 캠페인의 id를 넣어야 함 
+      onTap: ()=>Get.toNamed('/campaignDetail', arguments: 1),
+        child: Container(
       width: boxWidth,
       padding: EdgeInsets.all(boxPadding),
       decoration: BoxDecoration(
@@ -112,6 +116,6 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
           )
         ],
       ),
-    );
+    ));
   }
 }
