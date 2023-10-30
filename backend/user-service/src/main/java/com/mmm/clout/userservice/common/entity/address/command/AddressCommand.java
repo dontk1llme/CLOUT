@@ -1,6 +1,6 @@
-package com.mmm.clout.userservice.advertiser.application.command;
+package com.mmm.clout.userservice.common.entity.address.command;
 
-import com.mmm.clout.userservice.common.entity.Address;
+import com.mmm.clout.userservice.common.entity.address.Address;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

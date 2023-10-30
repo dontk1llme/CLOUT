@@ -20,11 +20,11 @@ public class AdvertiserFacade {
     private final SelectAdvertiserProcessor selectAdvertiserProcessor;
 
     public Advertiser create(CreateAdrCommand command) {
-        return createAdvertiserProcessor.excute(command);
+        return createAdvertiserProcessor.execute(command);
     }
 
-    public Advertiser update(UpdateAdrCommand command) {return updateAdvertiserProcessor.excute(command); }
+    public Advertiser update(UpdateAdrCommand command) {return updateAdvertiserProcessor.execute(command); }
 
-    public Advertiser select(Long advertiserId) { return selectAdvertiserProcessor.excute(advertiserId);
+    public Advertiser select(Long advertiserId) { return selectAdvertiserProcessor.execute(advertiserId);
     }
 }

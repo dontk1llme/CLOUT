@@ -1,6 +1,7 @@
 package com.mmm.clout.userservice.advertiser.presentation;
 
 import com.mmm.clout.userservice.advertiser.application.facade.AdvertiserFacade;
+import com.mmm.clout.userservice.advertiser.presentation.docs.AdvertiserControllerDocs;
 import com.mmm.clout.userservice.advertiser.presentation.request.CreateAdrRequest;
 import com.mmm.clout.userservice.advertiser.presentation.request.UpdateAdrRequest;
 import com.mmm.clout.userservice.advertiser.presentation.response.CreateAdrResponse;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/advertisers")
 @RequiredArgsConstructor
-public class AdvertiserController {
+public class AdvertiserController implements AdvertiserControllerDocs {
 
     private final AdvertiserFacade advertiserFacade;
 
@@ -27,7 +28,7 @@ public class AdvertiserController {
         CreateAdrResponse result = CreateAdrResponse.from(
             advertiserFacade.create(createAdrRequest.toCommand())
         );
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/{advertiserId}")
