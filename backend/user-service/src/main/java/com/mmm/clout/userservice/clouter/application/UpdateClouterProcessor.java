@@ -21,16 +21,16 @@ public class UpdateClouterProcessor {
     @Transactional
     public Clouter execute(UpdateClrCommand command) {
         Clouter clouter = clouterRepository.findById(command.getClouterId());
-        clouter.update(
-                command.getPwd(),
-                command.getName(),
-                command.getAddressCommand().toValueType(),
-                command.getSelectedCategory(),
-                command.getFollowerScale(),
-                command.getPlatForm(),
-                command.getBirthday(),
-                command.getAge()
-                );
+//        clouter.update(
+//                command.getPwd(),
+//                command.getName(),
+//                command.getAddressCommand().toValueType(),
+//                command.getSelectedCategory(),
+//                command.getFollowerScale(),
+//                command.getPlatForm(),
+//                command.getBirthday(),
+//                command.getAge()
+//                );
         clouter.changePwd(encoder.encode(clouter.getPwd()));
         return clouter;
     }
