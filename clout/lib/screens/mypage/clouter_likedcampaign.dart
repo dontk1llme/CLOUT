@@ -14,7 +14,7 @@ import 'package:clout/widgets/list/campaign_item_box.dart';
 class ClouterLikedCampaign extends StatelessWidget {
   const ClouterLikedCampaign({super.key});
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
@@ -38,25 +38,19 @@ class ClouterLikedCampaign extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                                    Text(''),
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.filter_list, size: 20),
-                                          Text('정렬'),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                            Text(''),
+                            Container(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.filter_list, size: 20),
+                                  Text('정렬'),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Divider(
-                          thickness: 1,
-                          height: 1,
-                          color: style.colors['lightgray']),
-                     Container(
-                      padding: EdgeInsets.all(15), // 가로 패딩 설정
-                      child: GridView.builder(
+                      GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2, // 한 행에 2개의 아이템 배치
                           mainAxisSpacing: 10,
@@ -70,7 +64,6 @@ class ClouterLikedCampaign extends StatelessWidget {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                       ),
-                    ),
                     ],
                   )),
             )));
