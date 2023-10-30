@@ -24,7 +24,7 @@ public class CreateCampaignRequest {
     private AdCategory adCategory;
 
     @NotBlank
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 50)
     private String title;
 
     @NotNull
@@ -39,7 +39,7 @@ public class CreateCampaignRequest {
     private Long price;
 
     @NotBlank
-    @Size(max = 500)
+        @Size(max = 500)
     private String offeringDetails;
 
     private String sellingLink;
