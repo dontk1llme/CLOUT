@@ -3,8 +3,7 @@ package com.mmm.clout.userservice.clouter.application;
 import com.mmm.clout.userservice.clouter.application.command.CreateClrCommand;
 import com.mmm.clout.userservice.clouter.domain.Clouter;
 import com.mmm.clout.userservice.clouter.domain.repository.ClouterRepository;
-import com.mmm.clout.userservice.clouter.infrastructure.exceptuion.ClrIdDuplicateException;
-import com.mmm.clout.userservice.common.exception.ErrorCode;
+import com.mmm.clout.userservice.clouter.domain.exceptuion.ClrIdDuplicateException;
 import com.mmm.clout.userservice.member.domain.Member;
 import com.mmm.clout.userservice.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class CreateClouterProcessor {
         if (findMember == null) {
             return true;
         } else {
-            throw new ClrIdDuplicateException(ErrorCode.CLOUTER_ID_DUPLICATE);
+            throw new ClrIdDuplicateException();
         }
     }
 }
