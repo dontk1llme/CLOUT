@@ -3,6 +3,7 @@ package com.mmm.clout.advertisementservice.common.docs;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -73,5 +74,28 @@ public interface AdvertisementControllerDocs {
     ResponseEntity<UpdateCampaignResponse> updateCampaign(
         Long advertisementId,
         UpdateCampaignRequest request
+    );
+
+
+    @Operation(summary = "광고 캠페인 삭제 (soft 삭제)",
+        description = "광고 캠페인 id를 받아 삭제합니다. (soft delete)",
+        parameters = {
+            @Parameter(
+                in = ParameterIn.HEADER,
+                name = "Authorization",
+                required = true,
+                schema = @Schema(type = "string"),
+                description = "인증 토큰"
+            )
+        },
+        responses =
+        @ApiResponse(responseCode = "200", description = "광고 캠페인 삭제 처리 성공",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation= DeleteCampaignResponse.class))
+        )
+    )
+    ResponseEntity<DeleteCampaignResponse> deleteCampaign(
+        Long advertisementId
     );
 }

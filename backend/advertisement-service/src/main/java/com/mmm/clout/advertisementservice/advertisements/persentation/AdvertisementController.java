@@ -4,12 +4,14 @@ import com.mmm.clout.advertisementservice.advertisements.application.facade.Adve
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,6 +46,15 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         @RequestBody @Valid UpdateCampaignRequest updateCampaignRequest
     ) {
         UpdateCampaignResponse result = UpdateCampaignResponse.from(advertisementFacade.update(advertisementId, updateCampaignRequest.toCommand()));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/{advertisementId}")
+    public ResponseEntity<DeleteCampaignResponse> deleteCampaign(
+        @PathVariable Long advertisementId
+    ) {
+        advertisementFacade.delete(advertisementId);
+        DeleteCampaignResponse result = DeleteCampaignResponse.from(advertisementId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
