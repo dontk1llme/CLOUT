@@ -40,11 +40,8 @@ void main() {
       GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
       GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
       GetPage(name: '/advertiserdetail', page: () => AdvertiserDetail()),
-<<<<<<< HEAD
-=======
       GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
       GetPage(name: '/withdrawfirst', page: () => WithdrawFirst()),
->>>>>>> ba769a6fa9451618ea4c5b29be20180f4b71a96d
     ],
   )));
 }
