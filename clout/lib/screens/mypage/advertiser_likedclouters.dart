@@ -11,8 +11,8 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 
-class AdvertiserMyClouters extends StatelessWidget {
-  const AdvertiserMyClouters({super.key});
+class AdvertiserLikedclouters extends StatelessWidget {
+  const AdvertiserLikedclouters({super.key});
 
 @override
   Widget build(BuildContext context) {
