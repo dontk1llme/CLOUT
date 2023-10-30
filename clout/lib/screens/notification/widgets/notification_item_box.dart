@@ -50,16 +50,22 @@ class _NotificationItemState extends State<NotificationItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('업체명',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: fontSize1,
                     )),
                 Text('계약서가 도착했어요!',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: fontSize2,
                     )),
                 Text('계약내용을 확인해보세요',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: style.colors['gray'],
                       fontSize: fontSize3,
