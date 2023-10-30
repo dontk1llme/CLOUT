@@ -27,11 +27,8 @@ public class CreateAdvertiserProcessor {
     }
 
     private boolean checkUserId(String userId) {
-        Member findMember = memberRepository.findByUserId(userId).orElse(null);
-        if (findMember == null) {
-            return true;
-        } else {
-            throw new AdrIdDuplicateException(ErrorCode.ADVERTISER_ID_DUPLICATE);
-        }
+        Member findMember = memberRepository.findByUserId(userId).orElseThrow(
+            () -> new AdrIdDuplicateException(ErrorCode.ADVERTISER_ID_DUPLICATE));
+        return true;
     }
 }
