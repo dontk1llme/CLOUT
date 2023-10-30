@@ -62,7 +62,7 @@ class Contract extends StatelessWidget {
               children: [
                 // 기능 없음! 아래 버튼들 누르지 마시오!
                 BigButton(title: '계약서 저장하기'),
-                SizedBox(height: 10), // 10 픽셀의 공백을 추가합니다.
+                SizedBox(height: 10), 
                 BigButton(title: '카카오톡 전송하기'),
               ],
             ),
