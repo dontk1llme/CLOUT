@@ -20,6 +20,9 @@ public class AdvertisementController implements AdvertisementControllerDocs {
 
     private final AdvertisementFacade advertisementFacade;
 
+    // TODO Point 도메인과 연결 & 이미지 저장 필요
+    // 등록하기 전 포인트 10,000포인트 있어야 함. 없으면 충전 페이지로 이동.
+
     @PostMapping
     public ResponseEntity<CreateCampaignResponse> createCampaign(
         @RequestBody @Valid CreateCampaignRequest createCampaignRequest

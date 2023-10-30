@@ -11,6 +11,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateCampaignCommand {
 
+
+    private Long registerId;
+
     private AdCategory adCategory;
 
     private String title;

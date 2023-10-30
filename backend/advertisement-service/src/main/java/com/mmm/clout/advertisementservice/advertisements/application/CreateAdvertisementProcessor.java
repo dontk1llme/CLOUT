@@ -13,7 +13,22 @@ public class CreateAdvertisementProcessor {
 
     @Transactional
     public Campaign execute(CreateCampaignCommand command) {
-
-        return advertisementRepository.save(null);
+        Campaign campaign = Campaign.create(
+            command.getRegisterId(),
+            command.getAdPlatformList(),
+            command.getPrice(),
+            command.getDetails(),
+            command.getTitle(),
+            command.getAdCategory(),
+            command.isPriceChangeable(),
+            command.isDeliveryRequired(),
+            command.getNumberOfRecruiter(),
+            command.getOfferingDetails(),
+            command.getSellingLink(),
+            command.getMinClouterAge(),
+            command.getMaxClouterAge(),
+            command.getMinFollower()
+        );
+        return advertisementRepository.save(campaign);
     }
 }

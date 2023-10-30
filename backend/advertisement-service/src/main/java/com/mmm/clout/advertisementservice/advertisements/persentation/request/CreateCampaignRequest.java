@@ -18,6 +18,9 @@ import lombok.Getter;
 public class CreateCampaignRequest {
 
     @NotNull
+    private Long registerId;
+
+    @NotNull
     private AdCategory adCategory;
 
     @NotBlank
@@ -70,6 +73,7 @@ public class CreateCampaignRequest {
 
     public CreateCampaignCommand toCommand() {
         return new CreateCampaignCommand(
+            this.registerId,
             this.adCategory,
             this.title,
             this.numberOfRecruiter,

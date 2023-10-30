@@ -11,16 +11,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.transaction.annotation.Transactional;
 
 @Getter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @DynamicInsert
 @Table(name = "campaign")
@@ -60,45 +58,79 @@ public class Campaign extends Advertisement {
     @Enumerated(EnumType.STRING)
     private List<Region> regionList;
 
-    public Campaign(String title, AdCategory category, Boolean isPriceChangeable, Boolean isDeliveryRequired, Integer numberOfRecruiter, Integer numberOfApplicants, String offeringDetails, String sellingLink, LocalDate applyStartDate,
-        LocalDate applyEndDate, Integer minClouterAge, Integer maxClouterAge, Integer minFollower) {
+    protected Campaign() {
+        super();
     }
 
-
-    public void create(
+    public Campaign(
+        Long registerId,
+        List<AdPlatform> adPlatformList,
+        Long price,
+        String details,
         String title,
         AdCategory category,
         Boolean isPriceChangeable,
         Boolean isDeliveryRequired,
         Integer numberOfRecruiter,
-        Integer numberOfApplicants,
         String offeringDetails,
         String sellingLink,
-        LocalDate applyStartDate,
-        LocalDate applyEndDate,
         Integer minClouterAge,
         Integer maxClouterAge,
         Integer minFollower
     ) {
-        new Campaign(
+        super(
+            registerId,
+            adPlatformList,
+            price,
+            details
+        );
+
+        this.title = title;
+        this.adCategory = category;
+        this.isPriceChangeable = isPriceChangeable;
+        this.isDeliveryRequired = isDeliveryRequired;
+        this.numberOfRecruiter = numberOfRecruiter;
+        this.numberOfApplicants = 0;
+        this.offeringDetails = offeringDetails;
+        this.sellingLink = sellingLink;
+        this.minClouterAge = minClouterAge;
+        this.maxClouterAge = maxClouterAge;
+        this.minFollower = minFollower;
+        this.applyStartDate = LocalDate.now();
+        this.applyEndDate = this.applyStartDate.plusMonths(1);
+    }
+
+    public static Campaign create(
+        Long registerId,
+        List<AdPlatform> adPlatformList,
+        Long price,
+        String details,
+        String title,
+        AdCategory category,
+        Boolean isPriceChangeable,
+        Boolean isDeliveryRequired,
+        Integer numberOfRecruiter,
+        String offeringDetails,
+        String sellingLink,
+        Integer minClouterAge,
+        Integer maxClouterAge,
+        Integer minFollower
+    ) {
+        return new Campaign(
+            registerId,
+            adPlatformList,
+            price,
+            details,
             title,
             category,
             isPriceChangeable,
             isDeliveryRequired,
             numberOfRecruiter,
-            numberOfApplicants,
             offeringDetails,
             sellingLink,
-            applyStartDate,
-            applyEndDate,
             minClouterAge,
             maxClouterAge,
             minFollower
         );
-    }
-
-    @Override
-    public void create() {
-
     }
 }
