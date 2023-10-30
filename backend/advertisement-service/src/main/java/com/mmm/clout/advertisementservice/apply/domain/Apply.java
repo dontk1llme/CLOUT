@@ -3,6 +3,7 @@ package com.mmm.clout.advertisementservice.apply.domain;
 import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
 import com.mmm.clout.advertisementservice.common.entity.BaseEntity;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -26,12 +27,13 @@ import org.hibernate.annotations.DynamicInsert;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @DynamicInsert
-@Table(name = "applies")
+@Table(name = "apply")
 @Entity
 public class Apply extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "apply_id")
     private Long id;
 
     @ManyToOne

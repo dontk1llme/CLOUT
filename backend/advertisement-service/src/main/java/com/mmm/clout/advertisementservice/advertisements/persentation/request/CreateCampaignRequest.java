@@ -1,6 +1,6 @@
 package com.mmm.clout.advertisementservice.advertisements.persentation.request;
 
-import com.mmm.clout.advertisementservice.advertisements.application.command.CreateAdCommand;
+import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
 import com.mmm.clout.advertisementservice.advertisements.domain.Region;
@@ -15,7 +15,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CreateAdRequest {
+public class CreateCampaignRequest {
 
     @NotNull
     private AdCategory adCategory;
@@ -68,8 +68,8 @@ public class CreateAdRequest {
     private List<Region> regionList;
 
 
-    public CreateAdCommand toCommand() {
-        return new CreateAdCommand(
+    public CreateCampaignCommand toCommand() {
+        return new CreateCampaignCommand(
             this.adCategory,
             this.title,
             this.numberOfRecruiter,

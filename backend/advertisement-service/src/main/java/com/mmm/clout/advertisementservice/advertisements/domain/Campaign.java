@@ -97,4 +97,8 @@ public class Campaign extends Advertisement {
         );
     }
 
+    @Override
+    public void create() {
+
+    }
 }

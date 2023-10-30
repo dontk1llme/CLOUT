@@ -1,5 +1,7 @@
 package com.mmm.clout.advertisementservice.advertisements.domain;
 
+import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
+import com.mmm.clout.advertisementservice.advertisements.domain.Register;
 import com.mmm.clout.advertisementservice.common.entity.BaseEntity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

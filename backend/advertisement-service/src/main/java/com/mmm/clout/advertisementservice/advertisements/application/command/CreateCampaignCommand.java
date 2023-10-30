@@ -3,19 +3,13 @@ package com.mmm.clout.advertisementservice.advertisements.application.command;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
 import com.mmm.clout.advertisementservice.advertisements.domain.Region;
-import java.time.LocalDate;
 import java.util.List;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CreateAdCommand {
+public class CreateCampaignCommand {
 
     private AdCategory adCategory;
 

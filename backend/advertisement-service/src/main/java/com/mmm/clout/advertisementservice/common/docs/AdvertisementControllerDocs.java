@@ -1,6 +1,6 @@
 package com.mmm.clout.advertisementservice.common.docs;
 
-import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateAdRequest;
+import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,6 +33,6 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<CreateCampaignResponse> createCampaign(
-        CreateAdRequest request
+        CreateCampaignRequest request
     );
 }
