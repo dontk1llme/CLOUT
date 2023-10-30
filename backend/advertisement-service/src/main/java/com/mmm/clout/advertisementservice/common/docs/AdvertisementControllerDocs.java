@@ -1,7 +1,9 @@
 package com.mmm.clout.advertisementservice.common.docs;
 
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
+import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -41,5 +43,35 @@ public interface AdvertisementControllerDocs {
     )
     ResponseEntity<CreateCampaignResponse> createCampaign(
         CreateCampaignRequest request
+    );
+
+
+    @Operation(summary = "광고 캠페인 수정",
+        description = "광고 캠페인 id를 받아 정보를 수정합니다.",
+        parameters = {
+            @Parameter(
+                in = ParameterIn.HEADER,
+                name = "Authorization",
+                required = true,
+                schema = @Schema(type = "string"),
+                description = "인증 토큰"
+            )
+        },
+        responses =
+        @ApiResponse(responseCode = "200", description = "광고 캠페인 수정 성공",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation= UpdateCampaignResponse.class))
+        ),
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = UpdateCampaignRequest.class)),
+            description = "캠페인 수정을 위한 정보",
+            required = true
+        )
+    )
+    ResponseEntity<UpdateCampaignResponse> updateCampaign(
+        Long advertisementId,
+        UpdateCampaignRequest request
     );
 }
