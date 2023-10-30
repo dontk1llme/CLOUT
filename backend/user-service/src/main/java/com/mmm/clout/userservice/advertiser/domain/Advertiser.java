@@ -1,6 +1,6 @@
 package com.mmm.clout.userservice.advertiser.domain;
 
-import com.mmm.clout.userservice.common.entity.Address;
+import com.mmm.clout.userservice.common.entity.address.Address;
 import com.mmm.clout.userservice.member.domain.Member;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 @Entity
 public class Advertiser extends Member {
 
+    @Embedded
     private Address address;
 
     @Embedded
@@ -36,8 +37,8 @@ public class Advertiser extends Member {
         return advertiser;
     }
 
-    public Advertiser update(String userId, String pwd, Address address, CompanyInfo companyInfo) {
-        super.update(userId, pwd);
+    public Advertiser update(String pwd, Address address, CompanyInfo companyInfo) {
+        super.update(pwd);
         this.address = address;
         this.companyInfo = companyInfo;
         return this;

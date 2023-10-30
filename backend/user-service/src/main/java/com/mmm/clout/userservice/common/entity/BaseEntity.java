@@ -1,4 +1,4 @@
-package com.mmm.clout.advertisementservice.common.entity;
+package com.mmm.clout.userservice.common.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @MappedSuperclass
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

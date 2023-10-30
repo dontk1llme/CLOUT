@@ -1,6 +1,7 @@
 package com.mmm.clout.userservice.advertiser.presentation.response;
 
 import com.mmm.clout.userservice.advertiser.domain.Advertiser;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,7 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class UpdateAdrResponse {
 
-    private Long createdAdrId;
+    @Schema(description = "수정된 광고주 id")
+    private Long updatedAdrId;
 
     public static UpdateAdrResponse from(Advertiser advertiser) {
         return new UpdateAdrResponse(advertiser.getId());

@@ -1,4 +1,4 @@
-package com.mmm.clout.userservice.common.entity;
+package com.mmm.clout.userservice.common.entity.address;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
