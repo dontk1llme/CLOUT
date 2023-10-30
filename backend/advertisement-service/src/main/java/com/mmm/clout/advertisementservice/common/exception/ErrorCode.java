@@ -25,7 +25,8 @@ public enum ErrorCode {
      * Advertisement - campaign
      */
 
-    CAMPAIGN_NOT_FOUND(HttpStatus.NOT_FOUND, "CAMPAIGN_ENTITY_NOT_FOUND", "등록되지 않은 광고 캠페인입니다.");
+    CAMPAIGN_NOT_FOUND(HttpStatus.NOT_FOUND, "CAMPAIGN_ENTITY_NOT_FOUND", "등록되지 않은 광고 캠페인입니다."),
+    END_RECUITS(HttpStatus.BAD_REQUEST, "END_RECRUITS", "모집 인원/날짜가 초과된 광고 캠페인입니다.");
 
 
     private final HttpStatus status;
