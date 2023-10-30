@@ -7,15 +7,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ImageWidget extends ConsumerWidget {
-  ImageWidget({super.key});
+  ImageWidget({super.key, this.parentImages});
+  final parentImages;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double imgBoxSize = ((MediaQuery.of(context).size.width - 32) / 5) - 4;
+    print(ref);
     final images = ref.watch(imagePickerProvider);
+    // print(images);
 
     Widget imageBox(XFile img) => GestureDetector(
-        onTap: () => ref.read(imagePickerProvider.notifier).delImage(img),
+        onTap: () => {
+              ref.read(imagePickerProvider.notifier).delImage(img),
+              // print(images)
+            },
         child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 2),
             width: imgBoxSize,
