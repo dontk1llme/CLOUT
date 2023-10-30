@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
-import 'package:clout/widgets/sns/widgets/bold_text.dart';
 import 'package:clout/widgets/sns/widgets/sns_item_box.dart';
 
 class Sns1 extends StatefulWidget {
