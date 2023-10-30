@@ -9,14 +9,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmsService {
 
-    public void smsSend(String number, String sendMessage) {
-        DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCSJ7HUQJPIEA5BA", "TWFJAU6CNXSK5CCKW65RX5MKSAHENIOL", "https://api.coolsms.co.kr");
-// Message 패키지가 중복될 경우 net.nurigo.sdk.message.model.Message로 치환하여 주세요
-        Message message = new Message();
-        message.setFrom("010-6208-0637");
-        message.setTo(number);
-        message.setText(sendMessage);
+    public final static String SENDNUM = "010-6208-0637";
+    public final static String FORM = "아래의 인증번호를 입력해 주세요\n";
 
+    public String smsSend(String number, String sendKey) {
+        DefaultMessageService messageService =  NurigoApp.INSTANCE.initialize("NCSJ7HUQJPIEA5BA", "TWFJAU6CNXSK5CCKW65RX5MKSAHENIOL", "https://api.coolsms.co.kr");
+        // Message 패키지가 중복될 경우 net.nurigo.sdk.message.model.Message로 치환하여 주세요
+        Message message = new Message();
+        message.setFrom(SENDNUM);
+        message.setTo(number);
+        message.setText(FORM + sendKey);
         try {
             // send 메소드로 ArrayList<Message> 객체를 넣어도 동작합니다!
             messageService.send(message);
@@ -27,6 +29,7 @@ public class SmsService {
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
+        return sendKey;
     }
 
 }

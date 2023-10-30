@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 @Entity
 public class Advertiser extends Member {
 
+    @Embedded
     private Address address;
 
     @Embedded
