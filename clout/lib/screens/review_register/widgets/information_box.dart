@@ -25,45 +25,55 @@ class InformationBox extends StatelessWidget {
       ),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
-              'assets/images/clouterImage.jpg',
-              width: imageSize,
-              height: imageSize,
-              fit: BoxFit.cover,
+          Flexible(
+            flex: 1,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                'assets/images/clouterImage.jpg',
+                width: imageSize,
+                height: imageSize,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SizedBox(
             width: textSpacing,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '모카우유',
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: fontSize1,
-                ),
-              ),
-              Text(
-                '2023.10.01 ~ 2023.10.25',
-                style: TextStyle(
-                  fontSize: fontSize2,
-                ),
-              ),
-              Text(
-                '80만 포인트',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: fontSize3,
-                  color: style.colors['main1'],
-                ),
-              ),
-            ],
-          )
+          Flexible(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '모카우유',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: fontSize1,
+                    ),
+                  ),
+                  Text(
+                    '2023.10.01 ~ 2023.10.25',
+                    style: TextStyle(
+                      fontSize: fontSize2,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    '80만 포인트',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: fontSize3,
+                      color: style.colors['main1'],
+                    ),
+                  ),
+                ],
+              ))
         ],
       ),
     );

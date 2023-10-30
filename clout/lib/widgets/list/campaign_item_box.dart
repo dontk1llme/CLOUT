@@ -1,10 +1,11 @@
-import 'package:clout/widgets/common/nametag.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
 import 'package:get/get.dart';
+import 'package:clout/widgets/common/nametag.dart';
+import 'package:clout/widgets/sns/sns2.dart';
 
 class CampaignItemBox extends StatefulWidget {
   const CampaignItemBox({super.key});
@@ -58,16 +59,35 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 height: imageSize,
                 fit: BoxFit.cover,
               ),
+              Positioned(
+                bottom: 5,
+                right: 5,
+                child: Sns2(),
+              ),
               LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
             ],
           ),
-          NameTag(title: '카테고리'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              NameTag(title: '카테고리'),
+              Text('2명 / 3명',
+                  style: TextStyle(
+                    fontSize: 12,
+                  )),
+            ],
+          ),
           Text('제품명',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: titleFontSize,
               )),
           Text('광고비',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: style.colors['main1'],
                 fontWeight: FontWeight.w500,
@@ -77,6 +97,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text('업체명',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: companyInfoFontSize,
                   )),

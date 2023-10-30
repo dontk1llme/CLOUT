@@ -1,4 +1,3 @@
-import 'package:clout/widgets/common/nametag.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -8,6 +7,8 @@ import 'package:clout/screens/clouter/clouter_detail.dart';
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
+import 'package:clout/widgets/common/nametag.dart';
+import 'package:clout/widgets/sns/sns2.dart';
 
 class ClouterItemBox extends StatefulWidget {
   const ClouterItemBox({super.key});
@@ -60,12 +61,19 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                   height: imageSize,
                   fit: BoxFit.cover,
                 ),
+                Positioned(
+                  bottom: 5, // 아래 여백
+                  right: 5, // 오른쪽 여백
+                  child: Sns2(), // 배치할 위젯
+                ),
                 LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
             NameTag(title: '카테고리'),
             Text(
               '계정명',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: nameFontSize,
@@ -73,6 +81,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
             ),
             Text(
               '광고비',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: style.colors['main1'],
                 fontWeight: FontWeight.w500,
@@ -89,6 +99,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                 ),
                 Text(
                   'N',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: contractInfoFontSize,

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:clout/style.dart' as style;
 
-class CategoryList extends StatelessWidget {
+class CategoryList extends StatefulWidget {
   CategoryList({super.key});
 
+  @override
+  State<CategoryList> createState() => _CategoryListState();
+}
+
+class _CategoryListState extends State<CategoryList> {
   final List<Map<String, String>> categoryData = [
     {'path': 'assets/images/all.png', 'name': '전체보기'},
     {'path': 'assets/images/cosmetics.png', 'name': '패션/뷰티'},
@@ -17,6 +23,8 @@ class CategoryList extends StatelessWidget {
     {'path': 'assets/images/money.png', 'name': '경제/사업'},
     {'path': 'assets/images/more.png', 'name': '기타'},
   ];
+
+  List<int> selectedCategories = [];
 
   @override
   build(BuildContext context) {
@@ -46,32 +54,50 @@ class CategoryList extends StatelessWidget {
 
   List<Widget> _categoryButtons(
       BuildContext context, int startIndex, int lastIndex, double buttonSize) {
-    return List.generate(
-      lastIndex - startIndex + 1,
-      (index) => Column(
+    final uniqueIndexes = List.generate(
+        lastIndex - startIndex + 1, (index) => startIndex + index);
+
+    return uniqueIndexes.map((index) {
+      return Column(
         children: [
           _categoryButton(
             context,
-            categoryData[startIndex + index]['path']!,
+            categoryData[index]['path']!,
             buttonSize,
+            index,
           ),
-          Text(categoryData[startIndex + index]['name']!,
+          Text(categoryData[index]['name']!,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
               )),
         ],
-      ),
-    );
+      );
+    }).toList();
   }
 
   Widget _categoryButton(
-      BuildContext context, String imagePath, double buttonSize) {
+      BuildContext context, String imagePath, double buttonSize, int index) {
     final double imageSize = buttonSize;
     final double paddingSize = imageSize / 6;
 
+    bool isSelected = selectedCategories.contains(index);
+
     return InkWell(
       onTap: () {
-        // 버튼 눌렀을 때 실행
+        setState(() {
+          if (index == 0) {
+            selectedCategories.clear();
+            selectedCategories.add(0);
+          } else {
+            selectedCategories.remove(0);
+            if (selectedCategories.contains(index)) {
+              selectedCategories.remove(index);
+            } else {
+              selectedCategories.add(index);
+            }
+          }
+          _fetchSearchResults();
+        });
       },
       child: Container(
         width: imageSize,
@@ -79,7 +105,7 @@ class CategoryList extends StatelessWidget {
         padding: EdgeInsets.all(paddingSize),
         margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isSelected ? style.colors['main2'] : style.colors['white'],
           borderRadius: BorderRadius.circular(13),
         ),
         child: Image.asset(
@@ -89,5 +115,11 @@ class CategoryList extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  //  💥 API 호출 및 결과 처리 메소드
+  void _fetchSearchResults() {
+    // 여기서
+    print("선택된 카테고리: $selectedCategories");
   }
 }
