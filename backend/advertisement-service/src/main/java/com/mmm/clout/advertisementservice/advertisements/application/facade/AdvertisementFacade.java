@@ -1,7 +1,7 @@
 package com.mmm.clout.advertisementservice.advertisements.application.facade;
 
 import com.mmm.clout.advertisementservice.advertisements.application.CreateAdvertisementProcessor;
-import com.mmm.clout.advertisementservice.advertisements.application.command.CreateAdCommand;
+import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class AdvertisementFacade {
 
     private final CreateAdvertisementProcessor createAdvertisementProcessor;
 
-    public Campaign create(CreateAdCommand command) {
+    public Campaign create(CreateCampaignCommand command) {
         return createAdvertisementProcessor.execute(command);
     }
 }
