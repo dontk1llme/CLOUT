@@ -11,10 +11,11 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/buttons/small_outlined_button.dart';
 import 'package:clout/screens/point/widgets/my_wallet.dart';
-import 'package:clout/screens/mypage/advertiser_mycampaign.dart';
-import 'package:clout/screens/mypage/advertiser_likedclouters.dart';
 
 // screens
+import 'package:clout/screens/mypage/advertiser_mycampaign.dart';
+import 'package:clout/screens/mypage/advertiser_likedclouters.dart';
+import 'package:clout/screens/mypage/contract_list.dart';
 import 'package:clout/screens/mypage/advertiser_detail.dart';
 import 'package:clout/screens/mypage/widgets/mypage_list.dart';
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
@@ -53,7 +54,7 @@ class AdvertiserMyPage extends StatelessWidget {
                     ),
                     MyWallet(userType: 'clouter'),
                     MyPageList(title: '내 계약서', btnTitle: '더보기', 
-                      onButtonPressed: () => Get.toNamed('/clouterdetail')), //
+                      onButtonPressed: () => Get.to(ContractList())), //
                     Divider(
                         thickness: 1,
                         height: 1,
