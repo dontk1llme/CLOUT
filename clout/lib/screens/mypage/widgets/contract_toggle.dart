@@ -30,7 +30,10 @@ class _ContractToggleState extends State<ContractToggle> {
           decoration: BoxDecoration(
             color: _selections1[0] ? style.colors['category'] : Color(0xFFE8ECF4),
             borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: Text('    전체 내역'),
+           child: Align(
+            alignment: Alignment.center,
+            child: Text('전체 내역'),
+          ),
         ),
         Container(
           width: 80,
@@ -39,15 +42,21 @@ class _ContractToggleState extends State<ContractToggle> {
             color: _selections1[1] ? style.colors['category'] : Color(0xFFE8ECF4), 
             borderRadius: BorderRadius.all(Radius.circular(10))),
       
-          child: Text('        완료'),
+           child: Align(
+            alignment: Alignment.center,
+            child: Text('완료'),
+          ),
         ),
         Container(
           width: 80,
           height: 24,
-         decoration: BoxDecoration(
+          decoration: BoxDecoration(
             color: _selections1[2] ? style.colors['category'] : Color(0xFFE8ECF4), 
             borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: Text('      진행 중'),
+           child: Align(
+            alignment: Alignment.center,
+            child: Text('진행 중'),
+          ),
         ),
         Container(
           width: 80,
@@ -56,7 +65,10 @@ class _ContractToggleState extends State<ContractToggle> {
             color: _selections1[3] ? style.colors['category'] : Color(0xFFE8ECF4), 
             borderRadius: BorderRadius.all(Radius.circular(10))),
             
-          child: Text('         예정'),
+           child: Align(
+            alignment: Alignment.center,
+            child: Text('예정'),
+          ),
         ),
       ],
     );
