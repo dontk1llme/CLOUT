@@ -1,5 +1,6 @@
 // 계약서 목록
 import 'package:clout/screens/mypage/widgets/contract_toggle.dart';
+import 'package:clout/screens/mypage/widgets/small_contract.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -47,23 +48,19 @@ class ContractList extends StatelessWidget {
                           thickness: 1,
                           height: 1,
                           color: style.colors['lightgray']),
-                     Container(
-                      padding: EdgeInsets.all(15), // 가로 패딩 설정
-                      child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 한 행에 2개의 아이템 배치
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 1 / 1.45,
+                     BouncingListview(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 5, right: 5),
+                          child: Column(children: [
+                            for (num i = 0; i < 10; i++)
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                                child: SmallContract(),
+                              ),
+                              
+                          ]),
                         ),
-                        itemCount: 20, // 아이템의 개수
-                        itemBuilder: (BuildContext context, int index) {
-                          return CampaignItemBox();
-                        },
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                      ),
-                    ),
+                      )
                     ],
                   )),
             )));
