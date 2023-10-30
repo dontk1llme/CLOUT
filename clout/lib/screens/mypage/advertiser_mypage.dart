@@ -48,7 +48,7 @@ class AdvertiserMyPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    MyWallet(userType: 'clouter'),
+                    MyWallet(userType: 'advertiser'),
                     MyPageList(title: '내 계약서', btnTitle: '더보기'),
                     Divider(
                         thickness: 1,
