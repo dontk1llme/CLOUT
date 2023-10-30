@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 // widgets
 import 'package:clout/widgets/header/header.dart';
-import 'package:clout/widgets/sns/sns3.dart';
+import 'package:clout/widgets/sns/sns1.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/buttons/like_button.dart';
 
@@ -58,7 +58,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                 ),
                 Row(
                   children: [
-                    Text('찜할래요'),
+                    Text('Like'),
                     LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
                   ],
                 )
@@ -142,7 +142,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                 ),
               ),
             ),
-            Sns3(),
+            Sns1(),
           ],
         ),
       ),
