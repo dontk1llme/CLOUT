@@ -1,13 +1,13 @@
-// 계약서 리스트에 들어갈 컴포넌트
-import 'package:clout/screens/join/widgets/small_button.dart';
-import 'package:clout/screens/mypage/contract.dart';
-import 'package:clout/widgets/common/nametag.dart';
+import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // widgets
-import 'package:clout/widgets/buttons/like_button.dart';
+import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
+import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/buttons/small_button.dart';
 
 class SmallContract extends StatefulWidget {
   const SmallContract({super.key});
@@ -17,93 +17,56 @@ class SmallContract extends StatefulWidget {
 }
 
 class _SmallContractState extends State<SmallContract> {
-  bool isItemLiked = false;
-
-  void handleItemTap() {
-    setState(() {
-      isItemLiked = !isItemLiked;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    final boxWidth = screenWidth;
-    final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
-
     return Container(
-      width: boxWidth,
-      padding: EdgeInsets.all(boxPadding),
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
       decoration: BoxDecoration(
         color: style.colors['white'],
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(5),
         boxShadow: style.shadows['shadow'],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            alignment: Alignment.topRight,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '못골영농조합법인',
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DataTitle(text: '못골영농조합법인'),
+            SizedBox(height: 7),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(Icons.card_giftcard_outlined,
+                    size: 17, color: style.colors['main1']),
+                Text(' 제공내역 ',
                     style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: screenWidth > 400 ? 19 : 17,
-                    ),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.card_giftcard,
-                            color: style.colors['main1'],
-                            size: screenWidth > 400 ? 18 : 15,
-                          ),
-                          Text(
-                            '제공내역 ',
-                            style: TextStyle(
-                              fontSize: screenWidth > 400 ? 14 : 11,
-                            ),
-                          ),
-                          Text(
-                            '1000 포인트',
-                            style: TextStyle(
-                              fontSize: screenWidth > 400 ? 15 : 13,
-                              fontWeight: FontWeight.w600,
-                              color: style.colors['main1'],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                      fontSize: 13,
+                    )),
+                Text('1,000 포인트',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: style.colors['main1'],
+                    )),
+              ],
+            )
+          ],
+        ),
+        ElevatedButton(
+          onPressed: () => {},
+          style: ElevatedButton.styleFrom(
+              backgroundColor: style.colors['main1'],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-              Positioned(
-                right: 10, // 조절하여 원하는 위치로 이동할 수 있습니다.
-                child: SmallButton(
-                  title: "계약서",
-                  function: () {
-                    Get.to(Contract());
-                  },
-                ),
-              ),
-            ],
-          )
-
-
-
-          
-        ],
-      ),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20)),
+          child: Text(
+            '계약서',
+            style: style.textTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }
