@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
 
 // widgets
 import 'package:clout/widgets/buttons/small_button.dart';
@@ -29,8 +30,7 @@ class MyWallet extends StatelessWidget {
             flex: 1,
             child: SmallButton(
               title: '출금하기',
-              destination: 'withdraw',
-              function: () {},
+              destination: 'withdrawfirst',
             ),
           ),
         ],
@@ -40,8 +40,7 @@ class MyWallet extends StatelessWidget {
         flex: 1,
         child: SmallButton(
           title: '출금하기',
-          destination: 'withdraw',
-          function: () {},
+          destination: 'withdrawfirst',
         ),
       );
     } else {

@@ -18,6 +18,8 @@ import 'package:clout/screens/mypage/clouter_mypage.dart';
 import 'package:clout/screens/mypage/advertiser_mypage.dart';
 import 'package:clout/screens/mypage/advertiser_detail.dart';
 import 'package:clout/screens/mypage/clouter_detail.dart';
+import 'package:clout/screens/point/withdraw/withdraw_first.dart';
+import 'package:clout/screens/point/withdraw/withdraw_second.dart';
 
 void main() {
   runApp(GetMaterialApp(
@@ -35,9 +37,12 @@ void main() {
       GetPage(name: '/chattinglist', page: () => ChattingList()),
       GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
       GetPage(name: '/cloutermypage', page: () => ClouterMyPage()),
+      GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
       GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
       GetPage(name: '/advertiserdetail', page: () => AdvertiserDetail()),
       GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
+      GetPage(name: '/withdrawfirst', page: () => WithdrawFirst()),
+      GetPage(name: '/withdrawsecond', page: () => WithdrawSecond()),
     ],
   ));
 }
