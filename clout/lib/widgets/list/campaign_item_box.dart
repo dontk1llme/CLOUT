@@ -25,11 +25,14 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final boxWidth = screenWidth > 400 ? 200.0 : 165.0;
-    final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
-    final imageSize = screenWidth > 400 ? 160.0 : 130.0;
-    final categoryNameWidth = screenWidth > 400 ? 70.0 : 55.0;
-    final categoryNameHeight = screenWidth > 400 ? 30.0 : 20.0;
+    final boxWidth = screenWidth * 0.4;
+    final boxPadding = screenWidth * 0.03;
+    final imageSize = screenWidth * 0.32;
+    final titleFontSize = screenWidth * 0.046;
+    final adPriceFontSize = screenWidth * 0.04;
+    final companyInfoFontSize = screenWidth * 0.033;
+    final starIconSize = screenWidth * 0.04;
+    final ratingFontSize = screenWidth * 0.03;
 
     return Container(
       width: boxWidth,
@@ -58,30 +61,30 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
           Text('제품명',
               style: TextStyle(
                 fontWeight: FontWeight.w700,
-                fontSize: screenWidth > 400 ? 19 : 17,
+                fontSize: titleFontSize,
               )),
           Text('광고비',
               style: TextStyle(
                 color: style.colors['main1'],
                 fontWeight: FontWeight.w500,
-                fontSize: screenWidth > 400 ? 17 : 15,
+                fontSize: adPriceFontSize,
               )),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text('업체명',
                   style: TextStyle(
-                    fontSize: screenWidth > 400 ? 15 : 13,
+                    fontSize: companyInfoFontSize,
                   )),
               Icon(
                 Icons.star,
                 color: Colors.yellow,
-                size: screenWidth > 400 ? 18 : 15,
+                size: starIconSize,
               ),
               Text('20.5',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: screenWidth > 400 ? 14 : 11,
+                    fontSize: ratingFontSize,
                   )),
             ],
           )

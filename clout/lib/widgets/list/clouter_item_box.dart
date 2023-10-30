@@ -17,24 +17,23 @@ class ClouterItemBox extends StatefulWidget {
 }
 
 class _ClouterItemBoxState extends State<ClouterItemBox> {
+  bool isItemLiked = false;
+
+  void handleItemTap() {
+    setState(() {
+      isItemLiked = !isItemLiked;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isItemLiked = false;
-
-    void handleItemTap() {
-      setState(() {
-        isItemLiked = !isItemLiked;
-      });
-    }
-
     final screenWidth = MediaQuery.of(context).size.width;
-    final boxWidth = screenWidth > 400 ? 200.0 : 165.0;
-    final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
-    final imageSize = screenWidth > 400 ? 160.0 : 130.0;
-    final categoryNameWidth = screenWidth > 400 ? 70.0 : 55.0;
-    final categoryNameHeight = screenWidth > 400 ? 30.0 : 20.0;
-    final nameFontSize = screenWidth > 400 ? 19.0 : 17.0;
-    final adFeeFontSize = screenWidth > 400 ? 17.0 : 15.0;
+    final boxWidth = screenWidth * 0.4;
+    final boxPadding = screenWidth * 0.03;
+    final imageSize = screenWidth * 0.32;
+    final nameFontSize = screenWidth * 0.046;
+    final adFeeFontSize = screenWidth * 0.04;
+    final contractInfoFontSize = screenWidth * 0.033;
 
     return GestureDetector(
       onTap: () {
@@ -45,7 +44,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
         padding: EdgeInsets.all(boxPadding),
         decoration: BoxDecoration(
           color: style.colors['white'],
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(
+              screenWidth * 0.025), // 2.5% of screen width
           boxShadow: style.shadows['shadow'],
         ),
         child: Column(
@@ -84,14 +84,14 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                 Text(
                   '계약한 광고 수 : ',
                   style: TextStyle(
-                    fontSize: screenWidth > 400 ? 15 : 13,
+                    fontSize: contractInfoFontSize,
                   ),
                 ),
                 Text(
                   'N',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: screenWidth > 400 ? 15 : 13,
+                    fontSize: contractInfoFontSize,
                   ),
                 ),
               ],
