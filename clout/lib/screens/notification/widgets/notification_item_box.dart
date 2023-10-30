@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 // screens
 import 'package:clout/screens/review_register/review_register.dart';
+import 'package:clout/screens/clouter/clouter_select.dart';
 
 class NotificationItem extends StatefulWidget {
   const NotificationItem({super.key});
@@ -79,7 +80,7 @@ class _NotificationItemState extends State<NotificationItem> {
                     width: buttonWidth,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(() => ReviewRegister());
+                        Get.to(() => ClouterSelect());
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
