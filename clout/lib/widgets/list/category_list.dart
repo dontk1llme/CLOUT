@@ -29,26 +29,17 @@ class _CategoryListState extends State<CategoryList> {
   @override
   build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double buttonSize = screenWidth / 7; // 이미지 버튼 크기를 화면 너비에 따라 조정
+    final double buttonSize = 50; // 이미지 버튼 크기를 화면 너비에 따라 조정
 
     return Container(
       width: double.infinity,
-      height: 225,
+      // height: 225,
       color: Color(0xffF6F4FF),
       padding: EdgeInsets.all(15),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: _categoryButtons(context, 0, 5, buttonSize),
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: _categoryButtons(context, 6, 11, buttonSize),
-          )
-        ],
-      ),
+      child: Wrap(
+          alignment: WrapAlignment.spaceAround,
+          runSpacing: 10,
+          children: _categoryButtons(context, 0, 11, buttonSize)),
     );
   }
 
@@ -77,6 +68,7 @@ class _CategoryListState extends State<CategoryList> {
 
   Widget _categoryButton(
       BuildContext context, String imagePath, double buttonSize, int index) {
+    final double screenWidth = MediaQuery.of(context).size.width;
     final double imageSize = buttonSize;
     final double paddingSize = imageSize / 6;
 
@@ -99,19 +91,25 @@ class _CategoryListState extends State<CategoryList> {
           _fetchSearchResults();
         });
       },
-      child: Container(
-        width: imageSize,
-        height: imageSize,
-        padding: EdgeInsets.all(paddingSize),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-        decoration: BoxDecoration(
-          color: isSelected ? style.colors['main2'] : style.colors['white'],
-          borderRadius: BorderRadius.circular(13),
-        ),
-        child: Image.asset(
-          imagePath,
-          width: imageSize - 2 * paddingSize,
-          height: imageSize - 2 * paddingSize,
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: Container(
+          width: screenWidth / 7,
+          height: screenWidth / 7,
+          // padding: EdgeInsets.all(10),
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
+          decoration: BoxDecoration(
+            color: isSelected ? style.colors['main2'] : style.colors['white'],
+            borderRadius: BorderRadius.circular(13),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Image.asset(
+              imagePath,
+              // width: imageSize - 2 * paddingSize,
+              // height: imageSize - 2 * paddingSize,
+            ),
+          ),
         ),
       ),
     );

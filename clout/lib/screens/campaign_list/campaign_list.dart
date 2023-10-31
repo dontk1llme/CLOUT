@@ -17,38 +17,22 @@ class CampaignList extends StatefulWidget {
 }
 
 class _MyCampaignList extends State<CampaignList> {
-  SfRangeValues ageRanges = SfRangeValues(0, 100);
-
-  var minAge;
-  var maxAge;
-
-  setAge(input) {
-    setState(() {
-      ageRanges = input;
-      minAge = input.start.toInt();
-      maxAge = input.end.toInt();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: style.colors['white'],
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: Header(
-          header: 1,
-          headerTitle: '캠페인 목록',
+        backgroundColor: style.colors['white'],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+            header: 1,
+            headerTitle: '캠페인 목록',
+          ),
         ),
-      ),
-      body: ListView(
-        children: [
+        body: ListView(children: [
           MySearchBar(),
           CategoryList(),
-          SearchDetailButton(
-            ageRanges: ageRanges,
-            setAge: setAge,
-          ),
+          SearchDetailButton(),
           Padding(
             padding: EdgeInsets.only(left: 20),
             child: Row(
@@ -64,25 +48,36 @@ class _MyCampaignList extends State<CampaignList> {
               ],
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(15), // 가로 패딩 설정
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 한 행에 2개의 아이템 배치
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 1 / 1.45,
-              ),
-              itemCount: 20, // 아이템의 개수
-              itemBuilder: (BuildContext context, int index) {
-                return CampaignItemBox();
-              },
-              shrinkWrap: true, // 필요한 경우 스크롤을 가능하게 함
-              physics: NeverScrollableScrollPhysics(), // 스크롤 방지
-            ),
-          ),
-        ],
-      ),
-    );
+          SizedBox(height: 20),
+          FractionallySizedBox(
+              widthFactor: screenWidth > 400 ? 0.9 : 1,
+              child: Align(alignment: Alignment.topCenter, child: Wrap(
+                  direction: Axis.horizontal,
+                  spacing: screenWidth > 400 ? 20 : 10,
+                  runSpacing: screenWidth > 400 ? 20 : 10,
+                  // alignment: Alignment.,
+                  children: []))),
+          SizedBox(height: 30),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+          CampaignItemBox(),
+        ]));
   }
 }

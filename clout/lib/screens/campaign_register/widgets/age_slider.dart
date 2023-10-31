@@ -1,24 +1,18 @@
+import 'package:clout/providers/serach_detail_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:clout/style.dart' as style;
 
 class AgeSlider extends StatelessWidget {
-  AgeSlider(
-      {super.key,
-      this.ageRanges,
-      this.setAge,
-      this.modalAge,
-      this.setModalAge});
-  var ageRanges;
-  var modalAge;
-  final setAge;
-  final setModalAge;
+  AgeSlider({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBuilder(builder: (context, setState) {
+    Get.put(SearchDetailController());
+    return GetBuilder<SearchDetailController>(builder: (controller) {
       return SfRangeSliderTheme(
           data: SfRangeSliderThemeData(
             tooltipBackgroundColor: style.colors['main2'],
@@ -38,17 +32,18 @@ class AgeSlider extends StatelessWidget {
             enableTooltip: true,
             min: 0.0,
             max: 100.0,
-            values: ageRanges,
+            values: controller.ageRanges,
             showTicks: true,
             showLabels: true,
             stepSize: 1,
             interval: 20,
             numberFormat: NumberFormat("###세"),
             onChanged: (SfRangeValues values) {
-              setAge(values);
-              if (setModalAge != null) setModalAge(values);
-              setState(() => modalAge = values);
-              setState(() => ageRanges = values);
+              controller.setAgeRanges(values);
+              // setAge(values);
+              // if (setModalAge != null) setModalAge(values);
+              // setState(() => modalAge = values);
+              // setState(() => ageRanges = values);
             },
           ));
     });
