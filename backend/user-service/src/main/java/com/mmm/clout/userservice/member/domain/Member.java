@@ -1,6 +1,6 @@
 package com.mmm.clout.userservice.member.domain;
 
-import com.mmm.clout.userservice.user.domain.common.Role;
+import com.mmm.clout.userservice.common.Role;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
@@ -14,16 +14,18 @@ import javax.persistence.*;
 @SuperBuilder
 @DynamicInsert
 @DiscriminatorColumn(name = "DTYPE")
-@Entity
+@Entity(name = "members")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Member {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="member_id")
     private Long id;
 
+    @Column(length = 25)
     private String userId;
 
+    @Column(length = 25)
     private String pwd;
 
     private Long avgScore;
