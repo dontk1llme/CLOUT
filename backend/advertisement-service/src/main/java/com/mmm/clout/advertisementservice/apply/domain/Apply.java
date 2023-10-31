@@ -54,7 +54,9 @@ public class Apply extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ApplyStatus applyStatus;
 
-    public static Apply apply(Campaign campaign, Applicant applicant, String applyMessage, Long hodeAdFee) {
+    public static Apply create(Campaign campaign, Applicant applicant, String applyMessage, Long hodeAdFee) {
+        campaign.validApplyStatus();
+        campaign.apply();
         return new Apply(campaign, applicant, applyMessage, hodeAdFee);
     }
 
@@ -66,6 +68,7 @@ public class Apply extends BaseEntity {
         this.appliedAt = LocalDateTime.now();
         this.applyStatus = ApplyStatus.WAITING;
     }
+
 
     public void cancelApply() {
         if (this.applyStatus == ApplyStatus.ACCEPTED) {
