@@ -33,7 +33,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
               Text('협찬 제공사', style: TextStyle(fontSize: 15)),
               Expanded(
                   child: Text(
-                campaign.campaginSubject,
+                campaign.campaignSubject,
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ))
@@ -47,7 +47,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
               Text('희망 플랫폼', style: TextStyle(fontSize: 15)),
               Expanded(
                   child: Text(
-                campaign.preferredFlatform,
+                campaign.preferredPlatform,
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ))
