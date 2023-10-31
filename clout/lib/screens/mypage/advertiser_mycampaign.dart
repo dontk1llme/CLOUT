@@ -15,6 +15,8 @@ class AdvertiserMycampaign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70),
@@ -29,11 +31,11 @@ class AdvertiserMycampaign extends StatelessWidget {
             height: double.infinity,
             child: BouncingListview(
               child: FractionallySizedBox(
-                  widthFactor: 0.9,
+                  widthFactor: screenWidth > 400 ? 0.9 : 1,
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(bottom: 10, right: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -49,20 +51,45 @@ class AdvertiserMycampaign extends StatelessWidget {
                           ],
                         ),
                       ),
-                      GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 한 행에 2개의 아이템 배치
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 1 / 1.45,
-                        ),
-                        itemCount: 20, 
-                        itemBuilder: (BuildContext context, int index) {
-                          return CampaignItemBox();
-                        },
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                      ),
+                      Align(
+                          alignment: Alignment.topCenter,
+                          child: Wrap(
+                              direction: Axis.horizontal,
+                              spacing: screenWidth > 400 ? 20 : 10,
+                              runSpacing: screenWidth > 400 ? 20 : 10,
+                              // alignment: Alignment.,
+                              children: [
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                                CampaignItemBox(),
+                              ])),
+                      SizedBox(height: 30)
                     ],
                   )),
             )));
