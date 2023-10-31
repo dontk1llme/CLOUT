@@ -17,7 +17,7 @@ class _NotificationItemState extends State<NotificationItem> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final itemImageSize = screenWidth * 0.24;
+    final itemImageSize = screenWidth * 0.3;
     final textSpacing = screenWidth * 0.03;
     final buttonWidth = screenWidth * 0.52;
     final fontSize1 = screenWidth * 0.05;

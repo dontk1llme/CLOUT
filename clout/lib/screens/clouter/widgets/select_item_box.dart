@@ -1,11 +1,10 @@
-import 'package:clout/screens/mypage/widgets/gray_title.dart';
-import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
 import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
-import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
+import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 
@@ -16,6 +15,7 @@ class SelectItemBox extends StatefulWidget {
   State<SelectItemBox> createState() => _SelectItemBoxState();
 }
 
+// 💥 clouter Container 누르면 해당 clouter의 Detail 페이지로 이동시키기
 class _SelectItemBoxState extends State<SelectItemBox> {
   void _selectClouter() {
     showModalBottomSheet<void>(
@@ -173,7 +173,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                       ),
                     ),
                     height: 200,
-                    child: SingleChildScrollView(
+                    child: BouncingListview(
                       child: Text(
                         '저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다.  저 정말 잘할 자신 있읍니다.  저 정말 잘할 자신 있읍니다.',
                         style: TextStyle(
@@ -232,89 +232,95 @@ class _SelectItemBoxState extends State<SelectItemBox> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-        margin: EdgeInsets.only(bottom: 15),
-        decoration: BoxDecoration(
-          color: style.colors['white'],
-          borderRadius: BorderRadius.circular(10), // 2.5% of screen width
-          boxShadow: style.shadows['shadow'],
-        ),
-        child: Row(
-          children: [
-            Flexible(
-              flex: 1,
-              child: Image.asset(
-                'assets/images/clouterImage.jpg',
-                height: 100,
-                width: 100,
-                fit: BoxFit.cover,
+    return LayoutBuilder(builder: (context, constraints) {
+      double containerWidth = constraints.maxWidth;
+      double imageWidth = containerWidth * 0.3;
+
+      return Container(
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+          margin: EdgeInsets.only(bottom: 15),
+          width: containerWidth,
+          decoration: BoxDecoration(
+            color: style.colors['white'],
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: style.shadows['shadow'],
+          ),
+          child: Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Image.asset(
+                  'assets/images/clouterImage.jpg',
+                  height: 100,
+                  width: imageWidth,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            SizedBox(width: 10),
-            Flexible(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      DataTitle(text: 'MochaMilk '),
-                      Text('희망 광고비'),
-                    ],
-                  ),
-                  SizedBox(height: 3),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Text('165만 ', style: TextStyle(fontSize: 15)),
-                              Icon(Icons.star, color: Colors.amber, size: 20),
-                              Text('20.5'),
-                            ],
+              SizedBox(width: 10),
+              Flexible(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        DataTitle(text: 'MochaMilk '),
+                        Text('희망 광고비'),
+                      ],
+                    ),
+                    SizedBox(height: 3),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Row(
+                              children: [
+                                Text('165만 ', style: TextStyle(fontSize: 15)),
+                                Icon(Icons.star, color: Colors.amber, size: 20),
+                                Text('20.5'),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text('3,000',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: style.colors['main1'],
+                                    fontWeight: FontWeight.bold)),
+                            Text(' points')
+                          ],
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: SmallButton(
+                            title: '한마디 보기',
+                            function: _showContent,
                           ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text('3,000',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: style.colors['main1'],
-                                  fontWeight: FontWeight.bold)),
-                          Text(' points')
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: SmallButton(
-                          title: '한마디 보기',
-                          function: _showContent,
                         ),
-                      ),
-                      SizedBox(width: 3),
-                      Flexible(
-                        flex: 1,
-                        child: SmallButton(
-                          title: '채택하기',
-                          function: _selectClouter,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ));
+                        SizedBox(width: 3),
+                        Flexible(
+                          flex: 1,
+                          child: SmallButton(
+                            title: '채택하기',
+                            function: _selectClouter,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ));
+    });
   }
 }
