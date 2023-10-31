@@ -1,11 +1,17 @@
+import 'package:clout/main.dart';
+import 'package:clout/providers/user_controller.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_content.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_delivery_info.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_info_box.dart';
+import 'package:clout/screens/clouter/clouter_select.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/header/header.dart';
+import 'package:clout/widgets/image_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Campaign {
   int campaignId = 1;
@@ -23,6 +29,21 @@ class Campaign {
   String requirements = '잘 부탁드립니다~~';
 }
 
+final List<String> imgList = [
+  'assets/images/main_carousel_1.jpg',
+  'assets/images/itemImage.jpg',
+  'assets/images/clouterImage.jpg',
+];
+
+final List<Widget> imageSliders = imgList
+    .map((item) => Padding(
+          padding: const EdgeInsets.all(0),
+          child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              child: Image.asset(item, fit: BoxFit.cover)),
+        ))
+    .toList();
+
 String caution = '법적 고지, 책임은 계약 당사자 간 있다, 등등...';
 
 class CampaignDetail extends StatelessWidget {
@@ -38,6 +59,7 @@ class CampaignDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userController = Get.put(UserController());
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70),
@@ -49,45 +71,98 @@ class CampaignDetail extends StatelessWidget {
         body: Container(
           color: Colors.white,
           width: double.infinity,
-          child: BouncingListview(
-              child: FractionallySizedBox(
-            widthFactor: 0.9,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 사진 캐러셀 컴포넌트는 일단 생략
-                // 캠페인 정보 상자
-                CampaignDetailInfoBox(campaign: campaign),
-                SizedBox(height: 20),
-                // 배송 여부 상자
-                CampaignDetailDeliveryInfo(),
-                CampaignDetailContent(
-                    title: '협찬 제공 방법',
-                    content: Text(
-                      campaign.offeringItems,
-                      style: style.textTheme.bodyLarge,
-                    )),
-                CampaignDetailContent(
-                    title: '제공 내역',
-                    content: Text(
-                      campaign.itemDetail,
-                      style: style.textTheme.bodyLarge,
-                    )),
-                CampaignDetailContent(
-                    title: '요구사항',
-                    content: Text(
-                      campaign.requirements,
-                      style: style.textTheme.bodyLarge,
-                    )),
-                CampaignDetailContent(
-                    title: '주의사항',
-                    content: Text(
-                      caution,
-                      style: style.textTheme.bodyLarge,
+          child: Stack(alignment: Alignment.topCenter, children: [
+            BouncingListview(
+                child: FractionallySizedBox(
+              widthFactor: 0.9,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20),
+                  // 사진 캐러셀
+                  ImageCarousel(
+                      imageSliders: imageSliders,
+                      aspectRatio: 1.2,
+                      enlarge: true),
+                  SizedBox(height: 20),
+                  // 캠페인 정보 상자
+                  CampaignDetailInfoBox(campaign: campaign),
+                  SizedBox(height: 20),
+                  // 배송 여부 상자
+                  CampaignDetailDeliveryInfo(),
+                  CampaignDetailContent(
+                      title: '협찬 제공 방법',
+                      content: Text(
+                        campaign.offeringItems,
+                        style: style.textTheme.bodyLarge,
+                      )),
+                  CampaignDetailContent(
+                      title: '제공 내역',
+                      content: Text(
+                        campaign.itemDetail,
+                        style: style.textTheme.bodyLarge,
+                      )),
+                  CampaignDetailContent(
+                      title: '요구사항',
+                      content: Text(
+                        campaign.requirements,
+                        style: style.textTheme.bodyLarge,
+                      )),
+                  CampaignDetailContent(
+                      title: '주의사항',
+                      content: Text(
+                        caution,
+                        style: style.textTheme.bodyLarge,
+                      )),
+                  SizedBox(height: 100),
+                ],
+              ),
+            )),
+            userController.clouter
+                ? Positioned(
+                    bottom: 10,
+                    left: 10,
+                    right: 10,
+                    child:
+                        SizedBox(height: 50, child: BigButton(title: '신청하기')))
+                : Positioned(
+                    bottom: 10,
+                    left: 10,
+                    right: 10,
+                    child: Row(
+                      children: [
+                        Expanded(
+                            flex: 6,
+                            child: SizedBox(
+                                height: 50,
+                                child: BigButton(
+                                  title: '신청자 목록보기',
+                                  function: () => Get.to(() => ClouterSelect()),
+                                ))),
+                        SizedBox(width: 10),
+                        Expanded(
+                            flex: 1,
+                            child: SizedBox(
+                                height: 50,
+                                child: ElevatedButton(
+                                    // 편집 삭제 bottomSheetModal 띄우는 함수 넣어야 함
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            style.colors['category'],
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        padding: EdgeInsets.all(0)),
+                                    child: Icon(
+                                      Icons.more_vert_outlined,
+                                      color: style.colors['main1'],
+                                      size: 30,
+                                    ))))
+                      ],
                     ))
-              ],
-            ),
-          )),
+          ]),
         ));
   }
 }

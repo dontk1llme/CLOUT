@@ -18,15 +18,12 @@ import 'package:clout/widgets/buttons/toggle_button.dart';
 import 'package:clout/widgets/image_picker.dart';
 import 'package:clout/widgets/sns/sns3.dart';
 import 'package:flutter/material.dart';
-import 'package:clout/style.dart' as style;
 import 'dart:ui' as ui;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:clout/providers/image_picker_provider.dart';
 
 // Screens
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
@@ -160,7 +157,7 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
     print(images);
   }
 
-  register(destination) async {
+  register() async {
     if (category != null &&
         productName != null &&
         startDate != null &&
@@ -174,13 +171,13 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
     } else {
       print('아래가 images 입니다.');
       await runImageProvider();
-      handleSaveButtonPressed(); // 서명 갤러리 저장함수
+      await handleSaveButtonPressed(); // 서명 갤러리 저장함수
       // 1. 여기서 axios 통신 해서 db에 내용 저장하고
       //   -> 이 라인에 써야함
       // 2. ref.invalidate해서 provider 초기화 시켜주고
       //    - 2번은 big_button에서 실행하는걸로 함 안먹혀서
       // 3. 아래 함수로 home으로 빠져나가야 함
-      Get.offNamed(destination);
+      Get.offNamed('/home');
     }
   }
 
@@ -195,7 +192,7 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
   // 특정 요소에 접근할때 키로 접근하는듯
   final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
 
-  void handleSaveButtonPressed() async {
+  handleSaveButtonPressed() async {
     final data =
         await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
     final bytes = await data.toByteData(format: ui.ImageByteFormat.png);
@@ -300,7 +297,7 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                       child: BigButton(
                         title: '캠페인 등록',
                         function: register,
-                        destination: '/home',
+                        // destination: '/home',
                       ),
                     )
                   ]),
