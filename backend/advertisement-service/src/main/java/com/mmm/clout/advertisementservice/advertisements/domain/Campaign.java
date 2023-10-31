@@ -194,10 +194,4 @@ public class Campaign extends Advertisement {
         super.softDelete();
     }
 
-
-    public void changePrice(Long newPrice) {
-        if (this.isPriceChangeable) {
-            super.changePrice(newPrice);
-        }
-    }
 }
