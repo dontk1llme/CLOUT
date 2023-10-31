@@ -40,7 +40,7 @@ class MainPage extends StatelessWidget {
         } else if (controller.tab == 3) {
           return ChattingList();
         } else if (controller.tab == 4) {
-          return AdvertiserMyPage();
+          return ClouterMyPage();
         }
         return Home();
       }),

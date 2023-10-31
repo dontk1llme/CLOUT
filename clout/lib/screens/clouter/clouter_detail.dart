@@ -76,12 +76,12 @@ class _ClouterDetailState extends State<ClouterDetail> {
         snsType: 'YouTube',
         channelName: 'MochaMilk',
         followers: 1650000,
-        link: ''),
+        link: 'https://www.youtube.com/c/mochamilk'),
     SNSChannel(
         snsType: 'Instagram',
         channelName: 'MochaMilk_Insta',
         followers: 750000,
-        link: ''),
+        link: 'https://www.instagram.com/milk_the_samoyed/'),
     // 다른 SNS 정보 추가
   ];
 
@@ -254,13 +254,15 @@ class _ClouterDetailState extends State<ClouterDetail> {
           ),
         ),
       ),
-      bottomSheet: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-        child: BigButton(
-          title: '채팅하기',
-          destination: "chattinglist",
-          notJustRoute: true,
-          function: doChat,
+      bottomSheet: Container(
+        color: Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        child: SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: BigButton(
+            title: '채팅하기',
+          ),
         ),
       ),
     );
