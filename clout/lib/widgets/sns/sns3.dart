@@ -3,6 +3,7 @@ import 'package:clout/style.dart' as style;
 
 class Sns3 extends StatefulWidget {
   const Sns3({Key? key}) : super(key: key);
+  
 
   @override
   _Sns3State createState() => _Sns3State();
@@ -10,6 +11,7 @@ class Sns3 extends StatefulWidget {
 
 class _Sns3State extends State<Sns3> {
   List<bool> _selections1 = [false, false, false];
+  var wd = double.infinity/3; //얘 활용해서 반응형으로 하고 싶었는데 안 됨
 
   @override
   Widget build(BuildContext context) {
