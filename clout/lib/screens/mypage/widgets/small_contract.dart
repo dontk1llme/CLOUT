@@ -4,11 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
-// widgets
-import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
-import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
-import 'package:clout/widgets/buttons/big_button.dart';
-import 'package:clout/widgets/buttons/small_button.dart';
 
 class SmallContract extends StatefulWidget {
   const SmallContract({super.key});
