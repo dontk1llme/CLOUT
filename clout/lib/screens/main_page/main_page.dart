@@ -1,4 +1,6 @@
 // global
+import 'package:clout/providers/user_controller.dart';
+import 'package:clout/screens/clouter/clouter_list.dart';
 import 'package:clout/screens/mypage/advertiser_mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,13 +25,18 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(NavBarController());
+    final userController = Get.put(UserController());
     return Scaffold(
       body: GetBuilder<NavBarController>(builder: (controller) {
         if (controller.tab == 0) {
           return Home();
           // 아래 controll.tab에 따라 보여주는 화면 다르게 하기
         } else if (controller.tab == 1) {
-          return CampaignList();
+          if (userController.clouter) {
+            return CampaignList();
+          } else {
+            return ClouterList();
+          }
         } else if (controller.tab == 3) {
           return ChattingList();
         } else if (controller.tab == 4) {

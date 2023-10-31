@@ -23,6 +23,12 @@ import 'package:clout/screens/point/withdraw/withdraw_first.dart';
 import 'package:clout/screens/point/withdraw/withdraw_second.dart';
 
 
+final List<String> imgList = [
+  'assets/images/main_carousel_1.jpg',
+  'assets/images/itemImage.jpg',
+  'assets/images/clouterImage.jpg',
+];
+
 void main() {
   runApp(ProviderScope(child: GetMaterialApp(
     theme: ThemeData(

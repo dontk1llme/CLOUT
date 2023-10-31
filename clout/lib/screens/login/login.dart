@@ -116,7 +116,9 @@ class _LoginState extends State<Login> {
                               padding: EdgeInsets.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            onPressed: () {Get.to(FindPassword());},
+                            onPressed: () {
+                              Get.to(FindPassword());
+                            },
                             child: Text('패스워드가 기억이 안나요',
                                 style: style.textTheme.bodyMedium?.copyWith(
                                     color: style.colors['gray'], height: 2))),
@@ -125,11 +127,15 @@ class _LoginState extends State<Login> {
                       // destination 수정해서 로그인 실행하는 로직 넣어야 함
                       Padding(
                         padding: const EdgeInsets.only(top: 50),
-                        child: BigButton(
-                          title: '로그인',
-                          destination: "userCheck",
-                          notJustRoute: true,
-                          function: doLogin,
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: BigButton(
+                            title: '로그인',
+                            destination: "userCheck",
+                            notJustRoute: true,
+                            function: doLogin,
+                          ),
                         ),
                       ),
                     ],

@@ -5,14 +5,15 @@ import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
 class BigButton extends ConsumerStatefulWidget {
-  BigButton(
-      {super.key,
-      this.title,
-      this.destination,
-      this.function,
-      this.notJustRoute,
-      this.textColor,
-      this.buttonColor}) {
+  BigButton({
+    super.key,
+    required this.title,
+    this.destination,
+    this.function,
+    this.notJustRoute,
+    this.textColor,
+    this.buttonColor,
+  }) {
     textColor ??= style.colors['white'];
     buttonColor ??= style.colors['main1'];
   }
@@ -32,38 +33,31 @@ class BigButton extends ConsumerStatefulWidget {
 class BigButtonState extends ConsumerState<BigButton> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      child: SizedBox(
-        width: double.infinity,
-        height: 50,
-        child: ElevatedButton(
-          onPressed: () => {
-            ref.invalidate(imagePickerProvider),
-            if (widget.destination != null)
-              {
-                // destination이 null이 아닌 경우에만 실행
-                if (widget.notJustRoute != null && widget.notJustRoute)
-                  {widget.function(widget.destination)}
-                else
-                  {Get.offAllNamed(widget.destination)}
-              }
-            else
+    return ElevatedButton(
+      onPressed: () => {
+        ref.invalidate(imagePickerProvider),
+        if (widget.destination != null)
+          {
+            // destination이 null이 아닌 경우에만 실행
+            if (widget.notJustRoute != null && widget.notJustRoute)
               {widget.function(widget.destination)}
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: widget.buttonColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          child: Text(
-            widget.title,
-            style: style.textTheme.headlineLarge?.copyWith(
-              color: widget.textColor,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+            else
+              {Get.offAllNamed(widget.destination)}
+          }
+        else
+          {widget.function()}
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: widget.buttonColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: Text(
+        widget.title,
+        style: style.textTheme.headlineLarge?.copyWith(
+          color: widget.textColor,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

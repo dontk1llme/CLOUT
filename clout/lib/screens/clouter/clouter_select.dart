@@ -47,7 +47,7 @@ class ClouterSelect extends StatelessWidget {
                       SelectItemBox(),
                       SelectItemBox(),
                     ]),
-                  )
+                  ),
                 ],
               )),
         ),
