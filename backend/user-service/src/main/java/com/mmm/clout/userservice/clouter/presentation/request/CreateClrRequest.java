@@ -7,7 +7,9 @@ import com.mmm.clout.userservice.common.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,18 +23,22 @@ public class CreateClrRequest {
 
     @NotBlank
     @Schema(description = "클라우터 아이디", defaultValue = "clouter1")
+    @Size(min = 5, max = 15)
     private String userId;
 
     @NotBlank
     @Schema(description = "클라우터 비밀번호")
+    @Size(min = 8, max = 20)
     private String pwd;
 
     @NotBlank
     @Schema(description = "클라우터 닉네임임")
+    @Size(max = 20)
     private String nickName;
 
     @NotBlank
     @Schema(description = "이름")
+    @Size(max = 20)
     private String name;
 
     @NotBlank
@@ -45,9 +51,11 @@ public class CreateClrRequest {
 
     @NotBlank
     @Schema(description = "전화번호")
+    @Size(max = 15)
     private String phoneNumber;
 
     @NotNull
+    @Size(min = 1)
     @Schema(description = "개인 채널 리스트")
     private List<ChannelRequest> channelList;
 

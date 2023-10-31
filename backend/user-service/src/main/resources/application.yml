@@ -41,3 +41,11 @@ springdoc:
   swagger-ui:
     path: /user-service/swagger-ui
     use-root-path: true
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api
+    swagger-ui:
+      base-url: /api
