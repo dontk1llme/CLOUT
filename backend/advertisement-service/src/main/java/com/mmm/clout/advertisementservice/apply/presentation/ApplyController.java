@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,5 +26,13 @@ public class ApplyController {
     ) {
         CreateApplyResponse result = CreateApplyResponse.from(applyFacade.create(createApplyRequest.toCommand()));
         return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{applyId}/cancel")
+    public ResponseEntity<String> cancelApply(
+        @PathVariable Long applyId
+    ) {
+        applyFacade.cancel(applyId);
+        return new ResponseEntity<>("신청 취소 완료", HttpStatus.OK);
     }
 }

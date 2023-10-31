@@ -1,8 +1,9 @@
 package com.mmm.clout.advertisementservice.apply.domain;
 
-import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.apply.domain.exception.CannotCancelApplyException;
 import com.mmm.clout.advertisementservice.common.entity.BaseEntity;
+import com.mmm.clout.advertisementservice.common.exception.ErrorCode;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -66,13 +67,22 @@ public class Apply extends BaseEntity {
         this.applyStatus = ApplyStatus.WAITING;
     }
 
+    public void cancelApply() {
+        if (this.applyStatus == ApplyStatus.ACCEPTED) {
+            throw new CannotCancelApplyException("해당 캠페인은 이미 채택되어 취소할 수 없습니다.", ErrorCode.ALREADY_ACCEPTED_APPLY);
+        }
+        this.getCampaign().cancel();
+        this.applyStatus  = ApplyStatus.CANCEL;
+    }
+
     @Getter
     @RequiredArgsConstructor
     public enum ApplyStatus {
 
-        WAITING("대기"),
+        WAITING("채택 대기"),
         ACCEPTED("채택"),
-        NOT_ACCEPTED("미채택");
+        NOT_ACCEPTED("미채택"),
+        CANCEL("신청 취소");
 
         private final String description;
     }
