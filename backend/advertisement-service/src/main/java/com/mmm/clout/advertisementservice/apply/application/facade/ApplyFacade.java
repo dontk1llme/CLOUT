@@ -2,8 +2,10 @@ package com.mmm.clout.advertisementservice.apply.application.facade;
 
 import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
+import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.command.CreateApplyCommand;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
+import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ public class ApplyFacade {
 
     private final CreateApplyProcessor createApplyProcessor;
     private final CancelApplyProcessor cancelApplyProcessor;
+    private final ReadAllApplyProcessor readAllApplyProcessor;
 
     public Apply create(CreateApplyCommand command) {
         return createApplyProcessor.execute(command);
@@ -23,7 +26,7 @@ public class ApplyFacade {
         cancelApplyProcessor.execute(applyId);
     }
 
-    public List<Apply> getAllByApplyStatus(Long clouterId, String type) {
-        return null;
+    public List<Apply> getAllByApplyStatus(Long clouterId, ApplyStatus type) {
+        return readAllApplyProcessor.execute(clouterId, type);
     }
 }
