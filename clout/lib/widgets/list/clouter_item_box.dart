@@ -29,12 +29,9 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final boxWidth = screenWidth * 0.4;
-    final boxPadding = screenWidth * 0.03;
-    final imageSize = screenWidth * 0.32;
-    final nameFontSize = screenWidth * 0.046;
-    final adFeeFontSize = screenWidth * 0.04;
-    final contractInfoFontSize = screenWidth * 0.033;
+    final boxWidth = screenWidth > 400 ? 200.0 : 170.0;
+    final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
+    final imageSize = screenWidth > 400 ? 160.0 : 140.0;
 
     return GestureDetector(
       onTap: () {
@@ -45,8 +42,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
         padding: EdgeInsets.all(boxPadding),
         decoration: BoxDecoration(
           color: style.colors['white'],
-          borderRadius: BorderRadius.circular(
-              screenWidth * 0.025), // 2.5% of screen width
+          borderRadius: BorderRadius.circular(10),
           boxShadow: style.shadows['shadow'],
         ),
         child: Column(
@@ -76,7 +72,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
-                fontSize: nameFontSize,
+                fontSize: screenWidth > 400 ? 19 : 17,
               ),
             ),
             Text(
@@ -86,7 +82,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
               style: TextStyle(
                 color: style.colors['main1'],
                 fontWeight: FontWeight.w500,
-                fontSize: adFeeFontSize,
+                fontSize: screenWidth > 400 ? 17 : 15,
               ),
             ),
             Row(
@@ -94,7 +90,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                 Text(
                   '계약한 광고 수 : ',
                   style: TextStyle(
-                    fontSize: contractInfoFontSize,
+                    fontSize: screenWidth > 400 ? 15 : 13,
                   ),
                 ),
                 Text(
@@ -103,7 +99,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: contractInfoFontSize,
+                    fontSize: screenWidth > 400 ? 15 : 13,
                   ),
                 ),
               ],

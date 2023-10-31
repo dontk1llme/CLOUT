@@ -39,11 +39,11 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 19)),
                 ),
-                PointItemBox(),
-                PointItemBox(),
-                PointItemBox(),
-                PointItemBox(),
-                PointItemBox(),
+                PointItemBox(type: '출금'),
+                PointItemBox(type: '충전'),
+                PointItemBox(type: '사용'),
+                PointItemBox(type: '사용'),
+                PointItemBox(type: '출금'),
               ],
             ),
           )

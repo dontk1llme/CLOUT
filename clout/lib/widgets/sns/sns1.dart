@@ -16,7 +16,7 @@ class _Sns1State extends State<Sns1> {
   Widget build(BuildContext context) {
     return Container(
         child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SnsItemBox(
           username: 'MochaMilk',
@@ -24,12 +24,14 @@ class _Sns1State extends State<Sns1> {
           imageName: 'assets/images/YouTube.png',
           snsUrl: 'https://www.youtube.com/c/mochamilk',
         ),
+        SizedBox(width: 5),
         SnsItemBox(
           username: 'milk_the_samoyed',
           followers: '13만 4천',
           imageName: 'assets/images/Instagram.png',
           snsUrl: 'https://www.instagram.com/milk_the_samoyed/',
         ),
+        SizedBox(width: 5),
         SnsItemBox(
           username: 'mochamilk',
           followers: '15만',
