@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -15,10 +16,12 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Channel {
 
+    @Column(length = 20)
     private String name;
 
     private Platform platform;
 
+    @Column(length = 600)
     private String link;
 
     private FollowerScale followerScale;

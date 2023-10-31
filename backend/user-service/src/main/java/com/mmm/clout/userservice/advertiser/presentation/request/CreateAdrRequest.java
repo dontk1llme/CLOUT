@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @AllArgsConstructor
@@ -14,10 +15,12 @@ public class CreateAdrRequest {
 
     @NotBlank
     @Schema(description = "유저 아이디")
+    @Size(min = 5, max = 15)
     private String userId;
 
     @NotBlank
     @Schema(description = "비밀번호")
+    @Size(min = 8, max = 20)
     private String pwd;
 
     private AddressRequest address;

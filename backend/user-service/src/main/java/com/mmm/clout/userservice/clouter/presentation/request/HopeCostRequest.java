@@ -7,16 +7,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
 public class HopeCostRequest {
 
-    @NotBlank
+    @NotNull
     @Schema(description = "원하는 최소 금액")
     private Long minCost;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "원하는 최대 금액")
     private Long maxCost;
 

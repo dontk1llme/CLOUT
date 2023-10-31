@@ -22,8 +22,10 @@ public abstract class Member {
     @Column(name="member_id")
     private Long id;
 
+    @Column(length = 25)
     private String userId;
 
+    @Column(length = 25)
     private String pwd;
 
     private Long avgScore;

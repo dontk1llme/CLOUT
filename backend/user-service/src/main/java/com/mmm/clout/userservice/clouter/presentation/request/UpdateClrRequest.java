@@ -21,14 +21,17 @@ public class UpdateClrRequest {
 
     @NotBlank
     @Schema(description = "클라우터 비밀번호", defaultValue = "pwd2")
+    @Size(min = 8, max = 20)
     private String pwd;
 
     @NotBlank
     @Schema(description = "클라우터 닉네임임", defaultValue = "updateNick")
+    @Size(max = 20)
     private String nickName;
 
     @NotBlank
     @Schema(description = "이름", defaultValue = "updateName")
+    @Size(max = 20)
     private String name;
 
     @NotBlank
@@ -41,6 +44,7 @@ public class UpdateClrRequest {
 
     @NotBlank
     @Schema(description = "전화번호", defaultValue = "저나번호")
+    @Size(max = 15)
     private String phoneNumber;
 
     @NotNull

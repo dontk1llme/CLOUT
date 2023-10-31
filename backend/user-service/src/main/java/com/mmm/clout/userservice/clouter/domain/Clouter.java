@@ -7,6 +7,7 @@ import com.mmm.clout.userservice.member.domain.Member;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,17 +24,20 @@ import java.util.List;
 @Entity
 public class Clouter extends Member {
 
+    @Column(length = 30)
     private String nickName;
 
+    @Column(length = 30)
     private String name;
 
     private LocalDate birthday;
 
     private Integer age;
 
+    @Column(length = 20)
     private String phoneNumber;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "channel", joinColumns = @JoinColumn(name = "member_id"))
     private List<Channel> channelList = new ArrayList<>();
 
