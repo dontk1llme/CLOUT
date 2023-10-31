@@ -1,4 +1,5 @@
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
+import 'package:clout/screens/mypage/contract.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -52,7 +53,7 @@ class _SmallContractState extends State<SmallContract> {
           ],
         ),
         ElevatedButton(
-          onPressed: () => {},
+          onPressed: () => {Get.to(Contract())},
           style: ElevatedButton.styleFrom(
               backgroundColor: style.colors['main1'],
               shape: RoundedRectangleBorder(
