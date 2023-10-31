@@ -1,6 +1,11 @@
+server:
+  port: 0
+
 spring:
+  application:
+    name: advertisement-service
   datasource:
-    url: jdbc:mariadb://localhost:13306/test
+    url: jdbc:mariadb://localhost:3306/test2
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: 1234
@@ -15,3 +20,12 @@ springdoc:
   swagger-ui:
     path: /api/swagger-ui
     use-root-path: true
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka

@@ -19,65 +19,73 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-        # user-service routes
+        # MEMBER-service routes
         # 인증 인가 api
-        - id: user-service
-          uri: lb://USER-SERVICE
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
           predicates:
-            - Path=/user-service/members/**
+            - Path=/member-service/members/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
         # 광고주 api
-        - id: user-service
-          uri: lb://USER-SERVICE
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
           predicates:
-            - Path=/user-service/advertisers/**
+            - Path=/member-service/advertisers/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
 #            - AuthorizationHeaderFilter
         # 클라우터 api
-        - id: user-service
-          uri: lb://USER-SERVICE
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
           predicates:
-            - Path=/user-service/clouters/**
+            - Path=/member-service/clouters/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
 #            - AuthorizationHeaderFilter
         # swagger 요청
-        - id: user-service
-          uri: lb://USER-SERVICE
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
           predicates:
-            - Path=/user-service/swagger-ui
+            - Path=/member-service/swagger-ui
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
         #    - AuthorizationHeaderFilter
-        - id: user-service
-          uri: lb://USER-SERVICE
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
           predicates:
-            - Path=/user-service/swagger-ui/**
+            - Path=/member-service/swagger-ui/**
           filters:
             - RemoveRequestHeader=Cookie
         #    - AuthorizationHeaderFilter
-#        - id: user-service
-#          uri: lb://USER-SERVICE
+        - id: advertisement-service
+          uri: lb://ADVERTISEMENT-SERVICE
+          predicates:
+            - Path=/advertisement-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/advertisement-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+#        - id: MEMBER-service
+#          uri: lb://MEMBER-SERVICE
 #          predicates:
-#            - Path=/user-service/v3/**
+#            - Path=/MEMBER-service/v3/**
 #          filters:
 #            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#            - RewritePath=/MEMBER-service/(?<segment>.*), /$\{segment}
 #        #    - AuthorizationHeaderFilter
 
-#        - id: user-service
-#          uri: lb://USER-SERVICE
+#        - id: MEMBER-service
+#          uri: lb://MEMBER-SERVICE
 #          predicates:
 #            - Path=/v3/**
 #          filters:
 #            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#            - RewritePath=/MEMBER-service/(?<segment>.*), /$\{segment}
 #          #    - AuthorizationHeaderFilter
 
 jwt:
