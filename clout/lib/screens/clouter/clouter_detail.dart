@@ -1,13 +1,14 @@
-import 'package:clout/utilities/bouncing_listview.dart';
-import 'package:clout/widgets/image_carousel.dart';
-import 'package:clout/widgets/sns/widgets/sns_item_box.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
+// utility
+import 'package:clout/utilities/bouncing_listview.dart';
+
 // widgets
+import 'package:clout/widgets/sns/widgets/sns_item_box.dart';
+import 'package:clout/widgets/image_carousel.dart';
 import 'package:clout/widgets/header/header.dart';
-import 'package:clout/widgets/sns/sns1.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/buttons/like_button.dart';
 
