@@ -17,8 +17,8 @@ class Campaign {
   int campaignId = 1;
   String category = '카테고리';
   String productName = '못골정미소 백미 5kg';
-  String campaginSubject = '못골영농조합법인';
-  String preferredFlatform = '인스타램/유튜브/틱톡';
+  String campaignSubject = '못골영농조합법인';
+  String preferredPlatform = '인스타램/유튜브/틱톡';
   String endDate = '2023.10.29(일)';
   int applicantCount = 2;
   int recruitCount = 5;
