@@ -30,7 +30,7 @@ public class CreateApplyProcessor {
             campaign,
             new Applicant(command.getClouterId()),
             command.getApplyMessage(),
-            command.getHodeAdFee()
+            command.getHopeAdFee()
         );
 
         return applyRepository.save(apply);

@@ -82,8 +82,5 @@ public abstract class Advertisement extends BaseEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
-    protected void changePrice(Long newPrice) {
-        this.price = newPrice;
-    }
 }
 

@@ -56,7 +56,6 @@ public class Apply extends BaseEntity {
 
     public static Apply create(Campaign campaign, Applicant applicant, String applyMessage, Long hopeAdFee) {
         campaign.validApplyStatus();
-        campaign.changePrice(hopeAdFee);
         campaign.apply();
         return new Apply(campaign, applicant, applyMessage, hopeAdFee);
     }
