@@ -1,5 +1,6 @@
 // Global
 import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/image_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -14,7 +15,195 @@ import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
+
+  List<String> imgList = [
+    'assets/images/main_carousel_1.jpg',
+    'assets/images/clouterImage.jpg',
+    'assets/images/itemImage.jpg',
+    'assets/images/food.png',
+  ];
+
+  List<Widget> carouselList = [
+    Stack(
+      children: [
+        Opacity(
+          opacity: 0.6,
+          child: Image.asset(
+            'assets/images/main_carousel_1.jpg',
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Container(
+            alignment: FractionalOffset(0.5, 0.5),
+            child: FractionallySizedBox(
+                widthFactor: 1,
+                heightFactor: 0.8,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        MainCarouselText1(
+                          text: '자신의 콘텐츠와 브랜드와의',
+                        ),
+                        MainCarouselText1(
+                          text: '적합성을 평가하여',
+                        ),
+                        MainCarouselText1(
+                          text: '최적의 계약을 체결해보세요!',
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                          width: 180,
+                          child: SmallButton(
+                            title: '캠페인 보러가기',
+                          )),
+                    )
+                  ],
+                )))
+      ],
+    ),
+    Stack(
+      children: [
+        Opacity(
+          opacity: 0.6,
+          child: SizedBox(
+            child: Image.asset(
+              'assets/images/clouterImage.jpg',
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Container(
+            alignment: FractionalOffset(0.5, 0.5),
+            child: FractionallySizedBox(
+                widthFactor: 1,
+                heightFactor: 0.8,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        MainCarouselText1(
+                          text: '자신의 콘텐츠와 브랜드와의',
+                        ),
+                        MainCarouselText1(
+                          text: '적합성을 평가하여',
+                        ),
+                        MainCarouselText1(
+                          text: '최적의 계약을 체결해보세요!',
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                          width: 180,
+                          child: SmallButton(
+                            title: '캠페인 보러가기',
+                          )),
+                    )
+                  ],
+                )))
+      ],
+    ),
+    Stack(
+      children: [
+        Opacity(
+          opacity: 0.6,
+          child: SizedBox(
+            child: Image.asset(
+              'assets/images/itemImage.jpg',
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Container(
+            alignment: FractionalOffset(0.5, 0.5),
+            child: FractionallySizedBox(
+                widthFactor: 1,
+                heightFactor: 0.8,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        MainCarouselText1(
+                          text: '자신의 콘텐츠와 브랜드와의',
+                        ),
+                        MainCarouselText1(
+                          text: '적합성을 평가하여',
+                        ),
+                        MainCarouselText1(
+                          text: '최적의 계약을 체결해보세요!',
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                          width: 180,
+                          child: SmallButton(
+                            title: '캠페인 보러가기',
+                          )),
+                    )
+                  ],
+                )))
+      ],
+    ),
+    Stack(
+      children: [
+        Opacity(
+          opacity: 0.6,
+          child: SizedBox(
+            child: Image.asset(
+              'assets/images/food.png',
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Container(
+            alignment: FractionalOffset(0.5, 0.5),
+            child: FractionallySizedBox(
+                widthFactor: 1,
+                heightFactor: 0.8,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        MainCarouselText1(
+                          text: '자신의 콘텐츠와 브랜드와의',
+                        ),
+                        MainCarouselText1(
+                          text: '적합성을 평가하여',
+                        ),
+                        MainCarouselText1(
+                          text: '최적의 계약을 체결해보세요!',
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                          width: 180,
+                          child: SmallButton(
+                            title: '캠페인 보러가기',
+                          )),
+                    )
+                  ],
+                )))
+      ],
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -31,51 +220,12 @@ class Home extends StatelessWidget {
             // 여기 아래 컨테이너에 캐러셀 넣어야 함(아래 컨테이너 전체를 캐러셀에 포함시켜야 함)
             Container(
                 color: Colors.black,
-                height: 200,
+                // height: 200,
                 width: double.infinity,
-                child: Stack(
-                  children: [
-                    Opacity(
-                      opacity: 0.6,
-                      child: Image.asset(
-                        'assets/images/main_carousel_1.jpg',
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Container(
-                        // color: Colors.black,
-                        height: 200,
-                        alignment: FractionalOffset(0.5, 0.5),
-                        child: FractionallySizedBox(
-                            widthFactor: 1,
-                            heightFactor: 0.7,
-                            child: Column(
-                              children: [
-                                Column(
-                                  children: [
-                                    MainCarouselText1(
-                                      text: '자신의 콘텐츠와 브랜드와의',
-                                    ),
-                                    MainCarouselText1(
-                                      text: '적합성을 평가하여',
-                                    ),
-                                    MainCarouselText1(
-                                      text: '최적의 계약을 체결해보세요!',
-                                    )
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: SizedBox(
-                                      width: 180,
-                                      child: SmallButton(
-                                        title: '캠페인 보러가기',
-                                      )),
-                                )
-                              ],
-                            )))
-                  ],
+                child: ImageCarousel(
+                  imageSliders: carouselList,
+                  aspectRatio: 0,
+                  enlarge: false,
                 )),
             Container(
               color: style.colors['white'],
