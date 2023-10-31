@@ -2,6 +2,7 @@ package com.mmm.clout.userservice.clouter.application;
 
 import com.mmm.clout.userservice.advertiser.application.command.UpdateAdrCommand;
 import com.mmm.clout.userservice.advertiser.domain.Advertiser;
+import com.mmm.clout.userservice.clouter.application.command.ChannelCommand;
 import com.mmm.clout.userservice.clouter.application.command.CreateClrCommand;
 import com.mmm.clout.userservice.clouter.application.command.UpdateClrCommand;
 import com.mmm.clout.userservice.clouter.domain.Clouter;
@@ -11,6 +12,8 @@ import com.mmm.clout.userservice.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class UpdateClouterProcessor {
@@ -22,15 +25,19 @@ public class UpdateClouterProcessor {
     public Clouter execute(UpdateClrCommand command) {
         Clouter clouter = clouterRepository.findById(command.getClouterId());
         clouter.update(
-                command.getPwd(),
-                command.getName(),
-                command.getAddressCommand().toValueType(),
-                command.getSelectedCategory(),
-                command.getFollowerScale(),
-                command.getPlatForm(),
-                command.getBirthday(),
-                command.getAge()
-                );
+            command.getPwd(),
+            command.getNickName(),
+            command.getName(),
+            command.getBirthday(),
+            command.getAge(),
+            command.getPhoneNumber(),
+            command.getChannelList().stream().map(v -> v.toValueType()).collect(Collectors.toList()),
+            command.getHopeCost().toValueType(),
+            command.isNegoable(),
+            command.getCategoryList(),
+            command.getRegionList(),
+            command.getAddress().toValueType()
+        );
         clouter.changePwd(encoder.encode(clouter.getPwd()));
         return clouter;
     }

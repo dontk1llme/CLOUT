@@ -1,6 +1,7 @@
 package com.mmm.clout.userservice.clouter.presentation;
 
 import com.mmm.clout.userservice.clouter.application.facade.ClouterFacade;
+import com.mmm.clout.userservice.clouter.presentation.docs.ClouterControllerDocs;
 import com.mmm.clout.userservice.clouter.presentation.request.CreateClrRequest;
 import com.mmm.clout.userservice.clouter.presentation.request.UpdateClrRequest;
 import com.mmm.clout.userservice.clouter.presentation.response.CreateClrResponse;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/clouters")
 @RequiredArgsConstructor
-public class ClouterController {
+public class ClouterController implements ClouterControllerDocs {
 
     private final ClouterFacade clouterFacade;
 
@@ -26,7 +27,7 @@ public class ClouterController {
         CreateClrResponse result = CreateClrResponse.from(
                 clouterFacade.create(createClrRequest.toCommand())
         );
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PutMapping("/{clouterId}")

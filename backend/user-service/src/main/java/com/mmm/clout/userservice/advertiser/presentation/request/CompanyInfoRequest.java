@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 public class CompanyInfoRequest {
     @NotBlank
     @Schema(description = "회사 이름")
+    @Size(max = 20)
     private String companyName;
 
     @NotBlank

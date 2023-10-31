@@ -1,7 +1,12 @@
 server:
-  port: 8888
+  port: 0
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: user-service
   datasource:
     url: jdbc:mariadb://localhost:3306/test
     driver-class-name: org.mariadb.jdbc.Driver
@@ -12,7 +17,7 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
   data:
     redis:
       host: localhost
@@ -34,5 +39,13 @@ jwt:
 
 springdoc:
   swagger-ui:
-    path: /api/swagger-ui
+    path: /user-service/swagger-ui
     use-root-path: true
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api
+    swagger-ui:
+      base-url: /api
