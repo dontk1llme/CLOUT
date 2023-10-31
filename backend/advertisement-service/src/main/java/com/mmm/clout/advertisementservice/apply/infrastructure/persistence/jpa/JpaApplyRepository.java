@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaApplyRepository extends JpaRepository<Apply, Long> {
 
-    boolean existsByCampaignAndApplicantId(Campaign campaign, Long applicantId);
+    boolean existsByCampaignAndApplicant_ApplicantId(Campaign campaign, Long clouterId);
 
-    List<Apply> findByApplicantIdAndApplyStatus(Long applicantId, ApplyStatus applyStatus);
+    List<Apply> findByApplicant_ApplicantIdAndApplyStatus(Long applicantId, ApplyStatus applyStatus);
 }

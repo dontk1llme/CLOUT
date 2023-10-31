@@ -28,12 +28,12 @@ public class ApplyRepositoryAdapter implements ApplyRepository {
 
     @Override
     public boolean checkApplyExists(Campaign campaign, Long clouterId) {
-        return jpaApplyRepository.existsByCampaignAndApplicantId(campaign, clouterId);
+        return jpaApplyRepository.existsByCampaignAndApplicant_ApplicantId(campaign, clouterId);
     }
 
     @Override
     public List<Apply> getAllByStatus(Long applicantId, ApplyStatus applyStatus) {
-        return jpaApplyRepository.findByApplicantIdAndApplyStatus(applicantId, applyStatus);
+        return jpaApplyRepository.findByApplicant_ApplicantIdAndApplyStatus(applicantId, applyStatus);
     }
 
 
