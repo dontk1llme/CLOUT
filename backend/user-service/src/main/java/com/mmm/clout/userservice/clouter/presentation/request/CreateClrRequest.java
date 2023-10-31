@@ -1,19 +1,13 @@
 package com.mmm.clout.userservice.clouter.presentation.request;
 
-import com.mmm.clout.userservice.clouter.domain.Channel;
-import com.mmm.clout.userservice.clouter.domain.HopeCost;
-import com.mmm.clout.userservice.common.entity.Region;
-import com.mmm.clout.userservice.common.entity.address.Address;
+import com.mmm.clout.userservice.common.Region;
 import com.mmm.clout.userservice.common.entity.address.request.AddressRequest;
 import com.mmm.clout.userservice.clouter.application.command.CreateClrCommand;
-import com.mmm.clout.userservice.common.entity.Category;
-import com.mmm.clout.userservice.common.entity.FollowerScale;
-import com.mmm.clout.userservice.common.entity.Platform;
+import com.mmm.clout.userservice.common.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

@@ -1,10 +1,8 @@
 package com.mmm.clout.userservice.clouter.domain;
 
-import com.mmm.clout.userservice.common.entity.Region;
+import com.mmm.clout.userservice.common.Region;
 import com.mmm.clout.userservice.common.entity.address.Address;
-import com.mmm.clout.userservice.common.entity.Category;
-import com.mmm.clout.userservice.common.entity.FollowerScale;
-import com.mmm.clout.userservice.common.entity.Platform;
+import com.mmm.clout.userservice.common.Category;
 import com.mmm.clout.userservice.member.domain.Member;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

@@ -1,23 +1,17 @@
 package com.mmm.clout.userservice.clouter.presentation.request;
 
-import com.mmm.clout.userservice.clouter.application.command.CreateClrCommand;
 import com.mmm.clout.userservice.clouter.application.command.UpdateClrCommand;
-import com.mmm.clout.userservice.common.entity.Category;
-import com.mmm.clout.userservice.common.entity.FollowerScale;
-import com.mmm.clout.userservice.common.entity.Platform;
-import com.mmm.clout.userservice.common.entity.Region;
+import com.mmm.clout.userservice.common.Category;
+import com.mmm.clout.userservice.common.Region;
 import com.mmm.clout.userservice.common.entity.address.request.AddressRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

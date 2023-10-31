@@ -1,6 +1,6 @@
 package com.mmm.clout.userservice.member.domain;
 
-import com.mmm.clout.userservice.user.domain.common.Role;
+import com.mmm.clout.userservice.common.Role;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;

@@ -1,9 +1,8 @@
 package com.mmm.clout.userservice.clouter.presentation.request;
 
 import com.mmm.clout.userservice.clouter.application.command.ChannelCommand;
-import com.mmm.clout.userservice.clouter.application.command.HopeCostCommand;
-import com.mmm.clout.userservice.common.entity.FollowerScale;
-import com.mmm.clout.userservice.common.entity.Platform;
+import com.mmm.clout.userservice.common.FollowerScale;
+import com.mmm.clout.userservice.common.Platform;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
