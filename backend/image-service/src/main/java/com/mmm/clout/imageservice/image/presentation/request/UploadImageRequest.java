@@ -1,5 +1,6 @@
 package com.mmm.clout.imageservice.image.presentation.request;
 
+import com.mmm.clout.imageservice.image.application.command.CreateImageCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,8 +12,15 @@ import javax.validation.constraints.NotNull;
 public class UploadImageRequest {
 
     @NotNull
-    private Long targertId;
+    private Long targetId;
 
     @NotBlank
     private String type;
+
+    public CreateImageCommand toCommand(){
+        return new CreateImageCommand(
+                this.targetId,
+                this.type
+        );
+    }
 }

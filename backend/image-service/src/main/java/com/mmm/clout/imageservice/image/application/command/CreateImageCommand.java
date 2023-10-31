@@ -6,6 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CreateImageCommand {
-    private Long id;
+    private Long targetId;
+
+    private String type;
 
 }

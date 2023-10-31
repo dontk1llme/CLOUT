@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @Where(clause = "deleted_at is null")
 @Entity
 public class Image {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -46,4 +47,28 @@ public class Image {
     @Column(name = "target_id")
     private Long targetId;
 
+
+    public Image(Long targetId, String originalName, String path, String imageName, String type) {
+        this.targetId = targetId;
+        this.type = type;
+        this.path = path;
+        this.imageName = imageName;
+        this.originalName = originalName;
+    }
+
+    public static Image create(
+            Long targetId,
+            String originalName,
+            String path,
+            String imageName,
+            String type
+    ){
+        return new Image(
+                targetId,
+                originalName,
+                path,
+                imageName,
+                type
+        );
+    }
 }

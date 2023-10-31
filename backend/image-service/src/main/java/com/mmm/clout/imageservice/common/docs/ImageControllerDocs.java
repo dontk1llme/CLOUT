@@ -10,6 +10,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @Tag(name = "맥주 도감 리스트 조회", description = "맥주 도감 리스트를 가져오는 api")
@@ -32,7 +35,7 @@ public interface ImageControllerDocs {
                 schema=@Schema(implementation= UploadImageResponse.class))
         )
     )
-    ResponseEntity<UploadImageResponse> createCampaign(
-        UploadImageRequest uploadImageRequest
-    );
+    ResponseEntity<List<UploadImageResponse>> UploadImage(
+            UploadImageRequest uploadImageRequest, List<MultipartFile> fileList
+    ) throws Exception;
 }
