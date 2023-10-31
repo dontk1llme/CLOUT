@@ -1,10 +1,13 @@
 package com.mmm.clout.advertisementservice.apply.infrastructure.config;
 
+import com.mmm.clout.advertisementservice.advertisements.domain.provider.AdvertiserInfoProvider;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
+import com.mmm.clout.advertisementservice.apply.infrastructure.provider.MemberFeignClientProviderAdapter;
+import com.mmm.clout.advertisementservice.apply.infrastructure.provider.feignclient.MemberFeignClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,10 +37,13 @@ public class ApplyConfig {
 
     @Bean
     ReadAllApplyProcessor readAllApplyProcessor(
-        ApplyRepository applyRepository
+        ApplyRepository applyRepository,
+        AdvertiserInfoProvider advertiserInfoProvider
+
     ) {
         return new ReadAllApplyProcessor(
-            applyRepository
+            applyRepository,
+            advertiserInfoProvider
         );
     }
 

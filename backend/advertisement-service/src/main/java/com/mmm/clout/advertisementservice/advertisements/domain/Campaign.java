@@ -196,4 +196,9 @@ public class Campaign extends Advertisement {
         super.softDelete();
     }
 
+    @Override
+    public Long getAdvertiserId() {
+        return super.getAdvertiserId();
+    }
+
 }
