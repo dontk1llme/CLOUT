@@ -17,9 +17,9 @@ class _Sns2State extends State<Sns2> {
       decoration: BoxDecoration(
           color: style.colors['white'], borderRadius: BorderRadius.circular(5)),
       child: Row(children: [
-        Image.asset('assets/images/youtube.png', width: 20, height: 20),
-        Image.asset('assets/images/instagram.png', width: 20, height: 20),
-        Image.asset('assets/images/tiktok.png', width: 20, height: 20),
+        Image.asset('assets/images/YouTube.png', width: 20, height: 20),
+        Image.asset('assets/images/Instagram.png', width: 20, height: 20),
+        Image.asset('assets/images/TikTok.png', width: 20, height: 20),
       ]),
     );
   }
