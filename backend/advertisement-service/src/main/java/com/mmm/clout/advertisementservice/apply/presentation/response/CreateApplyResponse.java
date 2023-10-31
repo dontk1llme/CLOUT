@@ -15,12 +15,11 @@ public class CreateApplyResponse {
     private Integer totalNumberOfApplicants; // 현재 최종 신청자 수
 
 
-    // TODO (campaign 가져오기)
     public static CreateApplyResponse from(Apply apply) {
         return new CreateApplyResponse(
             apply.getId(),
-            apply.getAdvertisement().getId(),
-            0
+            apply.getCampaign().getId(),
+            apply.getCampaign().getNumberOfApplicants()
         );
     }
 }

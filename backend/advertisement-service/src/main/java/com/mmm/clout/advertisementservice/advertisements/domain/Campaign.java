@@ -67,13 +67,16 @@ public class Campaign extends Advertisement {
         super();
     }
 
-    public void apply() {
+    public void validApplyStatus() {
         if (this.applyEndDate.isBefore(LocalDate.now())) {
             throw new AlreadyEndedException();
         }
         if (this.numberOfRecruiter - this.numberOfSelectedMembers <= 0) {
             throw new AlreadyEndedException();
         }
+    }
+
+    public void plusApplicants() {
         this.numberOfApplicants++;
     }
 
