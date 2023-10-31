@@ -18,7 +18,7 @@ class Campaign {
   String category = '카테고리';
   String productName = '못골정미소 백미 5kg';
   String campaignSubject = '못골영농조합법인';
-  String preferredPlatform = '인스타램/유튜브/틱톡';
+  String preferredPlatform = '인스타그램/유튜브/틱톡';
   String endDate = '2023.10.29(일)';
   int applicantCount = 2;
   int recruitCount = 5;
@@ -27,6 +27,7 @@ class Campaign {
   String offeringItems = '클라우터에게 배송';
   String itemDetail = '1. 못골 정미소 백미 5kg \n2. 광고비 1000포인트';
   String requirements = '잘 부탁드립니다~~';
+  int starRating = 20;
 }
 
 final List<String> imgList = [
