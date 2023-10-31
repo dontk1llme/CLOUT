@@ -29,17 +29,17 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final boxWidth = screenWidth > 400 ? 200.0 : 170.0;
-    final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
-    final imageSize = screenWidth > 400 ? 160.0 : 140.0;
+    // final boxWidth = screenWidth > 400 ? 200.0 : 170.0;
+    // final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
+    // final imageSize = screenWidth > 400 ? 160.0 : 140.0;
 
     return GestureDetector(
       onTap: () {
         Get.to(() => ClouterDetail());
       },
       child: Container(
-        width: boxWidth,
-        padding: EdgeInsets.all(boxPadding),
+        width: 170,
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: style.colors['white'],
           borderRadius: BorderRadius.circular(10),
@@ -51,17 +51,20 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
             Stack(
               alignment: Alignment.topRight,
               children: [
+                // 제일 큰 이미지
                 Image.asset(
                   'assets/images/clouterImage.jpg',
-                  width: boxWidth,
-                  height: imageSize,
+                  width: 170,
+                  height: 140,
                   fit: BoxFit.cover,
                 ),
+                // 이미지에 떠있는 플랫폼 이미지
                 Positioned(
                   bottom: 5, // 아래 여백
                   right: 5, // 오른쪽 여백
                   child: Sns2(), // 배치할 위젯
                 ),
+                // 좋아요 버튼
                 LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),

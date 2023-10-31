@@ -27,16 +27,16 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final boxWidth = screenWidth > 400 ? 200.0 : 170.0;
-    final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
-    final imageSize = screenWidth > 400 ? 160.0 : 140.0;
+    // final boxWidth = screenWidth > 400 ? 200.0 : 170.0;
+    // final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
+    // final imageSize = screenWidth > 400 ? 160.0 : 140.0;
 
     return InkWell(
         // 여기 arguments에 해당 캠페인의 id를 넣어야 함
         onTap: () => Get.toNamed('/campaignDetail', arguments: 1),
         child: Container(
-          width: boxWidth,
-          padding: EdgeInsets.all(boxPadding),
+          width: 170,
+          padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: style.colors['white'],
             borderRadius: BorderRadius.circular(10),
@@ -50,8 +50,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 children: [
                   Image.asset(
                     'assets/images/itemImage.jpg',
-                    width: boxWidth,
-                    height: imageSize,
+                    width: 170,
+                    height: 140,
                     fit: BoxFit.cover,
                   ),
                   Positioned(
