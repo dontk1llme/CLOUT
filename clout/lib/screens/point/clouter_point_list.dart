@@ -37,11 +37,11 @@ class _ClouterPointListState extends State<ClouterPointList> {
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 19)),
                 ),
-                PointItemBox(),
-                PointItemBox(),
-                PointItemBox(),
-                PointItemBox(),
-                PointItemBox(),
+                PointItemBox(type: '사용'),
+                PointItemBox(type: '출금'),
+                PointItemBox(type: '사용'),
+                PointItemBox(type: '충전'),
+                PointItemBox(type: '충전'),
               ],
             ),
           )
