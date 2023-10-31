@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -19,7 +20,7 @@ public class ChannelRequest {
     @Size(max = 20)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "자신의 플랫폼")
     private Platform platform;
 
@@ -28,7 +29,7 @@ public class ChannelRequest {
     @Size(max = 500)
     private String link;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "채널의 구독자 규모")
     private FollowerScale followerScale;
 

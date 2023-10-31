@@ -45,7 +45,7 @@ public class CreateClrRequest {
     @Schema(description = "생일")
     private LocalDate birthday;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "나이")
     private Integer age;
 
