@@ -20,14 +20,18 @@ public class CreateApplyProcessor {
     public Apply execute(CreateApplyCommand command) {
         Campaign campaign = campaignRepository.findById(command.getAdvertisementId())
             .orElseThrow(CampaignNotFoundException::new);
-        campaign.validApplyStatus();
-        campaign.apply();
-        Apply apply = Apply.apply(
+
+        if (applyRepository.checkApplyExists(campaign, command.getClouterId())) {
+            throw new RuntimeException();
+        }
+
+        Apply apply = Apply.create(
             campaign,
             new Applicant(command.getClouterId()),
             command.getApplyMessage(),
             command.getHodeAdFee()
         );
+
         return applyRepository.save(apply);
     }
 }

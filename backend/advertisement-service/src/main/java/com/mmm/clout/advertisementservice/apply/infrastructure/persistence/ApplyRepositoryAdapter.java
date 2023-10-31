@@ -1,5 +1,6 @@
 package com.mmm.clout.advertisementservice.apply.infrastructure.persistence;
 
+import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import com.mmm.clout.advertisementservice.apply.infrastructure.persistence.jpa.JpaApplyRepository;
@@ -22,4 +23,11 @@ public class ApplyRepositoryAdapter implements ApplyRepository {
     public Optional<Apply> findById(Long applyId) {
         return jpaApplyRepository.findById(applyId);
     }
+
+    @Override
+    public boolean checkApplyExists(Campaign campaign, Long clouterId) {
+        return jpaApplyRepository.existsByCampaignAndApplicantId(campaign, clouterId);
+    }
+
+
 }
