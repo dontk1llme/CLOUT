@@ -57,7 +57,7 @@ class AdvertiserLikedclouters extends StatelessWidget {
                           crossAxisSpacing: 10,
                           childAspectRatio: 1 / 1.45,
                         ),
-                        itemCount: 20, // 아이템의 개수
+                        itemCount: 20,
                         itemBuilder: (BuildContext context, int index) {
                           return ClouterItemBox();
                         },
