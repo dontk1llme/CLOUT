@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:clout/style.dart' as style;
 
-class Sns2 extends StatefulWidget {
-  const Sns2({super.key});
+class Sns2 extends StatelessWidget {
+  const Sns2({super.key, required this.selectedPlatform});
 
-  @override
-  State<Sns2> createState() => _Sns2State();
-}
+  final List<String> selectedPlatform;
 
-class _Sns2State extends State<Sns2> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: style.colors['white'],
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-          color: style.colors['white'], borderRadius: BorderRadius.circular(5)),
-      child: Row(children: [
-        Image.asset('assets/images/YouTube.png', width: 20, height: 20),
-        Image.asset('assets/images/Instagram.png', width: 20, height: 20),
-        Image.asset('assets/images/TikTok.png', width: 20, height: 20),
-      ]),
+    return Row(
+      children: selectedPlatform.map((platform) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 2),
+          child: Image.asset('assets/images/${platform}.png',
+              width: 20, height: 20),
+        );
+      }).toList(),
     );
   }
 }

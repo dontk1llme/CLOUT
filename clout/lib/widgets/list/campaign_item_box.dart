@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:intl/intl.dart';
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
 import 'package:get/get.dart';
 import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
+
+class Campaign {
+  int campaignId = 1;
+  String category = '음식';
+  String productName = '못골정미소 백미 5kg';
+  int pay = 1000;
+  String campaignSubject = '못골영농조합법인';
+  int applicantCount = 2;
+  int recruitCount = 5;
+  List<String> selectedPlatform = [
+    "YouTube",
+    // "Instagram",
+    "TikTok",
+  ];
+  int starRating = 20;
+  String firstImg = 'assets/images/itemImage.jpg';
+}
 
 class CampaignItemBox extends StatefulWidget {
   const CampaignItemBox({super.key});
@@ -15,6 +33,12 @@ class CampaignItemBox extends StatefulWidget {
 }
 
 class _CampaignItemBoxState extends State<CampaignItemBox> {
+  var campaignId = Get.arguments;
+
+  Campaign campaign = Campaign();
+
+  var f = NumberFormat('###,###,###,###');
+
   bool isItemLiked = false;
 
   void handleItemTap() {
@@ -26,10 +50,6 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
-    // final boxWidth = screenWidth > 400 ? 200.0 : 170.0;
-    // final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
-    // final imageSize = screenWidth > 400 ? 160.0 : 140.0;
 
     return InkWell(
         // 여기 arguments에 해당 캠페인의 id를 넣어야 함
@@ -57,7 +77,15 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                   Positioned(
                     bottom: 5,
                     right: 5,
-                    child: Sns2(),
+                    child: Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          color: style.colors['white'],
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Row(children: [
+                        Sns2(selectedPlatform: campaign.selectedPlatform)
+                      ]),
+                    ),
                   ),
                   LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
                 ],
@@ -66,21 +94,22 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  NameTag(title: '카테고리'),
-                  Text('2명 / 3명',
+                  NameTag(title: campaign.category),
+                  Text(
+                      '${campaign.applicantCount}명 / ${campaign.recruitCount}명',
                       style: TextStyle(
                         fontSize: 12,
                       )),
                 ],
               ),
-              Text('제품명',
+              Text(campaign.productName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: screenWidth > 400 ? 19 : 17,
+                    fontSize: screenWidth > 400 ? 17 : 15,
                   )),
-              Text('광고비',
+              Text('${f.format(campaign.pay)} 포인트',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -91,21 +120,30 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('업체명',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: screenWidth > 400 ? 15 : 13,
-                      )),
-                  Icon(
-                    Icons.star,
-                    color: Colors.yellow,
-                    size: screenWidth > 400 ? 18 : 15,
+                  Flexible(
+                    flex: 3,
+                    child: Text(campaign.campaignSubject,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: screenWidth > 400 ? 13 : 11,
+                        )),
                   ),
-                  Text('20.5',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: screenWidth > 400 ? 14 : 11,
+                  Flexible(
+                      flex: 1,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                            size: screenWidth > 400 ? 18 : 15,
+                          ),
+                          Text(campaign.starRating.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth > 400 ? 13 : 11,
+                              )),
+                        ],
                       )),
                 ],
               )
