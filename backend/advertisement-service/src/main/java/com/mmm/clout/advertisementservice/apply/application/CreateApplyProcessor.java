@@ -6,6 +6,7 @@ import com.mmm.clout.advertisementservice.advertisements.domain.repository.Campa
 import com.mmm.clout.advertisementservice.apply.application.command.CreateApplyCommand;
 import com.mmm.clout.advertisementservice.apply.domain.Applicant;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
+import com.mmm.clout.advertisementservice.apply.domain.exception.AlreadyCreatedApplyException;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class CreateApplyProcessor {
             .orElseThrow(CampaignNotFoundException::new);
 
         if (applyRepository.checkApplyExists(campaign, command.getClouterId())) {
-            throw new RuntimeException();
+            throw new AlreadyCreatedApplyException();
         }
 
         Apply apply = Apply.create(
