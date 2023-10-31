@@ -1,51 +1,27 @@
 import 'dart:io';
-
 import 'package:clout/providers/image_picker_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class ImagePickerService {
-  static final ImagePickerService _imagePickerService =
-      ImagePickerService._internal();
-  factory ImagePickerService() {
-    return _imagePickerService;
-  }
-  ImagePickerService._internal();
-
-  final ImagePicker _picker = ImagePicker();
-  Future<List<XFile>> pickImage() async {
-    try {
-      final pickedFile = await _picker.pickMultiImage();
-      return pickedFile;
-    } catch (e) {
-      print('ImagePickerService: $e');
-      return [];
-    }
-  }
-
-  Future<XFile?> pickSingleImage() async {
-    try {
-      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-      return pickedFile;
-    } catch (e) {
-      print('ImagePickerService: $e');
-      return null;
-    }
-  }
-}
-
 class ImageWidget extends ConsumerWidget {
-  const ImageWidget({Key? key}) : super(key: key);
+  ImageWidget({super.key, this.parentImages});
+  final parentImages;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double imgBoxSize = ((MediaQuery.of(context).size.width - 32) / 5) - 4;
+    print(ref);
     final images = ref.watch(imagePickerProvider);
+    // print(images);
 
     Widget imageBox(XFile img) => GestureDetector(
-        onTap: () => ref.read(imagePickerProvider.notifier).delImage(img),
+        onTap: () => {
+              ref.read(imagePickerProvider.notifier).delImage(img),
+              // print(images)
+            },
         child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 2),
             width: imgBoxSize,

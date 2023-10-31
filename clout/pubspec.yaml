@@ -56,6 +56,7 @@ dependencies:
   syncfusion_flutter_signaturepad: ^23.1.42
   image_gallery_saver: ^2.0.3
   change_app_package_name: ^1.1.0
+  url_launcher: ^6.2.1
 
 flutter_icons:
   android: "clout"

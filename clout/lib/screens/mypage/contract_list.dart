@@ -17,7 +17,7 @@ import 'package:clout/widgets/list/campaign_item_box.dart';
 class ContractList extends StatelessWidget {
   const ContractList({super.key});
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
@@ -40,26 +40,17 @@ class ContractList extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [ContractToggle()
-                                  ],
+                          children: [ContractToggle()],
                         ),
                       ),
-                      Divider(
-                          thickness: 1,
-                          height: 1,
-                          color: style.colors['lightgray']),
-                     BouncingListview(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          child: Column(children: [
-                            for (num i = 0; i < 10; i++)
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                                child: SmallContract(),
-                              ),
-                              
-                          ]),
-                        ),
+                      BouncingListview(
+                        child: Column(children: [
+                          for (num i = 0; i < 10; i++)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: SmallContract(),
+                            ),
+                        ]),
                       )
                     ],
                   )),
