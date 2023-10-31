@@ -5,8 +5,6 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import '../../style.dart' as style;
 
 import 'package:clout/screens/join/widgets/big_button.dart';
-import 'package:clout/screens/join/widgets/small_button.dart';
-import 'package:clout/screens/join/numberVerify.dart';
 
 import 'package:clout/screens/join/widgets/clouter/clouterJoin1.dart';
 import 'package:clout/screens/join/widgets/clouter/clouterJoin2.dart';
@@ -46,20 +44,19 @@ class _ClouterJoinState extends State<ClouterJoin> {
                 ],
               ),
               Text('매칭해요', style: style.textTheme.titleMedium),
-              SizedBox(height: 10), // 20픽셀의 공백
+              SizedBox(height: 10),  
 
               //페이지별로 보여주기
-              if (pageNum == 1) // Page 1
+              if (pageNum == 1)
                 ClouterJoin1(),
-              if (pageNum == 2) // Page 2
+              if (pageNum == 2) 
                 ClouterJoin2(),
-              if (pageNum == 3) // Page 2
+              if (pageNum == 3) 
                 ClouterJoin3(),
-                SizedBox(height: 20), // 20픽셀의 공백
+                SizedBox(height: 20), 
               BigButton(
                 title: pageNum == 3 ? '완료' : '다음', // pageNum에 따라 버튼 텍스트 변경
                 function: () {
-                  // 페이지 번호 업데이트
                   if (pageNum <= 3) {
                     setPageNum(pageNum + 1);
                   }
