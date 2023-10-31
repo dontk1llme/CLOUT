@@ -10,6 +10,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,13 +39,14 @@ public class Apply extends BaseEntity {
     @Column(name = "apply_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "advertisement_id")
     private Campaign campaign;
 
     @Embedded
     private Applicant applicant;
 
+    @Column(length = 310)
     private String applyMessage;
 
     private Long hopeAdFee;

@@ -28,6 +28,7 @@ import org.hibernate.annotations.DynamicInsert;
 @DiscriminatorValue("CP")
 public class Campaign extends Advertisement {
 
+    @Column(name = "title", length = 60)
     private String title;
 
     @Enumerated(EnumType.STRING)
@@ -43,6 +44,7 @@ public class Campaign extends Advertisement {
 
     private Integer numberOfSelectedMembers; // 채택 인원
 
+    @Column(length = 600)
     private String offeringDetails; // 제공 내역 설명
 
     private String sellingLink; // 판매처 링크 (선택사항)
