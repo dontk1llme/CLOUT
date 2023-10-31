@@ -27,95 +27,90 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final boxWidth = screenWidth * 0.4;
-    final boxPadding = screenWidth * 0.03;
-    final imageSize = screenWidth * 0.32;
-    final titleFontSize = screenWidth * 0.046;
-    final adPriceFontSize = screenWidth * 0.04;
-    final companyInfoFontSize = screenWidth * 0.033;
-    final starIconSize = screenWidth * 0.04;
-    final ratingFontSize = screenWidth * 0.03;
+    final boxWidth = screenWidth > 400 ? 200.0 : 170.0;
+    final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
+    final imageSize = screenWidth > 400 ? 160.0 : 140.0;
 
     return InkWell(
-      // 여기 arguments에 해당 캠페인의 id를 넣어야 함 
-      onTap: ()=>Get.toNamed('/campaignDetail', arguments: 1),
+        // 여기 arguments에 해당 캠페인의 id를 넣어야 함
+        onTap: () => Get.toNamed('/campaignDetail', arguments: 1),
         child: Container(
-      width: boxWidth,
-      padding: EdgeInsets.all(boxPadding),
-      decoration: BoxDecoration(
-        color: style.colors['white'],
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: style.shadows['shadow'],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            alignment: Alignment.topRight,
-            children: [
-              Image.asset(
-                'assets/images/itemImage.jpg',
-                width: boxWidth,
-                height: imageSize,
-                fit: BoxFit.cover,
-              ),
-              Positioned(
-                bottom: 5,
-                right: 5,
-                child: Sns2(),
-              ),
-              LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
-            ],
+          width: boxWidth,
+          padding: EdgeInsets.all(boxPadding),
+          decoration: BoxDecoration(
+            color: style.colors['white'],
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: style.shadows['shadow'],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              NameTag(title: '카테고리'),
-              Text('2명 / 3명',
-                  style: TextStyle(
-                    fontSize: 12,
-                  )),
-            ],
-          ),
-          Text('제품명',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: titleFontSize,
-              )),
-          Text('광고비',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: style.colors['main1'],
-                fontWeight: FontWeight.w500,
-                fontSize: adPriceFontSize,
-              )),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text('업체명',
+              Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Image.asset(
+                    'assets/images/itemImage.jpg',
+                    width: boxWidth,
+                    height: imageSize,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    bottom: 5,
+                    right: 5,
+                    child: Sns2(),
+                  ),
+                  LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  NameTag(title: '카테고리'),
+                  Text('2명 / 3명',
+                      style: TextStyle(
+                        fontSize: 12,
+                      )),
+                ],
+              ),
+              Text('제품명',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: companyInfoFontSize,
+                    fontWeight: FontWeight.w700,
+                    fontSize: screenWidth > 400 ? 19 : 17,
                   )),
-              Icon(
-                Icons.star,
-                color: Colors.yellow,
-                size: starIconSize,
-              ),
-              Text('20.5',
+              Text('광고비',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: ratingFontSize,
+                    color: style.colors['main1'],
+                    fontWeight: FontWeight.w500,
+                    fontSize: screenWidth > 400 ? 17 : 15,
                   )),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('업체명',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: screenWidth > 400 ? 15 : 13,
+                      )),
+                  Icon(
+                    Icons.star,
+                    color: Colors.yellow,
+                    size: screenWidth > 400 ? 18 : 15,
+                  ),
+                  Text('20.5',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: screenWidth > 400 ? 14 : 11,
+                      )),
+                ],
+              )
             ],
-          )
-        ],
-      ),
-    ));
+          ),
+        ));
   }
 }

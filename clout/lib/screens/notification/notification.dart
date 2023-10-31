@@ -1,7 +1,6 @@
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/utilities/my_scroll.dart';
 import 'package:flutter/material.dart';
-import '../../style.dart' as style;
 
 // widgets
 import '../../widgets/header/header.dart';
