@@ -12,7 +12,7 @@ class UpdateButton extends StatelessWidget {
     return ElevatedButton.icon(
       // 광고주냐 클라우터냐에 따라 회원정보수정 페이지 바뀌게 해야 함
       // onPressed: () {Get.to(AdvertiserUpdate());}, //광고주
-      onPressed: () {Get.to(ClouterUpdate());}, //광고주
+      onPressed: () {Get.to(ClouterUpdate());}, //클라우터
       icon: Icon(
         Icons.manage_accounts,
         size: 18,

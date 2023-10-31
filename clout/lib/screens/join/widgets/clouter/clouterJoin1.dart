@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
-import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/small_button.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 import 'package:clout/widgets/input/input.dart';
@@ -26,9 +25,8 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
   var checkPassword;
   var address;
 
-  // 추가 변수와 함수
-  var obscured = true; // 예시 값
-  Icon suffixIcon = Icon(Icons.visibility); // 예시 값
+  var obscured = true; 
+  Icon suffixIcon = Icon(Icons.visibility);
   var doubleId = 1;
 
   setDoubleId() {
@@ -115,20 +113,23 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
           progressColor: style.colors['logo'],
           barRadius: Radius.circular(5),
         ),
-        SizedBox(height: 5), // 20픽셀의 공백
+        SizedBox(height: 5), 
         Text(
             '1. 기본 정보',
-            style: style.textTheme.titleSmall, // 텍스트 스타일 설정
-            textAlign: TextAlign.left, // 얘 왜 말 안 들음? 왼쪽 가라니까
+            style: style.textTheme.titleSmall, 
+            textAlign: TextAlign.left, 
           ),
+          SizedBox(height: 10),
           Input(
             placeholder: '이름 입력',
             setText: setName,
           ),
+          SizedBox(height: 10),
           Input(
             placeholder: '생년월일 입력',
             setText: setBirthday,
           ),
+          SizedBox(height: 10),
           Stack(
             children: [
               Input(
@@ -137,7 +138,7 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
               ),
               Positioned(
                 right: 10,
-                top: 25,
+                top: 10,
                 child: SmallButton(
                   title: '인증',
                   function: () {
@@ -147,6 +148,7 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
               ),
             ],
           ),
+          SizedBox(height: 10),
           Stack(
             children: [
               Input(
@@ -155,9 +157,9 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
               ),
               Positioned(
                 right: 10,
-                top: 25,
+                top: 10,
                 child: SmallButton(
-                  title: '중복 확인',
+                  title: '중복\n확인',
                   function: setDoubleId,
                 ),
               ),
@@ -173,7 +175,6 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
                 alignment: Alignment.centerRight,
               ),
               onPressed: () {
-                // 원하는 동작을 구현
               },
               child: doubleId == 1
                   ? Text(
@@ -200,6 +201,7 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
                         ),
             ),
           ),
+          SizedBox(height: 5),
           Input(
             placeholder: '패스워드 입력',
             setText: setPassword,
@@ -207,12 +209,14 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
             suffixIcon: suffixIcon,
             setObscured: setObscured,
           ),
+          SizedBox(height: 10),
           Input(
             placeholder: '패스워드 확인',
             setText: setCheckPassword,
             obscure: obscured,
             suffixIcon: suffixIcon,
           ),
+          SizedBox(height: 10),
           Input(
             placeholder: '주소 입력',
             setText: setAddress,

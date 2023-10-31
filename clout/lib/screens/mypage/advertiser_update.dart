@@ -28,9 +28,8 @@ class _AdvertiserUpdateState extends State<AdvertiserUpdate> {
   var buisnessNumber;
   var buisnessAddress;
 
-  // 추가 변수와 함수
-  var obscured = true; // 예시 값
-  Icon suffixIcon = Icon(Icons.visibility); // 예시 값
+  var obscured = true; 
+  Icon suffixIcon = Icon(Icons.visibility); 
   var doubleId = 1;
 
   setDoubleId() {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
-import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/small_button.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 import 'package:clout/widgets/input/input.dart';
@@ -26,9 +25,8 @@ class _ClouterUpdate1State extends State<ClouterUpdate1> {
   var checkPassword;
   var address;
 
-  // 추가 변수와 함수
-  var obscured = true; // 예시 값
-  Icon suffixIcon = Icon(Icons.visibility); // 예시 값
+  var obscured = true; 
+  Icon suffixIcon = Icon(Icons.visibility); 
   var doubleId = 1;
 
   setDoubleId() {
@@ -115,13 +113,13 @@ class _ClouterUpdate1State extends State<ClouterUpdate1> {
           progressColor: style.colors['logo'],
           barRadius: Radius.circular(5),
         ),
-        SizedBox(height: 5), // 20픽셀의 공백
+        SizedBox(height: 34), 
         Text(
             '1. 기본 정보',
-            style: style.textTheme.titleSmall, // 텍스트 스타일 설정
-            textAlign: TextAlign.left, // 얘 왜 말 안 들음? 왼쪽 가라니까
+            style: style.textTheme.titleSmall, 
+            textAlign: TextAlign.left, 
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           Input(
             placeholder: '이름',
             setText: setName,

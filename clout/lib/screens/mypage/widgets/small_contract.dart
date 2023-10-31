@@ -52,7 +52,7 @@ class _SmallContractState extends State<SmallContract> {
             )
           ],
         ),
-        ElevatedButton(
+        ElevatedButton(                 
           onPressed: () => {Get.to(Contract())},
           style: ElevatedButton.styleFrom(
               backgroundColor: style.colors['main1'],

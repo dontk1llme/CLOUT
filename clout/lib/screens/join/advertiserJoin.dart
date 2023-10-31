@@ -24,9 +24,8 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
   var buisnessNumber;
   var buisnessAddress;
 
-  // 추가 변수와 함수
-  var obscured = true; // 예시 값
-  Icon suffixIcon = Icon(Icons.visibility); // 예시 값
+  var obscured = true; 
+  Icon suffixIcon = Icon(Icons.visibility);
   var doubleId = 1;
 
   setDoubleId() {
@@ -118,10 +117,12 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                   ],
                 ),
                 Text('매칭해요', style: style.textTheme.titleMedium),
+                SizedBox(height: 20),
                 Input(
                   placeholder: '담당자명 입력',
                   setText: setName,
                 ),
+                SizedBox(height: 10),
                 Stack(
                   children: [
                     Input(
@@ -130,7 +131,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                     ),
                     Positioned(
                       right: 10,
-                      top: 22,
+                      top: 10,
                       child: SmallButton(
                         title: '인증',
                         function: () {
@@ -140,6 +141,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                     ),
                   ],
                 ),
+                SizedBox(height: 10),
                 Stack(
                   children: [
                     Input(
@@ -148,9 +150,9 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                     ),
                     Positioned(
                       right: 10,
-                      top: 22,
+                      top: 10,
                       child: SmallButton(
-                        title: '중복 확인',
+                        title: '중복\n확인',
                         function: setDoubleId,
                       ),
                     ),
@@ -166,7 +168,6 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                       alignment: Alignment.centerRight,
                     ),
                     onPressed: () {
-                      // 원하는 동작을 구현
                     },
                     child: doubleId == 1
                         ? Text(
@@ -193,6 +194,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                               ),
                   ),
                 ),
+                SizedBox(height: 5),
                 Input(
                   placeholder: '패스워드 입력',
                   setText: setPassword,
@@ -200,24 +202,29 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                   suffixIcon: suffixIcon,
                   setObscured: setObscured,
                 ),
+                SizedBox(height: 10),
                 Input(
                   placeholder: '패스워드 확인',
                   setText: setCheckPassword,
                   obscure: obscured,
                   suffixIcon: suffixIcon,
                 ),
+                SizedBox(height: 10),
                 Input(
                   placeholder: '업체명 입력',
                   setText: setBuisnessName,
                 ),
+                SizedBox(height: 10),
                 Input(
                   placeholder: '사업자등록번호 입력',
                   setText: setBuisnessNumber,
                 ),
+                SizedBox(height: 10),
                 Input(
                   placeholder: '업체 주소 입력',
                   setText: setBuisnessAddress,
                 ),
+                SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: BigButton(
