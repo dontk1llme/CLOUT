@@ -1,6 +1,7 @@
 package com.mmm.clout.advertisementservice.apply.domain;
 
 import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
+import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.common.entity.BaseEntity;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -38,7 +39,7 @@ public class Apply extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "advertisement_id")
-    private Advertisement advertisement;
+    private Campaign campaign;
 
     @Embedded
     private Applicant applicant;
@@ -52,10 +53,27 @@ public class Apply extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ApplyStatus applyStatus;
 
+    public static Apply apply(Campaign campaign, Applicant applicant, String applyMessage, Long hodeAdFee) {
+        return new Apply(campaign, applicant, applyMessage, hodeAdFee);
+    }
+
+    public Apply(Campaign campaign, Applicant applicant, String applyMessage, Long hopeAdFee) {
+        this.campaign = campaign;
+        this.applicant = applicant;
+        this.applyMessage = applyMessage;
+        this.hopeAdFee = hopeAdFee;
+        this.appliedAt = LocalDateTime.now();
+        this.applyStatus = ApplyStatus.WAITING;
+    }
+
     @Getter
     @RequiredArgsConstructor
     public enum ApplyStatus {
-        WAITING("대기"), ACCEPTED("채택"), NOT_ACCEPTED("미채택");
+
+        WAITING("대기"),
+        ACCEPTED("채택"),
+        NOT_ACCEPTED("미채택");
+
         private final String description;
     }
 
