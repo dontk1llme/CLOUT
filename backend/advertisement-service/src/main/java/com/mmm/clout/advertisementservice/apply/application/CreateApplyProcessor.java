@@ -21,7 +21,7 @@ public class CreateApplyProcessor {
         Campaign campaign = campaignRepository.findById(command.getAdvertisementId())
             .orElseThrow(CampaignNotFoundException::new);
         campaign.validApplyStatus();
-        campaign.plusApplicants();
+        campaign.apply();
         Apply apply = Apply.apply(
             campaign,
             new Applicant(command.getClouterId()),

@@ -76,8 +76,12 @@ public class Campaign extends Advertisement {
         }
     }
 
-    public void plusApplicants() {
+    public void apply() {
         this.numberOfApplicants++;
+    }
+
+    public void cancel() {
+        this.numberOfApplicants--;
     }
 
     public Campaign(
@@ -189,4 +193,6 @@ public class Campaign extends Advertisement {
     public void softDelete() {
         super.softDelete();
     }
+
+
 }

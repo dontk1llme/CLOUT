@@ -1,6 +1,7 @@
 package com.mmm.clout.advertisementservice.apply.infrastructure.config;
 
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
+import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +19,15 @@ public class ApplyConfig {
         return new CreateApplyProcessor(
             applyRepository,
             campaignRepository
+        );
+    }
+
+    @Bean
+    CancelApplyProcessor cancelApplyProcessor(
+        ApplyRepository applyRepository
+    ) {
+        return new CancelApplyProcessor(
+            applyRepository
         );
     }
 
