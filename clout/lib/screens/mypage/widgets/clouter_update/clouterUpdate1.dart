@@ -6,14 +6,14 @@ import 'package:clout/screens/join/widgets/small_button.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 import 'package:clout/widgets/input/input.dart';
 
-class ClouterJoin1 extends StatefulWidget {
-  ClouterJoin1({Key? key}) : super(key: key);
+class ClouterUpdate1 extends StatefulWidget {
+  ClouterUpdate1({Key? key}) : super(key: key);
 
   @override
-  _ClouterJoin1State createState() => _ClouterJoin1State();
+  _ClouterUpdate1State createState() => _ClouterUpdate1State();
 }
 
-class _ClouterJoin1State extends State<ClouterJoin1> {
+class _ClouterUpdate1State extends State<ClouterUpdate1> {
   double percent = 0.33;
 
   var name;
@@ -26,7 +26,7 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
   var address;
 
   var obscured = true; 
-  Icon suffixIcon = Icon(Icons.visibility);
+  Icon suffixIcon = Icon(Icons.visibility); 
   var doubleId = 1;
 
   setDoubleId() {
@@ -113,27 +113,23 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
           progressColor: style.colors['logo'],
           barRadius: Radius.circular(5),
         ),
-        SizedBox(height: 5), 
+        SizedBox(height: 34), 
         Text(
             '1. 기본 정보',
             style: style.textTheme.titleSmall, 
             textAlign: TextAlign.left, 
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           Input(
-            placeholder: '이름 입력',
+            placeholder: '이름',
             setText: setName,
-          ),
-          SizedBox(height: 10),
-          Input(
-            placeholder: '생년월일 입력',
-            setText: setBirthday,
+            enabled: false,
           ),
           SizedBox(height: 10),
           Stack(
             children: [
               Input(
-                placeholder: '전화번호 입력',
+                placeholder: '전화번호 변경',
                 setText: setPhoneNumber,
               ),
               Positioned(
@@ -149,61 +145,8 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
             ],
           ),
           SizedBox(height: 10),
-          Stack(
-            children: [
-              Input(
-                placeholder: '아이디 입력',
-                setText: setEmail,
-              ),
-              Positioned(
-                right: 10,
-                top: 10,
-                child: SmallButton(
-                  title: '중복\n확인',
-                  function: setDoubleId,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 25,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                minimumSize: Size.zero,
-                padding: EdgeInsets.only(left:180),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                alignment: Alignment.centerRight,
-              ),
-              onPressed: () {
-              },
-              child: doubleId == 1
-                  ? Text(
-                      '아이디 중복 확인이 필요해요',
-                      style: style.textTheme.bodyMedium?.copyWith(
-                        color: style.colors['gray'],
-                        height: 2,
-                      ),
-                    )
-                  : doubleId == 2
-                      ? Text(
-                          '사용 가능한 아이디입니다',
-                          style: style.textTheme.bodyMedium?.copyWith(
-                            color: style.colors['main1'],
-                            height: 2,
-                          ),
-                        )
-                      : Text(
-                          '이미 사용 중인 아이디입니다',
-                          style: style.textTheme.bodyMedium?.copyWith(
-                            color: style.colors['Darkgray'],
-                            height: 2,
-                          ),
-                        ),
-            ),
-          ),
-          SizedBox(height: 5),
           Input(
-            placeholder: '패스워드 입력',
+            placeholder: '패스워드 변경',
             setText: setPassword,
             obscure: obscured,
             suffixIcon: suffixIcon,
@@ -211,16 +154,17 @@ class _ClouterJoin1State extends State<ClouterJoin1> {
           ),
           SizedBox(height: 10),
           Input(
-            placeholder: '패스워드 확인',
+            placeholder: '패스워드 변경',
             setText: setCheckPassword,
             obscure: obscured,
             suffixIcon: suffixIcon,
           ),
           SizedBox(height: 10),
           Input(
-            placeholder: '주소 입력',
+            placeholder: '주소 변경',
             setText: setAddress,
           ),
+          SizedBox(height: 20),
 
         
       ],

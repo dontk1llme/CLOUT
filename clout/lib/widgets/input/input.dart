@@ -10,19 +10,26 @@ class Input extends StatelessWidget {
       this.setText,
       this.suffixIcon,
       this.obscure,
-      this.setObscured});
+      this.setObscured,
+      this.enabled,});
 
   final placeholder;
   final setText;
   final suffixIcon;
   final obscure;
   final setObscured;
+  final enabled;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onChanged: (value) => setText(value),
+      onChanged: (value) {
+        if (enabled != false) {
+          setText(value);
+        }
+      },
       obscureText: obscure != null ? obscure : false,
+      enabled: enabled != false, 
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           labelText: placeholder,
