@@ -195,4 +195,9 @@ public class Campaign extends Advertisement {
     }
 
 
+    public void changePrice(Long newPrice) {
+        if (this.isPriceChangeable) {
+            super.changePrice(newPrice);
+        }
+    }
 }

@@ -54,10 +54,11 @@ public class Apply extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ApplyStatus applyStatus;
 
-    public static Apply create(Campaign campaign, Applicant applicant, String applyMessage, Long hodeAdFee) {
+    public static Apply create(Campaign campaign, Applicant applicant, String applyMessage, Long hopeAdFee) {
         campaign.validApplyStatus();
+        campaign.changePrice(hopeAdFee);
         campaign.apply();
-        return new Apply(campaign, applicant, applyMessage, hodeAdFee);
+        return new Apply(campaign, applicant, applyMessage, hopeAdFee);
     }
 
     public Apply(Campaign campaign, Applicant applicant, String applyMessage, Long hopeAdFee) {
