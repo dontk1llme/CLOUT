@@ -51,10 +51,6 @@ class ClouterMyCampaign extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // Divider(
-                      //     thickness: 1,
-                      //     height: 1,
-                      //     color: style.colors['lightgray']),
                       GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2, // 한 행에 2개의 아이템 배치
@@ -62,7 +58,7 @@ class ClouterMyCampaign extends StatelessWidget {
                           crossAxisSpacing: 10,
                           childAspectRatio: 1 / 1.45,
                         ),
-                        itemCount: 20, // 아이템의 개수
+                        itemCount: 20, 
                         itemBuilder: (BuildContext context, int index) {
                           return CampaignItemBox();
                         },
