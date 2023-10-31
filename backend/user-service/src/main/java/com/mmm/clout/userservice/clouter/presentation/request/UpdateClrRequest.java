@@ -34,20 +34,21 @@ public class UpdateClrRequest {
     @Size(max = 20)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "생일", defaultValue = "2000-09-17")
     private LocalDate birthday;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "나이", defaultValue = "22")
     private Integer age;
 
-    @NotBlank
-    @Schema(description = "전화번호", defaultValue = "저나번호")
+    @NotNull
+    @Schema(description = "전화번호", defaultValue = "전화번호")
     @Size(max = 15)
     private String phoneNumber;
 
     @NotNull
+    @Size(min = 1)
     @Schema(description = "개인 채널 리스트")
     private List<ChannelRequest> channelList;
 
