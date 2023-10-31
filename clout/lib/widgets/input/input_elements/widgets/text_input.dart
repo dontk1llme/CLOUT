@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 class TextInput extends StatelessWidget {
-  const TextInput(
+  TextInput(
       {super.key,
-      this.setData,
-      this.placeholder,
+      required this.setData,
+      required this.placeholder,
       this.keyboardType,
-      this.maxLength,
-      this.maxValue});
+      required this.maxLength,
+      required this.maxValue});
 
   final setData;
   final placeholder;

@@ -55,8 +55,9 @@ class NavBar extends StatelessWidget {
                   onTap: (value) {
                     if (!userController.clouter && value == 2) {
                       Get.toNamed('campaignRegister');
+                    } else {
+                      controller.setTab(value);
                     }
-                    controller.setTab(value);
                   },
                   currentIndex: controller.tab,
                 )));

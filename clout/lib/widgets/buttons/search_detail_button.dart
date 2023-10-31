@@ -1,3 +1,7 @@
+import 'package:clout/providers/serach_detail_controller.dart';
+import 'package:clout/screens/campaign_register/widgets/pay_dialog.dart';
+import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/input/input_elements/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -11,11 +15,10 @@ import 'package:clout/widgets/input/input.dart';
 
 // Screens
 import 'package:clout/widgets/list/data_title_thin.dart';
+import 'package:get/get.dart';
 
 class SearchDetailButton extends StatefulWidget {
-  SearchDetailButton({super.key, this.setAge, this.ageRanges});
-  var setAge;
-  var ageRanges;
+  SearchDetailButton({super.key});
 
   @override
   State<SearchDetailButton> createState() => _SearchDetailButtonState();
@@ -66,8 +69,90 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
     });
   }
 
+  void openBottomSheet() {
+    final controller = Get.put(SearchDetailController());
+    Get.bottomSheet(
+        isScrollControlled: true,
+        Container(
+            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+            decoration: BoxDecoration(color: Colors.white),
+            child: BouncingListview(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text('상세 조건 설정',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 22,
+                            )),
+                        InkWell(
+                          child: Icon(
+                            Icons.close,
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ]),
+                  DataTitleThin(text: '희망 광고 플랫폼', pdtop: 20),
+                  Sns3(),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text('다중 선택 가능',
+                        style: TextStyle(color: style.colors['gray'])),
+                  ),
+                  DataTitleThin(text: '희망 클라우터 나이', pdtop: 10),
+                  // slider 추가
+                  AgeSlider(),
+                  // dropdown 추가
+                  DataTitleThin(text: '희망 최소 팔로워 수', pdtop: 25),
+                  MinimumfollowersDialog(
+                      minimumFollowers: minimumFollowers,
+                      minimumFollowersString: minimumFollowersString,
+                      setMinimumFollowers: setMinimumFollowers,
+                      setMinimumFollowersString: setMinimumFollowersString),
+                  DataTitleThin(text: '희망 광고비', pdtop: 10),
+                  Row(
+                    children: [
+                      PayDialog(
+                          pay: controller.minFee,
+                          payString: controller.minFeeString,
+                          setPay: controller.setMinFee,
+                          setPayString: controller.setMinFeeString),
+                      SizedBox(width: 5),
+                      PayDialog(
+                          pay: controller.maxFee,
+                          payString: controller.maxFeeString,
+                          setPay: controller.setMaxFee,
+                          setPayString: controller.setMaxFeeString)
+                    ],
+                  ),
+                  DataTitleThin(text: '지역 선택', pdtop: 20),
+                  RegionMultiSelect(
+                      selectedRegions: selectedRegions,
+                      setSelectedRegions: setSelectedRegions),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: BigButton(
+                      title: '검색',
+                      destination: '/campaignlist',
+                    ),
+                  )
+                ],
+                // ),
+              ),
+            )));
+  }
+
   @override
   Widget build(BuildContext context) {
+    Get.put(SearchDetailController());
     return Row(
       mainAxisAlignment: MainAxisAlignment.end, // 가장 오른쪽으로 정렬
       children: <Widget>[
@@ -84,98 +169,7 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
             ]),
           ),
           onTap: () {
-            showModalBottomSheet<void>(
-              context: context,
-              isScrollControlled: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              builder: (BuildContext context) {
-                return Container(
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  // child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('상세 조건 설정',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 22,
-                                )),
-                            InkWell(
-                              child: Icon(
-                                Icons.close,
-                              ),
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                            )
-                          ]),
-                      DataTitleThin(text: '희망 광고 플랫폼', pdtop: 20),
-                      Sns3(),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text('다중 선택 가능',
-                            style: TextStyle(color: style.colors['gray'])),
-                      ),
-                      DataTitleThin(text: '희망 클라우터 나이', pdtop: 10),
-                      // slider 추가
-                      AgeSlider(
-                        setAge: widget.setAge,
-                        ageRanges: widget.ageRanges,
-                        modalAge: modalAge,
-                        setModalAge: setModalAge,
-                      ),
-                      // dropdown 추가
-                      DataTitleThin(text: '희망 최소 팔로워 수', pdtop: 25),
-                      MinimumfollowersDialog(
-                          minimumFollowers: minimumFollowers,
-                          minimumFollowersString: minimumFollowersString,
-                          setMinimumFollowers: setMinimumFollowers,
-                          setMinimumFollowersString: setMinimumFollowersString),
-                      DataTitleThin(text: '희망 광고비', pdtop: 10),
-                      Row(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: Input(
-                              placeholder: '최소 금액 (만원)',
-                              setText: setMinFee,
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Flexible(
-                            flex: 1,
-                            child: Input(
-                              placeholder: '최대 금액 (만원)',
-                              setText: setMaxFee,
-                            ),
-                          ),
-                        ],
-                      ),
-                      DataTitleThin(text: '지역 선택', pdtop: 20),
-                      RegionMultiSelect(
-                          selectedRegions: selectedRegions,
-                          setSelectedRegions: setSelectedRegions),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: BigButton(
-                          title: '검색',
-                          destination: '/campaignlist',
-                        ),
-                      )
-                    ],
-                    // ),
-                  ),
-                );
-              },
-            );
+            openBottomSheet();
           },
         ),
       ],

@@ -16,6 +16,8 @@ class ClouterMyCampaign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70),
@@ -25,7 +27,7 @@ class ClouterMyCampaign extends StatelessWidget {
           ),
         ),
         body: Container(
-            color: Colors.white,
+            color: Colors.black,
             width: double.infinity,
             height: double.infinity,
             child: BouncingListview(
@@ -51,20 +53,46 @@ class ClouterMyCampaign extends StatelessWidget {
                           ],
                         ),
                       ),
-                      GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 한 행에 2개의 아이템 배치
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 1 / 1.45,
-                        ),
-                        itemCount: 20, 
-                        itemBuilder: (BuildContext context, int index) {
-                          return CampaignItemBox();
-                        },
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                      ),
+                      FractionallySizedBox(
+                          widthFactor: screenWidth > 400 ? 0.9 : 1,
+                          child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Wrap(
+                                  direction: Axis.horizontal,
+                                  spacing: screenWidth > 400 ? 20 : 10,
+                                  runSpacing: screenWidth > 400 ? 20 : 10,
+                                  // alignment: Alignment.,
+                                  children: [
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                    CampaignItemBox(),
+                                  ]))),
                     ],
                   )),
             )));
