@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/input/input.dart';
-
-import 'package:clout/screens/join/widgets/big_button.dart';
-import 'package:clout/screens/join/widgets/small_button.dart';
-import 'package:clout/screens/join/numberVerify.dart';
 import 'package:clout/widgets/sns/sns3.dart';
 import 'package:clout/screens/join/widgets/clouter/followersDropdown.dart';
 
@@ -58,7 +54,7 @@ class _ClouterUpdate2State extends State<ClouterUpdate2> {
 
   @override
   Widget build(BuildContext context) {
-      return Column( // Use a Column to layout multiple widgets vertically
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           LinearPercentIndicator(
@@ -69,35 +65,38 @@ class _ClouterUpdate2State extends State<ClouterUpdate2> {
             progressColor: style.colors['logo'],
             barRadius: Radius.circular(5),
           ),
-          SizedBox(height: 5), // 20픽셀의 공백
+          SizedBox(height: 34), 
           Text(
             '2. 클라우터 정보',
-            style: style.textTheme.titleSmall, // 텍스트 스타일 설정
+            style: style.textTheme.titleSmall, 
             textAlign: TextAlign.left, 
           ),
+          SizedBox(height: 20),
           Input(
             placeholder: '닉네임 입력',
             setText: setNickName,
           ),
-          SizedBox(height: 10), // 20픽셀의 공백
+          SizedBox(height: 10),
           Sns3(),
+          SizedBox(height: 10),
           Input(
             placeholder: '채널 링크 입력',
             setText: setLink,
           ),
+          SizedBox(height: 10),
           Input(
             placeholder: '계정명 또는 채널명',
             setText: setChannelName,
           ),
-          SizedBox(height: 10), // 20픽셀의 공백
+          SizedBox(height: 10), 
           FollowersDropdown(follower: follower, setFollower: setFollower),
-          SizedBox(height: 10), // 20픽셀의 공백
+          SizedBox(height: 10), 
           Text(
             '활동 대표 사진',
-            style: style.textTheme.displayMedium, // 텍스트 스타일 설정
+            style: style.textTheme.displayMedium, 
             textAlign: TextAlign.left, 
           ),
-          SizedBox(height: 10), // 20픽셀의 공백
+          SizedBox(height: 10), 
           SizedBox(
                   height: 69,
                   child: TextButton(

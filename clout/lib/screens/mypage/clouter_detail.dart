@@ -43,7 +43,7 @@ class ClouterDetail extends StatelessWidget {
                             Text('회원 정보',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 20)),
-                            // 회원 정보 수정 버튼 위젯 삽입
+                            
                             UpdateButton(),
                           ],
                         ),
