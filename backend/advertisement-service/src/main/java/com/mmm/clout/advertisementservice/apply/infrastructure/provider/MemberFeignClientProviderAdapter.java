@@ -1,10 +1,12 @@
-package com.mmm.clout.advertisementservice.advertisements.infrastructure.provider;
+package com.mmm.clout.advertisementservice.apply.infrastructure.provider;
 
 import com.mmm.clout.advertisementservice.advertisements.domain.info.AdvertiserInfo;
 import com.mmm.clout.advertisementservice.advertisements.domain.provider.AdvertiserInfoProvider;
-import com.mmm.clout.advertisementservice.advertisements.infrastructure.provider.feignclient.MemberFeignClient;
+import com.mmm.clout.advertisementservice.apply.infrastructure.provider.feignclient.MemberFeignClient;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class MemberFeignClientProviderAdapter implements AdvertiserInfoProvider {
 
