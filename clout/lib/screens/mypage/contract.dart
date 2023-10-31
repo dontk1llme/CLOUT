@@ -61,9 +61,19 @@ class Contract extends StatelessWidget {
             child: Column(
               children: [
                 // 기능 없음! 아래 버튼들 누르지 마시오!
-                BigButton(title: '계약서 저장하기'),
+                SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: BigButton(
+                            title: '계약서 저장하기',
+                          )),
                 SizedBox(height: 10), 
-                BigButton(title: '카카오톡 전송하기'),
+                SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: BigButton(
+                            title: '카카오톡 전송하기',
+                          )),
               ],
             ),
           ),

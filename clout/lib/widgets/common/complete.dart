@@ -67,13 +67,17 @@ class CompletePage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-              child: BigButton(
-                title: buttonText,
-                destination: "${pageName}",
-                notJustRoute: true,
-                function: movePage,
-              ),
-            ),
+              child: 
+              SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child:  BigButton(
+                                title: buttonText,
+                                destination: "${pageName}",
+                                notJustRoute: true,
+                                function: movePage,
+                              ),
+                          )),
           ],
         ),
       ),
