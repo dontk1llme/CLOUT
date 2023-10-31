@@ -22,7 +22,6 @@ import 'package:clout/screens/mypage/clouter_detail.dart';
 import 'package:clout/screens/point/withdraw/withdraw_first.dart';
 import 'package:clout/screens/point/withdraw/withdraw_second.dart';
 
-
 final List<String> imgList = [
   'assets/images/main_carousel_1.jpg',
   'assets/images/itemImage.jpg',
@@ -30,7 +29,8 @@ final List<String> imgList = [
 ];
 
 void main() {
-  runApp(ProviderScope(child: GetMaterialApp(
+  runApp(ProviderScope(
+      child: GetMaterialApp(
     theme: ThemeData(
       fontFamily: 'NotoSansKR',
     ),

@@ -1,4 +1,5 @@
 import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/search_detail_bottom_sheet/search_detail_button.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -6,7 +7,6 @@ import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/list/category_list.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 import 'package:clout/widgets/input/search_bar.dart';
-import 'package:clout/widgets/buttons/search_detail_button.dart';
 import 'package:clout/widgets/header/header.dart';
 
 class ClouterList extends StatefulWidget {

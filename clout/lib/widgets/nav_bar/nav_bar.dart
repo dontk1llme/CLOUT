@@ -1,4 +1,5 @@
 // global
+import 'package:clout/providers/serach_detail_controller.dart';
 import 'package:clout/providers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,6 +56,7 @@ class NavBar extends StatelessWidget {
                   onTap: (value) {
                     if (!userController.clouter && value == 2) {
                       Get.toNamed('campaignRegister');
+                      Get.delete<SearchDetailController>();
                     } else {
                       controller.setTab(value);
                     }
