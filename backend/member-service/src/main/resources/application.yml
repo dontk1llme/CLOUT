@@ -39,7 +39,7 @@ jwt:
 
 springdoc:
   swagger-ui:
-    path: /user-service/swagger-ui
+    path: /swagger-ui
     use-root-path: true
 
 #springfox:
