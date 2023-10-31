@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 // widgets
 import 'package:clout/widgets/header/header.dart';
@@ -10,14 +12,38 @@ import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
 import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
 
 class WithdrawSecond extends StatefulWidget {
-  const WithdrawSecond({super.key});
+  const WithdrawSecond({super.key, this.bank, this.account});
+
+  final String? bank;
+  final String? account;
 
   @override
   State<WithdrawSecond> createState() => _WithdrawSecondState();
 }
 
 class _WithdrawSecondState extends State<WithdrawSecond> {
+  TextEditingController pointController = TextEditingController();
+  double amount = 0;
+
+  var f = NumberFormat('###,###,###,###');
+
+  String getCurrentDate() {
+    final now = DateTime.now();
+    final nextMonth = now.add(Duration(days: 30)); // 다음 달로 이동
+    final nextMonth15th = DateTime(nextMonth.year, nextMonth.month, 15);
+    final formatter = DateFormat('MM월 dd일');
+
+    return formatter.format(nextMonth15th);
+  }
+
   void _showModal() {
+    try {
+      amount = double.parse(pointController.text);
+    } catch (e) {
+      // pointController.text를 숫자로 변환할 수 없을 때 처리
+      print('계산 불가... 💨: ${pointController.text}');
+      // 다른 기본값을 설정하거나 오류 메시지 표시..
+    }
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -50,7 +76,7 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('11월 15일',
+                  Text(getCurrentDate(),
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -74,9 +100,10 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      BoldText(text: '100,000 원'),
+                      BoldText(text: '${f.format(amount)} 원'),
                       SizedBox(height: 5),
-                      BoldText(text: '- 7,000 원'),
+                      BoldText(
+                          text: '- ${f.format((amount * 0.07).floor())} 원'),
                     ],
                   )
                 ],
@@ -100,7 +127,7 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('93,000원',
+                      Text('${f.format(amount - (amount * 0.07).floor())} 원',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -131,25 +158,30 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Flexible(
-                    flex: 1,
+                  SizedBox(
+                    width: 140,
+                    height: 50,
                     child: BigButton(
                         title: '아니요',
                         textColor: Colors.black,
                         buttonColor: style.colors['lightgray'],
                         function: () {
-                          Navigator.of(context).pop();
+                          Get.back();
                         }),
                   ),
                   SizedBox(
                     width: 5,
                   ),
-                  Flexible(
-                      flex: 1,
-                      child: BigButton(
-                        title: '출금하기',
-                      )),
+                  SizedBox(
+                    width: 140,
+                    height: 50,
+                    child: BigButton(
+                      title: '출금하기',
+                      destination: "withdrawcomplete",
+                    ),
+                  ),
                 ],
               )
             ],
@@ -161,54 +193,64 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
 
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
+    // final account = widget.account;
+
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(70),
-            child: Header(header: 4, headerTitle: '')),
-        body: Container(
-          color: Colors.white,
-          height: double.infinity,
-          width: double.infinity,
-          child: BouncingListview(
-            child: FractionallySizedBox(
-              widthFactor: 0.8,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10),
-                  Text('김보연님께',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                  Text('신한 110-123-456789', style: TextStyle(fontSize: 15)),
-                  SizedBox(height: 10),
-                  MainText(textTitle: '얼마를 보낼까요?'),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: '보낼금액 (원)',
-                      labelStyle: TextStyle(
-                          fontSize: 20, color: style.colors['lightgray']),
-                    ),
-                    textInputAction: TextInputAction.next,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(header: 4, headerTitle: '')),
+      body: Container(
+        color: Colors.white,
+        height: double.infinity,
+        width: double.infinity,
+        child: BouncingListview(
+          child: FractionallySizedBox(
+            widthFactor: 0.8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 10),
+                Text('${args['bank']}',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                Text('계좌번호 : ${args['account']}',
+                    style: TextStyle(fontSize: 15)),
+                SizedBox(height: 10),
+                MainText(textTitle: '얼마를 보낼까요?'),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: pointController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: '보낼금액 (원)',
+                    labelStyle: TextStyle(
+                        fontSize: 20, color: style.colors['lightgray']),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Text('출금 가능 포인트: 130,000 points'),
-                  )
-                ],
-              ),
+                  textInputAction: TextInputAction.next,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text('출금 가능 포인트: 130,000 points'),
+                )
+              ],
             ),
           ),
         ),
-        bottomSheet: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: BigButton(
-              title: '출금',
-              function: _showModal,
-            ),
+      ),
+      bottomSheet: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        child: SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: BigButton(
+            title: '출금',
+            function: () => _showModal(),
+            // destination: "withdrawcomplete",
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
