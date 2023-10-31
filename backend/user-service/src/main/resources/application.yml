@@ -6,7 +6,7 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   application:
-    name: user-service
+    name: member-service
   datasource:
     url: jdbc:mariadb://localhost:3306/test
     driver-class-name: org.mariadb.jdbc.Driver
@@ -42,10 +42,10 @@ springdoc:
     path: /user-service/swagger-ui
     use-root-path: true
 
-springfox:
-  documentation:
-    swagger:
-      v2:
-        path: /api
-    swagger-ui:
-      base-url: /api
+#springfox:
+#  documentation:
+#    swagger:
+#      v2:
+#        path: /api
+#    swagger-ui:
+#      base-url: /api
