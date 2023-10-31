@@ -1,3 +1,4 @@
+import 'package:clout/widgets/search_detail_bottom_sheet/search_detail_button.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -5,7 +6,6 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 // widgets
 import 'package:clout/widgets/list/category_list.dart';
 import 'package:clout/widgets/input/search_bar.dart';
-import 'package:clout/widgets/buttons/search_detail_button.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/header/header.dart';
 
