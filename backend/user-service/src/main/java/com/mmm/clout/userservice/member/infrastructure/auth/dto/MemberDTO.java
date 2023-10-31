@@ -11,15 +11,15 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @AllArgsConstructor
-public class UserDTO {
+public class MemberDTO {
 
     private Long id;
 
-    private String email;
+    private String userId;
 
     private Role role;
 
-    private Integer point;
+    private Integer totalPoint;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createDate;

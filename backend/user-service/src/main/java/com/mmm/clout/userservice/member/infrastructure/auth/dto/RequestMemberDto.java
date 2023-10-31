@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
-public class RequestUserDto {
+public class RequestMemberDto {
     private String userId;
     private String newPassword;
     private String oldPassword;

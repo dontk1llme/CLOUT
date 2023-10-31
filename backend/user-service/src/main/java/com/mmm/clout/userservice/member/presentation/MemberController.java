@@ -3,7 +3,7 @@ package com.mmm.clout.userservice.member.presentation;
 import com.mmm.clout.userservice.common.entity.sms.SmsService;
 import com.mmm.clout.userservice.member.infrastructure.auth.dto.AuthDto;
 import com.mmm.clout.userservice.member.infrastructure.auth.service.AuthService;
-import com.mmm.clout.userservice.member.infrastructure.auth.service.UserService;
+import com.mmm.clout.userservice.member.infrastructure.auth.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class MemberController {
 
     private final AuthService authService;
     private final SmsService smsService;
-    private final UserService memberService;
+    private final MemberService memberService;
     private final BCryptPasswordEncoder encoder;
 
 

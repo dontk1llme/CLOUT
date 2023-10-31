@@ -1,7 +1,7 @@
 package com.mmm.clout.userservice.member.infrastructure.auth.security;
 
+import com.mmm.clout.userservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.userservice.member.infrastructure.auth.dto.AuthDto;
-import com.mmm.clout.userservice.member.infrastructure.auth.repository.UserRepository;
 import com.mmm.clout.userservice.member.infrastructure.auth.service.RedisService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -22,9 +22,9 @@ import java.util.Date;
 @Transactional(readOnly = true)
 public class JwtTokenProvider implements InitializingBean {
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final MemberDetailsServiceImpl userDetailsService;
     private final RedisService redisService;
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     private static final String AUTHORITIES_KEY = "role";
     private static final String USER_ID = "user_id";
@@ -38,18 +38,18 @@ public class JwtTokenProvider implements InitializingBean {
     private final Long refreshTokenValidityInMilliseconds;
 
     public JwtTokenProvider(
-            UserDetailsServiceImpl userDetailsService,
+            MemberDetailsServiceImpl userDetailsService,
             RedisService redisService,
             @Value("${jwt.secret}") String secretKey,
             @Value("${jwt.access-token-validity-in-seconds}") Long accessTokenValidityInMilliseconds,
-            @Value("${jwt.refresh-token-validity-in-seconds}") Long refreshTokenValidityInMilliseconds, UserRepository userRepository) {
+            @Value("${jwt.refresh-token-validity-in-seconds}") Long refreshTokenValidityInMilliseconds, MemberRepository memberRepository) {
         this.userDetailsService = userDetailsService;
         this.redisService = redisService;
         this.secretKey = secretKey;
         // seconds -> milliseconds
         this.accessTokenValidityInMilliseconds = accessTokenValidityInMilliseconds * 1000;
         this.refreshTokenValidityInMilliseconds = refreshTokenValidityInMilliseconds * 1000;
-        this.userRepository = userRepository;
+        this.memberRepository = memberRepository;
     }
 
     // 시크릿 키 설정
@@ -71,7 +71,7 @@ public class JwtTokenProvider implements InitializingBean {
                 .setExpiration(new Date(now + accessTokenValidityInMilliseconds))
                 .setSubject("access-token")
                 .claim(url, true)
-                .claim(MEMBER_ID, userRepository.findByUserId(userId).get().getId())
+                .claim(MEMBER_ID, memberRepository.findByUserId(userId).get().getId())
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
@@ -104,8 +104,8 @@ public class JwtTokenProvider implements InitializingBean {
 
     public Authentication getAuthentication(String token) {
         Long id = Long.parseLong(getClaims(token).get(MEMBER_ID).toString());
-        String email = userRepository.findById(id).get().getUserId();
-        UserDetailsImpl userDetailsImpl = userDetailsService.loadUserByUsername(email);
+        String userId = memberRepository.findById(id).get().getUserId();
+        MemberDetailsImpl userDetailsImpl = userDetailsService.loadUserByUsername(userId);
         return new UsernamePasswordAuthenticationToken(userDetailsImpl, "", userDetailsImpl.getAuthorities());
     }
 
