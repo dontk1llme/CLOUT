@@ -23,7 +23,7 @@ class SnsItemBox extends StatelessWidget {
         print('연결된 링크로 이동~👻');
       },
       child: Container(
-        width: 120,
+        width: 110,
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
         decoration: BoxDecoration(
           // color: Color(0xFFE8ECF4),
@@ -34,8 +34,8 @@ class SnsItemBox extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(imageName, width: 70, height: 70),
-            SizedBox(height: 5),
+            Image.asset(imageName, width: 40, height: 40),
+            SizedBox(height: 7),
             Text(
               username,
               style: TextStyle(

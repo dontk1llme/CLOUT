@@ -3,7 +3,7 @@ import 'package:clout/style.dart' as style;
 
 // widgets
 import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
-import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
+import 'package:clout/screens/clouter/widgets/medium_text.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/screens/clouter/widgets/select_item_box.dart';
@@ -38,7 +38,7 @@ class ClouterSelect extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 110),
                     child: Column(children: [
                       SelectItemBox(),
                       SelectItemBox(),
@@ -80,8 +80,8 @@ class ClouterSelect extends StatelessWidget {
                 ),
               ),
               VerticalDivider(
-                color: style.colors['lightgray'], // 수직선의 색상 설정
-                thickness: 1.0, // 수직선의 두께 설정
+                color: style.colors['lightgray'],
+                thickness: 1,
               ),
               Flexible(
                 flex: 1,
