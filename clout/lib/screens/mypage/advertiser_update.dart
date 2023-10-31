@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
-
-import 'package:clout/widgets/input/input.dart';
-import '../../style.dart' as style;
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/small_button.dart';
+
+// widgets
+import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/input/input.dart';
+import 'package:clout/widgets/header/header.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 
-class AdvertiserJoin extends StatefulWidget {
-  const AdvertiserJoin({super.key});
+class AdvertiserUpdate extends StatefulWidget {
+  const AdvertiserUpdate({super.key});
 
-  @override
-  State<AdvertiserJoin> createState() => _AdvertiserJoinState();
+    @override
+  State<AdvertiserUpdate> createState() => _AdvertiserUpdateState();
 }
 
-class _AdvertiserJoinState extends State<AdvertiserJoin> {
-  var name;
+class _AdvertiserUpdateState extends State<AdvertiserUpdate> {
+
+   var name;
   var phoneNumber;
   var email;
   var password;
@@ -25,7 +29,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
   var buisnessAddress;
 
   var obscured = true; 
-  Icon suffixIcon = Icon(Icons.visibility);
+  Icon suffixIcon = Icon(Icons.visibility); 
   var doubleId = 1;
 
   setDoubleId() {
@@ -101,24 +105,28 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(left: 25, top: 15, right:25, bottom:15),
-            child: ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                Text('가입하고', style: style.textTheme.titleMedium),
-                Row(
-                  children: <Widget>[
-                    Text('CLOUT', style: style.textTheme.titleMedium?.copyWith(
-                      color: style.colors['main1'])),
-                    Text('와 함께', style: style.textTheme.titleMedium),
-                  ],
-                ),
-                Text('매칭해요', style: style.textTheme.titleMedium),
-                SizedBox(height: 20),
-                Input(
+    return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+            header: 4,
+            headerTitle: '회원 정보 수정',
+          ),
+        ),
+        body: Container(
+            color: Colors.white,
+            width: double.infinity,
+            height: double.infinity,
+            child: BouncingListview(
+              child: FractionallySizedBox(
+                  widthFactor: 0.9,
+                  child: Column(
+                    children: [
+                      Divider(
+                          thickness: 1,
+                          height: 1,
+                          color: style.colors['lightgray']),
+                      Input(
                   placeholder: '담당자명 입력',
                   setText: setName,
                 ),
@@ -142,59 +150,12 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                   ],
                 ),
                 SizedBox(height: 10),
-                Stack(
-                  children: [
-                    Input(
-                      placeholder: '아이디 입력',
-                      setText: setEmail,
-                    ),
-                    Positioned(
-                      right: 10,
-                      top: 10,
-                      child: SmallButton(
-                        title: '중복\n확인',
-                        function: setDoubleId,
-                      ),
-                    ),
-                  ],
+                Input(
+                  placeholder: '아이디',
+                  setText: setEmail,
+                  enabled: false,
                 ),
-                SizedBox(
-                  height: 25,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      minimumSize: Size.zero,
-                      padding: EdgeInsets.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      alignment: Alignment.centerRight,
-                    ),
-                    onPressed: () {
-                    },
-                    child: doubleId == 1
-                        ? Text(
-                            '아이디 중복 확인이 필요해요',
-                            style: style.textTheme.bodyMedium?.copyWith(
-                              color: style.colors['gray'],
-                              height: 2,
-                            ),
-                          )
-                        : doubleId == 2
-                            ? Text(
-                                '사용 가능한 아이디입니다',
-                                style: style.textTheme.bodyMedium?.copyWith(
-                                  color: style.colors['main1'],
-                                  height: 2,
-                                ),
-                              )
-                            : Text(
-                                '이미 사용 중인 아이디입니다',
-                                style: style.textTheme.bodyMedium?.copyWith(
-                                  color: style.colors['Darkgray'],
-                                  height: 2,
-                                ),
-                              ),
-                  ),
-                ),
-                SizedBox(height: 5),
+                SizedBox(height: 10),
                 Input(
                   placeholder: '패스워드 입력',
                   setText: setPassword,
@@ -228,16 +189,15 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: BigButton(
-                    title: '회원가입',
+                    title: '수정 완료',
                     function: () {
-                      Get.toNamed('/login');
+                      // 업데이트 로직 추가할 것
+                      Get.toNamed('/advertiserdetail');
                     },
                   ),
                 )
-              ],
-            ),
-          ),
-        ),
-      );
-    }
+                    ],
+                  )),
+            )));
   }
+}
