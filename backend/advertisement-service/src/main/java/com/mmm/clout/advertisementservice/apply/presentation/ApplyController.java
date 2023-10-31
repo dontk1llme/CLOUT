@@ -28,7 +28,7 @@ public class ApplyController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{applyId}/cancel")
+    @PostMapping("/{applyId}/cancel")
     public ResponseEntity<String> cancelApply(
         @PathVariable Long applyId
     ) {
