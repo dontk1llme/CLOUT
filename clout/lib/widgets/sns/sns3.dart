@@ -1,61 +1,45 @@
+import 'package:clout/providers/serach_detail_controller.dart';
+import 'package:clout/widgets/sns/widgets/sns3_select_box.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
 
-class Sns3 extends StatefulWidget {
-  const Sns3({Key? key}) : super(key: key);
-
-  @override
-  _Sns3State createState() => _Sns3State();
-}
-
-class _Sns3State extends State<Sns3> {
-  List<bool> _selections1 = [false, false, false];
+class Sns3 extends StatelessWidget {
+  Sns3({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ToggleButtons(
-      onPressed: (int index) {
-        setState(() {
-          _selections1[index] = !_selections1[index];
-        });
-      },
-      isSelected: _selections1,
-      // selectedBorderColor: style.colors['category'], // 선택되었을 때의 테두리 색상
-      borderColor: Color(0xFFF7F8F9), // 선택되지 않았을 때의 테두리 색상
-      children: <Widget>[
-        Container(
-          width: 112,
-          height: 60,
-          decoration: BoxDecoration(
-            color:
-                _selections1[0] ? style.colors['category'] : Color(0xFFE8ECF4),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8),
-              bottomLeft: Radius.circular(8),
-            ),
-          ),
-          child: Image.asset('assets/images/Instagram.png'),
-        ),
-        Container(
-          width: 112,
-          height: 60,
-          color: _selections1[1] ? style.colors['category'] : Color(0xFFE8ECF4),
-          child: Image.asset('assets/images/TikTok.png'),
-        ),
-        Container(
-          width: 112,
-          height: 60,
-          decoration: BoxDecoration(
-            color:
-                _selections1[2] ? style.colors['category'] : Color(0xFFE8ECF4),
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(8),
-              bottomRight: Radius.circular(8),
-            ),
-          ),
-          child: Image.asset('assets/images/YouTube.png'),
-        ),
-      ],
+    Get.put(SearchDetailController());
+    final screenWidth = MediaQuery.of(context).size.width;
+    return GetBuilder<SearchDetailController>(
+      builder: (controller) => Container(
+          color: Colors.white,
+          width: screenWidth,
+          // height: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Sns3SelectBox(
+                    img: 'assets/images/Instagram.png',
+                    index: 0,
+                    title: 'Instagram'),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Sns3SelectBox(
+                    img: 'assets/images/TikTok.png', index: 1, title: 'Tiktok'),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Sns3SelectBox(
+                    img: 'assets/images/YouTube.png',
+                    index: 2,
+                    title: 'Youtube'),
+              ),
+            ],
+          )),
     );
   }
 }

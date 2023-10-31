@@ -1,6 +1,7 @@
 // global
 import 'dart:ui';
 import 'package:clout/providers/image_picker_provider.dart';
+import 'package:clout/providers/serach_detail_controller.dart';
 import 'package:clout/screens/campaign_register/widgets/age_slider.dart';
 import 'package:clout/screens/campaign_register/widgets/category_dropdown.dart';
 import 'package:clout/screens/campaign_register/widgets/itemdetail_textinput.dart';
@@ -279,7 +280,7 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                     DataTitle(text: '제품 사진 첨부(최대 4장)'),
                     SizedBox(height: 10),
                     ImageWidget(parentImages: images),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     DataTitle(text: '광고 희망 플랫폼'),
                     SizedBox(height: 10),
                     Sns3(),
