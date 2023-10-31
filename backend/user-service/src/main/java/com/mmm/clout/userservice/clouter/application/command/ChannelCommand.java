@@ -1,8 +1,8 @@
 package com.mmm.clout.userservice.clouter.application.command;
 
 import com.mmm.clout.userservice.clouter.domain.Channel;
-import com.mmm.clout.userservice.common.entity.FollowerScale;
-import com.mmm.clout.userservice.common.entity.Platform;
+import com.mmm.clout.userservice.common.FollowerScale;
+import com.mmm.clout.userservice.common.Platform;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

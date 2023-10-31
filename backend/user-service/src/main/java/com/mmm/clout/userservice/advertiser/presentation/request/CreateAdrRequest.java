@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @AllArgsConstructor
 public class CreateAdrRequest {
+
     @NotBlank
     @Schema(description = "유저 아이디")
     private String userId;
