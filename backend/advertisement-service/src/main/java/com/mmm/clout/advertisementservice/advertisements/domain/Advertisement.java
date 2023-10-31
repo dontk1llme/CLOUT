@@ -27,6 +27,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @ToString
@@ -45,6 +46,7 @@ public abstract class Advertisement extends BaseEntity {
     @Column(name = "advertisement_id")
     private Long id;
 
+    @Column(name = "register_id")
     private Long registerId; // 광고 등록자 (광고주)
 
     @ElementCollection(targetClass = AdPlatform.class, fetch = FetchType.LAZY)
@@ -53,8 +55,10 @@ public abstract class Advertisement extends BaseEntity {
     @Column(name = "platform")
     private List<AdPlatform> adPlatformList = new ArrayList<>();
 
+    @Column(name = "price")
     private Long price;
 
+    @Column(name = "details", length = 1000)
     private String details;
 
     @Column(name = "deleted_at")
