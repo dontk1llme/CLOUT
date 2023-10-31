@@ -34,13 +34,13 @@ class _Sns3State extends State<Sns3> {
               bottomLeft: Radius.circular(8),
             ),
           ),
-          child: Image.asset('assets/images/instagram.png'),
+          child: Image.asset('assets/images/Instagram.png'),
         ),
         Container(
           width: 112,
           height: 60,
           color: _selections1[1] ? style.colors['category'] : Color(0xFFE8ECF4),
-          child: Image.asset('assets/images/tiktok.png'),
+          child: Image.asset('assets/images/TikTok.png'),
         ),
         Container(
           width: 112,
@@ -53,7 +53,7 @@ class _Sns3State extends State<Sns3> {
               bottomRight: Radius.circular(8),
             ),
           ),
-          child: Image.asset('assets/images/youtube.png'),
+          child: Image.asset('assets/images/YouTube.png'),
         ),
       ],
     );

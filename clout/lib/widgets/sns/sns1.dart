@@ -21,19 +21,19 @@ class _Sns1State extends State<Sns1> {
         SnsItemBox(
           username: 'MochaMilk',
           followers: '165만',
-          imageName: 'assets/images/youtube.png',
+          imageName: 'assets/images/YouTube.png',
           snsUrl: 'https://www.youtube.com/c/mochamilk',
         ),
         SnsItemBox(
           username: 'milk_the_samoyed',
           followers: '13만 4천',
-          imageName: 'assets/images/instagram.png',
+          imageName: 'assets/images/Instagram.png',
           snsUrl: 'https://www.instagram.com/milk_the_samoyed/',
         ),
         SnsItemBox(
           username: 'mochamilk',
           followers: '15만',
-          imageName: 'assets/images/tiktok.png',
+          imageName: 'assets/images/TikTok.png',
           snsUrl: 'https://www.instagram.com/milk_the_samoyed/',
         ),
       ],
