@@ -22,7 +22,7 @@ class _ReviewRegisterState extends State<ReviewRegister> {
   int userRating = 0; // 사용자의 평가 점수
 
   doRegister(destination) {
-    // 완료버튼 눌렀을 때 실행할 함수
+    // 완료버튼 눌렀을 때 평점 보내기
     Get.to(() => ReviewComplete());
   }
 
