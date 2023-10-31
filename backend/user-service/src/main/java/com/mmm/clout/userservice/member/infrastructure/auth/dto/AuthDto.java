@@ -8,19 +8,19 @@ public class AuthDto {
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class LoginDto {
-        private String email;
+        private String userId;
         private String password;
 
         @Builder
         public LoginDto(String email, String password) {
-            this.email = email;
+            this.userId = email;
             this.password = password;
         }
     }
 
     @Data
-    public static class EmailDto {
-        private String email;
+    public static class UserIdDto {
+        private String userID;
     }
 
     @Getter
@@ -28,18 +28,18 @@ public class AuthDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @ToString
     public static class SignupDto {
-        private String email;
+        private String userId;
         private String password;
 
         @Builder
         public SignupDto(String email, String password) {
-            this.email = email;
+            this.userId = email;
             this.password = password;
         }
 
         public static SignupDto encodePassword(SignupDto signupDto, String encodedPassword) {
             SignupDto newSignupDto = new SignupDto();
-            newSignupDto.email = signupDto.getEmail();
+            newSignupDto.userId = signupDto.getUserId();
             newSignupDto.password = encodedPassword;
             return newSignupDto;
         }

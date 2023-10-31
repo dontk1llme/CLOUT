@@ -2,7 +2,6 @@ package com.mmm.clout.userservice.member.infrastructure.auth.service;
 
 import com.mmm.clout.userservice.member.infrastructure.auth.dto.AuthDto;
 import com.mmm.clout.userservice.member.domain.Member;
-import com.mmm.clout.userservice.member.infrastructure.auth.exception.EmailException;
 import com.mmm.clout.userservice.member.infrastructure.auth.exception.PasswordException;
 import com.mmm.clout.userservice.member.infrastructure.auth.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RedisService redisService;
-    private final UserService userService;
+    private final MemberService memberService;
     private final BCryptPasswordEncoder encoder;
 
 
@@ -37,14 +36,12 @@ public class AuthService {
     @Transactional
     public AuthDto.TokenDto login(AuthDto.LoginDto loginDto) {
 
-        Member member = userService.getUserByEmail(loginDto.getEmail());
-
-        if (member == null) throw new EmailException("아이디 또는 비밀번호가 틀렸습니다.");
+        Member member = memberService.getUserByUserId(loginDto.getUserId());
 
         if (!encoder.matches(loginDto.getPassword(), member.getPwd())) throw new PasswordException("아이디 또는 비밀번호가 틀렸습니다.");
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+                new UsernamePasswordAuthenticationToken(loginDto.getUserId(), loginDto.getPassword());
 
         Authentication authentication = authenticationManagerBuilder.getObject()
                 .authenticate(authenticationToken);
