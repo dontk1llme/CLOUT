@@ -81,5 +81,9 @@ public abstract class Advertisement extends BaseEntity {
     protected void softDelete() {
         this.deletedAt = LocalDateTime.now();
     }
+
+    protected void changePrice(Long newPrice) {
+        this.price = newPrice;
+    }
 }
 
