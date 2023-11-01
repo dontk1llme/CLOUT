@@ -15,10 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 
-@Tag(name = "맥주 도감 리스트 조회", description = "맥주 도감 리스트를 가져오는 api")
+@Tag(name = "사진 리스트 조회", description = "사진 리스트를 가져오는 api")
 public interface ImageControllerDocs {
 
-    @Operation(summary = "광고 캠페인 등록",
+    @Operation(summary = "사진 등록",
         parameters = {
             @Parameter(
                 in = ParameterIn.HEADER,

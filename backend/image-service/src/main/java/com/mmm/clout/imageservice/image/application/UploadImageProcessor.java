@@ -17,7 +17,7 @@ public class UploadImageProcessor {
     @Transactional
     public Image execute(CreateImageCommand createImageCommand, MultipartFile multipartFile) throws Exception {
         String originalName = multipartFile.getOriginalFilename();
-        String uploadedPath = fileUploader.upload(multipartFile);
+        String uploadedPath = fileUploader.upload(multipartFile, createImageCommand.getType(), createImageCommand.getTargetId());
         Image image = Image.create(
                 createImageCommand.getTargetId(),
                 createImageCommand.getType(),
