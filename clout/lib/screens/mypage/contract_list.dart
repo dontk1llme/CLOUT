@@ -5,14 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
-import 'package:clout/screens/mypage/widgets/content_text.dart';
-import 'package:clout/screens/mypage/widgets/gray_title.dart';
-import 'package:clout/screens/mypage/widgets/info_item_box.dart';
-import 'package:clout/screens/mypage/widgets/update_button.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
-import 'package:clout/widgets/list/campaign_item_box.dart';
-import 'package:clout/widgets/list/campaign_item_box.dart';
 
 class ContractList extends StatelessWidget {
   const ContractList({super.key});
