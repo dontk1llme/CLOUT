@@ -3,8 +3,7 @@ package com.mmm.clout.imageservice.image.infrastructure;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.mmm.clout.imageservice.image.domain.Image;
-import com.mmm.clout.imageservice.image.domain.S3Uploader;
+import com.mmm.clout.imageservice.image.domain.FileUploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,14 +18,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
 @Service
-public class S3UploaderImpl implements S3Uploader {
+public class FileUploaderImpl implements FileUploader {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;

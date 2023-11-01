@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @DynamicInsert
 @Table(name = "image", indexes = @Index(name = "idx__type", columnList = "type"))
-@Where(clause = "deleted_at is null")
 @Entity
 public class Image {
 

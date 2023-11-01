@@ -20,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/image")
+@RequestMapping("/v1/images")
 @RequiredArgsConstructor
 public class ImageController implements ImageControllerDocs {
 
