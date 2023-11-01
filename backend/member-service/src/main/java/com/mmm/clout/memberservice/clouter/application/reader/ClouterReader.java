@@ -3,7 +3,9 @@ package com.mmm.clout.memberservice.clouter.application.reader;
 import com.mmm.clout.memberservice.clouter.domain.Clouter;
 import com.mmm.clout.memberservice.common.Category;
 import com.mmm.clout.memberservice.common.Region;
+import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.common.entity.address.reader.AddressReader;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,6 +18,16 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 public class ClouterReader {
+
+    private Long clouterId;
+
+    private String userId;
+
+    private Long avgScore;
+
+    private Long totalPoint;
+
+    private Role role;
 
     private String nickName;
 
@@ -40,6 +52,12 @@ public class ClouterReader {
     private AddressReader address;
 
     public ClouterReader(Clouter clouter) {
+
+        this.clouterId = clouter.getId();
+        this.userId = clouter.getUserId();
+        this.avgScore = clouter.getAvgScore();
+        this.totalPoint = clouter.getTotalPoint();
+        this.role = clouter.getRole();
         this.nickName = clouter.getNickName();
         this.name = clouter.getName();
         this.birthday = clouter.getBirthday();

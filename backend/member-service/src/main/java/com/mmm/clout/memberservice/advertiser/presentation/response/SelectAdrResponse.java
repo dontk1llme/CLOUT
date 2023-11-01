@@ -17,9 +17,6 @@ public class SelectAdrResponse {
     @Schema(description = "광고주 유저 아이디")
     private String userId;
 
-    @Schema(description = "광고주 별점 평균")
-    private Long avgScore;
-
     @Schema(description = "광고주 전체 포인트")
     private Long totalPoint;
 
@@ -36,8 +33,8 @@ public class SelectAdrResponse {
     public SelectAdrResponse(Advertiser advertiser) {
         this.advertiserId = advertiser.getId();
         this.userId = advertiser.getUserId();
-        this.advertiserAvgStar = advertiser.getAvgScore();
         this.totalPoint = advertiser.getTotalPoint();
+        this.role = advertiser.getRole();
         this.advertiserAvgStar = advertiser.getAvgScore();
         this.addressInfo = new AddressResponse(advertiser.getAddress());
         this.companyInfo = new CompanyInfoResponse(advertiser.getCompanyInfo());
