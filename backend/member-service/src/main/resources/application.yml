@@ -13,11 +13,11 @@ spring:
     username: root
     password: 1234
   jpa:
-    open-in-view: false
+#    open-in-view: true
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   data:
     redis:
       host: localhost

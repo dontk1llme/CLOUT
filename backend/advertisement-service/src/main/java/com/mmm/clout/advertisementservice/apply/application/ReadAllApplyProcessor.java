@@ -1,20 +1,21 @@
 package com.mmm.clout.advertisementservice.apply.application;
 
-import com.mmm.clout.advertisementservice.advertisements.domain.info.AdvertiserInfo;
-import com.mmm.clout.advertisementservice.advertisements.domain.provider.AdvertiserInfoProvider;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
+import com.mmm.clout.advertisementservice.apply.domain.info.AdvertiserInfo;
+import com.mmm.clout.advertisementservice.apply.domain.provider.AdvertiserProvider;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 public class ReadAllApplyProcessor {
 
     private final ApplyRepository applyRepository;
-    private final AdvertiserInfoProvider advertiserInfoProvider;
+    private final AdvertiserProvider advertiserInfoProvider;
 
     public List<Apply> execute(Long applicantId, ApplyStatus applyStatus) {
         List<Apply> applyList = applyRepository.getAllByStatus(applicantId, applyStatus);

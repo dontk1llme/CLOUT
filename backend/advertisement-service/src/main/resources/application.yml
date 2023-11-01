@@ -10,7 +10,7 @@ spring:
     username: root
     password: 1234
   jpa:
-    open-in-view: false
+#    open-in-view: false
     generate-ddl: true
     show-sql: true
     hibernate:

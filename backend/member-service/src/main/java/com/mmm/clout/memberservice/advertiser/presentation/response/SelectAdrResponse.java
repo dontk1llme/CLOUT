@@ -9,13 +9,16 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SelectAdrResponse {
 
-    private AddressResponse address;
+    private Long advertiserId;
+
+    private AddressResponse addressInfo;
 
     private CompanyInfoResponse companyInfo;
 
 
     public SelectAdrResponse(Advertiser advertiser) {
-        this.address = new AddressResponse(advertiser.getAddress());
+        this.advertiserId = advertiser.getId();
+        this.addressInfo = new AddressResponse(advertiser.getAddress());
         this.companyInfo = new CompanyInfoResponse(advertiser.getCompanyInfo());
     }
 

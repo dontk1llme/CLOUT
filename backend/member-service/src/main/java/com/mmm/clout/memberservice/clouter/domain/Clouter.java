@@ -36,7 +36,7 @@ public class Clouter extends Member {
     @Column(length = 20)
     private String phoneNumber;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "channel", joinColumns = @JoinColumn(name = "member_id"))
     private List<Channel> channelList = new ArrayList<>();
 
