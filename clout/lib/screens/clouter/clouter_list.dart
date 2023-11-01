@@ -11,21 +11,37 @@ import 'package:clout/widgets/input/search_bar.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:get/get.dart';
 
+class Clouter {
+  int clouterId = 1;
+  String nickname = '모카우유';
+  int starRating = 20;
+  int fee = 500000;
+  String category = '반려동물'; // 카테고리는 대표 1개만 받읍시다..
+  int contractCount = 5;
+  List<String> selectedPlatform = [
+    "YouTube",
+    "Instagram",
+    "TikTok",
+  ];
+  String firstImg = 'assets/images/clouterImage.jpg';
+}
+
 class ClouterList extends StatefulWidget {
-  const ClouterList({super.key});
+  ClouterList({super.key});
 
   @override
   State<ClouterList> createState() => _ClouterList();
 }
 
 class _ClouterList extends State<ClouterList> {
-  repeatItem() {
-    var items = [];
-    for (int i = 0; i < 20; i++) {
-      items.add(ClouterItemBox());
-    }
-    return items.toList();
-  }
+  // repeatItem() {
+  //   var items = [];
+  //   for (int i = 0; i < 20; i++) {
+  //     items.add(ClouterItemBox());
+  //   }
+  //   return items.toList();
+  // }
+  Clouter clouter = Clouter();
 
   @override
   Widget build(BuildContext context) {
@@ -89,28 +105,30 @@ class _ClouterList extends State<ClouterList> {
                           runSpacing: screenWidth > 400 ? 20 : 10,
                           // alignment: Alignment.,
                           children: [
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
-                            ClouterItemBox(),
+                            ClouterItemBox(
+                                nickname: clouter.nickname,
+                                starRating: clouter.starRating,
+                                fee: clouter.fee,
+                                category: clouter.category,
+                                contractCount: clouter.contractCount,
+                                selectedPlatform: clouter.selectedPlatform,
+                                firstImg: clouter.firstImg),
+                            ClouterItemBox(
+                                nickname: clouter.nickname,
+                                starRating: clouter.starRating,
+                                fee: clouter.fee,
+                                category: clouter.category,
+                                contractCount: clouter.contractCount,
+                                selectedPlatform: clouter.selectedPlatform,
+                                firstImg: clouter.firstImg),
+                            ClouterItemBox(
+                                nickname: clouter.nickname,
+                                starRating: clouter.starRating,
+                                fee: clouter.fee,
+                                category: clouter.category,
+                                contractCount: clouter.contractCount,
+                                selectedPlatform: clouter.selectedPlatform,
+                                firstImg: clouter.firstImg),
                           ]))),
               SizedBox(height: 30),
             ],

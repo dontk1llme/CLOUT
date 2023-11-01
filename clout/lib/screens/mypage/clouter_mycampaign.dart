@@ -11,8 +11,27 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 
+class Campaign {
+  int campaignId = 1;
+  String category = '음식';
+  String productName = '못골정미소 백미 5kg';
+  int pay = 1000;
+  String campaignSubject = '못골영농조합법인';
+  int applicantCount = 2;
+  int recruitCount = 5;
+  List<String> selectedPlatform = [
+    "YouTube",
+    // "Instagram",
+    "TikTok",
+  ];
+  int starRating = 20;
+  String firstImg = 'assets/images/itemImage.jpg';
+}
+
 class ClouterMyCampaign extends StatelessWidget {
-  const ClouterMyCampaign({super.key});
+  ClouterMyCampaign({super.key});
+
+  Campaign campaign = Campaign();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +46,7 @@ class ClouterMyCampaign extends StatelessWidget {
           ),
         ),
         body: Container(
-            color: Colors.black,
+            color: Colors.white,
             width: double.infinity,
             height: double.infinity,
             child: BouncingListview(
@@ -53,46 +72,48 @@ class ClouterMyCampaign extends StatelessWidget {
                           ],
                         ),
                       ),
-                      FractionallySizedBox(
-                          widthFactor: screenWidth > 400 ? 0.9 : 1,
-                          child: Align(
-                              alignment: Alignment.topCenter,
-                              child: Wrap(
-                                  direction: Axis.horizontal,
-                                  spacing: screenWidth > 400 ? 20 : 10,
-                                  runSpacing: screenWidth > 400 ? 20 : 10,
-                                  // alignment: Alignment.,
-                                  children: [
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                    CampaignItemBox(),
-                                  ]))),
+                      Align(
+                          alignment: Alignment.topCenter,
+                          child: Wrap(
+                              direction: Axis.horizontal,
+                              spacing: screenWidth > 400 ? 20 : 10,
+                              runSpacing: screenWidth > 400 ? 20 : 10,
+                              // alignment: Alignment.,
+                              children: [
+                                CampaignItemBox(
+                                  category: campaign.category,
+                                  productName: campaign.productName,
+                                  pay: campaign.pay,
+                                  campaignSubject: campaign.campaignSubject,
+                                  applicantCount: campaign.applicantCount,
+                                  recruitCount: campaign.recruitCount,
+                                  selectedPlatform: campaign.selectedPlatform,
+                                  starRating: campaign.starRating,
+                                  firstImg: campaign.firstImg,
+                                ),
+                                CampaignItemBox(
+                                  category: campaign.category,
+                                  productName: campaign.productName,
+                                  pay: campaign.pay,
+                                  campaignSubject: campaign.campaignSubject,
+                                  applicantCount: campaign.applicantCount,
+                                  recruitCount: campaign.recruitCount,
+                                  selectedPlatform: campaign.selectedPlatform,
+                                  starRating: campaign.starRating,
+                                  firstImg: campaign.firstImg,
+                                ),
+                                CampaignItemBox(
+                                  category: campaign.category,
+                                  productName: campaign.productName,
+                                  pay: campaign.pay,
+                                  campaignSubject: campaign.campaignSubject,
+                                  applicantCount: campaign.applicantCount,
+                                  recruitCount: campaign.recruitCount,
+                                  selectedPlatform: campaign.selectedPlatform,
+                                  starRating: campaign.starRating,
+                                  firstImg: campaign.firstImg,
+                                ),
+                              ])),
                     ],
                   )),
             )));

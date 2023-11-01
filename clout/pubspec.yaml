@@ -60,6 +60,8 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_inset_box_shadow: ^1.0.8
   flutter_animate: ^4.2.0+1
+  stomp_dart_client: ^1.0.0
+  web_socket_channel: ^2.4.0
 
 flutter_icons:
   android: "clout"
