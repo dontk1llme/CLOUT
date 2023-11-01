@@ -1,3 +1,4 @@
+import 'package:clout/providers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -122,149 +123,159 @@ class _ClouterDetailState extends State<ClouterDetail> {
     });
   }
 
+  final userController = Get.put(UserController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: style.colors['white'],
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70),
-          child: Header(
-            header: 3,
-            headerTitle: clouter.nickname, // 채널명 또는 계정명
-          )),
-      body: Container(
-        color: Colors.white,
-        width: double.infinity,
-        child: BouncingListview(
-          child: FractionallySizedBox(
-            widthFactor: 0.9,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        backgroundColor: style.colors['white'],
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(70),
+            child: Header(
+              header: 3,
+              headerTitle: clouter.nickname, // 채널명 또는 계정명
+            )),
+        body: Container(
+          color: Colors.white,
+          width: double.infinity,
+          child: Stack(children: [
+            BouncingListview(
+              child: FractionallySizedBox(
+                widthFactor: 0.9,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(Icons.star, color: Colors.amber),
-                        SizedBox(width: 3),
-                        Text(clouter.starRating.toString(),
-                            style: TextStyle(fontWeight: FontWeight.w800)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Like'),
-                        LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
-                      ],
-                    )
-                  ],
-                ),
-                // 사진 캐러셀
-                ImageCarousel(
-                    imageSliders: imageSliders,
-                    aspectRatio: 1.2,
-                    enlarge: true),
-                SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  height: 120,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(7),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        Row(
                           children: [
-                            Text('희망 광고비', style: TextStyle(fontSize: 15)),
-                            Text('희망 카테고리', style: TextStyle(fontSize: 15)),
-                            Text('계약한 광고 수', style: TextStyle(fontSize: 15)),
+                            Icon(Icons.star, color: Colors.amber),
+                            SizedBox(width: 3),
+                            Text(clouter.starRating.toString(),
+                                style: TextStyle(fontWeight: FontWeight.w800)),
                           ],
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        Row(
                           children: [
-                            Row(
+                            Text('Like'),
+                            LikeButton(
+                                isLiked: isItemLiked, onTap: handleItemTap),
+                          ],
+                        )
+                      ],
+                    ),
+                    // 사진 캐러셀
+                    ImageCarousel(
+                        imageSliders: imageSliders,
+                        aspectRatio: 1.2,
+                        enlarge: true),
+                    SizedBox(height: 20),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      height: 120,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text(formattedFee,
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                        color: style.colors['logo'])),
-                                Text(' points'),
+                                Text('희망 광고비', style: TextStyle(fontSize: 15)),
+                                Text('희망 카테고리', style: TextStyle(fontSize: 15)),
+                                Text('계약한 광고 수',
+                                    style: TextStyle(fontSize: 15)),
                               ],
                             ),
-                            Text(clouter.selectedCategories.join(', '),
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: style.colors['logo'])),
-                            Row(
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text(clouter.contractCount.toString(),
+                                Row(
+                                  children: [
+                                    Text(formattedFee,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                            color: style.colors['logo'])),
+                                    Text(' points'),
+                                  ],
+                                ),
+                                Text(clouter.selectedCategories.join(', '),
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w700,
                                         color: style.colors['logo'])),
-                                Text(' 건', style: TextStyle(fontSize: 15)),
+                                Row(
+                                  children: [
+                                    Text(clouter.contractCount.toString(),
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                            color: style.colors['logo'])),
+                                    Text(' 건', style: TextStyle(fontSize: 15)),
+                                  ],
+                                )
                               ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 10),
-                  child: Align(
-                    alignment: Alignment.centerLeft, // 왼쪽으로 정렬
-                    child: Text(
-                      'SNS',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 10),
+                      child: Align(
+                        alignment: Alignment.centerLeft, // 왼쪽으로 정렬
+                        child: Text(
+                          'SNS',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // 여러개 SNS 정보 반복해서 생성
+                    Column(
+                      children: snsChannels.map((snsChannel) {
+                        return SnsItemBox(
+                          snsType: snsChannel.snsType,
+                          username: snsChannel.channelName,
+                          followers: snsChannel.followers,
+                          snsUrl: snsChannel.link,
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(height: 50),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: Container(
+                color: Colors.transparent,
+                child: SizedBox(
+                  height: 50,
+                  child: BigButton(
+                    title: '채팅하기',
                   ),
                 ),
-                // 여러개 SNS 정보 반복해서 생성
-                Column(
-                  children: snsChannels.map((snsChannel) {
-                    return SnsItemBox(
-                      snsType: snsChannel.snsType,
-                      username: snsChannel.channelName,
-                      followers: snsChannel.followers,
-                      snsUrl: snsChannel.link,
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-      bottomSheet: Container(
-        color: Colors.transparent,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        child: SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: BigButton(
-            title: '채팅하기',
-          ),
-        ),
-      ),
-    );
+              ),
+            )
+          ]),
+        ));
   }
 }

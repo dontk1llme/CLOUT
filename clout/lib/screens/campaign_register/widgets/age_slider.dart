@@ -1,4 +1,4 @@
-import 'package:clout/providers/serach_detail_controller.dart';
+import 'package:clout/providers/age_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -11,8 +11,8 @@ class AgeSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SearchDetailController());
-    return GetBuilder<SearchDetailController>(builder: (controller) {
+    Get.put(AgeController(), permanent: true);
+    return GetBuilder<AgeController>(builder: (controller) {
       return SfRangeSliderTheme(
           data: SfRangeSliderThemeData(
             tooltipBackgroundColor: style.colors['main2'],
@@ -40,10 +40,6 @@ class AgeSlider extends StatelessWidget {
             numberFormat: NumberFormat("###세"),
             onChanged: (SfRangeValues values) {
               controller.setAgeRanges(values);
-              // setAge(values);
-              // if (setModalAge != null) setModalAge(values);
-              // setState(() => modalAge = values);
-              // setState(() => ageRanges = values);
             },
           ));
     });
