@@ -32,11 +32,11 @@ public class S3UploaderImpl implements S3Uploader {
     private final AmazonS3Client amazonS3Client;
 
     @Override
-    public String upload(MultipartFile multipartFile) throws Exception {
+    public String upload(MultipartFile multipartFile) throws IOException {
         log.info("S3Uploader_upload_start(MultipartFile): " + multipartFile.getOriginalFilename() + " - " + multipartFile);
 
         File uploadFile = convert(multipartFile)
-                .orElseThrow(Exception::new);
+                .orElseThrow(IOException::new);
 
         log.info("S3Uploader_upload_end(MultipartFile): " + uploadFile);
         String uploadPath = upload(uploadFile, multipartFile.getOriginalFilename());
@@ -88,19 +88,21 @@ public class S3UploaderImpl implements S3Uploader {
     }
 
     private Optional<File> convert(MultipartFile file) throws IOException {
-        log.info("S3Uploader_convert_start(file): " + file);
-        File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-        log.debug("convertFile: " + convertFile);
-
-        if (convertFile.createNewFile()) {
-            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-                fos.write(file.getBytes());
-            }
-            log.info("S3Uploader_convert_end(convertFile):" + convertFile);
-            return Optional.of(convertFile);
-        }
+        log.info("S3Uploader_convert_start(file): " + file + file.getOriginalFilename());
+        File convertFile = new File(file.getOriginalFilename());
+        log.info("convertFile: " + convertFile);
+//        if (convertFile.createNewFile()) {
+//            log.info("여긴오니?");
+//            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
+//                fos.write(file.getBytes());
+//            }
+//            log.info("S3Uploader_convert_end(convertFile):" + convertFile);
+//            return Optional.of(convertFile);
+//        }
+        FileOutputStream fos = new FileOutputStream(convertFile);
+        fos.write(file.getBytes());
 
         log.info("S3Uploader_convert_end: End with failure(with creating new file)");
-        return Optional.empty();
+        return Optional.of(convertFile);
     }
 }
