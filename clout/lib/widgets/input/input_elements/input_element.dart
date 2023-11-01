@@ -6,6 +6,7 @@ import 'package:clout/style.dart' as style;
 // Widgets
 import 'package:clout/widgets/input/input_elements/widgets/text_input.dart';
 import 'package:clout/widgets/input/input_elements/widgets/dropdown_input.dart';
+import 'package:clout/widgets/input/input_elements/widgets/dropdown_input_under.dart';
 
 class InputElement extends StatelessWidget {
   InputElement(
@@ -19,8 +20,7 @@ class InputElement extends StatelessWidget {
       this.maxLength,
       this.maxValue,
       this.minValue,
-      this.offset
-      }) {
+      this.offset}) {
     keyboardType ??= TextInputType.text;
     maxLength ??= 600;
     maxValue ??= -1;
@@ -50,6 +50,14 @@ class InputElement extends StatelessWidget {
       );
     } else if (elementType == 'dropdown') {
       return DropdownInput(
+        placeholder: placeholder,
+        data: data,
+        setData: setData,
+        value: value,
+        offset: offset,
+      );
+    } else if (elementType == 'dropdownunder') {
+      return DropdownInputUnder(
         placeholder: placeholder,
         data: data,
         setData: setData,
