@@ -60,25 +60,33 @@ class ClouterMyPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Icon(Icons.arrow_forward_ios),
+                        InkWell(
+                          child: Icon(Icons.arrow_forward_ios),
+                          onTap: () => Get.toNamed('/clouterdetail'),
+                        ),
                       ],
                     ),
                     MyWallet(userType: 'clouter'),
-                    MyPageList(title: '내 계약서', btnTitle: '더보기'
-                    ,onButtonPressed: () => Get.toNamed('/clouterdetail')), 
+                    MyPageList(
+                        title: '내 계약서',
+                        btnTitle: '더보기',
+                        onButtonPressed: () => Get.toNamed('/contractlist')),
                     Divider(
                         thickness: 1,
                         height: 1,
                         color: style.colors['lightgray']),
-                    MyPageList(title: '신청한 캠페인', btnTitle: '더보기',
-                    onButtonPressed: () => Get.to(ClouterMyCampaign())), 
-                    
+                    MyPageList(
+                        title: '신청한 캠페인',
+                        btnTitle: '더보기',
+                        onButtonPressed: () => Get.to(ClouterMyCampaign())),
                     Divider(
                         thickness: 1,
                         height: 1,
                         color: style.colors['lightgray']),
-                    MyPageList(title: '관심있는 캠페인', btnTitle: '더보기',
-                    onButtonPressed: () => Get.to(ClouterLikedCampaign())), 
+                    MyPageList(
+                        title: '관심있는 캠페인',
+                        btnTitle: '더보기',
+                        onButtonPressed: () => Get.to(ClouterLikedCampaign())),
                     Divider(
                         thickness: 1,
                         height: 1,

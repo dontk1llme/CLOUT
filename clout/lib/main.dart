@@ -23,6 +23,7 @@ import 'package:clout/screens/point/withdraw/withdraw_second.dart';
 import 'package:clout/screens/point/withdraw/withdraw_complete.dart';
 import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:clout/screens/campaign_detail/campaign_detail.dart';
+import 'package:clout/screens/mypage/contract_list.dart';
 
 final List<String> imgList = [
   'assets/images/main_carousel_1.jpg',
@@ -55,6 +56,7 @@ void main() {
       GetPage(name: '/withdrawfirst', page: () => WithdrawFirst()),
       GetPage(name: '/withdrawsecond', page: () => WithdrawSecond()),
       GetPage(name: '/withdrawcomplete', page: () => WithdrawComplete()),
+      GetPage(name: '/contractlist', page: () => ContractList()),
     ],
   )));
 }
