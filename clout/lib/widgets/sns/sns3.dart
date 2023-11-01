@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
-<<<<<<< HEAD
 class Sns3 extends StatefulWidget {
   const Sns3({Key? key}) : super(key: key);
   
@@ -16,10 +15,6 @@ class Sns3 extends StatefulWidget {
 class _Sns3State extends State<Sns3> {
   List<bool> _selections1 = [false, false, false];
   var wd = double.infinity/3; //얘 활용해서 반응형으로 하고 싶었는데 안 됨
-=======
-class Sns3 extends StatelessWidget {
-  Sns3({super.key});
->>>>>>> 811ad1bc3b2313efcd27bf6261999371f1c8f4ee
 
   @override
   Widget build(BuildContext context) {
