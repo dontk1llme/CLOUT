@@ -1,12 +1,28 @@
-import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 // widgets
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
+import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
+import 'package:clout/widgets/sns/sns4.dart';
+
+class Clouter {
+  int clouterId = 1;
+  String nickname = '모카우유';
+  int starRating = 20;
+  int fee = 500000;
+  List<String> selectedPlatform = [
+    "YouTube",
+    "Instagram",
+    "TikTok",
+  ];
+  String firstImg = 'assets/images/clouterImage.jpg';
+}
 
 class SelectItemBox extends StatefulWidget {
   const SelectItemBox({super.key});
@@ -17,6 +33,11 @@ class SelectItemBox extends StatefulWidget {
 
 // 💥 clouter Container 누르면 해당 clouter의 Detail 페이지로 이동시키기
 class _SelectItemBoxState extends State<SelectItemBox> {
+  var clouterId = Get.arguments;
+  Clouter clouter = Clouter();
+
+  var f = NumberFormat('###,###,###,###');
+
   void _selectClouter() {
     showModalBottomSheet<void>(
       context: context,
@@ -41,7 +62,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                       Icons.close,
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                   )
                 ],
@@ -50,7 +71,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                 children: [
                   ClipOval(
                     child: Image.asset(
-                      'assets/images/clouterImage.jpg',
+                      clouter.firstImg,
                       height: 120,
                       width: 120,
                       fit: BoxFit.cover,
@@ -60,7 +81,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('MochaMilk',
+                      Text(clouter.nickname,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 22,
@@ -125,7 +146,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                       Icons.close,
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                   )
                 ],
@@ -136,7 +157,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                     children: [
                       ClipOval(
                         child: Image.asset(
-                          'assets/images/clouterImage.jpg',
+                          clouter.firstImg,
                           height: 70,
                           width: 70,
                           fit: BoxFit.cover,
@@ -149,7 +170,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                         children: [
                           Row(
                             children: [
-                              Text('MochaMilk',
+                              Text(clouter.nickname,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22,
@@ -192,7 +213,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                               color: style.colors['darkgray'],
                               fontWeight: FontWeight.w600)),
                       SizedBox(width: 20),
-                      DataTitle(text: '1,000 포인트'),
+                      DataTitle(text: '${f.format(clouter.fee)} 포인트'),
                     ],
                   ),
                   SizedBox(height: 30),
@@ -245,79 +266,80 @@ class _SelectItemBoxState extends State<SelectItemBox> {
             borderRadius: BorderRadius.circular(10),
             boxShadow: style.shadows['shadow'],
           ),
-          child: Row(
+          child: Column(
             children: [
-              Flexible(
-                flex: 1,
-                child: Image.asset(
-                  'assets/images/clouterImage.jpg',
-                  height: 100,
-                  width: imageWidth,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(width: 10),
-              Flexible(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        DataTitle(text: 'MochaMilk '),
-                        Text('희망 광고비'),
-                      ],
+              Row(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Image.asset(
+                      clouter.firstImg,
+                      height: 100,
+                      width: imageWidth,
+                      fit: BoxFit.cover,
                     ),
-                    SizedBox(height: 3),
-                    Row(
+                  ),
+                  SizedBox(width: 10),
+                  Flexible(
+                    flex: 2,
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            DataTitle(text: '${clouter.nickname} '),
                             Row(
                               children: [
-                                Text('165만 ', style: TextStyle(fontSize: 15)),
                                 Icon(Icons.star, color: Colors.amber, size: 20),
-                                Text('20.5'),
+                                Text('${clouter.starRating}'),
                               ],
                             ),
                           ],
                         ),
+                        SizedBox(height: 3),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('3,000',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: style.colors['main1'],
-                                    fontWeight: FontWeight.bold)),
-                            Text(' points')
+                            Text('희망 광고비'),
+                            Row(
+                              children: [
+                                Text('${f.format(clouter.fee)} 포인트',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: style.colors['main1'],
+                                        fontWeight: FontWeight.bold)),
+                              ],
+                            )
                           ],
-                        )
+                        ),
+                        SizedBox(height: 15),
+                        // 여기에 sns 팔로워 수 정보
+                        Sns4(selectedPlatform: clouter.selectedPlatform),
                       ],
                     ),
-                    SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Flexible(
-                          flex: 1,
-                          child: SmallButton(
-                            title: '한마디 보기',
-                            function: _showContent,
-                          ),
-                        ),
-                        SizedBox(width: 3),
-                        Flexible(
-                          flex: 1,
-                          child: SmallButton(
-                            title: '채택하기',
-                            function: _selectClouter,
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                  )
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: SmallButton(
+                      title: '한마디 보기',
+                      function: _showContent,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Flexible(
+                    flex: 1,
+                    child: SmallButton(
+                      title: '채택하기',
+                      function: _selectClouter,
+                    ),
+                  )
+                ],
               )
             ],
           ));
