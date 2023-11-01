@@ -3,8 +3,9 @@ import 'package:clout/style.dart' as style;
 
 class RightChat extends StatelessWidget {
   final String message;
+  final String time;
 
-  RightChat(this.message);
+  RightChat(this.message, this.time);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +17,8 @@ class RightChat extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.fromLTRB(20, 12, 20, 12),
-              margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
-              constraints: BoxConstraints(maxWidth: 250), // 최대 width 설정
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              constraints: BoxConstraints(maxWidth: 250),
               decoration: BoxDecoration(
                 color: style.colors['logo'],
                 borderRadius: BorderRadius.only(
@@ -42,7 +43,7 @@ class RightChat extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(right: 20),
           child: Text(
-            '11:17',
+            time,
             style: TextStyle(
               fontSize: 11,
               color: style.colors['gray'],
