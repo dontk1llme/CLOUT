@@ -5,8 +5,9 @@ import 'package:clout/style.dart' as style;
 // Widgets
 import 'package:clout/widgets/input/input_elements/utilities/numeric_range_formatter.dart';
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
+import 'package:flutter/services.dart';
 
-class PayInputDialog extends StatelessWidget {
+class PayInputDialog extends StatefulWidget {
   PayInputDialog(
       {super.key,
       this.setData,
@@ -24,6 +25,11 @@ class PayInputDialog extends StatelessWidget {
   final converter;
 
   @override
+  State<PayInputDialog> createState() => _PayInputDialogState();
+}
+
+class _PayInputDialogState extends State<PayInputDialog> {
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text("희망 광고비"),
@@ -35,7 +41,8 @@ class PayInputDialog extends StatelessWidget {
                 children: [
                   TextFormField(
                     inputFormatters: [
-                      NumericRangeFormatter(min: 0, max: 1000000000)
+                      NumericRangeFormatter(min: 0, max: 1000000000),
+                      FilteringTextInputFormatter.digitsOnly
                     ],
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
@@ -44,18 +51,19 @@ class PayInputDialog extends StatelessWidget {
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 color: style.colors['main1']!, width: 2))),
-                    initialValue: value,
+                    initialValue: widget.value,
                     onChanged: (newVal) {
-                      setData(newVal);
-                      setValueString(converter(newVal));
-                      setState(() => value = newVal);
-                      setState(() => valueString = converter(newVal));
+                      widget.setData(newVal);
+                      widget.setValueString(widget.converter(newVal));
+                      setState(() => widget.value = newVal);
+                      setState(
+                          () => widget.valueString = widget.converter(newVal));
                     },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(valueString),
+                      Text(widget.valueString),
                       DataTitle(
                         text: '원',
                       )
@@ -64,11 +72,11 @@ class PayInputDialog extends StatelessWidget {
                 ]));
       }),
       actions: <Widget>[
-        Container(
+        SizedBox(
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
-              setValueString(valueString);
+              widget.setValueString(widget.valueString);
               Navigator.of(context).pop(); //창 닫기
             },
             style: ElevatedButton.styleFrom(

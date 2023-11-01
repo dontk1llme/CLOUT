@@ -1,6 +1,7 @@
 // global
 import 'dart:ui';
 import 'package:clout/providers/image_picker_provider.dart';
+import 'package:clout/providers/serach_detail_controller.dart';
 import 'package:clout/screens/campaign_register/widgets/age_slider.dart';
 import 'package:clout/screens/campaign_register/widgets/category_dropdown.dart';
 import 'package:clout/screens/campaign_register/widgets/itemdetail_textinput.dart';
@@ -18,6 +19,7 @@ import 'package:clout/widgets/buttons/toggle_button.dart';
 import 'package:clout/widgets/image_picker.dart';
 import 'package:clout/widgets/sns/sns3.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
@@ -140,19 +142,13 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
   }
 
   Future runImageProvider() async {
-    print('여기1');
-    // print(ref);
     final newImages = ref.watch(imagePickerProvider);
-    print(newImages);
-    print('여기2');
     setImages(newImages);
   }
 
   setImages(input) {
-    print('이미지 설정됨');
     setState(() {
       images = input;
-      print('여기3');
     });
     print(images);
   }
@@ -169,7 +165,6 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
         minimumFollowers != null) {
       //등록하는 api 요청 들어가야 함
     } else {
-      print('아래가 images 입니다.');
       await runImageProvider();
       await handleSaveButtonPressed(); // 서명 갤러리 저장함수
       // 1. 여기서 axios 통신 해서 db에 내용 저장하고
@@ -191,15 +186,31 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
 
   // 특정 요소에 접근할때 키로 접근하는듯
   final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
+  final GlobalKey stackGlobalKey = GlobalKey();
 
-  handleSaveButtonPressed() async {
-    final data =
-        await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
-    final bytes = await data.toByteData(format: ui.ImageByteFormat.png);
-    if (bytes != null) {
-      // 나중에 axios로 db에 넣을때 여기 if 안에서 넣어야 함
-      await ImageGallerySaver.saveImage(bytes.buffer.asUint8List());
-      Utils.toast('서명이 갤러리에 저장되었습니다.');
+  Future<void> handleSaveButtonPressed() async {
+    // final data =
+    // await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
+    // final bytes = await data.toByteData(format: ui.ImageByteFormat.png);
+    // if (bytes != null) {
+    //   // 나중에 axios로 db에 넣을때 여기 if 안에서 넣어야 함
+    //   await ImageGallerySaver.saveImage(bytes.buffer.asUint8List());
+    //   Utils.toast('서명이 갤러리에 저장되었습니다.');
+    // }
+    print("START CAPTURE");
+    final renderObject = stackGlobalKey.currentContext!.findRenderObject();
+    if (renderObject is RenderRepaintBoundary) {
+      var boundary = renderObject;
+      ui.Image image = await boundary.toImage(pixelRatio: 5.0);
+      // final directory = (await getApplicationDocumentsDirectory()).path;
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (byteData != null) {
+        // 나중에 axios로 db에 넣을때 여기 if 안에서 넣어야 함
+        await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
+        Utils.toast('서명이 갤러리에 저장되었습니다.');
+      }
+    } else {
+      print('여기로 왔는데?');
     }
   }
 
@@ -269,13 +280,13 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                     DataTitle(text: '제품 사진 첨부(최대 4장)'),
                     SizedBox(height: 10),
                     ImageWidget(parentImages: images),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     DataTitle(text: '광고 희망 플랫폼'),
                     SizedBox(height: 10),
                     Sns3(),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 클라우터 나이'),
-                    AgeSlider(ageRanges: ageRanges, setAge: setAge),
+                    AgeSlider(),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 최소 팔로워 수'),
                     MinimumfollowersDialog(
@@ -289,15 +300,19 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                         selectedRegions: selectedRegions,
                         setSelectedRegions: setSelectedRegions),
                     SizedBox(height: 20),
-                    DataTitle(text: '전자 서명'),
                     SizedBox(height: 10),
-                    Signature(globalKey: signatureGlobalKey),
+                    Signature(
+                        globalKey: stackGlobalKey,
+                        signatureKey: signatureGlobalKey),
                     Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 20),
-                      child: BigButton(
-                        title: '캠페인 등록',
-                        function: register,
-                        // destination: '/home',
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: BigButton(
+                          title: '캠페인 등록',
+                          function: register,
+                        ),
                       ),
                     )
                   ]),

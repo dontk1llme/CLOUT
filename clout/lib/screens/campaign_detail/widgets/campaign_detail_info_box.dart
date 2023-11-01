@@ -32,10 +32,23 @@ class CampaignDetailInfoBox extends StatelessWidget {
               SizedBox(width: 10),
               Text('협찬 제공사', style: TextStyle(fontSize: 15)),
               Expanded(
-                  child: Text(
-                campaign.campaginSubject,
-                textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    campaign.campaignSubject,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(width: 5),
+                  Row(
+                    children: [
+                      Icon(Icons.star, color: Colors.amber, size: 18),
+                      SizedBox(width: 2),
+                      Text(campaign.starRating.toString(),
+                          style: TextStyle(fontWeight: FontWeight.w800)),
+                    ],
+                  ),
+                ],
               ))
             ],
           ),
@@ -47,7 +60,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
               Text('희망 플랫폼', style: TextStyle(fontSize: 15)),
               Expanded(
                   child: Text(
-                campaign.preferredFlatform,
+                campaign.preferredPlatform,
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ))

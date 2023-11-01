@@ -1,15 +1,16 @@
 import 'package:clout/widgets/input/input_elements/utilities/numeric_range_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:flutter/services.dart';
 
 class TextInput extends StatelessWidget {
-  const TextInput(
+  TextInput(
       {super.key,
-      this.setData,
-      this.placeholder,
+      required this.setData,
+      required this.placeholder,
       this.keyboardType,
-      this.maxLength,
-      this.maxValue});
+      required this.maxLength,
+      required this.maxValue});
 
   final setData;
   final placeholder;
@@ -20,8 +21,12 @@ class TextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      inputFormatters:
-          maxValue != -1 ? [NumericRangeFormatter(min: 0, max: maxValue)] : [],
+      inputFormatters: maxValue != -1
+          ? [
+              NumericRangeFormatter(min: 0, max: maxValue),
+              FilteringTextInputFormatter.digitsOnly
+            ]
+          : [],
       onChanged: (value) => setData(value),
       keyboardType: keyboardType,
       minLines: 5,

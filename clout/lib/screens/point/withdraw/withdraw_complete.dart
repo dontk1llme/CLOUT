@@ -13,7 +13,7 @@ class WithdrawComplete extends StatelessWidget {
       alertText: '출금 신청 완료!',
       buttonText: '포인트 내역으로 이동',
       onPressed: () {},
-      pageName: "pointlist",
+      pageName: "clouterpointlist",
     );
   }
 }
