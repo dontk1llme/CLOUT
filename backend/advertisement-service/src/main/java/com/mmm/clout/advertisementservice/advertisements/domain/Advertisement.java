@@ -86,5 +86,8 @@ public abstract class Advertisement extends BaseEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
+    public Long getAdvertiserId() {
+        return this.registerId;
+    }
 }
 
