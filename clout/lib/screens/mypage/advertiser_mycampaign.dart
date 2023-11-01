@@ -39,14 +39,11 @@ class AdvertiserMycampaign extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(''),
-                            Container(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.filter_list, size: 20),
-                                  Text('정렬'),
-                                ],
-                              ),
+                            Row(
+                              children: [
+                                Icon(Icons.filter_list, size: 20),
+                                Text('정렬'),
+                              ],
                             ),
                           ],
                         ),
