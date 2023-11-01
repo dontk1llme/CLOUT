@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.advertisements.domain.repository.Campa
 import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
+import com.mmm.clout.advertisementservice.apply.domain.provider.AdvertiserProvider;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -34,10 +35,13 @@ public class ApplyConfig {
 
     @Bean
     ReadAllApplyProcessor readAllApplyProcessor(
-        ApplyRepository applyRepository
+        ApplyRepository applyRepository,
+        AdvertiserProvider advertiserInfoProvider
+
     ) {
         return new ReadAllApplyProcessor(
-            applyRepository
+            applyRepository,
+            advertiserInfoProvider
         );
     }
 

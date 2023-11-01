@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 @Getter
@@ -116,6 +117,7 @@ public class Campaign extends Advertisement {
         this.isDeliveryRequired = isDeliveryRequired;
         this.numberOfRecruiter = numberOfRecruiter;
         this.numberOfApplicants = 0;
+        this.numberOfSelectedMembers = 0;
         this.offeringDetails = offeringDetails;
         this.sellingLink = sellingLink;
         this.minClouterAge = minClouterAge;
@@ -194,6 +196,11 @@ public class Campaign extends Advertisement {
 
     public void softDelete() {
         super.softDelete();
+    }
+
+    @Override
+    public Long getAdvertiserId() {
+        return super.getAdvertiserId();
     }
 
 }
