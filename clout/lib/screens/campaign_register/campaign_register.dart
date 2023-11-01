@@ -1,7 +1,6 @@
 // global
 import 'dart:ui';
 import 'package:clout/providers/image_picker_provider.dart';
-import 'package:clout/providers/serach_detail_controller.dart';
 import 'package:clout/screens/campaign_register/widgets/age_slider.dart';
 import 'package:clout/screens/campaign_register/widgets/category_dropdown.dart';
 import 'package:clout/screens/campaign_register/widgets/itemdetail_textinput.dart';
@@ -16,8 +15,8 @@ import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/signature.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/buttons/toggle_button.dart';
-import 'package:clout/widgets/image_picker.dart';
-import 'package:clout/widgets/sns/sns3.dart';
+import 'package:clout/widgets/image_widget.dart';
+import 'package:clout/widgets/sns/platform_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
@@ -44,28 +43,12 @@ class CampaignRegister extends ConsumerStatefulWidget {
 class CampaignRegisterState extends ConsumerState<CampaignRegister> {
   var category,
       productName,
-      startDate,
-      endDate,
       recruitCount = 1,
       pay,
       payString = '0',
       offeringItems,
       itemDetail,
-      minAge = 0,
-      maxAge = 100,
-      minimumFollowers,
-      minimumFollowersString = '0',
       images;
-
-  List<String?> selectedRegions = [];
-
-  setSelectedRegions(input) {
-    setState(() {
-      selectedRegions = input;
-    });
-  }
-
-  SfRangeValues ageRanges = SfRangeValues(0, 100);
 
   setCategory(input) {
     setState(() {
@@ -76,18 +59,6 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
   setProductName(input) {
     setState(() {
       productName = input;
-    });
-  }
-
-  setStartDate(input) {
-    setState(() {
-      startDate = input;
-    });
-  }
-
-  setEndDate(input) {
-    setState(() {
-      endDate = input;
     });
   }
 
@@ -121,26 +92,6 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
     });
   }
 
-  setAge(input) {
-    setState(() {
-      ageRanges = input;
-      minAge = input.start.toInt();
-      maxAge = input.end.toInt();
-    });
-  }
-
-  setMinimumFollowers(input) {
-    setState(() {
-      minimumFollowers = input;
-    });
-  }
-
-  setMinimumFollowersString(input) {
-    setState(() {
-      minimumFollowersString = input;
-    });
-  }
-
   Future runImageProvider() async {
     final newImages = ref.watch(imagePickerProvider);
     setImages(newImages);
@@ -156,13 +107,9 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
   register() async {
     if (category != null &&
         productName != null &&
-        startDate != null &&
-        endDate != null &&
         pay != null &&
         offeringItems != null &&
-        itemDetail != null &&
-        // age != null &&
-        minimumFollowers != null) {
+        itemDetail != null) {
       //등록하는 api 요청 들어가야 함
     } else {
       await runImageProvider();
@@ -283,22 +230,16 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                     SizedBox(height: 20),
                     DataTitle(text: '광고 희망 플랫폼'),
                     SizedBox(height: 10),
-                    Sns3(),
+                    PlatformToggle(multiAllowed: true),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 클라우터 나이'),
                     AgeSlider(),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 최소 팔로워 수'),
-                    MinimumfollowersDialog(
-                        minimumFollowers: minimumFollowers,
-                        minimumFollowersString: minimumFollowersString,
-                        setMinimumFollowers: setMinimumFollowers,
-                        setMinimumFollowersString: setMinimumFollowersString),
+                    // MinimumfollowersDialog(),
                     DataTitle(text: '지역 선택'),
                     SizedBox(height: 10),
-                    RegionMultiSelect(
-                        selectedRegions: selectedRegions,
-                        setSelectedRegions: setSelectedRegions),
+                    RegionMultiSelect(),
                     SizedBox(height: 20),
                     SizedBox(height: 10),
                     Signature(
