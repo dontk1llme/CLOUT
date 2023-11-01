@@ -11,8 +11,25 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 
+class Clouter {
+  int clouterId = 1;
+  String nickname = '모카우유';
+  int starRating = 20;
+  int fee = 500000;
+  String category = '반려동물'; // 카테고리는 대표 1개만 받읍시다..
+  int contractCount = 5;
+  List<String> selectedPlatform = [
+    "YouTube",
+    "Instagram",
+    "TikTok",
+  ];
+  String firstImg = 'assets/images/clouterImage.jpg';
+}
+
 class AdvertiserLikedclouters extends StatelessWidget {
-  const AdvertiserLikedclouters({super.key});
+  AdvertiserLikedclouters({super.key});
+
+  Clouter clouter = Clouter();
 
   @override
   Widget build(BuildContext context) {
@@ -59,35 +76,14 @@ class AdvertiserLikedclouters extends StatelessWidget {
                               runSpacing: screenWidth > 400 ? 20 : 10,
                               // alignment: Alignment.,
                               children: [
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
-                                ClouterItemBox(),
+                                ClouterItemBox(
+                                    nickname: clouter.nickname,
+                                    starRating: clouter.starRating,
+                                    fee: clouter.fee,
+                                    category: clouter.category,
+                                    contractCount: clouter.contractCount,
+                                    selectedPlatform: clouter.selectedPlatform,
+                                    firstImg: clouter.firstImg),
                               ])),
                       SizedBox(height: 30)
                     ])))));

@@ -11,32 +11,30 @@ import 'package:clout/widgets/buttons/like_button.dart';
 import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 
-class Clouter {
-  int clouterId = 1;
-  String nickname = '모카우유';
-  int starRating = 20;
-  int fee = 500000;
-  String category = '반려동물'; // 카테고리는 대표 1개만 받읍시다..
-  int contractCount = 5;
-  List<String> selectedPlatform = [
-    "YouTube",
-    "Instagram",
-    "TikTok",
-  ];
-  String firstImg = 'assets/images/clouterImage.jpg';
-}
-
 class ClouterItemBox extends StatefulWidget {
-  const ClouterItemBox({super.key});
+  final String nickname;
+  final int starRating;
+  final int fee;
+  final String category;
+  final int contractCount;
+  final List<String> selectedPlatform;
+  final String firstImg;
+
+  ClouterItemBox(
+      {super.key,
+      required this.nickname,
+      required this.starRating,
+      required this.fee,
+      required this.category,
+      required this.contractCount,
+      required this.selectedPlatform,
+      required this.firstImg});
 
   @override
   State<ClouterItemBox> createState() => _ClouterItemBoxState();
 }
 
 class _ClouterItemBoxState extends State<ClouterItemBox> {
-  var clouterId = Get.arguments;
-  Clouter clouter = Clouter();
-
   var f = NumberFormat('###,###,###,###');
 
   bool isItemLiked = false;
@@ -71,7 +69,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
               children: [
                 // 제일 큰 이미지
                 Image.asset(
-                  clouter.firstImg,
+                  widget.firstImg,
                   width: 170,
                   height: 140,
                   fit: BoxFit.cover,
@@ -86,7 +84,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                         color: style.colors['white'],
                         borderRadius: BorderRadius.circular(5)),
                     child: Row(children: [
-                      Sns2(selectedPlatform: clouter.selectedPlatform)
+                      Sns2(selectedPlatform: widget.selectedPlatform)
                     ]),
                   ),
                 ),
@@ -94,9 +92,9 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                 LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
-            NameTag(title: clouter.category),
+            NameTag(title: widget.category),
             Text(
-              clouter.nickname,
+              widget.nickname,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -105,7 +103,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
               ),
             ),
             Text(
-              '${f.format(clouter.fee)} 포인트',
+              '${f.format(widget.fee)} 포인트',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -123,7 +121,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                   ),
                 ),
                 Text(
-                  '${clouter.contractCount}건',
+                  '${widget.contractCount}건',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
