@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor
 import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadApplicantsByCampaignProcessor;
+import com.mmm.clout.advertisementservice.apply.application.GetApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.command.CreateApplyCommand;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplicantListByCampaignReader;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplyListByClouterReader;
@@ -21,6 +22,7 @@ public class ApplyFacade {
     private final CancelApplyProcessor cancelApplyProcessor;
     private final ReadAllApplyProcessor readAllApplyProcessor;
     private final ReadApplicantsByCampaignProcessor readApplicantsByCampaignProcessor;
+    private final GetApplyProcessor getApplyProcessor;
 
     public Apply create(CreateApplyCommand command) {
         return createApplyProcessor.execute(command);
@@ -38,4 +40,7 @@ public class ApplyFacade {
         return readApplicantsByCampaignProcessor.execute(advertisementId);
     }
 
+    public String getMessage(Long applyId) {
+        return getApplyProcessor.execute(applyId).getApplyMessage();
+    }
 }
