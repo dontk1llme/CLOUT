@@ -20,10 +20,10 @@ public class UploadImageProcessor {
         String uploadedPath = fileUploader.upload(multipartFile, createImageCommand.getType(), createImageCommand.getTargetId());
         Image image = Image.create(
                 createImageCommand.getTargetId(),
-                createImageCommand.getType(),
-                uploadedPath,
                 originalName,
-                uploadedPath
+                uploadedPath,
+                uploadedPath,
+                createImageCommand.getType()
         );
         return imageRepository.save(image);
     }

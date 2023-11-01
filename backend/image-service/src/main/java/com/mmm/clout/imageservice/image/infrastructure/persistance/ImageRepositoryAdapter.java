@@ -6,6 +6,8 @@ import com.mmm.clout.imageservice.image.infrastructure.persistance.jpa.JpaImageR
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class ImageRepositoryAdapter implements ImageRepository {
@@ -13,4 +15,9 @@ public class ImageRepositoryAdapter implements ImageRepository {
 
     @Override
     public Image save(Image image) {return jpaImageRepository.save(image);}
+
+    @Override
+    public List<Image> findByTargetIdAndType(Long targetId, String type) {
+        return jpaImageRepository.findByTargetIdAndType(targetId, type);
+    }
 }
