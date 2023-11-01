@@ -1,12 +1,9 @@
 package com.mmm.clout.advertisementservice.apply.presentation.response;
 
-import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
-import com.mmm.clout.advertisementservice.apply.application.reader.ClouterApplyListReader;
+import com.mmm.clout.advertisementservice.apply.application.reader.ApplyListByClouterReader;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
-import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,9 +14,9 @@ public class GetAllByStatusResponse {
     private List<GetApplyByStatusResponse> applyList;
 
 
-    public static GetAllByStatusResponse from(List<ClouterApplyListReader> readerList) {
+    public static GetAllByStatusResponse from(List<ApplyListByClouterReader> readerList) {
         List<GetApplyByStatusResponse> responseList = new ArrayList<>();
-        for (ClouterApplyListReader r :readerList) {
+        for (ApplyListByClouterReader r :readerList) {
             Apply apply = r.getApply();
             responseList.add(
                 new GetApplyByStatusResponse(
