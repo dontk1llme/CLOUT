@@ -27,7 +27,6 @@ public class GetAllByStatusResponse {
                 apply.getCampaign().getPrice(),
                 apply.getCampaign().getNumberOfSelectedMembers(),
                 apply.getCampaign().getNumberOfRecruiter(),
-                null,
                 "CompanyNAme",
                 100
             );

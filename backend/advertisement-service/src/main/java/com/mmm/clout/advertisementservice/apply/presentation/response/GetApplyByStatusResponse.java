@@ -16,7 +16,7 @@ public class GetApplyByStatusResponse {
     private Long price;
     private Integer numberOfSelectedMembers;
     private Integer numberOfRecruiter;
-    private List<ImageResponse> responseList;
+//    private List<ImageResponse> imageList;
     private String companyName;
     private Integer companyAvgStars;
 
