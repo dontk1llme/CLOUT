@@ -1,3 +1,4 @@
+import 'package:clout/providers/region_controller.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/search_detail_bottom_sheet/search_detail_button.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:clout/widgets/list/category_list.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 import 'package:clout/widgets/input/search_bar.dart';
 import 'package:clout/widgets/header/header.dart';
+import 'package:get/get.dart';
 
 class ClouterList extends StatefulWidget {
   const ClouterList({super.key});
@@ -28,7 +30,7 @@ class _ClouterList extends State<ClouterList> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
+    // Get.put(RegionController());
     return Scaffold(
         backgroundColor:
             style.colors['white'], // 기본 backgroundColor 밝은 회색이길래 넣은 코드

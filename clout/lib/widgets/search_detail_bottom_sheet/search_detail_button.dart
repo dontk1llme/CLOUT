@@ -1,4 +1,5 @@
-import 'package:clout/providers/serach_detail_controller.dart';
+import 'package:clout/providers/platform_select_controller.dart';
+import 'package:clout/providers/region_controller.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/search_detail_bottom_sheet/widgets/fee_range_dialog.dart';
 import 'package:clout/widgets/search_detail_bottom_sheet/widgets/followercount_state_dialog.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
-import 'package:clout/widgets/sns/sns3.dart';
+import 'package:clout/widgets/sns/platform_toggle.dart';
 import 'package:clout/screens/campaign_register/widgets/age_slider.dart';
 import 'package:clout/screens/campaign_register/widgets/region_multiselect.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
@@ -24,8 +25,6 @@ class SearchDetailButton extends StatefulWidget {
 
 class _SearchDetailButtonState extends State<SearchDetailButton> {
   void openBottomSheet() {
-    final controller = Get.put(SearchDetailController());
-
     Get.bottomSheet(
         isScrollControlled: true,
         Container(
@@ -67,13 +66,13 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  Sns3(),
+                  PlatformToggle(multiAllowed: true),
                   ///////////////////////////////////////////
                   SizedBox(height: 20),
                   DataTitleThin(text: '희망 클라우터 나이'),
                   // slider 추가
                   AgeSlider(),
-                  ///////////////////////////////////////////
+                  // ///////////////////////////////////////////
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,10 +92,7 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
                   SizedBox(height: 20),
                   DataTitleThin(text: '지역 선택'),
                   SizedBox(height: 10),
-                  RegionMultiSelect(
-                    selectedRegions: controller.selectedRegions,
-                    setSelectedRegions: controller.setSelectedRegions,
-                  ),
+                  RegionMultiSelect(),
                   ///////////////////////////////////////////
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
@@ -117,7 +113,6 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SearchDetailController());
     return Row(
       mainAxisAlignment: MainAxisAlignment.end, // 가장 오른쪽으로 정렬
       children: <Widget>[
