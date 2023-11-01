@@ -1,13 +1,13 @@
 package com.mmm.clout.memberservice.clouter.presentation.response;
 
-import com.mmm.clout.memberservice.clouter.domain.Clouter;
+import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
 import com.mmm.clout.memberservice.common.Category;
 import com.mmm.clout.memberservice.common.Region;
+import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.common.entity.address.response.AddressResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +16,21 @@ import java.util.stream.Collectors;
 @Getter
 @AllArgsConstructor
 public class SelectClrResponse {
+
+//    @Schema(description = "클라우터 멤버 아이디")
+//    private Long clouterId;
+//
+//    @Schema(description = "클라우터 유저 아이디")
+//    private String userId;
+//
+//    @Schema(description = "클라우터 별점 평균")
+//    private Long avgScore;
+//
+//    @Schema(description = "클라우터 전체 포인트")
+//    private Long totalPoint;
+//
+//    @Schema(description = "클라우터 유저 role (USER, ADMIN)")
+//    private String role;
 
     @Schema(description = "클라우터 닉네임임")
     private String nickName;
@@ -41,30 +56,30 @@ public class SelectClrResponse {
     private boolean negoable;
 
     @Schema(description = "광고를 원하는 카테고리 목록")
-    private List<Category> categoryList;
+    private List<String> categoryList;
 
     @Schema(description = "광고를 희망하는 지역 목록")
-    private List<Region> regionList;
+    private List<String> regionList;
 
     private AddressResponse address;
 
-    public SelectClrResponse(Clouter clouter) {
-        this.nickName = clouter.getNickName();
-        this.name = clouter.getName();
-        this.birthday = clouter.getBirthday();
-        this.age = clouter.getAge();
-        this.phoneNumber = clouter.getPhoneNumber();
-        this.channelList = clouter.getChannelList()
+    public SelectClrResponse(ClouterReader clouterReader) {
+        this.nickName = clouterReader.getNickName();
+        this.name = clouterReader.getName();
+        this.birthday = clouterReader.getBirthday();
+        this.age = clouterReader.getAge();
+        this.phoneNumber = clouterReader.getPhoneNumber();
+        this.channelList = clouterReader.getChannelList()
             .stream().map(ChannelResponse::new).collect(Collectors.toList());
-        this.hopeCost = new HopeCostResponse(clouter.getHopeCost());
-        this.negoable = clouter.isNegoable();
-        this.categoryList = clouter.getCategoryList();
-        this.regionList = clouter.getRegioinList();
-        this.address = new AddressResponse(clouter.getAddress());
+        this.hopeCost = new HopeCostResponse(clouterReader.getHopeCost());
+        this.negoable = clouterReader.isNegoable();
+        this.categoryList = clouterReader.getCategoryList();
+        this.regionList = clouterReader.getRegionList();
+        this.address = new AddressResponse(clouterReader.getAddress());
     }
 
-    public static SelectClrResponse from(Clouter clouter) {
-        SelectClrResponse response = new SelectClrResponse(clouter);
+    public static SelectClrResponse from(ClouterReader clouterReader) {
+        SelectClrResponse response = new SelectClrResponse(clouterReader);
         return response;
     }
 }
