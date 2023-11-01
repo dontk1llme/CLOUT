@@ -48,10 +48,10 @@ class BankDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputElement(
-      elementType: 'dropdown',
+      elementType: 'dropdownunder',
       data: banks,
       value: bank,
-      placeholder: '카테고리 선택',
+      placeholder: '-- 은행명 선택 --',
       setData: setBank,
     );
   }
