@@ -14,6 +14,38 @@ import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 
+class Clouter {
+  int clouterId = 1;
+  String nickname = '모카우유';
+  int starRating = 20;
+  int fee = 500000;
+  String category = '반려동물';
+  int contractCount = 5;
+  List<String> selectedPlatform = [
+    "YouTube",
+    "Instagram",
+    "TikTok",
+  ];
+  String firstImg = 'assets/images/clouterImage.jpg';
+}
+
+class Campaign {
+  int campaignId = 1;
+  String category = '음식';
+  String productName = '못골정미소 백미 5kg';
+  int pay = 1000;
+  String campaignSubject = '못골영농조합법인';
+  int applicantCount = 2;
+  int recruitCount = 5;
+  List<String> selectedPlatform = [
+    "YouTube",
+    // "Instagram",
+    "TikTok",
+  ];
+  int starRating = 20;
+  String firstImg = 'assets/images/itemImage.jpg';
+}
+
 class Home extends StatelessWidget {
   Home({super.key});
 
@@ -23,6 +55,8 @@ class Home extends StatelessWidget {
     'assets/images/itemImage.jpg',
     'assets/images/food.png',
   ];
+  Clouter clouter = Clouter();
+  Campaign campaign = Campaign();
 
   List<Widget> carouselList = [
     Stack(
@@ -244,7 +278,14 @@ class Home extends StatelessWidget {
                           for (num i = 0; i < 10; i++)
                             Padding(
                               padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                              child: ClouterItemBox(),
+                              child: ClouterItemBox(
+                                  nickname: clouter.nickname,
+                                  starRating: clouter.starRating,
+                                  fee: clouter.fee,
+                                  category: clouter.category,
+                                  contractCount: clouter.contractCount,
+                                  selectedPlatform: clouter.selectedPlatform,
+                                  firstImg: clouter.firstImg),
                             )
                         ]),
                       ),
@@ -264,7 +305,17 @@ class Home extends StatelessWidget {
                           for (num i = 0; i < 10; i++)
                             Padding(
                               padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                              child: CampaignItemBox(),
+                              child: CampaignItemBox(
+                                category: campaign.category,
+                                productName: campaign.productName,
+                                pay: campaign.pay,
+                                campaignSubject: campaign.campaignSubject,
+                                applicantCount: campaign.applicantCount,
+                                recruitCount: campaign.recruitCount,
+                                selectedPlatform: campaign.selectedPlatform,
+                                starRating: campaign.starRating,
+                                firstImg: campaign.firstImg,
+                              ),
                             )
                         ]),
                       ),
