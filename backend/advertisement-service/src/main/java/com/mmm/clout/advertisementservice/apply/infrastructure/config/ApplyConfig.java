@@ -48,10 +48,12 @@ public class ApplyConfig {
 
     @Bean
     ReadApplicantsByCampaignProcessor readApplicantsByCampaignProcessor(
-        ApplyRepository applyRepository
+        ApplyRepository applyRepository,
+        MemberProvider memberProvider
     ) {
         return new ReadApplicantsByCampaignProcessor(
-            applyRepository
+            applyRepository,
+            memberProvider
         );
     }
 
