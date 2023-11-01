@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UploadImageResponse {
-    private Long Id;
+    private Long imageId;
 
-    private String poath;
+    private String path;
 
     public static UploadImageResponse from(Image image) {
         return new UploadImageResponse(image.getId(), image.getPath());
