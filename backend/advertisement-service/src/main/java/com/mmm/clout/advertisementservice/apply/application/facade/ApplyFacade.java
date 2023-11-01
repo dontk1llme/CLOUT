@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor
 import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.command.CreateApplyCommand;
+import com.mmm.clout.advertisementservice.apply.application.reader.ClouterApplyListReader;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ApplyFacade {
         cancelApplyProcessor.execute(applyId);
     }
 
-    public List<Apply> getAllByApplyStatus(Long clouterId, ApplyStatus type) {
+    public List<ClouterApplyListReader> getAllByApplyStatus(Long clouterId, ApplyStatus type) {
         return readAllApplyProcessor.execute(clouterId, type);
     }
 }
