@@ -5,6 +5,7 @@ import com.mmm.clout.memberservice.clouter.application.SelectClouterProcessor;
 import com.mmm.clout.memberservice.clouter.application.UpdateClouterProcessor;
 import com.mmm.clout.memberservice.clouter.application.command.CreateClrCommand;
 import com.mmm.clout.memberservice.clouter.application.command.UpdateClrCommand;
+import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
 import com.mmm.clout.memberservice.clouter.domain.Clouter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,5 +26,5 @@ public class ClouterFacade {
 
     public Clouter update(UpdateClrCommand command) { return updateClouterProcessor.execute(command); }
 
-    public Clouter select(Long clouterId) { return selectClouterProcessor.execute(clouterId); }
+    public ClouterReader select(Long clouterId) { return selectClouterProcessor.execute(clouterId); }
 }
