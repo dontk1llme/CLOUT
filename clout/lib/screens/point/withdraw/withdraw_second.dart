@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // widgets
 import 'package:clout/widgets/header/header.dart';
@@ -24,8 +25,29 @@ class WithdrawSecond extends StatefulWidget {
 class _WithdrawSecondState extends State<WithdrawSecond> {
   TextEditingController pointController = TextEditingController();
   double amount = 0;
+  int userPoints = 1; // 사용자 보유 포인트
 
   var f = NumberFormat('###,###,###,###');
+
+  Future<int> fetchUserPoints() async {
+    // 여기에서 실제 API 호출 또는 하드 코딩된 값을 반환
+
+    return 130000; // 임시로 130,000을 반환
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // API 호출하여 사용자의 보유 포인트를 가져오는 함수
+    fetchUserPoints().then((points) {
+      setState(() {
+        userPoints = points;
+        // TextFormField에 보유 포인트 설정하기
+        pointController.text = userPoints.toString();
+      });
+    });
+  }
 
   String getCurrentDate() {
     final now = DateTime.now();
@@ -66,7 +88,7 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
                       Icons.close,
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                   )
                 ],
@@ -194,7 +216,24 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
   @override
   Widget build(BuildContext context) {
     final args = Get.arguments;
-    // final account = widget.account;
+
+    // 입력한 금액 모니터링
+    pointController.addListener(() {
+      try {
+        amount = double.parse(pointController.text);
+        if (amount > userPoints) {
+          // 입력한 금액이 보유 포인트보다 크면 보유 포인트로 바꿔주기
+          pointController.text = userPoints.toString();
+          amount = userPoints.toDouble();
+          // 입력한 금액이 보유 포인트보다 클 경우 알림
+          Fluttertoast.showToast(msg: '보유 포인트보다 많이 입력되어 입력 금액이 조정되었습니다.');
+        }
+      } catch (e) {
+        // pointController.text를 숫자로 변환할 수 없을 때 처리
+        print('계산 불가... 💨: ${pointController.text}');
+        // 다른 기본값을 설정하거나 오류 메시지 표시..
+      }
+    });
 
     return Scaffold(
       appBar: PreferredSize(
@@ -231,7 +270,7 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 10),
-                  child: Text('출금 가능 포인트: 130,000 points'),
+                  child: Text('출금 가능 포인트: ${f.format(userPoints)} points'),
                 )
               ],
             ),
