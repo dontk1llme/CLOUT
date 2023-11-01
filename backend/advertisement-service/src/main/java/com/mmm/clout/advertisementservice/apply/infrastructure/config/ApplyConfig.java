@@ -3,6 +3,7 @@ package com.mmm.clout.advertisementservice.apply.infrastructure.config;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
+import com.mmm.clout.advertisementservice.apply.application.GetApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadApplicantsByCampaignProcessor;
 import com.mmm.clout.advertisementservice.apply.domain.provider.MemberProvider;
@@ -54,6 +55,15 @@ public class ApplyConfig {
         return new ReadApplicantsByCampaignProcessor(
             applyRepository,
             memberProvider
+        );
+    }
+
+    @Bean
+    GetApplyProcessor getApplyProcessor(
+        ApplyRepository applyRepository
+    ) {
+        return new GetApplyProcessor(
+            applyRepository
         );
     }
 

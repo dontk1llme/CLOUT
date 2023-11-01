@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.apply.application.facade.ApplyFacade;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import com.mmm.clout.advertisementservice.apply.presentation.request.CreateApplyRequest;
 import com.mmm.clout.advertisementservice.apply.presentation.response.ApplicantResponse;
+import com.mmm.clout.advertisementservice.apply.presentation.response.ApplyMessageResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.CreateApplyResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.GetAllByStatusResponse;
 import java.util.List;
@@ -61,5 +62,16 @@ public class ApplyController {
         List<ApplicantResponse> result =
             ApplicantResponse.from(applyFacade.getApplicantList(advertisementId));
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/{applyId}/msg")
+    public ResponseEntity<ApplyMessageResponse> getApplyMsg(
+        @PathVariable Long applyId
+    ) {
+        String result = applyFacade.getMessage(applyId);
+
+        return new ResponseEntity<>(
+            new ApplyMessageResponse(applyId, result), HttpStatus.OK
+        );
     }
 }
