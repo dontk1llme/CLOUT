@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clout/style.dart' as style;
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ImageWidget extends ConsumerWidget {
   ImageWidget({super.key, this.parentImages});
@@ -23,7 +22,7 @@ class ImageWidget extends ConsumerWidget {
               // print(images)
             },
         child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 5),
+            margin: const EdgeInsets.symmetric(horizontal: 2),
             width: imgBoxSize,
             height: imgBoxSize,
             child: Stack(children: [
@@ -59,7 +58,7 @@ class ImageWidget extends ConsumerWidget {
         InkWell(
             onTap: () => ref.read(imagePickerProvider.notifier).getImage(),
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 2),
+              margin: const EdgeInsets.symmetric(horizontal: 1),
               width: MediaQuery.of(context).size.width * 0.2,
               height: MediaQuery.of(context).size.width * 0.2,
               decoration: BoxDecoration(

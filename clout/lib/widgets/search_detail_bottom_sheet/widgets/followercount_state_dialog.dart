@@ -1,5 +1,5 @@
 // Global
-import 'package:clout/providers/serach_detail_controller.dart';
+import 'package:clout/providers/follower_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -12,13 +12,12 @@ import 'package:get/get.dart';
 //이건 getX 쓸때 쓰는 컴포넌트임 일반으로 쓰는 컴포넌트는 followercount_input_dialog.dart
 class FollowercountStateDialog extends StatelessWidget {
   FollowercountStateDialog({super.key});
-
   void openDialog() {
     Get.defaultDialog(
       title: "모집인원",
       titlePadding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-      content: GetBuilder<SearchDetailController>(
+      content: GetBuilder<FollowerContoller>(
           builder: (controller) => SizedBox(
               height: 75,
               child: Column(
@@ -67,7 +66,8 @@ class FollowercountStateDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SearchDetailController>(
+    Get.put(FollowerContoller(), permanent: true);
+    return GetBuilder<FollowerContoller>(
         builder: (controller) => Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

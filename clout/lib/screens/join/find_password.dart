@@ -12,8 +12,8 @@ import 'package:clout/screens/join/widgets/small_button.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 
 import 'package:clout/screens/join/widgets/clouter/clouterJoin1.dart';
-import 'package:clout/screens/join/widgets/clouter/clouterJoin2.dart';
 import 'package:clout/screens/join/widgets/clouter/clouterJoin3.dart';
+import 'package:clout/screens/join/widgets/clouter/clouterJoin4.dart';
 
 class FindPassword extends StatefulWidget {
   const FindPassword({super.key});

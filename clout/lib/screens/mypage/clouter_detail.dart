@@ -1,7 +1,7 @@
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:clout/screens/mypage/widgets/selected_category.dart';
 import 'package:clout/widgets/common/nametag.dart';
-import 'package:clout/widgets/sns/sns3.dart';
+import 'package:clout/widgets/sns/platform_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -43,7 +43,6 @@ class ClouterDetail extends StatelessWidget {
                             Text('회원 정보',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 20)),
-                            
                             UpdateButton(),
                           ],
                         ),
@@ -72,7 +71,7 @@ class ClouterDetail extends StatelessWidget {
                           SizedBox(height: 30),
                           DataTitle(text: '광고 희망 플랫폼'),
                           SizedBox(height: 10),
-                          Sns3(),
+                          PlatformToggle(multiAllowed: true),
                           SizedBox(height: 20),
                           DataTitle(text: '희망 광고비'),
                           Row(

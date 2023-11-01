@@ -1,4 +1,4 @@
-import 'package:clout/providers/serach_detail_controller.dart';
+import 'package:clout/providers/platform_select_controller.dart';
 import 'package:flutter/material.dart'
     hide BoxDecoration, BoxShadow; //  기존 BoxShadow 속성을 가려줘야 함
 import 'package:get/get.dart';
@@ -7,14 +7,20 @@ import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
 class Sns3SelectBox extends StatelessWidget {
   const Sns3SelectBox(
-      {super.key, required this.img, required this.index, required this.title});
+      {super.key,
+      required this.img,
+      required this.index,
+      required this.title,
+      required this.multiAllowed});
   final img;
   final index;
   final title;
+  final multiAllowed;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SearchDetailController>(
+    Get.put(PlatformSelectController(), permanent: true);
+    return GetBuilder<PlatformSelectController>(
         builder: (controller) => Container(
               decoration: BoxDecoration(
                   color: controller.platforms[index]
@@ -45,7 +51,7 @@ class Sns3SelectBox extends StatelessWidget {
                         ]),
               padding: EdgeInsets.all(10),
               child: InkWell(
-                onTap: () => controller.setSelected(index),
+                onTap: () => controller.setSelected(index, multiAllowed),
                 child: Wrap(
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -59,7 +65,7 @@ class Sns3SelectBox extends StatelessWidget {
                     ),
                     Text(
                       title,
-                      style: style.textTheme.headlineMedium
+                      style: style.textTheme.headlineSmall
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                   ],
