@@ -1,12 +1,11 @@
 package com.mmm.clout.advertisementservice.apply.application;
 
-import com.mmm.clout.advertisementservice.apply.application.reader.ClouterApplyListReader;
+import com.mmm.clout.advertisementservice.apply.application.reader.ApplyListByClouterReader;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import com.mmm.clout.advertisementservice.apply.domain.info.AdvertiserInfo;
-import com.mmm.clout.advertisementservice.apply.domain.provider.AdvertiserProvider;
+import com.mmm.clout.advertisementservice.apply.domain.provider.MemberProvider;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,17 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReadAllApplyProcessor {
 
     private final ApplyRepository applyRepository;
-    private final AdvertiserProvider advertiserInfoProvider;
+    private final MemberProvider advertiserInfoProvider;
 
     @Transactional
-    public List<ClouterApplyListReader> execute(Long applicantId, ApplyStatus applyStatus) {
+    public List<ApplyListByClouterReader> execute(Long applicantId, ApplyStatus applyStatus) {
         List<Apply> applyList = applyRepository.getAllByStatus(applicantId, applyStatus);
-        List<ClouterApplyListReader> readerList = new ArrayList<>();
+        List<ApplyListByClouterReader> readerList = new ArrayList<>();
         for (Apply apply: applyList) {
             Long advertiserId = apply.getCampaign().getAdvertiserId();
             AdvertiserInfo info = advertiserInfoProvider.getAdvertiserInfoByMemberId(advertiserId);
             readerList.add(
-                new ClouterApplyListReader(
+                new ApplyListByClouterReader(
                     apply, info.getCompanyInfo().getCompanyName(), 0
                 )
             );
