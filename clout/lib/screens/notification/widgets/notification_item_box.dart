@@ -17,17 +17,10 @@ class _NotificationItemState extends State<NotificationItem> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final itemImageSize = screenWidth * 0.3;
-    final textSpacing = screenWidth * 0.03;
-    final buttonWidth = screenWidth * 0.52;
-    final fontSize1 = screenWidth * 0.05;
-    final fontSize2 = screenWidth * 0.043;
-    final fontSize3 = screenWidth * 0.04;
 
     return Container(
-      padding: EdgeInsets.all(screenWidth * 0.03), // 3% of screen width
-      margin: EdgeInsets.fromLTRB(screenWidth * 0.05, screenWidth * 0.0125,
-          screenWidth * 0.05, screenWidth * 0.0125),
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -35,70 +28,63 @@ class _NotificationItemState extends State<NotificationItem> {
       child: SizedBox(
         child: Row(
           children: [
-            Flexible(
-              flex: 1,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5), // 5% of screen width
-                child: Image.asset(
-                  'assets/images/itemImage.jpg',
-                  width: itemImageSize,
-                  height: itemImageSize,
-                  fit: BoxFit.cover,
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(5), // 5% of screen width
+              child: Image.asset(
+                'assets/images/itemImage.jpg',
+                width: 120,
+                height: 120,
+                fit: BoxFit.cover,
               ),
             ),
             SizedBox(
-              width: textSpacing,
+              width: 20,
             ),
-            Flexible(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('업체명',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: fontSize1,
-                      )),
-                  Text('계약서가 도착했어요!',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: fontSize2,
-                      )),
-                  Text('계약내용을 확인해보세요',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: style.colors['gray'],
-                        fontSize: fontSize3,
-                      )),
-                  SizedBox(
-                    width: buttonWidth,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.to(() => ClouterSelect());
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color(0xFF6B4EFF),
-                        ), // 원하는 색상으로 변경
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                screenWidth * 0.1), // 10% of screen width
-                          ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('업체명',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                    )),
+                Text('계약서가 도착했어요!',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    )),
+                Text('계약내용을 확인해보세요',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: style.colors['gray'],
+                      fontSize: 15,
+                    )),
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => ClouterSelect());
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Color(0xFF6B4EFF),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * 0.1),
                         ),
                       ),
-                      child: Text('계약서 확인하기'),
                     ),
-                  )
-                ],
-              ),
+                    child: Text('계약서 확인하기'),
+                  ),
+                )
+              ],
             )
           ],
         ),

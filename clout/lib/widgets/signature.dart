@@ -1,10 +1,16 @@
+import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 class Signature extends StatefulWidget {
-  const Signature({super.key, required this.globalKey});
+  const Signature({
+    super.key,
+    required this.globalKey,
+    required this.signatureKey,
+  });
   final globalKey;
+  final signatureKey;
 
   @override
   State<Signature> createState() => _SignatureState();
@@ -12,7 +18,7 @@ class Signature extends StatefulWidget {
 
 class _SignatureState extends State<Signature> {
   void _handleClearButtonPressed() {
-    widget.globalKey.currentState!.clear();
+    widget.signatureKey.currentState!.clear();
   }
 
   @override
@@ -21,33 +27,77 @@ class _SignatureState extends State<Signature> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 1),
-            // borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-          child: SfSignaturePad(
-              key: widget.globalKey,
-              backgroundColor: Colors.transparent,
-              strokeColor: Colors.black,
-              minimumStrokeWidth: 1.0,
-              maximumStrokeWidth: 4.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+          DataTitle(text: '전자 서명'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              TextButton.icon(
+                onPressed: _handleClearButtonPressed,
+                icon: Icon(
+                  Icons.restart_alt_outlined,
+                  color: style.colors['main1'],
+                ),
+                label: Text('초기화',
+                    style:
+                        TextStyle(color: style.colors['main1'], height: 1.25)),
+              )
+            ],
+          )
+        ]),
+        Stack(
+          children: [
+            Positioned(
+                bottom: 1,
+                top: 1,
+                left: 1,
+                right: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                )),
+            RepaintBoundary(
+                key: widget.globalKey,
+                child: Stack(children: [
+                  Positioned(
+                      bottom: 3,
+                      top: 3,
+                      left: 3,
+                      right: 3,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                '( 인 )',
+                                style: style.textTheme.titleLarge?.copyWith(
+                                    color: style.colors['text'], height: 1),
+                              ),
+                            ],
+                          ))),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: SfSignaturePad(
+                        key: widget.signatureKey,
+                        backgroundColor: Colors.transparent,
+                        strokeColor: Colors.black,
+                        minimumStrokeWidth: 1.0,
+                        maximumStrokeWidth: 4.0),
+                  ),
+                ]))
+          ],
         ),
         // SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            TextButton.icon(
-              onPressed: _handleClearButtonPressed,
-              icon: Icon(
-                Icons.restart_alt_outlined,
-                color: style.colors['main1'],
-              ),
-              label: Text('초기화',
-                  style: TextStyle(color: style.colors['main1'], height: 1.25)),
-            )
-          ],
-        )
       ],
     );
   }

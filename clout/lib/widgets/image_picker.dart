@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:clout/providers/image_picker_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:clout/style.dart' as style;
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ImageWidget extends ConsumerWidget {
@@ -12,7 +12,7 @@ class ImageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    double imgBoxSize = ((MediaQuery.of(context).size.width - 32) / 5) - 4;
+    double imgBoxSize = MediaQuery.of(context).size.width * 0.2;
     print(ref);
     final images = ref.watch(imagePickerProvider);
     // print(images);
@@ -23,13 +23,15 @@ class ImageWidget extends ConsumerWidget {
               // print(images)
             },
         child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 2),
+            margin: const EdgeInsets.symmetric(horizontal: 5),
             width: imgBoxSize,
             height: imgBoxSize,
             child: Stack(children: [
               Center(
                   child: Container(
                       decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1, color: style.colors['main1']!),
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: Image.file(File(img.path)).image),
@@ -58,8 +60,8 @@ class ImageWidget extends ConsumerWidget {
             onTap: () => ref.read(imagePickerProvider.notifier).getImage(),
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 2),
-              width: MediaQuery.of(context).size.width * 0.17,
-              height: MediaQuery.of(context).size.width * 0.17,
+              width: MediaQuery.of(context).size.width * 0.2,
+              height: MediaQuery.of(context).size.width * 0.2,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey[300]!, width: 1),
                 borderRadius: BorderRadius.circular(10),
