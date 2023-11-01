@@ -17,20 +17,20 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class SelectClrResponse {
 
-//    @Schema(description = "클라우터 멤버 아이디")
-//    private Long clouterId;
-//
-//    @Schema(description = "클라우터 유저 아이디")
-//    private String userId;
-//
-//    @Schema(description = "클라우터 별점 평균")
-//    private Long avgScore;
-//
-//    @Schema(description = "클라우터 전체 포인트")
-//    private Long totalPoint;
-//
-//    @Schema(description = "클라우터 유저 role (USER, ADMIN)")
-//    private String role;
+    @Schema(description = "클라우터 멤버 아이디")
+    private Long clouterId;
+
+    @Schema(description = "클라우터 유저 아이디")
+    private String userId;
+
+    @Schema(description = "클라우터 별점 평균")
+    private Long avgScore;
+
+    @Schema(description = "클라우터 전체 포인트")
+    private Long totalPoint;
+
+    @Schema(description = "클라우터 유저 role (USER, ADMIN)")
+    private Role role;
 
     @Schema(description = "클라우터 닉네임임")
     private String nickName;
@@ -64,6 +64,17 @@ public class SelectClrResponse {
     private AddressResponse address;
 
     public SelectClrResponse(ClouterReader clouterReader) {
+
+        this.clouterId = clouterReader.getClouterId();
+
+        this.userId = clouterReader.getUserId();
+
+        this.avgScore = clouterReader.getAvgScore();
+
+        this.totalPoint = clouterReader.getTotalPoint();
+
+        this.role = clouterReader.getRole();
+
         this.nickName = clouterReader.getNickName();
         this.name = clouterReader.getName();
         this.birthday = clouterReader.getBirthday();
