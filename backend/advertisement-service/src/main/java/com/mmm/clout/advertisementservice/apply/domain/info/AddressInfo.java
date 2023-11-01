@@ -1,10 +1,12 @@
-package com.mmm.clout.advertisementservice.advertisements.domain.info;
+package com.mmm.clout.advertisementservice.apply.domain.info;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
+@ToString
 public class AddressInfo {
 
     private String zipCode;

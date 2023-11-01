@@ -39,7 +39,7 @@ public class Apply extends BaseEntity {
     @Column(name = "apply_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "advertisement_id")
     private Campaign campaign;
 
