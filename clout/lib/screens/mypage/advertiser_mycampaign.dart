@@ -10,8 +10,27 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 
+class Campaign {
+  int campaignId = 1;
+  String category = '음식';
+  String productName = '못골정미소 백미 5kg';
+  int pay = 1000;
+  String campaignSubject = '못골영농조합법인';
+  int applicantCount = 2;
+  int recruitCount = 5;
+  List<String> selectedPlatform = [
+    "YouTube",
+    // "Instagram",
+    "TikTok",
+  ];
+  int starRating = 20;
+  String firstImg = 'assets/images/itemImage.jpg';
+}
+
 class AdvertiserMycampaign extends StatelessWidget {
-  const AdvertiserMycampaign({super.key});
+  AdvertiserMycampaign({super.key});
+
+  Campaign campaign = Campaign();
 
   @override
   Widget build(BuildContext context) {
@@ -56,35 +75,39 @@ class AdvertiserMycampaign extends StatelessWidget {
                               runSpacing: screenWidth > 400 ? 20 : 10,
                               // alignment: Alignment.,
                               children: [
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
-                                CampaignItemBox(),
+                                CampaignItemBox(
+                                  category: campaign.category,
+                                  productName: campaign.productName,
+                                  pay: campaign.pay,
+                                  campaignSubject: campaign.campaignSubject,
+                                  applicantCount: campaign.applicantCount,
+                                  recruitCount: campaign.recruitCount,
+                                  selectedPlatform: campaign.selectedPlatform,
+                                  starRating: campaign.starRating,
+                                  firstImg: campaign.firstImg,
+                                ),
+                                CampaignItemBox(
+                                  category: campaign.category,
+                                  productName: campaign.productName,
+                                  pay: campaign.pay,
+                                  campaignSubject: campaign.campaignSubject,
+                                  applicantCount: campaign.applicantCount,
+                                  recruitCount: campaign.recruitCount,
+                                  selectedPlatform: campaign.selectedPlatform,
+                                  starRating: campaign.starRating,
+                                  firstImg: campaign.firstImg,
+                                ),
+                                CampaignItemBox(
+                                  category: campaign.category,
+                                  productName: campaign.productName,
+                                  pay: campaign.pay,
+                                  campaignSubject: campaign.campaignSubject,
+                                  applicantCount: campaign.applicantCount,
+                                  recruitCount: campaign.recruitCount,
+                                  selectedPlatform: campaign.selectedPlatform,
+                                  starRating: campaign.starRating,
+                                  firstImg: campaign.firstImg,
+                                ),
                               ])),
                       SizedBox(height: 30)
                     ],
