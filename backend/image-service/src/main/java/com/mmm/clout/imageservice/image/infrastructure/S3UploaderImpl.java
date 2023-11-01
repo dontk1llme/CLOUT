@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -32,14 +33,15 @@ public class S3UploaderImpl implements S3Uploader {
     private final AmazonS3Client amazonS3Client;
 
     @Override
-    public String upload(MultipartFile multipartFile) throws IOException {
+    public String upload(MultipartFile multipartFile, String type, Long targetId) throws IOException {
         log.info("S3Uploader_upload_start(MultipartFile): " + multipartFile.getOriginalFilename() + " - " + multipartFile);
 
         File uploadFile = convert(multipartFile)
                 .orElseThrow(IOException::new);
-
+        LocalDateTime now = LocalDateTime.now();
+        String filename = type+"/targetId"+targetId+"-"+now.toString()+""+multipartFile.getOriginalFilename();
         log.info("S3Uploader_upload_end(MultipartFile): " + uploadFile);
-        String uploadPath = upload(uploadFile, multipartFile.getOriginalFilename());
+        String uploadPath = upload(uploadFile, filename);
         return uploadPath;
     }
 
@@ -91,14 +93,7 @@ public class S3UploaderImpl implements S3Uploader {
         log.info("S3Uploader_convert_start(file): " + file + file.getOriginalFilename());
         File convertFile = new File(file.getOriginalFilename());
         log.info("convertFile: " + convertFile);
-//        if (convertFile.createNewFile()) {
-//            log.info("여긴오니?");
-//            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-//                fos.write(file.getBytes());
-//            }
-//            log.info("S3Uploader_convert_end(convertFile):" + convertFile);
-//            return Optional.of(convertFile);
-//        }
+
         FileOutputStream fos = new FileOutputStream(convertFile);
         fos.write(file.getBytes());
 
