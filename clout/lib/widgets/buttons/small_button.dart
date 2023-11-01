@@ -20,39 +20,37 @@ class SmallButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _textsize = buttonHeight * 0.3; // 버튼 높이에 따라 fontSize 계산
+    final _textSize = (buttonHeight * 0.3)
+        .clamp(13.0, double.infinity); // 버튼 높이에 따라 fontSize 계산
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      child: SizedBox(
-        width: double.infinity,
-        height: buttonHeight,
-        child: ElevatedButton(
-          onPressed: () {
-            if (destination != null) {
-              if (notJustRoute != null && notJustRoute) {
-                function(destination);
-              } else {
-                Get.toNamed(destination);
-              }
+    return SizedBox(
+      width: double.infinity,
+      height: buttonHeight,
+      child: ElevatedButton(
+        onPressed: () {
+          if (destination != null) {
+            if (notJustRoute != null && notJustRoute) {
+              function(destination);
             } else {
-              function();
+              Get.toNamed(destination);
             }
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: style.colors['main1'],
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
+          } else {
+            function();
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: style.colors['main1'],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: _textsize,
-              color: style.colors['white'],
-              fontWeight: FontWeight.w400,
-              height: 1.2,
-            ),
+        ),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: _textSize,
+            color: style.colors['white'],
+            fontWeight: FontWeight.w400,
+            height: 1.2,
           ),
         ),
       ),
