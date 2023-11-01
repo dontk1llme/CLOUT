@@ -1,4 +1,4 @@
-import 'package:clout/providers/serach_detail_controller.dart';
+import 'package:clout/providers/fee_controller.dart';
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/widgets/input/input_elements/utilities/numeric_range_formatter.dart';
 import 'package:flutter/material.dart';
@@ -11,17 +11,17 @@ class FeeRangeDialog extends StatelessWidget {
   FeeRangeDialog({super.key});
 
   void openDialog() {
-    final controller = Get.put(SearchDetailController());
+    final feeController = Get.put(FeeController());
 
     TextEditingController minController =
-        TextEditingController(text: controller.minFee);
+        TextEditingController(text: feeController.minFee);
     TextEditingController maxController =
-        TextEditingController(text: controller.maxFee);
+        TextEditingController(text: feeController.maxFee);
 
     Get.defaultDialog(
         title: '희망 광고비 범위',
         titlePadding: EdgeInsets.only(top: 30),
-        content: GetBuilder<SearchDetailController>(
+        content: GetBuilder<FeeController>(
             builder: (controller) => Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -66,7 +66,7 @@ class FeeRangeDialog extends StatelessWidget {
                               ],
                               keyboardType: TextInputType.number,
                               onChanged: (value) => {
-                                controller.setMaxFee(value),
+                                feeController.setMaxFee(value),
                               },
                               decoration: InputDecoration(
                                   focusedBorder: UnderlineInputBorder(
@@ -106,19 +106,25 @@ class FeeRangeDialog extends StatelessWidget {
                         child: BigButton(
                           title: '확인',
                           function: () => {
-                            if (controller.maxFee == null)
+                            if (feeController.maxFee == null)
                               {
-                                controller.setMaxFee('1000000000'),
+                                feeController.setMaxFee('1000000000'),
                               },
-                            if (controller.minFee == null)
-                              {controller.setMinFee('0')},
-                            if (int.parse(controller.minFee) >
-                                int.parse(controller.maxFee))
+                            if (feeController.minFee == null)
+                              {feeController.setMinFee('0')},
+                            if (int.parse(feeController.minFee.toString()) >
+                                int.parse(feeController.maxFee.toString()))
                               {
-                                if (controller.maxFee == '0')
-                                  {controller.setMaxFee(controller.minFee)}
+                                if (feeController.maxFee.toString() == '0')
+                                  {
+                                    feeController
+                                        .setMaxFee(feeController.minFee)
+                                  }
                                 else
-                                  {controller.setMinFee(controller.maxFee)},
+                                  {
+                                    feeController
+                                        .setMinFee(feeController.maxFee)
+                                  },
                                 Fluttertoast.showToast(
                                     msg: '범위가 올바르지 않아 조정되었습니다.')
                               },
@@ -133,8 +139,8 @@ class FeeRangeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SearchController());
-    return GetBuilder<SearchDetailController>(
+    Get.put(FeeController(), permanent: true);
+    return GetBuilder<FeeController>(
         builder: (controller) => OutlinedButton(
             onPressed: () => openDialog(),
             style: OutlinedButton.styleFrom(
