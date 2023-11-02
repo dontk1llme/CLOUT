@@ -26,6 +26,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Override
     public CreateChatRoomResponse makeRoom(ChatRoomRequest request) {
+        checkDuplicate(request.getHostId(),request.getGuestId());
+
         ChatRoom room = ChatRoom.builder()
             .advertisementId(request.getAdvertisementId())
             .hostId(request.getHostId())
@@ -64,5 +66,12 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             chatRoomRepository.findAllByGuestId(clouterId).stream()
                 .map(ChatRoomResponse::of).collect(Collectors.toList()));
         return result;
+    }
+
+    public boolean checkDuplicate(Long hostId, Long guestId) {
+        ChatRoom room = chatRoomRepository.findByHostIdAndGuestId(hostId, guestId).orElse(null);
+
+        if(room == null) return true;
+        else throw new ExistedRoomException();
     }
 }
