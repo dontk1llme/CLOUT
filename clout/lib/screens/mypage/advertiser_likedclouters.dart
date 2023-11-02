@@ -1,14 +1,9 @@
+import 'package:clout/widgets/buttons/filter_button.dart';
 import 'package:flutter/material.dart';
-import 'package:clout/style.dart' as style;
 
 // widgets
-import 'package:clout/screens/mypage/widgets/content_text.dart';
-import 'package:clout/screens/mypage/widgets/gray_title.dart';
-import 'package:clout/screens/mypage/widgets/info_item_box.dart';
-import 'package:clout/screens/mypage/widgets/update_button.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
-import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 
 class Clouter {
@@ -51,23 +46,7 @@ class AdvertiserLikedclouters extends StatelessWidget {
                 child: FractionallySizedBox(
                     widthFactor: screenWidth > 400 ? 0.9 : 1,
                     child: Column(children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 10, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(''),
-                            Container(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.filter_list, size: 20),
-                                  Text('정렬'),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      FilterButton(),
                       Align(
                           alignment: Alignment.topCenter,
                           child: Wrap(
