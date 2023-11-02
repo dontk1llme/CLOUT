@@ -1,7 +1,11 @@
 import 'package:clout/providers/clouter_register_controller.dart';
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/clouter/widgets/join_input.dart';
+<<<<<<< HEAD
+import 'package:clout/widgets/input/input_elements/widgets/date_input.dart';
+=======
 import 'package:clout/widgets/address/library_daum_postcode_screen.dart';
+>>>>>>> f58e0615085787e6ad1be1213406992962494661
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:clout/style.dart' as style;
@@ -28,7 +32,6 @@ class ClouterJoin1State extends State<ClouterJoin1> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ClouterRegisterController(), permanent: true);
     return GetBuilder<ClouterRegisterController>(
       builder: (controller) => FractionallySizedBox(
         widthFactor: 0.9,
@@ -49,13 +52,7 @@ class ClouterJoin1State extends State<ClouterJoin1> {
               setState: controller.setName,
             ),
             SizedBox(height: 10),
-            JoinInput(
-              keyboardType: TextInputType.datetime,
-              maxLength: 11,
-              title: '생년월일 입력',
-              label: '생년월일',
-              setState: controller.setBirthday,
-            ),
+            DateInput(setState: controller.setBirthday),
             SizedBox(height: 10),
             Stack(
               children: [
@@ -67,19 +64,20 @@ class ClouterJoin1State extends State<ClouterJoin1> {
                   setState: controller.setPhoneNumber,
                 ),
                 Positioned(
-                    right: 10,
-                    top: 2,
-                    child: ElevatedButton(
-                      onPressed: () => Get.to(() => NumberVerify()),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: style.colors['main1'],
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+                  right: 10,
+                  top: 2,
+                  child: ElevatedButton(
+                    onPressed: () => Get.to(() => NumberVerify()),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: style.colors['main1'],
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Text('인증'),
-                    )),
+                    ),
+                    child: Text('인증'),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 15),
