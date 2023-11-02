@@ -11,4 +11,6 @@ public interface ImageRepository {
     List<Image> findByTargetIdAndType(Long targetId, String type);
 
     Image delete(Long id);
+
+    Image find(Long id);
 }
