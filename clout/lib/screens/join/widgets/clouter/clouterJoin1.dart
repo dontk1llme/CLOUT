@@ -1,5 +1,5 @@
 import 'package:clout/providers/clouter_register_controller.dart';
-import 'package:clout/screens/join/widgets/clouter/widgets/join_input.dart';
+import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/widgets/input/address_input.dart';
 import 'package:clout/widgets/input/input_elements/widgets/date_input.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class ClouterJoin1State extends State<ClouterJoin1> {
               setState: controller.setName,
             ),
             SizedBox(height: 10),
-            DateInput(setState: controller.setBirthday),
+            DateInput(),
             SizedBox(height: 10),
             Stack(
               children: [

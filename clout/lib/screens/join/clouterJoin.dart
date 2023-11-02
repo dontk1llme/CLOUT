@@ -1,6 +1,5 @@
 import 'package:clout/providers/clouter_register_controller.dart';
 import 'package:clout/providers/image_picker_provider.dart';
-import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/screens/join/widgets/clouter/clouterJoin2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,6 +26,8 @@ class ClouterJoin extends ConsumerStatefulWidget {
 class ClouterJoinState extends ConsumerState<ClouterJoin> {
   int pageNum = 1;
   double percent = 1 / 4;
+
+  final registerController = Get.put(ClouterRegisterController());
 
   void setPageNum(int newPageNum) {
     bool canGoNext = false;
@@ -58,8 +59,6 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
       Fluttertoast.showToast(msg: '모든 항목을 입력해주세요 🤗');
     }
   }
-
-  final registerController = Get.put(ClouterRegisterController());
 
   Future runImageProvider() async {
     final newImages = ref.watch(imagePickerProvider);
@@ -113,7 +112,6 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
   Widget build(BuildContext context) {
     // 회원 가입도중 뒤로 갈 경우 사진을 담아뒀던 state가 만료될 수 있도록 초기화
     ref.invalidate(imagePickerProvider);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: LayoutBuilder(
@@ -136,12 +134,12 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
                               SizedBox(height: 80),
                               Text('가입하고', style: style.textTheme.titleMedium),
                               Row(
-                                children: <Widget>[
-                                  Text('CLOUT',
-                                      style: style.textTheme.titleMedium
-                                          ?.copyWith(
-                                              color: style.colors['main1'])),
-                                  Text('와 함께',
+                                children: [
+                                  Image.asset(
+                                    'assets/images/Clout_Logo.png',
+                                    width: 100,
+                                  ),
+                                  Text(' 와 함께',
                                       style: style.textTheme.titleMedium),
                                 ],
                               ),
