@@ -21,7 +21,7 @@ public class UploadImageProcessor {
         Image image = Image.create(
                 createImageCommand.getTargetId(),
                 originalName,
-                uploadedPath,
+                "https://yangkidsbucket.s3.ap-northeast-2.amazonaws.com/"+uploadedPath,
                 uploadedPath,
                 createImageCommand.getType()
         );

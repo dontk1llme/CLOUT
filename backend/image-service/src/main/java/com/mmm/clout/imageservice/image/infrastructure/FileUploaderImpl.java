@@ -36,22 +36,24 @@ public class FileUploaderImpl implements FileUploader {
 
         File uploadFile = convert(multipartFile)
                 .orElseThrow(IOException::new);
-        LocalDateTime now = LocalDateTime.now();
-        String filename = type+"/targetId"+targetId+"-"+now.toString()+""+multipartFile.getOriginalFilename();
+
+        //난수생성
+        int min = 1;
+        int max = 100000;
+        int random = (int) ((Math.random() * (max - min)) + min);
+
+        String filename = type+"/targetId"+targetId+"-"+random+"-"+multipartFile.getOriginalFilename();
         log.info("S3Uploader_upload_end(MultipartFile): " + uploadFile);
         String uploadPath = upload(uploadFile, filename);
-        return uploadPath;
+        return filename;
     }
 
     @Override
     public boolean delete(String imagePath) {
         log.info("FileUploader_delete_start: "+imagePath);
         if (!"".equals(imagePath) && imagePath != null) {
-            log.info("여긴 오니?");
             boolean isExistObject = amazonS3Client.doesObjectExist(bucket, imagePath);
-            log.info("여긴 오니?2222: "+ isExistObject);
             if (isExistObject) {
-                log.info("여긴 오니?3333: "+ isExistObject);
                 amazonS3Client.deleteObject(bucket, imagePath);
                 log.info("FileUploader_delete_success: "+imagePath);
                 return true;

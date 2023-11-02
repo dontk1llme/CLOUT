@@ -17,7 +17,7 @@ public class DeleteImageProcessor {
     @Transactional
     public boolean execute(Long id) {
         Image image = imageRepository.delete(id);
-        boolean res =  fileUploader.delete(image.getPath());
+        boolean res =  fileUploader.delete(image.getImageName());
         return res;
     }
 }
