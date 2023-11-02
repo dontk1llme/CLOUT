@@ -152,7 +152,12 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  positive ? PayDialog() : Container(),
+                  positive
+                      ? PayDialog(
+                          title: '희망 광고비',
+                          hintText: '희망 광고비 입력',
+                        )
+                      : Container(),
                   SizedBox(height: 10),
                   OfferingitemTextinput(
                     setOfferingItems: controller.setOfferingItems,

@@ -39,7 +39,7 @@ class FollowerContoller extends GetxController {
   }
 
   void setMinimumFollowersString(input) {
-    minimumFollowersString = '${input}명';
+    minimumFollowersString = '${input} 명';
     update();
   }
 }
