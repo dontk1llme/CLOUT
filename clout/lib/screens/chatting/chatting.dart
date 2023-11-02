@@ -38,7 +38,8 @@ class _ChattingState extends State<ChattingPage> {
   void initState() {
     super.initState();
     _channel = WebSocketChannel.connect(
-      Uri.parse('wss://echo.websocket.events'), // url
+      // Uri.parse('wss://echo.websocket.events'), // url
+      Uri.parse('ws://3.35.132.84:8080/clout-websocket'), // url
     );
   }
 
