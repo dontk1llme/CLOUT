@@ -8,4 +8,5 @@ import java.util.List;
 public interface JpaImageRepository extends JpaRepository<Image, Long> {
 
     List<Image> findByTargetIdAndType(Long targetId, String type);
+
 }

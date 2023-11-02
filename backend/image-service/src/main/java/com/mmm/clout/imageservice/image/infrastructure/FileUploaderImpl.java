@@ -44,14 +44,22 @@ public class FileUploaderImpl implements FileUploader {
     }
 
     @Override
-    public void delete(String imagePath) {
+    public boolean delete(String imagePath) {
+        log.info("FileUploader_delete_start: "+imagePath);
         if (!"".equals(imagePath) && imagePath != null) {
+            log.info("여긴 오니?");
             boolean isExistObject = amazonS3Client.doesObjectExist(bucket, imagePath);
-
+            log.info("여긴 오니?2222: "+ isExistObject);
             if (isExistObject) {
+                log.info("여긴 오니?3333: "+ isExistObject);
                 amazonS3Client.deleteObject(bucket, imagePath);
+                log.info("FileUploader_delete_success: "+imagePath);
+                return true;
             }
+        }else{
+            return false;
         }
+        return false;
     }
     @Override
     public ResponseEntity<UrlResource> downloadImage(String originalFilename) {

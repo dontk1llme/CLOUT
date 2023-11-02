@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileUploader {
     public String upload(MultipartFile multipartFile, String type, Long targetId) throws Exception;
 
-    public void delete(String imagePath);
+    public boolean delete(String imagePath);
 
     public ResponseEntity<UrlResource> downloadImage(String originalFilename);
 }

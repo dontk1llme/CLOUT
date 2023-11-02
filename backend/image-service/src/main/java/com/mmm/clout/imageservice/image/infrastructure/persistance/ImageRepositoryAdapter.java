@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,5 +20,14 @@ public class ImageRepositoryAdapter implements ImageRepository {
     @Override
     public List<Image> findByTargetIdAndType(Long targetId, String type) {
         return jpaImageRepository.findByTargetIdAndType(targetId, type);
+    }
+
+    @Override
+    public Image delete(Long id){
+        Image image = jpaImageRepository.findById(id)
+                .orElseThrow(IllegalAccessError::new);
+
+        jpaImageRepository.deleteById(id);
+        return image;
     }
 }
