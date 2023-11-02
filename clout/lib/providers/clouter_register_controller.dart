@@ -1,14 +1,15 @@
 import 'package:clout/providers/address_controller.dart';
+import 'package:clout/providers/date_input_controller.dart';
 import 'package:clout/providers/fee_controller.dart';
 import 'package:clout/providers/follower_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/providers/region_controller.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ClouterRegisterController extends GetxController {
   var name;
   var gender;
-  var birthday;
   var phoneNumber;
   var id;
   var password;
@@ -22,6 +23,7 @@ class ClouterRegisterController extends GetxController {
   final followerController = Get.put(FollowerContoller());
   final feeController = Get.put(FeeController());
   final regionController = Get.put(RegionController());
+  final dateController = Get.put(DateInputController());
 
   setName(input) {
     name = input;
@@ -30,11 +32,6 @@ class ClouterRegisterController extends GetxController {
 
   setGender(input) {
     gender = input;
-    update();
-  }
-
-  setBirthday(input) {
-    birthday = input;
     update();
   }
 
@@ -64,9 +61,21 @@ class ClouterRegisterController extends GetxController {
     print(images);
   }
 
+  setSelection(index) {
+    if (index == 0) {
+      selections = List.generate(12, (index) => false);
+      selections[index] = !selections[index];
+    } else {
+      selections[0] = false;
+      selections[index] = !selections[index];
+    }
+    update();
+  }
+
   canGoSecondPage() {
     if (name != null &&
-        birthday != null &&
+        DateFormat('yyyy.MM.dd').format(dateController.selectedDate) !=
+            DateFormat('yyyy.MM.dd').format(DateTime.now()) &&
         phoneNumber != null &&
         addressController.daumAddress != '주소 검색' &&
         addressController.detailAddress != null) {
@@ -91,26 +100,15 @@ class ClouterRegisterController extends GetxController {
     }
   }
 
-  setSelection(index) {
-    if (index == 0) {
-      selections = List.generate(12, (index) => false);
-      selections[index] = !selections[index];
-    } else {
-      selections[0] = false;
-      selections[index] = !selections[index];
-    }
-    update();
-  }
-
   printAll() {
     print('이름');
     print(name);
     print('생년월일');
-    print(birthday);
+    print(dateController.selectedDate);
     print('휴대폰 번호');
     print(phoneNumber);
     print('주소');
-    print(addressController.finalAddress);
+    print(DateFormat('yyyy.MM.dd').format(dateController.selectedDate));
     print('아이디');
     print(id);
     print('비번');
