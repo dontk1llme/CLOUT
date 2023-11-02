@@ -174,20 +174,17 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
               ],
             ),
             SizedBox(height: 10),
-            FractionallySizedBox(
-              widthFactor: 0.9,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10),
-                  Text(
-                    '활동 대표 사진',
-                    style: style.textTheme.headlineMedium,
-                  ),
-                  SizedBox(height: 10),
-                  ImageWidget(parentImages: controller.images),
-                ],
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 10),
+                Text(
+                  '활동 대표 사진',
+                  style: style.textTheme.headlineMedium,
+                ),
+                SizedBox(height: 10),
+                ImageWidget(parentImages: controller.images),
+              ],
             ),
           ],
         ),

@@ -21,22 +21,45 @@ class ClouterJoin extends ConsumerStatefulWidget {
   const ClouterJoin({super.key});
 
   @override
-  _ClouterJoinState createState() => _ClouterJoinState();
+  ClouterJoinState createState() => ClouterJoinState();
 }
 
-class _ClouterJoinState extends ConsumerState<ClouterJoin> {
+class ClouterJoinState extends ConsumerState<ClouterJoin> {
   int pageNum = 1;
   double percent = 1 / 4;
 
   void setPageNum(int newPageNum) {
-    setState(() {
-      pageNum = newPageNum;
-      if (pageNum != 5) percent = newPageNum / 4;
-    });
+    bool canGoNext = false;
+    switch (newPageNum) {
+      case 2:
+        if (registerController.canGoSecondPage()) {
+          canGoNext = true;
+        }
+        break;
+      case 3:
+        if (registerController.canGoThirdPage() == 0) {
+          Fluttertoast.showToast(msg: '비밀번호 확인이 일치하지 않습니다 😅');
+          return;
+        } else if (registerController.canGoThirdPage() == 1) {
+          canGoNext = true;
+        }
+        break;
+      case 4:
+        canGoNext = true;
+        break;
+    }
+    if (canGoNext) {
+      setState(() {
+        pageNum = newPageNum;
+        if (pageNum != 5) percent = newPageNum / 4;
+      });
+      canGoNext = false;
+    } else {
+      Fluttertoast.showToast(msg: '모든 항목을 입력해주세요 🤗');
+    }
   }
 
-  final registerController =
-      Get.put(ClouterRegisterController(), permanent: true);
+  final registerController = Get.put(ClouterRegisterController());
 
   Future runImageProvider() async {
     final newImages = ref.watch(imagePickerProvider);
@@ -164,17 +187,11 @@ class _ClouterJoinState extends ConsumerState<ClouterJoin> {
                                 if (pageNum != 2) {
                                   setPageNum(pageNum + 1);
                                 } else {
-                                  if (registerController.password ==
-                                      registerController.checkPassword) {
-                                    await runImageProvider();
-                                    setPageNum(pageNum + 1);
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: '비밀번호 확인이 일치하지 않습니다.');
-                                  }
+                                  await runImageProvider();
+                                  setPageNum(pageNum + 1);
                                 }
                               } else {
-                                // registerController.printAll();
+                                registerController.printAll();
                                 showSnackBar();
                                 Get.offNamed('/login');
                               }

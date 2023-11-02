@@ -11,12 +11,14 @@ class JoinInput extends StatefulWidget {
       required this.title,
       required this.label,
       required this.setState,
+      this.index,
       this.obscured});
   final keyboardType;
   final maxLength;
   final title;
   final label;
   final setState;
+  final index;
   final obscured;
 
   @override
@@ -29,8 +31,10 @@ class _JoinInputState extends State<JoinInput> {
     return TextFormField(
       keyboardType: widget.keyboardType,
       maxLength: widget.maxLength,
-      onChanged: (value) => widget.setState(value),
-      obscureText: widget.obscured != null ? widget.obscured : false,
+      onChanged: widget.index == null
+          ? (value) => widget.setState(value)
+          : (value) => widget.setState(widget.index, value),
+      obscureText: widget.obscured ?? false,
       decoration: InputDecoration(
         counterText: '',
         contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
