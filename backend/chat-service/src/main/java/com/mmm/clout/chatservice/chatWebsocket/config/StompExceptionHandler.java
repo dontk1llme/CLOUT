@@ -29,10 +29,6 @@ public class StompExceptionHandler extends StompSubProtocolErrorHandler {
 
         final Throwable exception = converterTrowException(ex);
 
-//        if (exception instanceof UnauthorizedException) {
-//            return handleUnauthorizedException(clientMessage, exception);
-//        }
-
         return super.handleClientMessageProcessingError(clientMessage, ex);
 
     }
@@ -84,13 +80,10 @@ public class StompExceptionHandler extends StompSubProtocolErrorHandler {
         }
     }
 
-    //2
     @Override
     protected Message<byte[]> handleInternal(StompHeaderAccessor errorHeaderAccessor,
                                              byte[] errorPayload, Throwable cause, StompHeaderAccessor clientHeaderAccessor) {
 
         return MessageBuilder.createMessage(errorPayload, errorHeaderAccessor.getMessageHeaders());
-
-//        return super.handleInternal(errorHeaderAccessor, errorPayload, cause, clientHeaderAccessor);
     }
 }
