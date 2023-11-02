@@ -1,3 +1,4 @@
+import 'package:clout/widgets/buttons/filter_button.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -53,20 +54,7 @@ class AdvertiserMycampaign extends StatelessWidget {
                   widthFactor: screenWidth > 400 ? 0.9 : 1,
                   child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 10, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.filter_list, size: 20),
-                                Text('정렬'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      FilterButton(),
                       Align(
                           alignment: Alignment.topCenter,
                           child: Wrap(

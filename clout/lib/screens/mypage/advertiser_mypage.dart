@@ -3,9 +3,6 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // widgets
-import 'package:clout/widgets/common/nametag.dart';
-import 'package:clout/widgets/list/campaign_item_box.dart';
-import 'package:clout/widgets/list/clouter_item_box.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/buttons/small_outlined_button.dart';
@@ -15,9 +12,7 @@ import 'package:clout/screens/point/widgets/my_wallet.dart';
 import 'package:clout/screens/mypage/advertiser_mycampaign.dart';
 import 'package:clout/screens/mypage/advertiser_likedclouters.dart';
 import 'package:clout/screens/mypage/contract_list.dart';
-import 'package:clout/screens/mypage/advertiser_detail.dart';
 import 'package:clout/screens/mypage/widgets/mypage_list.dart';
-import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 
 class AdvertiserMyPage extends StatelessWidget {
   const AdvertiserMyPage({super.key});
