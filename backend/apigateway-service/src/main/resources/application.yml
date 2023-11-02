@@ -46,6 +46,15 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
 #            - AuthorizationHeaderFilter
+        # Image api
+        - id: image-service
+          uri: lb://IMAGE-SERVICE
+          predicates:
+            - Path=/image-service/images/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/image-service/(?<segment>.*), /$\{segment}
+        #            - AuthorizationHeaderFilter
         # swagger 요청
         - id: member-service
           uri: lb://MEMBER-SERVICE
