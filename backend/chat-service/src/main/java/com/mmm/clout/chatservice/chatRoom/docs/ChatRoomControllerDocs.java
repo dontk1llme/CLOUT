@@ -2,6 +2,7 @@ package com.mmm.clout.chatservice.chatRoom.docs;
 
 import com.mmm.clout.chatservice.chatRoom.dto.request.ChatRoomRequest;
 import com.mmm.clout.chatservice.chatRoom.dto.response.ChatRoomDetailResponse;
+import com.mmm.clout.chatservice.chatRoom.dto.response.ChatRoomListResponse;
 import com.mmm.clout.chatservice.chatRoom.dto.response.CreateChatRoomResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Tag(name = "채팅방 CRUD", description = "채팅방 생성, 조회를 제공하는 api")
@@ -39,4 +41,29 @@ public interface ChatRoomControllerDocs {
     )
     public ResponseEntity<ChatRoomDetailResponse> enterRoom(
         @PathVariable("chatRoomId") Long roomId);
+
+
+    @Operation(summary = "광고주 채팅방 목록",
+        responses =
+        @ApiResponse(responseCode = "200", description = "광고주 채팅방 목록 목록 제공",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation= ChatRoomListResponse.class))
+        )
+    )
+    public ResponseEntity<ChatRoomListResponse> getAdvertiserChatRoom(
+        @RequestParam Long advertiserId
+    );
+
+    @Operation(summary = "클라우터 채팅방 목록",
+        responses =
+        @ApiResponse(responseCode = "200", description = "클라우터 채팅방 목록 제공",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation= ChatRoomListResponse.class))
+        )
+    )
+    public ResponseEntity<ChatRoomListResponse> getClouterChatRoom(
+        @RequestParam Long clouterId
+    );
 }

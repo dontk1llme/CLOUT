@@ -6,11 +6,10 @@ import com.mmm.clout.chatservice.chatWebsocket.ChatHistory;
 import java.time.LocalDateTime;
 
 public record ChatHistoryResponse(
-    String chatIdx,
-        String sender,
-        String senderUuid,
+        String chatIdx,
+        String senderName,
+        String senderId,
         String msg,
-        String imgUrl,
         LocalDateTime dateTime
 ) {
 
@@ -20,7 +19,6 @@ public record ChatHistoryResponse(
                 entity.getSenderName(),
                 entity.getSenderUuid(),
                 entity.getMsg(),
-                entity.getImgUrl(),
                 entity.getCreatedAt()
         );
     }
