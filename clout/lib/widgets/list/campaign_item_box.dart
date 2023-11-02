@@ -56,6 +56,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
         onTap: () => Get.toNamed('/campaignDetail', arguments: 1),
         child: Container(
           width: 170,
+          height: 300,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: style.colors['white'],
@@ -69,7 +70,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 alignment: Alignment.topRight,
                 children: [
                   Image.asset(
-                    'assets/images/itemImage.jpg',
+                    widget.firstImg,
                     width: 170,
                     height: 140,
                     fit: BoxFit.cover,
