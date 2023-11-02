@@ -13,11 +13,15 @@ spring:
     username: root
     password: 1234
   jpa:
-#    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
+    open-in-view: false
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   data:
     redis:
       host: localhost
