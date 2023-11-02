@@ -1,3 +1,6 @@
+server:
+  port: 0
+
 spring:
   config:
     import: secret/application-secret.yml
@@ -14,6 +17,16 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
 
 logging.level:
   root: info
