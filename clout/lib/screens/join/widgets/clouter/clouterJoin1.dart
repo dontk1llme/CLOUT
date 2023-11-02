@@ -1,11 +1,8 @@
 import 'package:clout/providers/clouter_register_controller.dart';
 import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/clouter/widgets/join_input.dart';
-<<<<<<< HEAD
 import 'package:clout/widgets/input/input_elements/widgets/date_input.dart';
-=======
 import 'package:clout/widgets/address/library_daum_postcode_screen.dart';
->>>>>>> f58e0615085787e6ad1be1213406992962494661
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:clout/style.dart' as style;
@@ -87,47 +84,48 @@ class ClouterJoin1State extends State<ClouterJoin1> {
               textAlign: TextAlign.left,
             ),
             Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-            child: GestureDetector(
-              onTap: () async {
-                HapticFeedback.mediumImpact();
-                final value = await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LibraryDaumPostcodeScreen(),
-                  ),
-                );
-                if (value != null) {
-                  print(value); // 테스트용 로그
-                  final DataModel dataModel = value;
-                  setState(() {
-                    _dataModel = dataModel;
-                    daumAddress = dataModel.address ?? '';
-                    controller.setAddress(daumAddress);
-                  });
-                }
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+              child: GestureDetector(
+                onTap: () async {
+                  HapticFeedback.mediumImpact();
+                  final value = await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const LibraryDaumPostcodeScreen(),
+                    ),
+                  );
+                  if (value != null) {
+                    print(value); // 테스트용 로그
+                    final DataModel dataModel = value;
+                    setState(() {
+                      _dataModel = dataModel;
+                      daumAddress = dataModel.address ?? '';
+                      controller.setAddress(daumAddress);
+                    });
+                  }
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
                       width: 1, // 보더의 두께 설정
                       color: Colors.grey, // 보더의 색상 설정
                     ),
-                ),
-                child:  Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
                       '   ' + daumAddress,
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,),
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
             SizedBox(height: 10),
             JoinInput(
               keyboardType: TextInputType.text,
@@ -135,7 +133,7 @@ class ClouterJoin1State extends State<ClouterJoin1> {
               title: '상세 주소 입력',
               label: '상세 주소',
               // setState: controller.setAddress,
-              setState: (input){
+              setState: (input) {
                 detailAddress = input;
                 if (daumAddress != null) {
                   final newAddress = daumAddress + ' ' + detailAddress;
@@ -147,11 +145,6 @@ class ClouterJoin1State extends State<ClouterJoin1> {
                 }
               },
             ),
-            
-
-            
-
-
           ],
         ),
       ),
