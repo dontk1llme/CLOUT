@@ -2,8 +2,7 @@ import 'package:get/get.dart';
 
 class FollowerContoller extends GetxController {
   var minimumFollowers;
-  var minimumFollowersString = '0';
-  
+  var minimumFollowersString = '0 명';
 
   numbering(value, division) {
     return (value / division).floor();
@@ -40,8 +39,7 @@ class FollowerContoller extends GetxController {
   }
 
   void setMinimumFollowersString(input) {
-    minimumFollowersString = input;
+    minimumFollowersString = '${input}명';
     update();
   }
-
 }

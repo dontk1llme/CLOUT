@@ -124,8 +124,12 @@ class CampaignDetail extends StatelessWidget {
                     bottom: 10,
                     left: 10,
                     right: 10,
-                    child:
-                        SizedBox(height: 50, child: BigButton(title: '신청하기')))
+                    child: SizedBox(
+                        height: 50,
+                        child: BigButton(
+                          title: '신청하기',
+                          function: () => Get.toNamed('/home'),
+                        )))
                 : Positioned(
                     bottom: 10,
                     left: 10,
