@@ -1,6 +1,6 @@
-import 'package:clout/providers/platform_input_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/screens/join/widgets/clouter/widgets/join_input.dart';
+import 'package:clout/widgets/search_detail_bottom_sheet/widgets/followercount_state_dialog.dart';
 import 'package:flutter/material.dart'
     hide BoxDecoration, BoxShadow; //  기존 BoxShadow 속성을 가려줘야 함
 import 'package:get/get.dart';
@@ -11,49 +11,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 class InputCustomdrop extends StatelessWidget {
   InputCustomdrop({super.key, this.index});
   final index;
-  final platformInputController = Get.put(PlatformInputController());
-
-  setId(input) {
-    switch (index) {
-      case 0:
-        platformInputController.setInstagramId(input);
-        break;
-      case 1:
-        platformInputController.setTiktokId(input);
-        break;
-      case 2:
-        platformInputController.setInstagramId(input);
-        break;
-    }
-  }
-
-  setLink(input) {
-    switch (index) {
-      case 0:
-        platformInputController.setInstagramLink(input);
-        break;
-      case 1:
-        platformInputController.setTiktokLink(input);
-        break;
-      case 2:
-        platformInputController.setYoutubeLink(input);
-        break;
-    }
-  }
-
-  setFollower(input) {
-    switch (index) {
-      case 0:
-        platformInputController.setInstagramFollowerCount(input);
-        break;
-      case 1:
-        platformInputController.setTiktokFollowerCount(input);
-        break;
-      case 2:
-        platformInputController.setYoutubeFollowerCount(input);
-        break;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,26 +48,44 @@ class InputCustomdrop extends StatelessWidget {
                           reverse: true,
                           physics: NeverScrollableScrollPhysics(),
                           children: [
-                            JoinInput(
-                                keyboardType: TextInputType.text,
-                                maxLength: 30,
-                                title: '팔로워 수 / 구독자 수 입력',
-                                label: '팔로워 수 / 구독자 수',
-                                setState: setId),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    index != 2 ? '팔로워 수' : '구독자 수',
+                                    style:
+                                        style.textTheme.headlineSmall?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.2,
+                                    ),
+                                  ),
+                                ),
+                                FollowercountStateDialog(
+                                  title: index != 2 ? '팔로워 수' : '구독자 수',
+                                  hintText: '팔로워/구독자 수 입력',
+                                ),
+                              ],
+                            ),
                             SizedBox(height: 10),
                             JoinInput(
                                 keyboardType: TextInputType.text,
                                 maxLength: 30,
-                                title: '채널 링크 입력',
-                                label: '채널 링크',
-                                setState: setLink),
+                                title: index != 2 ? '계정 링크 입력' : '채널 링크 입력',
+                                label: index != 2 ? '계정 링크' : '채널 링크',
+                                index: index,
+                                setState: controller.setLink),
                             SizedBox(height: 10),
                             JoinInput(
-                                keyboardType: TextInputType.text,
-                                maxLength: 30,
-                                title: '계정명/채널명 입력',
-                                label: '계정명/채널명',
-                                setState: setId),
+                              keyboardType: TextInputType.text,
+                              maxLength: 30,
+                              title: index != 2 ? '계정명 입력' : '채널명 입력',
+                              label: index != 2 ? '계정명' : '채널명',
+                              index: index,
+                              setState: controller.setId,
+                            ),
                             SizedBox(height: 10),
                             Text(
                               '정보 입력',
