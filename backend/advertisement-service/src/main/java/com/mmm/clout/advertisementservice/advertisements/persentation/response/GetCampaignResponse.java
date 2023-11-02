@@ -2,7 +2,10 @@ package com.mmm.clout.advertisementservice.advertisements.persentation.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
+import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
+import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,7 +21,7 @@ public class GetCampaignResponse {
 
     private Long campaignId;
 
-    private List<String> adPlatformList;
+    private List<AdPlatform> adPlatformList;
 
     private Long price;
 
@@ -54,6 +57,31 @@ public class GetCampaignResponse {
 
     private AdvertiserInfo advertiserInfo;
 
+    public static GetCampaignResponse from(CampaignReader reader) {
+        Campaign campaign = reader.getCampaign();
+        AdvertiserInfo advertiser = reader.getAdvertiserInfo();
+        return new GetCampaignResponse(
+            campaign.getId(),
+            campaign.getAdPlatformList(),
+            campaign.getPrice(),
+            campaign.getDetails(),
+            campaign.getDeletedAt(),
+            campaign.getAdCategory(),
+            campaign.getIsPriceChangeable(),
+            campaign.getIsDeliveryRequired(),
+            campaign.getNumberOfRecruiter(),
+            campaign.getNumberOfApplicants(),
+            campaign.getNumberOfSelectedMembers(),
+            campaign.getOfferingDetails(),
+            campaign.getSellingLink(),
+            campaign.getApplyStartDate(),
+            campaign.getApplyEndDate(),
+            campaign.getMinClouterAge(),
+            campaign.getMaxClouterAge(),
+            campaign.getMinFollower(),
+            advertiser
+        );
+    }
 }
 
 /*
