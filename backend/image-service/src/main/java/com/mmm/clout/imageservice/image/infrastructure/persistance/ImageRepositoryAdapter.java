@@ -30,4 +30,12 @@ public class ImageRepositoryAdapter implements ImageRepository {
         jpaImageRepository.deleteById(id);
         return image;
     }
+
+    @Override
+    public Image find(Long id){
+        Image image = jpaImageRepository.findById(id)
+                .orElseThrow(IllegalAccessError::new);
+
+        return image;
+    }
 }

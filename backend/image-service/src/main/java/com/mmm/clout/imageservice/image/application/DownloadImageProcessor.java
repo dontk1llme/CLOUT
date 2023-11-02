@@ -16,7 +16,7 @@ public class DownloadImageProcessor {
     private final FileUploader fileUploader;
     @Transactional
     public ResponseEntity<UrlResource> execute(Long id) {
-        Image image = imageRepository.delete(id);
+        Image image = imageRepository.find(id);
         ResponseEntity<UrlResource> res =  fileUploader.downloadImage(image.getImageName());
         return res;
     }
