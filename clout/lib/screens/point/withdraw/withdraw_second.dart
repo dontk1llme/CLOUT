@@ -3,6 +3,8 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:brasil_fields/brasil_fields.dart';
+import 'package:flutter/services.dart';
 
 // widgets
 import 'package:clout/widgets/header/header.dart';
@@ -11,6 +13,7 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
 import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 
 class WithdrawSecond extends StatefulWidget {
   const WithdrawSecond({super.key, this.bank, this.account});
@@ -30,10 +33,12 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
   var f = NumberFormat('###,###,###,###');
 
   Future<int> fetchUserPoints() async {
-    // 여기에서 실제 API 호출 또는 하드 코딩된 값을 반환
+    // 여기에서 실제 API 호출
 
     return 130000; // 임시로 130,000을 반환
   }
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -43,8 +48,6 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
     fetchUserPoints().then((points) {
       setState(() {
         userPoints = points;
-        // TextFormField에 보유 포인트 설정하기
-        pointController.text = userPoints.toString();
       });
     });
   }
@@ -221,6 +224,13 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
     pointController.addListener(() {
       try {
         amount = double.parse(pointController.text);
+        if (amount < 100) {
+          // 입력한 금액이 100 미만일 때
+          pointController.text = '100';
+          amount = 100;
+          // 사용자에게 메시지 표시
+          Fluttertoast.showToast(msg: '출금 가능 최소 금액은 100원입니다.');
+        }
         if (amount > userPoints) {
           // 입력한 금액이 보유 포인트보다 크면 보유 포인트로 바꿔주기
           pointController.text = userPoints.toString();
@@ -261,6 +271,9 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
                 TextFormField(
                   controller: pointController,
                   keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   decoration: InputDecoration(
                     labelText: '보낼금액 (원)',
                     labelStyle: TextStyle(
@@ -284,10 +297,14 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
           width: double.infinity,
           height: 50,
           child: BigButton(
-            title: '출금',
-            function: () => _showModal(),
-            // destination: "withdrawcomplete",
-          ),
+              title: '출금',
+              function: () {
+                if (pointController.text.isEmpty  ) {
+                  Fluttertoast.showToast(msg: '금액을 입력해주세요.');
+                } else {
+                  _showModal();
+                }
+              }),
         ),
       ),
     );
