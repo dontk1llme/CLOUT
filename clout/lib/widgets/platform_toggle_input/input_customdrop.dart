@@ -57,7 +57,6 @@ class InputCustomdrop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(PlatformSelectController());
     return GetBuilder<PlatformSelectController>(
         builder: (controller) => AnimatedContainer(
               duration: Duration(milliseconds: 500),

@@ -28,15 +28,12 @@ class RecruitInput extends StatelessWidget {
                       );
                     })),
                 child: Text(
-                  recruitCount.toString(),
+                  '${recruitCount.toString()} 명',
                   style: style.textTheme.titleMedium?.copyWith(
                       color: style.colors['main1'],
                       fontWeight: FontWeight.bold,
                       height: 1.1),
                 )),
-            DataTitle(
-              text: '명',
-            )
           ],
         ));
   }

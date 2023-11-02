@@ -12,7 +12,6 @@ class PlatformToggleInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final platformInputController = Get.put(PlatformSelectController());
     return GetBuilder<PlatformSelectController>(
       builder: (controller) => Stack(
         children: [
