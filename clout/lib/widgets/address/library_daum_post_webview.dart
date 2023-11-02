@@ -17,7 +17,7 @@ class LibraryDaumPostcodeScreen extends StatelessWidget {
             headerTitle: '주소 검색',
           ),),
       body: DaumPostcodeSearch(
-        webPageTitle: "다음 주소 검색",
+        webPageTitle: "주소 검색",
         initialOption: InAppWebViewGroupOptions(),
         onConsoleMessage: ((controller, consoleMessage) {}),
         onLoadError: ((controller, url, code, message) {}),

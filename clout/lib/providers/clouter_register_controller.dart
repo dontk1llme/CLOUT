@@ -5,7 +5,7 @@ class ClouterRegisterController extends GetxController {
   var gender;
   var birthday;
   var phoneNumber;
-  var address;
+  String address = '' ;
 
   setName(input) {
     name = input;
@@ -28,7 +28,6 @@ class ClouterRegisterController extends GetxController {
   }
 
   setAddress(input) {
-    address = input();
+    address = input;
     update();
-  }
-}
+}}
