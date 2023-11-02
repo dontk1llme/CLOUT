@@ -124,6 +124,7 @@ class _MyWalletState extends State<MyWallet> {
                       flex: 1,
                       child: BigButton(
                         title: '충전하기',
+                        function: () {},
                       )),
                 ],
               )

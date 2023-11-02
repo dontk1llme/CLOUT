@@ -71,12 +71,7 @@ class _ReviewRegisterState extends State<ReviewRegister> {
       ),
       bottomSheet: Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-        child: BigButton(
-          title: '완료',
-          destination: 'reviewcomplete',
-          notJustRoute: true,
-          function: doRegister,
-        ),
+        child: BigButton(title: '완료', function: doRegister),
       ),
     );
   }

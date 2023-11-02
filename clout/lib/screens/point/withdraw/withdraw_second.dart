@@ -201,7 +201,7 @@ class _WithdrawSecondState extends State<WithdrawSecond> {
                     height: 50,
                     child: BigButton(
                       title: '출금하기',
-                      destination: "withdrawcomplete",
+                      function: Get.toNamed("/withdrawcomplete"),
                     ),
                   ),
                 ],

@@ -21,28 +21,6 @@ class ClouterJoin3 extends StatefulWidget {
 class _ClouterJoin3State extends State<ClouterJoin3> {
   double percent = 0.66; // 초기값 설정
 
-  var link;
-  var channelName;
-  var follower;
-
-  setLink(input) {
-    setState(() {
-      link = input;
-    });
-  }
-
-  setChannelName(input) {
-    setState(() {
-      channelName = input;
-    });
-  }
-
-  setFollower(input) {
-    setState(() {
-      follower = input;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
