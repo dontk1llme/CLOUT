@@ -8,13 +8,13 @@ spring:
   application:
     name: chat-service
   datasource:
-    url: jdbc:mariadb://localhost:3306/chat
+    url: jdbc:mariadb://3.35.132.84:3306/chat
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: 1234
   data:
     mongodb:
-      uri: mongodb://test:1234@localhost:27017/test
+      uri: mongodb://test:1234@3.35.132.84:27017/test
   jpa:
     open-in-view: false
     generate-ddl: true
