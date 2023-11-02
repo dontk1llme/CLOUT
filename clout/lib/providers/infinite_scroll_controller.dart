@@ -1,21 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+class Campaign {
+  int campaignId = 1;
+  String category = '음식';
+  String productName = '못골정미소 백미 5kg';
+  int pay = 1000;
+  String campaignSubject = '못골영농조합법인';
+  int applicantCount = 2;
+  int recruitCount = 5;
+  List<String> selectedPlatform = [
+    "YouTube",
+    // "Instagram",
+    "TikTok",
+  ];
+  int starRating = 20;
+  String firstImg = 'assets/images/itemImage.jpg';
+}
+
+Campaign campaign = Campaign();
+
 class InfiniteScrollController extends GetxController {
   var scrollController = ScrollController().obs;
 
-  var data = <int>[].obs;
-  var isLoading = false.obs;
-  var hasMore = false.obs;
+  int pageSize = 20;
+  List<Campaign> data = [campaign];
+  var isLoading = false;
+  var hasMore = false;
 
   @override
   void onInit() {
     _getData();
 
-    this.scrollController.value.addListener(() {
-      if (this.scrollController.value.position.pixels ==
-              this.scrollController.value.position.maxScrollExtent &&
-          this.hasMore.value) {
+    scrollController.value.addListener(() {
+      if (scrollController.value.position.pixels ==
+          scrollController.value.position.maxScrollExtent) {
         _getData();
       }
     });
@@ -24,24 +43,45 @@ class InfiniteScrollController extends GetxController {
   }
 
   _getData() async {
-    isLoading.value = true;
+    isLoading = true;
 
     await Future.delayed(Duration(seconds: 2));
 
     int offset = data.length;
-    var appendData = List<int>.generate(10, (i) => i + 1 + offset);
+    // 캠페인 추가하는 통신(아니면 다른 정3보) 여기에 작성해야될듯
+    var appendData = List<Campaign>.generate(20, (i) {
+      return Campaign()
+        ..campaignId = i + 1 + offset
+        ..category = '음식'
+        ..productName = '못골정미소 백미 5kg'
+        ..pay = 1000
+        ..campaignSubject = '못골영농조합법인'
+        ..applicantCount = 2
+        ..recruitCount = 5
+        ..selectedPlatform = [
+          "YouTube",
+          // "Instagram",
+          "TikTok",
+        ]
+        ..starRating = 20
+        ..firstImg = 'assets/images/itemImage.jpg';
+    });
     data.addAll(appendData);
 
-    isLoading.value = false;
-    hasMore.value = data.length < 30;
+    print(data.length);
+
+    isLoading = false;
+    hasMore = data.length < 20;
+    update();
   }
 
   reload() async {
-    isLoading.value = true;
+    isLoading = true;
     data.clear();
 
     await Future.delayed(Duration(seconds: 2));
 
     _getData();
+    update();
   }
 }
