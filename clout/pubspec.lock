@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  brasil_fields:
+    dependency: "direct main"
+    description:
+      name: brasil_fields
+      sha256: "765f59e4e22fbfbc10d59d0208d369bad611c714419093ad14668a41863e49a8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.14.0"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -129,6 +137,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  currency_text_input_formatter:
+    dependency: "direct main"
+    description:
+      name: currency_text_input_formatter
+      sha256: "5d8db755ccde76817f6f5fb33e65304d7b1db442e1ccff079fe235584c6b7d5a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.10"
+  daum_postcode_search:
+    dependency: "direct main"
+    description:
+      name: daum_postcode_search
+      sha256: "4c160305712164e18b03fd9d02abd67049f625d4454551da7eee658085436645"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   dropdown_button2:
     dependency: "direct main"
     description:
@@ -198,6 +222,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0+1"
+  flutter_inappwebview:
+    dependency: "direct main"
+    description:
+      name: flutter_inappwebview
+      sha256: d198297060d116b94048301ee6749cd2e7d03c1f2689783f52d210a6b7aba350
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.8.0"
   flutter_inset_box_shadow:
     dependency: "direct main"
     description:
@@ -238,6 +270,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.4"
+  flutter_staggered_grid_view:
+    dependency: transitive
+    description:
+      name: flutter_staggered_grid_view
+      sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   flutter_svg:
     dependency: transitive
     description:
@@ -384,6 +424,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  infinite_scroll_pagination:
+    dependency: "direct main"
+    description:
+      name: infinite_scroll_pagination
+      sha256: b68bce20752fcf36c7739e60de4175494f74e99e9a69b4dd2fe3a1dd07a7f16a
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   intl:
     dependency: "direct main"
     description:
@@ -645,6 +693,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliver_tools:
+    dependency: transitive
+    description:
+      name: sliver_tools
+      sha256: eae28220badfb9d0559207badcbbc9ad5331aac829a88cb0964d330d2a4636a6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.12"
   source_span:
     dependency: transitive
     description:

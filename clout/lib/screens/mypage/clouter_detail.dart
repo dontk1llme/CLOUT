@@ -1,13 +1,10 @@
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:clout/screens/mypage/widgets/selected_category.dart';
-import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/platform_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
-import 'package:clout/screens/mypage/widgets/content_text.dart';
-import 'package:clout/screens/mypage/widgets/gray_title.dart';
 import 'package:clout/screens/mypage/widgets/info_item_box.dart';
 import 'package:clout/screens/mypage/widgets/update_button.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
