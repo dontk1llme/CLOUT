@@ -6,10 +6,9 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 class DateInput extends StatelessWidget {
-  DateInput({super.key, this.setState});
-
-  final setState;
-  final dateInputController = Get.put(DateInputController());
+  DateInput({
+    super.key,
+  });
 
   showDatePickerDialog() {
     Get.defaultDialog(
@@ -32,23 +31,22 @@ class DateInput extends StatelessWidget {
           ),
         ),
       ],
-      content: SizedBox(
-        height: 250,
-        width: 300,
-        child: SfDateRangePicker(
-          onSelectionChanged: (value) {
-            dateInputController.setSelectedDate(value);
-            setState(value);
-          },
-          selectionMode: DateRangePickerSelectionMode.single,
-          todayHighlightColor: style.colors['main1'],
-          headerStyle: DateRangePickerHeaderStyle(
-              textStyle: style.textTheme.headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.w500)),
-          view: DateRangePickerView.decade,
-          selectionColor: style.colors['main1'],
-          initialSelectedDate: dateInputController.selectedDate,
-          showNavigationArrow: true,
+      content: GetBuilder<DateInputController>(
+        builder: (controller) => SizedBox(
+          height: 250,
+          width: 300,
+          child: SfDateRangePicker(
+            onSelectionChanged: (value) => controller.setSelectedDate(value),
+            selectionMode: DateRangePickerSelectionMode.single,
+            todayHighlightColor: style.colors['main1'],
+            headerStyle: DateRangePickerHeaderStyle(
+                textStyle: style.textTheme.headlineSmall
+                    ?.copyWith(fontWeight: FontWeight.w500)),
+            view: DateRangePickerView.decade,
+            selectionColor: style.colors['main1'],
+            initialSelectedDate: controller.selectedDate,
+            showNavigationArrow: true,
+          ),
         ),
       ),
     );
@@ -56,7 +54,6 @@ class DateInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(DateInputController());
     return GetBuilder<DateInputController>(
       builder: (controller) => OutlinedButton(
         onPressed: showDatePickerDialog,
