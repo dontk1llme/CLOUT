@@ -7,6 +7,7 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.request.Cr
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.EndedCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampaignAndAdvertiserResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampainListByAdvertiserResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetTop10CampainListResponse;
@@ -121,4 +122,20 @@ public class AdvertisementController implements AdvertisementControllerDocs {
             );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    /**
+     * 캠페인 모집 종료
+     * TODO 배치로 종료된 광고 종료 설정하기
+     * 전체 조회 / 탑텐에서만 안보임
+     */
+    @PostMapping("/{advertisementId}/end")
+    public ResponseEntity<EndedCampaignResponse> endCampaign(
+        @PathVariable Long advertisementId
+    ) {
+        EndedCampaignResponse result =
+            EndedCampaignResponse.from(advertisementFacade.end(advertisementId));
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }

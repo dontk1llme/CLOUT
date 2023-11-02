@@ -57,6 +57,9 @@ public class Campaign extends Advertisement {
 
     private Integer minFollower; // 최소 팔로워 수
 
+    @Column(name = "is_ended")
+    private Boolean isEnded; // 모집 종료 여부
+
     @ElementCollection(targetClass = Region.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "advertisement_region", joinColumns = @JoinColumn(name = "advertisement_id"))
     @Enumerated(EnumType.STRING)
@@ -123,6 +126,7 @@ public class Campaign extends Advertisement {
         this.applyStartDate = LocalDate.now();
         this.applyEndDate = this.applyStartDate.plusMonths(1);
         this.regionList = regionList;
+        this.isEnded = false;
     }
 
     public static Campaign create(
@@ -200,4 +204,8 @@ public class Campaign extends Advertisement {
         return super.getAdvertiserId();
     }
 
+    public void end() {
+        this.applyEndDate = LocalDate.now();
+        this.isEnded = true;
+    }
 }
