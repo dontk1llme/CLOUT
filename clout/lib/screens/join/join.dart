@@ -2,7 +2,7 @@
 import 'package:clout/screens/join/widgets/big_button.dart';
 
 //pages
-import 'package:clout/screens/join/advertiserJoin.dart';
+import 'package:clout/screens/join/advertiser_join.dart';
 import 'package:clout/screens/join/clouterJoin.dart';
 
 //global
@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 
 class Join extends StatelessWidget {
   const Join({super.key});
-
 
   @override
   Widget build(BuildContext context) {

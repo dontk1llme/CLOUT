@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
                             width: 100,
                           ),
                           TitleText(
-                            text: '와 함께',
+                            text: ' 와 함께',
                           )
                         ],
                       ),

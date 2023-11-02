@@ -1,5 +1,5 @@
 import 'package:clout/providers/platform_select_controller.dart';
-import 'package:clout/screens/join/widgets/clouter/widgets/join_input.dart';
+import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/widgets/search_detail_bottom_sheet/widgets/followercount_state_dialog.dart';
 import 'package:flutter/material.dart'
     hide BoxDecoration, BoxShadow; //  기존 BoxShadow 속성을 가려줘야 함
