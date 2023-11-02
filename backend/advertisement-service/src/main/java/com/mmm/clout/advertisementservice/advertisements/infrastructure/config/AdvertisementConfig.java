@@ -8,6 +8,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.GetCampaign
 import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.UpdateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
+import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -72,8 +73,9 @@ public class AdvertisementConfig {
 
     @Bean
     public EndCampaignProcessor endCampaignProcessor(
-        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
+        ApplyRepository applyRepository
     ) {
-        return new EndCampaignProcessor(campaignRepository);
+        return new EndCampaignProcessor(campaignRepository, applyRepository);
     }
 }
