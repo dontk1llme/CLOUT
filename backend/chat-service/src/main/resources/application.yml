@@ -16,7 +16,7 @@ spring:
     mongodb:
       uri: mongodb://test:1234@localhost:27017/test
   jpa:
-    #    open-in-view: true
+    open-in-view: false
     generate-ddl: true
     show-sql: true
     hibernate:

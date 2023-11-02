@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class ChatRoomDetailResponse {
+public class ChatRoomResponse {
 
     private Long chatRoomId;
 
@@ -19,10 +19,8 @@ public class ChatRoomDetailResponse {
 
     private Long guestId;
 
-    private List<ChatHistoryResponse> chatHistories;
-
-    public static ChatRoomDetailResponse of(ChatRoom room) {
-        ChatRoomDetailResponse newRoom = ChatRoomDetailResponse.builder()
+    public static ChatRoomResponse of(ChatRoom room) {
+        ChatRoomResponse newRoom = ChatRoomResponse.builder()
             .chatRoomId(room.getId())
             .advertisementId(room.getAdvertisementId())
             .hostId(room.getHostId())
