@@ -1,5 +1,6 @@
 package com.mmm.clout.imageservice.image.infrastructure.config;
 
+import com.mmm.clout.imageservice.image.application.DeleteImageProcessor;
 import com.mmm.clout.imageservice.image.application.FindImageProcessor;
 import com.mmm.clout.imageservice.image.application.UploadImageProcessor;
 import com.mmm.clout.imageservice.image.domain.FileUploader;
@@ -17,5 +18,10 @@ public class ImageConfig {
     @Bean
     public FindImageProcessor findImageProcessor(ImageRepository imageRepository) {
         return new FindImageProcessor(imageRepository);
+    }
+
+    @Bean
+    public DeleteImageProcessor deleteImageProcessor(ImageRepository imageRepository, FileUploader fileUploader){
+        return new DeleteImageProcessor(imageRepository, fileUploader);
     }
 }

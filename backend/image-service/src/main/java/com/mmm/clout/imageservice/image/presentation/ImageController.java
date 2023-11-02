@@ -74,5 +74,23 @@ public class ImageController implements ImageControllerDocs {
             throw new NullPointerException();
         }
     }
+    /**
+     * 이미지 삭제를 위한 API
+     *
+     * @param id : img Id
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteImage(@RequestParam Long id) {
 
+        log.info("ImageController_deleteImage_start: " + id);
+
+        boolean isDeleted = imageFacade.delete(id);
+
+        if (isDeleted) { // 삭제 성공하면 조회 결과 return
+            log.info("ImageController_deleteImage_end: ");
+            return new ResponseEntity<>(isDeleted, HttpStatus.ACCEPTED);
+        } else {    // 조회 실패하면 Exception
+            throw new NullPointerException();
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.mmm.clout.imageservice.image.application.facade;
 
+import com.mmm.clout.imageservice.image.application.DeleteImageProcessor;
 import com.mmm.clout.imageservice.image.application.FindImageProcessor;
 import com.mmm.clout.imageservice.image.application.UploadImageProcessor;
 import com.mmm.clout.imageservice.image.application.command.CreateImageCommand;
@@ -18,11 +19,17 @@ public class ImageFacade {
 
     private final FindImageProcessor findImageProcessor;
 
+    private final DeleteImageProcessor deleteImageProcessor;
+
     public Image create(CreateImageCommand createImageCommand, MultipartFile multipartFile) throws Exception {
         return uploadImageProcessor.execute(createImageCommand, multipartFile);
     }
 
     public List<Image> find(Long targetId, String type){
         return findImageProcessor.execute(targetId, type);
+    }
+
+    public Boolean delete(Long id){
+        return deleteImageProcessor.execute(id);
     }
 }

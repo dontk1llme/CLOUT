@@ -9,4 +9,6 @@ public interface ImageRepository {
     Image save(Image image);
 
     List<Image> findByTargetIdAndType(Long targetId, String type);
+
+    Image delete(Long id);
 }
