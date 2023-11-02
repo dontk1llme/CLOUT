@@ -19,7 +19,7 @@ class Sns3SelectBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(PlatformSelectController(), permanent: true);
+    // Get.put(PlatformSelectController(), permanent: true);
     return GetBuilder<PlatformSelectController>(
         builder: (controller) => Container(
               decoration: BoxDecoration(

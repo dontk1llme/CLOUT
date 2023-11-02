@@ -113,6 +113,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                       flex: 1,
                       child: BigButton(
                         title: '채택하기',
+                        function: () {},
                       )),
                 ],
               )

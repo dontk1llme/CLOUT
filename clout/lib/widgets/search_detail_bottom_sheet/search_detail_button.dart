@@ -101,7 +101,7 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
                       height: 50,
                       child: BigButton(
                         title: '검색',
-                        destination: '/campaignlist',
+                        function: () => Get.toNamed('/campaignList'),
                       ),
                     ),
                   )

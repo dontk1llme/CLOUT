@@ -3,33 +3,40 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
-class JoinInput extends StatelessWidget {
-  const JoinInput(
+class JoinInput extends StatefulWidget {
+  JoinInput(
       {super.key,
       required this.keyboardType,
       required this.maxLength,
       required this.title,
       required this.label,
-      required this.setState});
-
+      required this.setState,
+      this.obscured});
   final keyboardType;
   final maxLength;
   final title;
   final label;
   final setState;
+  final obscured;
 
+  @override
+  State<JoinInput> createState() => _JoinInputState();
+}
+
+class _JoinInputState extends State<JoinInput> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: keyboardType,
-      maxLength: maxLength,
-      onChanged: (value) => setState(value),
+      keyboardType: widget.keyboardType,
+      maxLength: widget.maxLength,
+      onChanged: (value) => widget.setState(value),
+      obscureText: widget.obscured != null ? widget.obscured : false,
       decoration: InputDecoration(
         counterText: '',
         contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-        hintText: title,
-        labelText: label,
+        hintText: widget.title,
+        labelText: widget.label,
         floatingLabelStyle: TextStyle(color: style.colors['main1']),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
