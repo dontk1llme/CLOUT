@@ -2,6 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.infrastructure.config;
 
 import com.mmm.clout.advertisementservice.advertisements.application.CreateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.DeleteCampaignProcessor;
+import com.mmm.clout.advertisementservice.advertisements.application.EndCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByAdvertiser;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
@@ -37,7 +38,7 @@ public class AdvertisementConfig {
     }
 
     @Bean
-    GetCampaignProcessor getCampaignProcessor(
+    public GetCampaignProcessor getCampaignProcessor(
         @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
         MemberProvider memberProvider
     ) {
@@ -48,7 +49,7 @@ public class AdvertisementConfig {
     }
 
     @Bean
-    GetTop10CampaignListProcessor getTop10CampaignListProcessor(
+    public GetTop10CampaignListProcessor getTop10CampaignListProcessor(
         @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
         MemberProvider memberProvider
     ) {
@@ -59,7 +60,7 @@ public class AdvertisementConfig {
     }
 
     @Bean
-    GetCampaignListByAdvertiser getCampaignListByAdvertiser(
+    public GetCampaignListByAdvertiser getCampaignListByAdvertiser(
         @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
         MemberProvider memberProvider
     ) {
@@ -67,5 +68,12 @@ public class AdvertisementConfig {
             campaignRepository,
             memberProvider
         );
+    }
+
+    @Bean
+    public EndCampaignProcessor endCampaignProcessor(
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
+    ) {
+        return new EndCampaignProcessor(campaignRepository);
     }
 }

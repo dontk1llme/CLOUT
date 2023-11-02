@@ -17,8 +17,8 @@ public class GetCampaignListByAdvertiser {
 
     public CampaignListReader execute(Long advertiserId, Pageable pageable) {
         AdvertiserInfo advertiserInfo = memberProvider.getAdvertiserInfoByMemberId(advertiserId);
-        List<Campaign> campainList = campaignRepository.getCampainListByAdvertiserId(
-            advertiserId, pageable);
+        List<Campaign> campainList =
+            campaignRepository.getCampainListByAdvertiserId(advertiserId, pageable);
         return new CampaignListReader(campainList, advertiserInfo);
     }
 }

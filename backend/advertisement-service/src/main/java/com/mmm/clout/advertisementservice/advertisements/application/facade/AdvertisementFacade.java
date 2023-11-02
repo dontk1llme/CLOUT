@@ -2,6 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.application.facade;
 
 import com.mmm.clout.advertisementservice.advertisements.application.CreateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.DeleteCampaignProcessor;
+import com.mmm.clout.advertisementservice.advertisements.application.EndCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByAdvertiser;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
@@ -25,8 +26,8 @@ public class AdvertisementFacade {
     private final DeleteCampaignProcessor deleteCampaignProcessor;
     private final GetCampaignProcessor getCampaignProcessor;
     private final GetTop10CampaignListProcessor getTop10CampaignListProcessor;
-    private final GetCampaignListByAdvertiser getCampaignListByAdvertiser;
-
+    private final GetCampaignListByAdvertiser getCampaignListByAdvertiserProcessor;
+    private final EndCampaignProcessor endCampaignProcessor;
 
     public Campaign create(CreateCampaignCommand command) {
         return createCampaignProcessor.execute(command);
@@ -49,6 +50,10 @@ public class AdvertisementFacade {
     }
 
     public CampaignListReader getAllCampaignsByAdvertisers(Long advertiserId, Pageable pageable) {
-        return getCampaignListByAdvertiser.execute(advertiserId, pageable);
+        return getCampaignListByAdvertiserProcessor.execute(advertiserId, pageable);
+    }
+
+    public Long end(Long advertisementId) {
+        return endCampaignProcessor.execute(advertisementId);
     }
 }
