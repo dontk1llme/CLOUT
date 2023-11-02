@@ -1,5 +1,6 @@
 package com.mmm.clout.advertisementservice.apply.infrastructure.config;
 
+import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
@@ -64,6 +65,15 @@ public class ApplyConfig {
     ) {
         return new GetApplyProcessor(
             applyRepository
+        );
+    }
+
+    @Bean
+    GetCampaignProcessor getCampaignProcessor(
+        CampaignRepository campaignRepository
+    ) {
+        return new GetCampaignProcessor(
+            campaignRepository
         );
     }
 
