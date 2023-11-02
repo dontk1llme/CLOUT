@@ -2,6 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.infrastructure.config;
 
 import com.mmm.clout.advertisementservice.advertisements.application.CreateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.DeleteCampaignProcessor;
+import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByAdvertiser;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.UpdateCampaignProcessor;
@@ -51,6 +52,15 @@ public class AdvertisementConfig {
         @Qualifier("CampaignRepository") CampaignRepository campaignRepository
     ) {
         return new GetTop10CampaignListProcessor(
+            campaignRepository
+        );
+    }
+
+    @Bean
+    GetCampaignListByAdvertiser getCampaignListByAdvertiser(
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
+    ) {
+        return new GetCampaignListByAdvertiser(
             campaignRepository
         );
     }

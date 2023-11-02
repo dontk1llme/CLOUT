@@ -13,6 +13,8 @@ import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDoc
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -98,4 +101,17 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * 광고주 자신이 올린 광고 목록 조회 (최신순)
+     */
+    @GetMapping("/advertisements")
+    public ResponseEntity<Void> getCampaignsByAdvertisers(
+        @RequestParam Long advertiserId,
+        @RequestParam int page,
+        @RequestParam int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<Campaign> result = advertisementFacade.getAllCampaignsByAdvertisers(advertiserId, pageable);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

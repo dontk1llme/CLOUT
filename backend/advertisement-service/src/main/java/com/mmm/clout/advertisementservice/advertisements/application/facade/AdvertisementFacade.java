@@ -2,6 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.application.facade;
 
 import com.mmm.clout.advertisementservice.advertisements.application.CreateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.DeleteCampaignProcessor;
+import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByAdvertiser;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.UpdateCampaignProcessor;
@@ -11,6 +12,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.reader.Camp
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +24,7 @@ public class AdvertisementFacade {
     private final DeleteCampaignProcessor deleteCampaignProcessor;
     private final GetCampaignProcessor getCampaignProcessor;
     private final GetTop10CampaignListProcessor getTop10CampaignListProcessor;
+    private final GetCampaignListByAdvertiser getCampaignListByAdvertiser;
 
 
     public Campaign create(CreateCampaignCommand command) {
@@ -42,5 +45,9 @@ public class AdvertisementFacade {
 
     public List<Campaign> getTop10() {
         return getTop10CampaignListProcessor.execute();
+    }
+
+    public List<Campaign> getAllCampaignsByAdvertisers(Long advertiserId, Pageable pageable) {
+        return getCampaignListByAdvertiser.execute(advertiserId, pageable);
     }
 }

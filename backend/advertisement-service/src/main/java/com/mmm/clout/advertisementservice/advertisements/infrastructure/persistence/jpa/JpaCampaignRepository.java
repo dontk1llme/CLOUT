@@ -2,7 +2,6 @@ package com.mmm.clout.advertisementservice.advertisements.infrastructure.persist
 
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import java.time.LocalDate;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +14,6 @@ public interface JpaCampaignRepository extends JpaRepository<Campaign, Long> {
      */
     @Query("SELECT c FROM Campaign c WHERE :current BETWEEN c.applyStartDate AND c.applyEndDate ORDER BY c.numberOfApplicants DESC, c.createdAt DESC")
     Page<Campaign> findActiveCampaignsOrderByApplicants(LocalDate current, Pageable pageable);
+
+    Page<Campaign> findByRegisterIdOrderByCreatedAtDesc(Long advertiserId, Pageable pageable);
 }
