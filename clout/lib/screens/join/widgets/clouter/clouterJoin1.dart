@@ -1,5 +1,7 @@
 import 'package:clout/providers/clouter_register_controller.dart';
+import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/clouter/widgets/join_input.dart';
+import 'package:clout/widgets/address/library_daum_postcode_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:clout/style.dart' as style;
@@ -73,6 +75,8 @@ class ClouterJoin1State extends State<ClouterJoin1> {
               ],
             ),
             SizedBox(height: 10),
+            BigButton(title: '주소 테스트', 
+            function: (){Get.to(LibararyDaumPostcodeScreen());}),
             JoinInput(
               keyboardType: TextInputType.text,
               maxLength: 30,
