@@ -1,4 +1,4 @@
-package com.mmm.clout.advertisementservice.apply.domain.info;
+package com.mmm.clout.advertisementservice.common.msa.info;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

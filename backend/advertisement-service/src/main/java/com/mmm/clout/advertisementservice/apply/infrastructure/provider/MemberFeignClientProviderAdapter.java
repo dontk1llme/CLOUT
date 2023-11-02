@@ -1,8 +1,8 @@
 package com.mmm.clout.advertisementservice.apply.infrastructure.provider;
 
-import com.mmm.clout.advertisementservice.apply.domain.info.AdvertiserInfo;
-import com.mmm.clout.advertisementservice.apply.domain.info.ClouterInfo;
-import com.mmm.clout.advertisementservice.apply.domain.provider.MemberProvider;
+import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
+import com.mmm.clout.advertisementservice.common.msa.info.ClouterInfo;
+import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import com.mmm.clout.advertisementservice.apply.infrastructure.provider.feignclient.MemberFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

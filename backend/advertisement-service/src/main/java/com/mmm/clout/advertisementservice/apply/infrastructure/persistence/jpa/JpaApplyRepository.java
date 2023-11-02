@@ -12,5 +12,5 @@ public interface JpaApplyRepository extends JpaRepository<Apply, Long> {
 
     List<Apply> findByApplicant_ApplicantIdAndApplyStatus(Long applicantId, ApplyStatus applyStatus);
 
-    List<Apply> findByIdAndAdvertisementId(Long advertisementId);
+    List<Apply> findByCampaignId(Long advertisementId);
 }
