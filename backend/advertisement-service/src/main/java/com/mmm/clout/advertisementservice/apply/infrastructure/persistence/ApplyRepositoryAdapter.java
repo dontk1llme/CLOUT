@@ -41,5 +41,10 @@ public class ApplyRepositoryAdapter implements ApplyRepository {
         return jpaApplyRepository.findByCampaignId(advertisementId);
     }
 
+    @Override
+    public List<Apply> findByCampaign(Campaign campaign) {
+        return jpaApplyRepository.findByCampaign(campaign);
+    }
+
 
 }
