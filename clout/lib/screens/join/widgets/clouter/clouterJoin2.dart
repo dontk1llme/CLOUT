@@ -1,6 +1,6 @@
 import 'package:clout/providers/clouter_register_controller.dart';
 import 'package:clout/providers/image_picker_provider.dart';
-import 'package:clout/screens/join/widgets/clouter/widgets/join_input.dart';
+import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -102,40 +102,31 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 25,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize: Size.zero,
-                  padding: EdgeInsets.only(left: 180),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  alignment: Alignment.centerRight,
-                ),
-                onPressed: () {},
-                child: doubleId == 1
-                    ? Text(
-                        '아이디 중복 확인이 필요해요',
-                        style: style.textTheme.bodyMedium?.copyWith(
-                          color: style.colors['gray'],
-                          height: 2,
-                        ),
-                      )
-                    : doubleId == 2
-                        ? Text(
-                            '사용 가능한 아이디입니다',
-                            style: style.textTheme.bodyMedium?.copyWith(
-                              color: style.colors['main1'],
-                              height: 2,
-                            ),
-                          )
-                        : Text(
-                            '이미 사용 중인 아이디입니다',
-                            style: style.textTheme.bodyMedium?.copyWith(
-                              color: style.colors['Darkgray'],
-                              height: 2,
-                            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: doubleId == 1
+                  ? Text(
+                      '아이디 중복 확인이 필요해요',
+                      style: style.textTheme.bodySmall?.copyWith(
+                        color: style.colors['gray'],
+                        height: 1.5,
+                      ),
+                    )
+                  : doubleId == 2
+                      ? Text(
+                          '사용 가능한 아이디입니다',
+                          style: style.textTheme.bodySmall?.copyWith(
+                            color: style.colors['main1'],
+                            height: 1.5,
                           ),
-              ),
+                        )
+                      : Text(
+                          '이미 사용 중인 아이디입니다',
+                          style: style.textTheme.bodySmall?.copyWith(
+                            color: style.colors['Darkgray'],
+                            height: 1.5,
+                          ),
+                        ),
             ),
             SizedBox(height: 5),
             Stack(
