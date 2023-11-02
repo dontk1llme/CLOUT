@@ -7,7 +7,7 @@ import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor
 import com.mmm.clout.advertisementservice.apply.application.GetApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadApplicantsByCampaignProcessor;
-import com.mmm.clout.advertisementservice.apply.domain.provider.MemberProvider;
+import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -68,13 +68,5 @@ public class ApplyConfig {
         );
     }
 
-    @Bean
-    GetCampaignProcessor getCampaignProcessor(
-        CampaignRepository campaignRepository
-    ) {
-        return new GetCampaignProcessor(
-            campaignRepository
-        );
-    }
 
 }

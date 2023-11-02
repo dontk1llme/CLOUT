@@ -1,7 +1,7 @@
 package com.mmm.clout.advertisementservice.advertisements.application.reader;
 
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
-import com.mmm.clout.advertisementservice.apply.domain.info.AdvertiserInfo;
+import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

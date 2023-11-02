@@ -45,7 +45,7 @@ public class ApplyController {
     }
 
     // TODO 이미지, star 기능 만들어지면 추가 필요
-    @GetMapping
+    @GetMapping("/clouters")
     public ResponseEntity<GetAllByStatusResponse> getApplyListByStatus(
         @RequestParam Long clouterId,
         @RequestParam ApplyStatus type
@@ -55,7 +55,7 @@ public class ApplyController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/advertisers")
     public ResponseEntity<List<ApplicantResponse>> getApplicantList(
         @RequestParam Long advertisementId
     ) {

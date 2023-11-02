@@ -1,4 +1,4 @@
-package com.mmm.clout.advertisementservice.apply.domain.info;
+package com.mmm.clout.advertisementservice.common.msa.info;
 
 import java.time.LocalDate;
 import java.util.List;

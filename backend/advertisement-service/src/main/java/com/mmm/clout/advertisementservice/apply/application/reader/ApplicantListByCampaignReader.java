@@ -1,6 +1,6 @@
 package com.mmm.clout.advertisementservice.apply.application.reader;
 
-import com.mmm.clout.advertisementservice.apply.domain.info.ChannelInfo;
+import com.mmm.clout.advertisementservice.common.msa.info.ChannelInfo;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
