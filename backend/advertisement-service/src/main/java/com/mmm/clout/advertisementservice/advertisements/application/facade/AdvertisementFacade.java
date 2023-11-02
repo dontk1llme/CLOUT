@@ -3,11 +3,13 @@ package com.mmm.clout.advertisementservice.advertisements.application.facade;
 import com.mmm.clout.advertisementservice.advertisements.application.CreateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.DeleteCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
+import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.UpdateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.application.command.UpdateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class AdvertisementFacade {
     private final UpdateCampaignProcessor updateCampaignProcessor;
     private final DeleteCampaignProcessor deleteCampaignProcessor;
     private final GetCampaignProcessor getCampaignProcessor;
+    private final GetTop10CampaignListProcessor getTop10CampaignListProcessor;
 
 
     public Campaign create(CreateCampaignCommand command) {
@@ -35,5 +38,9 @@ public class AdvertisementFacade {
 
     public CampaignReader get(Long advertisementId) {
         return getCampaignProcessor.execute(advertisementId);
+    }
+
+    public List<Campaign> getTop10() {
+        return getTop10CampaignListProcessor.execute();
     }
 }
