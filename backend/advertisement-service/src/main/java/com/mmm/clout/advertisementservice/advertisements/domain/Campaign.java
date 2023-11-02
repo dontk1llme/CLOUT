@@ -16,12 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 @Getter
-@ToString
 @AllArgsConstructor
 @DynamicInsert
 @Table(name = "campaign")

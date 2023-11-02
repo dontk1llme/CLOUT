@@ -49,19 +49,23 @@ public class AdvertisementConfig {
 
     @Bean
     GetTop10CampaignListProcessor getTop10CampaignListProcessor(
-        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
+        MemberProvider memberProvider
     ) {
         return new GetTop10CampaignListProcessor(
-            campaignRepository
+            campaignRepository,
+            memberProvider
         );
     }
 
     @Bean
     GetCampaignListByAdvertiser getCampaignListByAdvertiser(
-        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
+        MemberProvider memberProvider
     ) {
         return new GetCampaignListByAdvertiser(
-            campaignRepository
+            campaignRepository,
+            memberProvider
         );
     }
 }

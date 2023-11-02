@@ -8,6 +8,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.GetTop10Cam
 import com.mmm.clout.advertisementservice.advertisements.application.UpdateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.application.command.UpdateCampaignCommand;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import java.util.List;
@@ -43,11 +44,11 @@ public class AdvertisementFacade {
         return getCampaignProcessor.execute(advertisementId);
     }
 
-    public List<Campaign> getTop10() {
+    public List<CampaignReader> getTop10() {
         return getTop10CampaignListProcessor.execute();
     }
 
-    public List<Campaign> getAllCampaignsByAdvertisers(Long advertiserId, Pageable pageable) {
+    public CampaignListReader getAllCampaignsByAdvertisers(Long advertiserId, Pageable pageable) {
         return getCampaignListByAdvertiser.execute(advertiserId, pageable);
     }
 }
