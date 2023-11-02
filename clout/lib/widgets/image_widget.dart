@@ -37,6 +37,7 @@ class ImageWidget extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(10)),
                       width: imgBoxSize,
                       height: imgBoxSize)),
+              // 사진 삭제하는 버튼(오른쪽 위 X)
               Positioned(
                   top: 0,
                   right: 0,
