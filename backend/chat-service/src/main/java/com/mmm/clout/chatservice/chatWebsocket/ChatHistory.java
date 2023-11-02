@@ -30,13 +30,10 @@ public class ChatHistory {
     private String senderName;
 
     @Field("sender_uuid")
-    private String senderUuid;
+    private String senderId;
 
     @Field("msg")
     private String msg;
-
-    @Field("img_url")
-    private String imgUrl;
 
     @Field("created_at")
     @CreatedDate
@@ -47,28 +44,25 @@ public class ChatHistory {
     private LocalDateTime updatedAt;
 
     @Builder
-    private ChatHistory(String id, String roomIdx, String senderName, String senderUuid, String msg,
-                        String imgUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private ChatHistory(String id, String roomIdx, String senderName, String senderId, String msg,
+                        LocalDateTime createdAt, LocalDateTime updatedAt) {
 
         this.id = id;
         this.roomIdx = roomIdx;
         this.senderName = senderName;
-        this.senderUuid = senderUuid;
+        this.senderId = senderId;
         this.msg = msg;
-        this.imgUrl = imgUrl;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public static ChatHistory of(String roomIdx, String senderName, String senderUuid, String msg,
-                                 String imgUrl) {
+    public static ChatHistory of(String roomIdx, String senderName, String senderId, String msg) {
 
         return ChatHistory.builder()
                 .roomIdx(roomIdx)
                 .senderName(senderName)
-                .senderUuid(senderUuid)
+                .senderId(senderId)
                 .msg(msg)
-                .imgUrl(imgUrl)
                 .build();
     }
 

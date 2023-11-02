@@ -1,5 +1,6 @@
 package com.mmm.clout.chatservice.chatWebsocket;
 
+import com.mmm.clout.chatservice.chatWebsocket.docs.ChatSocketControllerDocs;
 import com.mmm.clout.chatservice.chatWebsocket.dto.ChatRequest;
 import com.mmm.clout.chatservice.chatWebsocket.dto.ChatHistoryResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class ChatSocketController {
+public class ChatSocketController implements ChatSocketControllerDocs {
 
     private final ChatSocketService chatSocketService;
 

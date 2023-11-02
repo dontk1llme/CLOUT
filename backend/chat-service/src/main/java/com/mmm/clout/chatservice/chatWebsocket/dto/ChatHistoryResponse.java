@@ -17,7 +17,7 @@ public record ChatHistoryResponse(
         return new ChatHistoryResponse(
                 entity.getId(),
                 entity.getSenderName(),
-                entity.getSenderUuid(),
+                entity.getSenderId(),
                 entity.getMsg(),
                 entity.getCreatedAt()
         );

@@ -18,8 +18,8 @@ public class ChatSocketService {
     public ChatHistoryResponse recordHistory(final String chatRoomNo, final ChatRequest request) {
 
         final ChatHistory save = chatSocketRepository.save(
-                ChatHistory.of(chatRoomNo, request.sender(), request.senderUuid(),
-                        request.msg(), request.imgUrl())
+                ChatHistory.of(chatRoomNo, request.sender(), request.senderId(),
+                        request.msg())
         );
         return ChatHistoryResponse.of(save);
     }
