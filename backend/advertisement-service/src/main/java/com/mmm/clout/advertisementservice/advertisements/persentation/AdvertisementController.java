@@ -64,8 +64,11 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     public ResponseEntity<GetCampaignResponse> getCampaign(
         @PathVariable Long advertisementId
     ) {
-        CampaignReader reader = advertisementFacade.get(advertisementId);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        GetCampaignResponse result = GetCampaignResponse.from(
+            advertisementFacade.get(advertisementId)
+        );
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }
