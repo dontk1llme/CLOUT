@@ -1,4 +1,4 @@
-package com.mmm.clout.chatservice.configuration;
+package com.mmm.clout.chatservice.common.configuration;
 
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
