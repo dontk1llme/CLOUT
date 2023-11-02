@@ -8,7 +8,7 @@ import com.mmm.clout.chatservice.chatRoom.dto.response.ChatRoomListResponse;
 import com.mmm.clout.chatservice.chatRoom.dto.response.ChatRoomResponse;
 import com.mmm.clout.chatservice.chatRoom.dto.response.CreateChatRoomResponse;
 import com.mmm.clout.chatservice.chatRoom.exception.ExistedRoomException;
-import com.mmm.clout.chatservice.chatRoom.exception.NotFoundRoom;
+import com.mmm.clout.chatservice.chatRoom.exception.NotFoundRoomException;
 import com.mmm.clout.chatservice.chatWebsocket.ChatSocketService;
 import com.mmm.clout.chatservice.chatWebsocket.dto.ChatHistoryResponse;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Override
     public ChatRoomDetailResponse enterRoom(Long roomId) {
-        ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(NotFoundRoom::new);
+        ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow(NotFoundRoomException::new);
 
         List<ChatHistoryResponse> chatHistory = chatSocketService.getList(roomId.toString());
 

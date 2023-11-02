@@ -19,5 +19,4 @@ public interface ChatRoomService {
     ChatRoomListResponse getChatRoomByAdvertiser(Long advertiserId);
 
     ChatRoomListResponse getChatRoomByClouter(Long clouterId);
-
 }
