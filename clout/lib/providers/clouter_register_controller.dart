@@ -6,7 +6,6 @@ class ClouterRegisterController extends GetxController {
   var gender;
   var birthday;
   var phoneNumber;
-  var address;
   var id;
   var password;
   var checkPassword;
@@ -14,6 +13,7 @@ class ClouterRegisterController extends GetxController {
   var images;
 
   final platformInputController = Get.put(PlatformSelectController());
+  String address = '' ;
 
   setName(input) {
     name = input;
