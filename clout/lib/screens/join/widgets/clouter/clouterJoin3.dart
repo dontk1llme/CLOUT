@@ -15,12 +15,10 @@ class ClouterJoin3 extends StatefulWidget {
   const ClouterJoin3({super.key});
 
   @override
-  _ClouterJoin3State createState() => _ClouterJoin3State();
+  ClouterJoin3State createState() => ClouterJoin3State();
 }
 
-class _ClouterJoin3State extends State<ClouterJoin3> {
-  double percent = 0.66; // 초기값 설정
-
+class ClouterJoin3State extends State<ClouterJoin3> {
   @override
   Widget build(BuildContext context) {
     return Column(

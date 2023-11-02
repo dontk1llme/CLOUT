@@ -7,11 +7,15 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class PayDialog extends StatelessWidget {
-  PayDialog({super.key});
+  PayDialog({super.key, required this.title, required this.hintText});
+  final title;
+  final hintText;
 
   openPayDialog() {
     Get.defaultDialog(
-      title: "희망 광고비",
+      title: title,
+      titlePadding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+      contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 20),
       content: GetBuilder<FeeController>(
         builder: (controller) => SizedBox(
           height: 75,
@@ -25,7 +29,7 @@ class PayDialog extends StatelessWidget {
                 ],
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                    hintText: '희망 광고비 입력',
+                    hintText: hintText,
                     contentPadding: EdgeInsets.only(left: 15, right: 15),
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
@@ -69,6 +73,9 @@ class PayDialog extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () => openPayDialog(),
+              style: ButtonStyle(
+                  minimumSize: MaterialStatePropertyAll(Size(200, 50)),
+                  alignment: Alignment.centerRight),
               child: Text(
                 controller.payString,
                 style: style.textTheme.titleMedium?.copyWith(
