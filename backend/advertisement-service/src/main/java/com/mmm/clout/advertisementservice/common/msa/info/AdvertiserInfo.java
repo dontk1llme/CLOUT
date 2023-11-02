@@ -1,12 +1,13 @@
 package com.mmm.clout.advertisementservice.common.msa.info;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-
+@JsonInclude(Include.NON_NULL)
 @Getter
 @AllArgsConstructor
-@ToString
 public class AdvertiserInfo {
 
     private Long advertiserId; // memberId

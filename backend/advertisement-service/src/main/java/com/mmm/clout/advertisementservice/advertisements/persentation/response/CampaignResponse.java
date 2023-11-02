@@ -1,13 +1,17 @@
 package com.mmm.clout.advertisementservice.advertisements.persentation.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
+import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@JsonInclude(Include.NON_NULL)
 @Getter
 @AllArgsConstructor
 public class CampaignResponse {
@@ -47,4 +51,27 @@ public class CampaignResponse {
     private Integer maxClouterAge; // 최대 클라우터 나이
 
     private Integer minFollower; // 최소 팔로워 수
+
+    public static CampaignResponse from(Campaign campaign) {
+        return new CampaignResponse(
+            campaign.getId(),
+            campaign.getAdPlatformList(),
+            campaign.getPrice(),
+            campaign.getDetails(),
+            campaign.getDeletedAt(),
+            campaign.getAdCategory(),
+            campaign.getIsPriceChangeable(),
+            campaign.getIsDeliveryRequired(),
+            campaign.getNumberOfRecruiter(),
+            campaign.getNumberOfApplicants(),
+            campaign.getNumberOfSelectedMembers(),
+            campaign.getOfferingDetails(),
+            campaign.getSellingLink(),
+            campaign.getApplyStartDate(),
+            campaign.getApplyEndDate(),
+            campaign.getMinClouterAge(),
+            campaign.getMaxClouterAge(),
+            campaign.getMinFollower()
+        );
+    }
 }

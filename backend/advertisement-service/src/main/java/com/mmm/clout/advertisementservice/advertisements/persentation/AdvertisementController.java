@@ -7,7 +7,9 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.request.Cr
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
-import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampaignAndAdvertiserResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampainListByAdvertiserResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetTop10CampainListResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
 import java.util.List;
@@ -81,10 +83,10 @@ public class AdvertisementController implements AdvertisementControllerDocs {
      */
 
     @GetMapping("/{advertisementId}")
-    public ResponseEntity<GetCampaignResponse> getCampaign(
+    public ResponseEntity<GetCampaignAndAdvertiserResponse> getCampaign(
         @PathVariable Long advertisementId
     ) {
-        GetCampaignResponse result = GetCampaignResponse.from(
+        GetCampaignAndAdvertiserResponse result = GetCampaignAndAdvertiserResponse.from(
             advertisementFacade.get(advertisementId)
         );
 
@@ -92,26 +94,31 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     }
 
     /**
-     * 인기 있는 광고 리스트 (10개) 조회 (신청자 수 많은 순 / 모집기간 내 / 우선순위가 같을경우, 최신순)
-     * 복잡한 조건이라 jpa 쿼리로 작성하기에 가독성이 좋지 않으므로 jpql 사용
+     * 인기 있는 광고 리스트 (10개) 조회 (신청자 수 많은 순 / 모집기간 내 / 우선순위가 같을경우, 최신순) 복잡한 조건이라 jpa 쿼리로 작성하기에 가독성이 좋지
+     * 않으므로 jpql 사용
      */
     @GetMapping("/top10")
-    public ResponseEntity<Void> getTop10Campaigns() {
-        List<Campaign> result = advertisementFacade.getTop10();
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<GetTop10CampainListResponse> getTop10Campaigns() {
+        GetTop10CampainListResponse result = GetTop10CampainListResponse.from(
+            advertisementFacade.getTop10()
+        );
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
      * 광고주 자신이 올린 광고 목록 조회 (최신순)
      */
     @GetMapping("/advertisements")
-    public ResponseEntity<Void> getCampaignsByAdvertisers(
+    public ResponseEntity<GetCampainListByAdvertiserResponse> getCampaignsByAdvertisers(
         @RequestParam Long advertiserId,
         @RequestParam int page,
         @RequestParam int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        List<Campaign> result = advertisementFacade.getAllCampaignsByAdvertisers(advertiserId, pageable);
-        return new ResponseEntity<>(HttpStatus.OK);
+        GetCampainListByAdvertiserResponse result =
+            GetCampainListByAdvertiserResponse.from(
+                advertisementFacade.getAllCampaignsByAdvertisers(advertiserId, pageable)
+            );
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
