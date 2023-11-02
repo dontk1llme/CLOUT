@@ -1,11 +1,11 @@
 package com.mmm.clout.chatservice.chatRoom;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity
 @AllArgsConstructor
@@ -14,7 +14,8 @@ import javax.persistence.Id;
 @Getter
 public class ChatRoom {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "chatroom_id")
     private Long id;
 
@@ -23,4 +24,12 @@ public class ChatRoom {
     private Long hostId;
 
     private Long guestId;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
