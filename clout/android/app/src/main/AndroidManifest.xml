@@ -14,7 +14,8 @@
     <application
         android:label="clout"
         android:name="${applicationName}"
-        android:icon="@mipmap/clout">
+        android:icon="@mipmap/clout"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
