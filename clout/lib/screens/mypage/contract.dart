@@ -1,12 +1,10 @@
 // 계약서
-import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
-import 'package:clout/widgets/list/category_list.dart';
-import 'package:clout/widgets/list/clouter_item_box.dart';
-import 'package:clout/widgets/input/search_bar.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/header/header.dart';
 
 class Contract extends StatelessWidget {
@@ -17,7 +15,6 @@ class Contract extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     final boxWidth = screenWidth;
-    final boxPadding = screenWidth > 400 ? 12.0 : 10.0;
 
     return Scaffold(
       backgroundColor: style.colors['white'],
@@ -28,13 +25,14 @@ class Contract extends StatelessWidget {
           headerTitle: 'OOO님과의 계약서',
         ),
       ),
-      body: ListView(
+      body: BouncingListview(
+          child: Column(
         children: [
           Padding(
             padding: EdgeInsets.all(15),
             child: Container(
               width: boxWidth,
-              padding: EdgeInsets.all(boxPadding),
+              padding: EdgeInsets.all(screenWidth > 400 ? 30 : 20),
               decoration: BoxDecoration(
                 color: style.colors['white'],
                 boxShadow: style.shadows['shadow'],
@@ -54,6 +52,8 @@ class Contract extends StatelessWidget {
               ),
             ),
           ),
+          // 💥 클라우터, 광고주 둘 다 전자서명시 <<계약서 저장하기>>버튼 보여주고,
+          // 한 명이라도 전자서명 미진행시 <<신청 취소하기>> 버튼 보여주기
           Padding(
             padding: EdgeInsets.all(15),
             child: Column(
@@ -61,7 +61,6 @@ class Contract extends StatelessWidget {
                 // 기능 없음! 아래 버튼들 누르지 마시오!
                 SizedBox(
                     width: double.infinity,
-                    height: 50,
                     child: BigButton(
                       title: '계약서 저장하기',
                       function: () {},
@@ -69,7 +68,6 @@ class Contract extends StatelessWidget {
                 SizedBox(height: 10),
                 SizedBox(
                     width: double.infinity,
-                    height: 50,
                     child: BigButton(
                       title: '카카오톡 전송하기',
                       function: () {},
@@ -78,7 +76,7 @@ class Contract extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      )),
     );
   }
 }
