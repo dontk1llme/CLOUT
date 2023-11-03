@@ -1,6 +1,7 @@
 package com.mmm.clout.memberservice.star.presentation;
 
 import com.mmm.clout.memberservice.star.application.facade.StarFacade;
+import com.mmm.clout.memberservice.star.presentation.docs.StarControllerDocs;
 import com.mmm.clout.memberservice.star.presentation.request.createStarDetailRequest;
 import com.mmm.clout.memberservice.star.presentation.response.CreateStarResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/starts")
 @RequiredArgsConstructor
-public class StarController {
+public class StarController implements StarControllerDocs {
 
     private final StarFacade starFacade;
 
@@ -26,7 +27,7 @@ public class StarController {
             starFacade.starScoreAdd(requst.toCommand())
         );
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
 }

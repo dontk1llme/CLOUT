@@ -1,6 +1,5 @@
 package com.mmm.clout.memberservice.star.domain;
 
-import com.mmm.clout.memberservice.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
