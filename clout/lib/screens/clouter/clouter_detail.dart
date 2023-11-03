@@ -1,4 +1,5 @@
 import 'package:clout/providers/user_controller.dart';
+import 'package:clout/screens/chatting/widgets/chatting_item_box.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -15,6 +16,9 @@ import 'package:clout/widgets/buttons/like_button.dart';
 
 // screen
 import 'package:clout/screens/chatting/chatting_list.dart';
+
+// controller
+import 'package:clout/providers/user_controller.dart';
 
 class Clouter {
   int clouterId = 1;
@@ -138,7 +142,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
         body: Container(
           color: Colors.white,
           width: double.infinity,
-          child: Stack(children: [
+          child: Stack(alignment: Alignment.topCenter, children: [
             BouncingListview(
               child: FractionallySizedBox(
                 widthFactor: 0.9,
@@ -256,25 +260,28 @@ class _ClouterDetailState extends State<ClouterDetail> {
                         );
                       }).toList(),
                     ),
-                    SizedBox(height: 50),
+                    SizedBox(height: 70),
                   ],
                 ),
               ),
             ),
-            Positioned(
-              bottom: 20,
-              left: 20,
-              right: 20,
-              child: Container(
-                color: Colors.transparent,
-                child: SizedBox(
-                  height: 50,
-                  child: BigButton(
-                    title: '채팅하기',
-                  ),
-                ),
-              ),
-            )
+            userController.clouter
+                ? Container()
+                : Positioned(
+                    bottom: 20,
+                    left: 20,
+                    right: 20,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: SizedBox(
+                        height: 50,
+                        child: BigButton(
+                          title: '채팅하기',
+                          function: () => Get.to(() => Chatting()),
+                        ),
+                      ),
+                    ),
+                  )
           ]),
         ));
   }

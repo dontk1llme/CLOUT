@@ -12,18 +12,15 @@ class PlatformToggleInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final platformInputController = Get.put(PlatformSelectController());
-    return GetBuilder<PlatformSelectController>(
-      builder: (controller) => Stack(
-        children: [
-          // 인스타그램 입력 창
-          InputCustomdrop(index: 0),
-          // 틱톡 입력 창
-          InputCustomdrop(index: 1),
-          // 유튜브 입력 창
-          InputCustomdrop(index: 2),
-        ],
-      ),
+    return Stack(
+      children: [
+        // 인스타그램 입력 창
+        InputCustomdrop(index: 0),
+        // 틱톡 입력 창
+        InputCustomdrop(index: 1),
+        // 유튜브 입력 창
+        InputCustomdrop(index: 2),
+      ],
     );
   }
 }

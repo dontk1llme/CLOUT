@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:get/get.dart';
 
 class Landing extends StatelessWidget {
   const Landing({super.key});
@@ -60,7 +61,7 @@ class Landing extends StatelessWidget {
                     width: double.infinity,
                     child: BigButton(
                       title: '로그인',
-                      destination: '/login',
+                      function: () => Get.offNamed('/login'),
                     ),
                   ),
                   TextButton(

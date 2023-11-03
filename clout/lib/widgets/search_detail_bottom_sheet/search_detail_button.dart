@@ -50,7 +50,7 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
                           Icons.close,
                         ),
                         onTap: () {
-                          Navigator.pop(context);
+                          Get.back();
                         },
                       )
                     ],
@@ -83,7 +83,8 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
                           style: TextStyle(color: style.colors['gray']))
                     ],
                   ),
-                  FollowercountStateDialog(),
+                  FollowercountStateDialog(
+                      title: '희망 최소 팔로워수', hintText: '희망 최소 팔로워 수(최대 10억)'),
                   ///////////////////////////////////////////
                   DataTitleThin(text: '희망 광고비'),
                   SizedBox(height: 10),
@@ -101,7 +102,7 @@ class _SearchDetailButtonState extends State<SearchDetailButton> {
                       height: 50,
                       child: BigButton(
                         title: '검색',
-                        destination: '/campaignlist',
+                        function: () => Get.toNamed('/campaignList'),
                       ),
                     ),
                   )
