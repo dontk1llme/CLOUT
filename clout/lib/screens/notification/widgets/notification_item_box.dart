@@ -1,3 +1,4 @@
+import 'package:clout/screens/mypage/contract.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -20,20 +21,23 @@ class _NotificationItemState extends State<NotificationItem> {
 
     return Container(
       padding: EdgeInsets.all(10),
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: EdgeInsets.symmetric(
+          horizontal: screenWidth > 400 ? 15 : 10,
+          vertical: screenWidth > 400 ? 7 : 4),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
       child: SizedBox(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(5), // 5% of screen width
               child: Image.asset(
                 'assets/images/itemImage.jpg',
-                width: 120,
-                height: 120,
+                width: 130,
+                height: 130,
                 fit: BoxFit.cover,
               ),
             ),
@@ -68,7 +72,7 @@ class _NotificationItemState extends State<NotificationItem> {
                   width: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.to(() => ClouterSelect());
+                      Get.to(() => Contract());
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
