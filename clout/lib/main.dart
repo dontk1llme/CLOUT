@@ -29,6 +29,7 @@ import 'package:clout/screens/point/withdraw/withdraw_complete.dart';
 import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:clout/screens/campaign_detail/campaign_detail.dart';
 import 'package:clout/screens/mypage/contract_list.dart';
+import 'package:clout/binding/app_binding.dart';
 
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -121,6 +122,7 @@ var messageString = "";
     theme: ThemeData(
       fontFamily: 'NotoSansKR',
     ),
+    initialBinding: AppBinding(),
     getPages: [
       GetPage(name: '/', page: () => Landing()),
       GetPage(name: '/login', page: () => Login()),
