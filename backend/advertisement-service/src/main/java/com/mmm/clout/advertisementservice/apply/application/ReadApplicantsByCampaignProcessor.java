@@ -30,7 +30,7 @@ public class ReadApplicantsByCampaignProcessor {
                     campaign.getNumberOfRecruiter(),
                     campaign.getNumberOfApplicants(),
                     campaign.getNumberOfSelectedMembers(),
-                    // TODO image
+                    //TODO image
                     apply.getHopeAdFee(),
                     apply.getApplyStatus().toString(),
                     info.getNickName(),

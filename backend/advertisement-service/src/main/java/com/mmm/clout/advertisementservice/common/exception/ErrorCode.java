@@ -34,7 +34,8 @@ public enum ErrorCode {
     ALREADY_ACCEPTED_APPLY(HttpStatus.BAD_REQUEST, "ALREADY_ACCEPTED_APPLY",
         "해당 광고 캠페인은 채택(계약) 완료 되었습니다."),
     ALREADY_CREATED_APPLY(HttpStatus.BAD_REQUEST, "ALREADY_ACCEPTED_APPLY", "이미 신청한 광고 캠페인입니다."),
-    APPLY_NOT_FOUND(HttpStatus.NOT_FOUND, "APPLY_ENTITY_NOT_FOUND", "등록되지 않은 신청입니다.");
+    APPLY_NOT_FOUND(HttpStatus.NOT_FOUND, "APPLY_ENTITY_NOT_FOUND", "등록되지 않은 신청입니다."),
+    APPLY_IS_CANCELED(HttpStatus.NOT_FOUND, "APPLY_IS_CANCELED", "신청자가 신청 취소하여 계약을 요청할 수 없습니다.");
 
 
     private final HttpStatus status;

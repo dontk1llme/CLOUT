@@ -1,6 +1,7 @@
 package com.mmm.clout.advertisementservice.apply.domain;
 
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.apply.domain.exception.CancelApplyException;
 import com.mmm.clout.advertisementservice.apply.domain.exception.CannotCancelApplyException;
 import com.mmm.clout.advertisementservice.common.entity.BaseEntity;
 import com.mmm.clout.advertisementservice.common.exception.ErrorCode;
@@ -86,6 +87,14 @@ public class Apply extends BaseEntity {
         if (this.applyStatus == ApplyStatus.WAITING) {
             this.applyStatus = ApplyStatus.NOT_ACCEPTED;
         }
+    }
+
+    public void askForContract() {
+        if (this.applyStatus == ApplyStatus.CANCEL) {
+            throw new CancelApplyException();
+        }
+        this.applyStatus = ApplyStatus.ACCEPTED;
+        this.campaign.selectClouter();
     }
 
     @Getter

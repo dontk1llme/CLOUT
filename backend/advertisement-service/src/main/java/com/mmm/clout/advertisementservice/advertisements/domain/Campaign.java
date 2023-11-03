@@ -208,4 +208,8 @@ public class Campaign extends Advertisement {
         this.applyEndDate = LocalDate.now();
         this.isEnded = true;
     }
+
+    public void selectClouter() {
+        this.numberOfSelectedMembers++;
+    }
 }

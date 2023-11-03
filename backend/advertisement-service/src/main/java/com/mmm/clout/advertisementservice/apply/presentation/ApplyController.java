@@ -74,4 +74,17 @@ public class ApplyController {
             new ApplyMessageResponse(applyId, result), HttpStatus.OK
         );
     }
+
+    /**
+     * 채택 -> 계약 생성
+     */
+    @PostMapping("/{applyId}/selection")
+    public ResponseEntity<Void> selectForContract(
+        @PathVariable Long applyId
+    ) {
+        applyFacade.selectForContract(applyId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
