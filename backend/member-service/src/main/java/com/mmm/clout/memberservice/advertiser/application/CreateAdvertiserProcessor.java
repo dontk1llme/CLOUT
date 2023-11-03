@@ -6,6 +6,8 @@ import com.mmm.clout.memberservice.advertiser.domain.repository.AdvertiserReposi
 import com.mmm.clout.memberservice.advertiser.infrastructure.exception.AdrIdDuplicateException;
 import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
+import com.mmm.clout.memberservice.star.domain.Star;
+import com.mmm.clout.memberservice.star.domain.repository.StarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +18,20 @@ public class CreateAdvertiserProcessor {
     private final AdvertiserRepository advertiserRepository;
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
+    private final StarRepository starRepository;
 
     @Transactional
     public Advertiser execute(CreateAdrCommand command) {
         checkUserId(command.getUserId());
         Advertiser advertiser = command.toEntity();
         advertiser.changePwd(encoder.encode(advertiser.getPwd()));
-        return advertiserRepository.save(advertiser);
+        Advertiser savedAdvertiser = advertiserRepository.save(advertiser);
+        initStar(savedAdvertiser);
+        return savedAdvertiser;
+    }
+
+    private Star initStar(Member member) {
+        return starRepository.save(Star.init(member));
     }
 
     private boolean checkUserId(String userId) {

@@ -15,6 +15,4 @@ public class StarConfig {
         StarRepository starRepository) {
         return new CreateStarDetailProcessor(starDetailRepository,starRepository);
     }
-
-
 }

@@ -14,6 +14,11 @@ public class StarAdapter implements StarRepository {
     private final JpaStarRepository jpaStarRepository;
 
     @Override
+    public Star save(Star star) {
+        return jpaStarRepository.save(star);
+    }
+
+    @Override
     public Star findById(Long memberId) {
         return jpaStarRepository.findByMemberId(memberId).orElseThrow(NotFoundStarException::new);
     }
