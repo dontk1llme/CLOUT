@@ -77,23 +77,6 @@ class _ClouterList extends State<ClouterList> {
                   ],
                 ),
               ),
-              // Container(
-              //   padding: EdgeInsets.all(15), // 가로 패딩 설정
-              //   child: GridView.builder(
-              //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 2, // 한 행에 2개의 아이템 배치
-              //       mainAxisSpacing: 10,
-              //       crossAxisSpacing: 10,
-              //       childAspectRatio: 1 / 1.45,
-              //     ),
-              //     itemCount: 20, // 아이템의 개수
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return ClouterItemBox();
-              //     },
-              //     shrinkWrap: true,
-              //     physics: NeverScrollableScrollPhysics(),
-              //   ),
-              // ),
               SizedBox(height: 20),
               FractionallySizedBox(
                   widthFactor: screenWidth > 400 ? 0.9 : 1,
