@@ -74,6 +74,7 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
               title: '닉네임 입력',
               label: '닉네임',
               setState: controller.setNickName,
+              initialValue: controller.nickName,
             ),
             SizedBox(height: 10),
             Stack(
@@ -84,6 +85,7 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                   title: '아이디 입력',
                   label: '아이디',
                   setState: controller.setId,
+                  initialValue: controller.id,
                 ),
                 Positioned(
                   right: 10,
@@ -174,7 +176,7 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                   style: style.textTheme.headlineMedium,
                 ),
                 SizedBox(height: 10),
-                ImageWidget(parentImages: controller.images),
+                ImageWidget(),
               ],
             ),
           ],

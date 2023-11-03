@@ -1,3 +1,7 @@
+import 'package:clout/providers/clouter_register_controller.dart';
+import 'package:clout/screens/join/widgets/clouter/clouter_join_2.dart';
+import 'package:clout/screens/join/widgets/clouter/clouter_join_3.dart';
+import 'package:clout/screens/join/widgets/clouter/clouter_join_4.dart';
 import 'package:clout/screens/mypage/widgets/clouter_update/clouterUpdate2.dart';
 import 'package:clout/screens/mypage/widgets/clouter_update/clouterUpdate3.dart';
 import 'package:flutter/material.dart';
@@ -7,23 +11,12 @@ import 'package:clout/screens/join/widgets/big_button.dart';
 // widgets
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
-import 'package:clout/screens/mypage/widgets/clouter_update/clouterUpdate1.dart';
+import 'package:clout/screens/mypage/widgets/clouter_update/clouter_update_1.dart';
 
-class ClouterUpdate extends StatefulWidget {
-  const ClouterUpdate({Key? key});
+class ClouterUpdate extends StatelessWidget {
+  ClouterUpdate({super.key});
 
-  @override
-  _ClouterUpdateState createState() => _ClouterUpdateState();
-}
-
-class _ClouterUpdateState extends State<ClouterUpdate> {
-  int pageNum = 1;
-
-  void setPageNum(int newPageNum) {
-    setState(() {
-      pageNum = newPageNum;
-    });
-  }
+  final controller = Get.put(ClouterRegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,31 +29,20 @@ class _ClouterUpdateState extends State<ClouterUpdate> {
         ),
       ),
       body: BouncingListview(
-        child: Padding(
-          padding: EdgeInsets.only(left: 25, top: 15, right: 25, bottom: 15),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              if (pageNum == 1) 
-                ClouterUpdate1(),
-              if (pageNum == 2) 
-                ClouterUpdate2(),
-              if (pageNum == 3)
-                ClouterUpdate3(),
-                SizedBox(height: 20),
-              BigButton(
-                title: pageNum == 3 ? '완료' : '다음', // pageNum에 따라 버튼 텍스트 변경
-                function: () {
-                  if (pageNum <= 3) {
-                    setPageNum(pageNum + 1);
-                  }
-                  if (pageNum == 4) {
-                    Get.toNamed('/login');
-                  }
-                },
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            ClouterUpdate1(),
+            ClouterJoin2(),
+            ClouterJoin3(),
+            ClouterJoin4(),
+            SizedBox(height: 20),
+            BigButton(
+              title: '완료', // pageNum에 따라 버튼 텍스트 변경
+              function: () {
+                Get.toNamed('/login');
+              },
+            ),
+          ],
         ),
       ),
     );

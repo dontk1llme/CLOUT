@@ -1,21 +1,31 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:clout/providers/image_picker_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clout/style.dart' as style;
+import 'dart:ui' as ui;
 
-class ImageWidget extends ConsumerWidget {
-  ImageWidget({super.key, this.parentImages});
+class ImageWidget extends ConsumerStatefulWidget {
+  const ImageWidget({super.key, this.parentImages});
   final parentImages;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    double imgBoxSize = MediaQuery.of(context).size.width * 0.2;
-    print(ref);
-    final images = ref.watch(imagePickerProvider);
-    // print(images);
+  ImageWidgetState createState() => ImageWidgetState();
+}
 
+class ImageWidgetState extends ConsumerState<ImageWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final images = ref.watch(imagePickerProvider);
+    load() {
+      ref.read(imagePickerProvider.notifier).loadPreviousImage();
+    }
+
+    load();
+    double imgBoxSize = MediaQuery.of(context).size.width * 0.2;
     Widget imageBox(XFile img) => GestureDetector(
         onTap: () => {
               ref.read(imagePickerProvider.notifier).delImage(img),
@@ -37,7 +47,7 @@ class ImageWidget extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(10)),
                       width: imgBoxSize,
                       height: imgBoxSize)),
-              // 사진 삭제하는 버튼(오른쪽 위 X)
+              // 사진 삭제하는 버튼(오른쪽 위 X버튼)
               Positioned(
                   top: 0,
                   right: 0,

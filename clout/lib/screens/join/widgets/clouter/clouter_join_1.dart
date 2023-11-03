@@ -35,6 +35,7 @@ class ClouterJoin1State extends State<ClouterJoin1> {
               title: '이름 입력',
               label: '이름',
               setState: controller.setName,
+              initialValue: controller.name,
             ),
             SizedBox(height: 10),
             DateInput(),
@@ -47,6 +48,7 @@ class ClouterJoin1State extends State<ClouterJoin1> {
                   title: '휴대전화 번호 입력',
                   label: '휴대전화 번호',
                   setState: controller.setPhoneNumber,
+                  initialValue: controller.phoneNumber,
                 ),
                 Positioned(
                   right: 10,
