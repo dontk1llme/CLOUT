@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8888
 
 spring:
   mvc:
@@ -8,7 +8,7 @@ spring:
   application:
     name: member-service
   datasource:
-    url: jdbc:mariadb://localhost:3306/test
+    url: jdbc:mariadb://localhost:3306/member
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: 1234

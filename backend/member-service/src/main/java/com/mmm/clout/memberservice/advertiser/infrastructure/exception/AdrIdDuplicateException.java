@@ -1,4 +1,4 @@
-package com.mmm.clout.memberservice.advertiser.infrastructure.exceptuion;
+package com.mmm.clout.memberservice.advertiser.infrastructure.exception;
 
 import com.mmm.clout.memberservice.common.exception.CustomBaseException;
 import com.mmm.clout.memberservice.common.exception.ErrorCode;
