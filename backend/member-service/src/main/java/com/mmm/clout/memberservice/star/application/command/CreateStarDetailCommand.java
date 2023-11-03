@@ -20,6 +20,7 @@ public class CreateStarDetailCommand {
     public StarDetail toEntity(Star star) {
         return StarDetail.create(
             star,
+            this.contractId,
             this.score,
             this.giverId
         );

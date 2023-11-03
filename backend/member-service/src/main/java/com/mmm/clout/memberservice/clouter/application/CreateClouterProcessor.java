@@ -3,7 +3,7 @@ package com.mmm.clout.memberservice.clouter.application;
 import com.mmm.clout.memberservice.clouter.application.command.CreateClrCommand;
 import com.mmm.clout.memberservice.clouter.domain.Clouter;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
-import com.mmm.clout.memberservice.clouter.domain.exceptuion.ClrIdDuplicateException;
+import com.mmm.clout.memberservice.clouter.domain.exception.ClrIdDuplicateException;
 import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.memberservice.star.domain.Star;

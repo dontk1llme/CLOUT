@@ -1,12 +1,15 @@
 package com.mmm.clout.memberservice.star.domain;
 
 import com.mmm.clout.memberservice.member.domain.Member;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StarDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,17 +24,16 @@ public class StarDetail {
 
     private Long score;
 
-    @OneToOne
-    @JoinColumn(name = "member_id")
-    private Member rater;
+    private Long giverId;
 
-    public StarDetail(Star star, Long contractId, Long score) {
+    public StarDetail(Star star, Long contractId, Long score, Long giverId) {
         this.star = star;
         this.contractId = contractId;
         this.score = score;
+        this.giverId = giverId;
     }
 
-    public static StarDetail create(Star star, Long contractId, Long score) {
-        return new StarDetail(star,contractId,score);
+    public static StarDetail create(Star star, Long contractId, Long score, Long giverId) {
+        return new StarDetail(star, contractId, score, giverId);
     }
 }

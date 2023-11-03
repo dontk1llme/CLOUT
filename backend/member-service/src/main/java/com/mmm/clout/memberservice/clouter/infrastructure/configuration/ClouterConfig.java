@@ -5,6 +5,7 @@ import com.mmm.clout.memberservice.clouter.application.SelectClouterProcessor;
 import com.mmm.clout.memberservice.clouter.application.UpdateClouterProcessor;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
+import com.mmm.clout.memberservice.star.domain.repository.StarRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,9 +17,10 @@ public class ClouterConfig {
     public CreateClouterProcessor createClouterProcessor(
             ClouterRepository clouterRepository,
             MemberRepository memberRepository,
-            BCryptPasswordEncoder encoder
+            BCryptPasswordEncoder encoder,
+            StarRepository starRepository
     ) {
-        return new CreateClouterProcessor(clouterRepository, memberRepository, encoder);
+        return new CreateClouterProcessor(clouterRepository, memberRepository, encoder, starRepository);
     }
 
     @Bean

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/starts")
+@RequestMapping("/v1/starts")
 @RequiredArgsConstructor
 public class StarController {
 
