@@ -1,7 +1,7 @@
 package com.mmm.clout.memberservice.clouter.infrastructure.persistence;
 
 import com.mmm.clout.memberservice.clouter.domain.Clouter;
-import com.mmm.clout.memberservice.clouter.domain.exceptuion.NotFoundClouterException;
+import com.mmm.clout.memberservice.clouter.domain.exception.NotFoundClouterException;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
 import com.mmm.clout.memberservice.clouter.infrastructure.persistence.jpa.JpaClouterRepository;
 import lombok.RequiredArgsConstructor;

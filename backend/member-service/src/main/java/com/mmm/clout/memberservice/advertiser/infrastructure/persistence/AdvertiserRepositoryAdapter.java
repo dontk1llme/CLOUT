@@ -2,7 +2,7 @@ package com.mmm.clout.memberservice.advertiser.infrastructure.persistence;
 
 import com.mmm.clout.memberservice.advertiser.domain.Advertiser;
 import com.mmm.clout.memberservice.advertiser.domain.repository.AdvertiserRepository;
-import com.mmm.clout.memberservice.advertiser.infrastructure.exception.NotFoundAdvertiser;
+import com.mmm.clout.memberservice.advertiser.domain.exception.NotFoundAdvertiser;
 import com.mmm.clout.memberservice.advertiser.infrastructure.persistence.jpa.JpaAdvertiserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

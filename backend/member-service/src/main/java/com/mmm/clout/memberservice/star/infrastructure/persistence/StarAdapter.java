@@ -1,8 +1,9 @@
 package com.mmm.clout.memberservice.star.infrastructure.persistence;
 
+import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.star.domain.Star;
 import com.mmm.clout.memberservice.star.domain.repository.StarRepository;
-import com.mmm.clout.memberservice.star.infrastructure.exception.NotFoundStarException;
+import com.mmm.clout.memberservice.star.domain.exception.NotFoundStarException;
 import com.mmm.clout.memberservice.star.infrastructure.persistence.jpa.JpaStarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -19,7 +20,7 @@ public class StarAdapter implements StarRepository {
     }
 
     @Override
-    public Star findById(Long memberId) {
-        return jpaStarRepository.findByMemberId(memberId).orElseThrow(NotFoundStarException::new);
+    public Star findByMember(Member member) {
+        return jpaStarRepository.findByMember(member).orElseThrow(NotFoundStarException::new);
     }
 }

@@ -3,7 +3,7 @@ package com.mmm.clout.memberservice.advertiser.application;
 import com.mmm.clout.memberservice.advertiser.application.command.CreateAdrCommand;
 import com.mmm.clout.memberservice.advertiser.domain.Advertiser;
 import com.mmm.clout.memberservice.advertiser.domain.repository.AdvertiserRepository;
-import com.mmm.clout.memberservice.advertiser.infrastructure.exception.AdrIdDuplicateException;
+import com.mmm.clout.memberservice.advertiser.domain.exception.AdrIdDuplicateException;
 import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.memberservice.star.domain.Star;

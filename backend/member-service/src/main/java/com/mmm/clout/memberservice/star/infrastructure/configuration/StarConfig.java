@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.star.infrastructure.configuration;
 
+import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.memberservice.star.application.CreateStarDetailProcessor;
 import com.mmm.clout.memberservice.star.domain.repository.StarDetailRepository;
 import com.mmm.clout.memberservice.star.domain.repository.StarRepository;
@@ -12,7 +13,9 @@ public class StarConfig {
     @Bean
     public CreateStarDetailProcessor createStarDetailProcessor(
         StarDetailRepository starDetailRepository,
-        StarRepository starRepository) {
-        return new CreateStarDetailProcessor(starDetailRepository,starRepository);
+        StarRepository starRepository,
+        MemberRepository memberRepository
+    ) {
+        return new CreateStarDetailProcessor(starDetailRepository,starRepository, memberRepository);
     }
 }

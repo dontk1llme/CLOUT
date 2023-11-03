@@ -51,6 +51,11 @@ public abstract class Member {
         this.totalPoint = 0L;
     }
 
+    public Long updateAvgScore(Long avgScore) {
+        this.avgScore = avgScore;
+        return this.avgScore;
+    }
+
     public Member changePwd(String pwd) {
         this.pwd = pwd;
         return this;

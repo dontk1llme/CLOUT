@@ -1,4 +1,4 @@
-package com.mmm.clout.memberservice.star.infrastructure.exception;
+package com.mmm.clout.memberservice.star.domain.exception;
 
 import com.mmm.clout.memberservice.common.exception.CustomBaseException;
 import com.mmm.clout.memberservice.common.exception.ErrorCode;

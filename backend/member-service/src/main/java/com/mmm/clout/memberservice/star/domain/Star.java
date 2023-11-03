@@ -39,4 +39,15 @@ public class Star {
         Star star = new Star(member);
         return star;
     }
+
+    public Long addTotalScore(Long score) {
+        this.totalScore += score;
+        return totalScore;
+    }
+
+    public Long addNumberOfRaters() {
+        this.numberOfRaters++;
+        return numberOfRaters;
+    }
+
 }
