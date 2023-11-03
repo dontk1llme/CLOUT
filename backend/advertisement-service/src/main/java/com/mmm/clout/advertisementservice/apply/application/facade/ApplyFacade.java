@@ -5,6 +5,7 @@ import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor
 import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadApplicantsByCampaignProcessor;
 import com.mmm.clout.advertisementservice.apply.application.GetApplyProcessor;
+import com.mmm.clout.advertisementservice.apply.application.SelectApplyForContractProcessor;
 import com.mmm.clout.advertisementservice.apply.application.command.CreateApplyCommand;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplicantListByCampaignReader;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplyListByClouterReader;
@@ -23,6 +24,7 @@ public class ApplyFacade {
     private final ReadAllApplyProcessor readAllApplyProcessor;
     private final ReadApplicantsByCampaignProcessor readApplicantsByCampaignProcessor;
     private final GetApplyProcessor getApplyProcessor;
+    private final SelectApplyForContractProcessor selectApplyForContractProcessor;
 
     public Apply create(CreateApplyCommand command) {
         return createApplyProcessor.execute(command);
@@ -42,5 +44,9 @@ public class ApplyFacade {
 
     public String getMessage(Long applyId) {
         return getApplyProcessor.execute(applyId).getApplyMessage();
+    }
+
+    public void selectForContract(Long applyId) {
+        selectApplyForContractProcessor.execute(applyId);
     }
 }
