@@ -28,6 +28,7 @@ class BigButton extends StatelessWidget {
       onPressed: function,
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor,
+        padding: EdgeInsets.symmetric(vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
