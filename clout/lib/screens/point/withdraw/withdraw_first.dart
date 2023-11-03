@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:brasil_fields/brasil_fields.dart';
+import 'package:flutter/services.dart';
 
 // widgets
 import 'package:clout/widgets/header/header.dart';
@@ -17,7 +20,7 @@ class WithdrawFirst extends StatefulWidget {
 
 class _WithdrawFirstState extends State<WithdrawFirst> {
   var bank;
-  TextEditingController accountController = TextEditingController();
+  TextEditingController _accountController = TextEditingController();
 
   setBank(input) {
     setState(() {
@@ -29,7 +32,7 @@ class _WithdrawFirstState extends State<WithdrawFirst> {
   Future goSecond(BuildContext context, String bank, String account) async {
     final arguments = {
       'bank': bank,
-      'account': accountController.text,
+      'account': _accountController.text,
     };
     print(arguments);
     Get.toNamed('/withdrawsecond', arguments: arguments);
@@ -61,8 +64,11 @@ class _WithdrawFirstState extends State<WithdrawFirst> {
                   setBank: setBank,
                 ),
                 TextFormField(
-                  controller: accountController,
+                  controller: _accountController,
                   keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   decoration: InputDecoration(labelText: '계좌번호 (- 없이 입력해주세요)'),
                   textInputAction: TextInputAction.next,
                 ),
@@ -79,8 +85,12 @@ class _WithdrawFirstState extends State<WithdrawFirst> {
           height: 50,
           child: BigButton(
             title: '다음',
-            // destination: "withdrawsecond",
-            function: () => goSecond(context, bank, accountController.text),
+            function: () => {
+              if (bank == null || _accountController.text == null)
+                {Fluttertoast.showToast(msg: "계좌 정보를 입력해주세요.")}
+              else
+                {goSecond(context, bank, _accountController.text)}
+            },
           ),
         ),
       ),

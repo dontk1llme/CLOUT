@@ -1,5 +1,7 @@
+import 'package:clout/providers/clouter_register_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
 
 class CategoryToggle extends StatefulWidget {
   const CategoryToggle({Key? key}) : super(key: key);
@@ -8,42 +10,81 @@ class CategoryToggle extends StatefulWidget {
   _CategoryToggleState createState() => _CategoryToggleState();
 }
 
+class Category {
+  final String name;
+  final String title;
+
+  Category(this.name, this.title);
+}
+
 class _CategoryToggleState extends State<CategoryToggle> {
-  List<bool> _selections1 = List.generate(12, (index) => false);
-  final ImgList = [
-    'all', 'cosmetics','barbell', 'airplane','baby','electronics',
-    'food','location','paw','game','money','more',
+  final List<Category> imgList = [
+    Category('all', '전체'),
+    Category('cosmetics', '패션/뷰티'),
+    Category('barbell', '건강/생활'),
+    Category('airplane', '여행/레저'),
+    Category('baby', '육아'),
+    Category('electronics', '전자제품'),
+    Category('food', '음식'),
+    Category('location', '방문/체험'),
+    Category('paw', '반려동물'),
+    Category('game', '게임'),
+    Category('money', '경제/사업'),
+    Category('more', '기타')
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 8, // 가로 간격 설정
-      runSpacing: 8, // 세로 간격 설정
-      children: List.generate(2, (rowIndex) {
-        return ToggleButtons(
-          onPressed: (int innerIndex) {
-            final currentIndex = rowIndex * 6 + innerIndex;
-            setState(() {
-              _selections1[currentIndex] = !_selections1[currentIndex];
-            });
-          },
-          isSelected: _selections1.sublist(rowIndex * 6, (rowIndex + 1) * 6),
-          borderColor: Color(0xFFF7F8F9),
-          children: List.generate(6, (innerIndex) {
-            final currentIndex = rowIndex * 6 + innerIndex;
-            return Container(
-              width: 55.5,
-              height: 60,
-              decoration: BoxDecoration(
-                color: _selections1[currentIndex] ? style.colors['category'] : Color(0xFFE8ECF4),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Image.asset('assets/images/${ImgList[currentIndex]}.png'),
+    return GetBuilder<ClouterRegisterController>(
+      builder: (controller) => Center(
+        child: Wrap(
+          children: List.generate(3, (rowIndex) {
+            return ToggleButtons(
+              onPressed: (int innerIndex) {
+                final currentIndex = rowIndex * 4 + innerIndex;
+                controller.setSelection(currentIndex);
+              },
+              color: Colors.white,
+              borderColor: Colors.white,
+              selectedBorderColor: Colors.white,
+              fillColor: Colors.white,
+              splashColor: Colors.white,
+              borderWidth: 0,
+              isSelected: controller.selections
+                  .sublist(rowIndex * 4, (rowIndex + 1) * 4),
+              children: List.generate(4, (innerIndex) {
+                final currentIndex = rowIndex * 4 + innerIndex;
+                return Container(
+                  width: 80,
+                  height: 90,
+                  decoration: BoxDecoration(
+                      color: controller.selections[currentIndex]
+                          ? style.colors['main2']
+                          : Color(0xFFE8ECF4),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 3, color: Colors.white)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                            'assets/images/${imgList[currentIndex].name}.png',
+                            height: 50,
+                            fit: BoxFit.fitHeight),
+                        Text(
+                          imgList[currentIndex].title,
+                          style: style.textTheme.bodySmall
+                              ?.copyWith(color: style.colors['text']),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              }),
             );
           }),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

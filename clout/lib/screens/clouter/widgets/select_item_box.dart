@@ -94,28 +94,31 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                 ],
               ),
               SizedBox(height: 10),
-              Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: BigButton(
-                        title: '아니요',
-                        textColor: Colors.black,
-                        buttonColor: style.colors['lightgray'],
-                        function: () {
-                          Navigator.of(context).pop();
-                        }),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Flexible(
-                      flex: 1,
-                      child: BigButton(
-                        title: '채택하기',
-                      )),
-                ],
-              )
+              SizedBox(
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: BigButton(
+                            title: '아니요',
+                            textColor: Colors.black,
+                            buttonColor: style.colors['lightgray'],
+                            function: () {
+                              Get.back();
+                            }),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                          flex: 1,
+                          child: BigButton(
+                            title: '채택하기',
+                            function: () {},
+                          )),
+                    ],
+                  ))
             ],
           ),
         );
@@ -219,30 +222,32 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                   SizedBox(height: 30),
                 ],
               ),
-              Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: BigButton(
-                        title: '아니요',
-                        textColor: Colors.black,
-                        buttonColor: style.colors['lightgray'],
-                        function: () {
-                          Navigator.of(context).pop();
-                        }),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Flexible(
+              SizedBox(
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Expanded(
                       flex: 1,
                       child: BigButton(
-                          title: '채택하기',
+                          title: '아니요',
+                          textColor: Colors.black,
+                          buttonColor: style.colors['lightgray'],
                           function: () {
-                            // Navigator.of(context).pop();
-                            _selectClouter();
-                          })),
-                ],
+                            Get.back();
+                          }),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: BigButton(
+                            title: '채택하기',
+                            function: () {
+                              _selectClouter();
+                            })),
+                  ],
+                ),
               )
             ],
           ),

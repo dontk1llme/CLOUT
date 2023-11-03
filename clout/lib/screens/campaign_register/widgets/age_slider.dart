@@ -11,7 +11,6 @@ class AgeSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(AgeController(), permanent: true);
     return GetBuilder<AgeController>(builder: (controller) {
       return SfRangeSliderTheme(
           data: SfRangeSliderThemeData(
