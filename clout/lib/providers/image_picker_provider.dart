@@ -1,5 +1,10 @@
+import 'dart:typed_data';
+
+import 'package:clout/providers/clouter_register_controller.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 final imagePickerProvider =
@@ -46,9 +51,26 @@ class ImageState extends StateNotifier<List<XFile>> {
 
   final ImagePickerService picker = ImagePickerService();
 
+  final registerController = Get.find<ClouterRegisterController>();
+
   @override
   set state(List<XFile> value) {
     super.state = value;
+  }
+
+// 기존 사진 가져오는 로직(회원 정보 수정때 사용해야함)
+  loadPreviousImage() async {
+    if (registerController.images.isNotEmpty) {
+      var previousImg = registerController.images;
+      List<XFile> imgList = [];
+      for (int i = 0; i < previousImg.length; i++) {
+        final ByteData bytes = await rootBundle.load(previousImg[i]);
+        final Uint8List target = bytes.buffer.asUint8List();
+        imgList.add(XFile.fromData(target));
+        print('따잇');
+      }
+      state = imgList;
+    }
   }
 
   delImage(XFile image) {
@@ -59,7 +81,8 @@ class ImageState extends StateNotifier<List<XFile>> {
 
   void addImage(List<XFile> value) {
     var list = [...super.state];
-    print(super.state);
+    print('여기? : ${super.state}');
+
     if (list.isEmpty) {
       state = value;
     } else {

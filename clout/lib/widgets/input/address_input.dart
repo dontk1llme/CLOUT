@@ -60,6 +60,7 @@ class AddressInput extends StatelessWidget {
             title: '상세 주소 입력',
             label: '상세 주소',
             setState: controller.setDetailAddress,
+            initialValue: controller.detailAddress,
           ),
         ],
       ),

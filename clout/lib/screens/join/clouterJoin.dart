@@ -1,6 +1,6 @@
 import 'package:clout/providers/clouter_register_controller.dart';
 import 'package:clout/providers/image_picker_provider.dart';
-import 'package:clout/screens/join/widgets/clouter/clouterJoin2.dart';
+import 'package:clout/screens/join/widgets/clouter/clouter_join_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,9 +12,9 @@ import '../../style.dart' as style;
 
 import 'package:clout/screens/join/widgets/big_button.dart';
 
-import 'package:clout/screens/join/widgets/clouter/clouterJoin1.dart';
-import 'package:clout/screens/join/widgets/clouter/clouterJoin3.dart';
-import 'package:clout/screens/join/widgets/clouter/clouterJoin4.dart';
+import 'package:clout/screens/join/widgets/clouter/clouter_join_1.dart';
+import 'package:clout/screens/join/widgets/clouter/clouter_join_3.dart';
+import 'package:clout/screens/join/widgets/clouter/clouter_join_4.dart';
 
 class ClouterJoin extends ConsumerStatefulWidget {
   const ClouterJoin({super.key});
@@ -60,10 +60,9 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
     }
   }
 
-  Future runImageProvider() async {
-    final newImages = ref.watch(imagePickerProvider);
-    registerController.setImages(newImages);
-  }
+  // Future runImageProvider() async {
+  //   final newImages = ref.watch(imagePickerProvider);
+  // }
 
   showSnackBar() {
     Get.snackbar(
@@ -185,7 +184,7 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
                                 if (pageNum != 2) {
                                   setPageNum(pageNum + 1);
                                 } else {
-                                  await runImageProvider();
+                                  // await runImageProvider();
                                   setPageNum(pageNum + 1);
                                 }
                               } else {
