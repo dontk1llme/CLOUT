@@ -6,6 +6,8 @@ import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
 import com.mmm.clout.memberservice.clouter.domain.exceptuion.ClrIdDuplicateException;
 import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
+import com.mmm.clout.memberservice.star.domain.Star;
+import com.mmm.clout.memberservice.star.domain.repository.StarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +18,21 @@ public class CreateClouterProcessor {
     private final ClouterRepository clouterRepository;
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
+    private final StarRepository starRepository;
 
     @Transactional
     public Clouter execute(CreateClrCommand command) {
         checkUserId(command.getUserId());
         Clouter clouter = command.toEntity();
         clouter.changePwd(encoder.encode(clouter.getPwd()));
-        return clouterRepository.save(clouter);
+        Clouter savedClouter = clouterRepository.save(clouter);
+        initStar(savedClouter);
+        return savedClouter;
+    }
+
+
+    private Star initStar(Member member) {
+        return starRepository.save(Star.init(member));
     }
 
     private boolean checkUserId(String userId) {

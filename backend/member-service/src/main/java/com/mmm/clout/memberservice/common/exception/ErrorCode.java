@@ -24,7 +24,8 @@ public enum ErrorCode {
     CLOUTER_ID_DUPLICATE(HttpStatus.CONFLICT, "CLOUTER_ID_DUPLICATE", "현재 아이디는 다른 유저가 사용하고 있습니다."),
     NOT_F0UND_ADVERTISER(HttpStatus.NOT_FOUND, "NOT_F0UND_ADVERTISER", "존재하지 않는 유저 입니다."),
     NOT_F0UND_CLOUTER(HttpStatus.NOT_FOUND, "NOT_F0UND_CLOUTER", "존재하지 않는 유저 입니다."),
-    NOT_FOUND_STAR(HttpStatus.NOT_FOUND, "NOT_FOUND_STAR", "존재하지 않는 별점입니다.");
+    NOT_FOUND_STAR(HttpStatus.NOT_FOUND, "NOT_FOUND_STAR", "존재하지 않는 별점입니다."),
+    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "NOT_FOUND_MEMBER", "존재하지 않는 유저 입니다.");
 
 
     private final HttpStatus status;
