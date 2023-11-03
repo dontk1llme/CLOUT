@@ -18,13 +18,15 @@ class Campaign {
   String firstImg = 'assets/images/itemImage.jpg';
 }
 
-Campaign campaign = Campaign();
-
 class InfiniteScrollController extends GetxController {
   var scrollController = ScrollController().obs;
 
+  Campaign campaign = Campaign();
   int pageSize = 20;
-  List<Campaign> data = [campaign];
+  // List<Campaign> data = [campaign];
+  // List data = <int>[].obs;
+  List<Campaign> data = <Campaign>[].obs;
+
   var isLoading = false;
   var hasMore = false;
 
@@ -34,7 +36,8 @@ class InfiniteScrollController extends GetxController {
 
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels ==
-          scrollController.value.position.maxScrollExtent) {
+              scrollController.value.position.maxScrollExtent &&
+          hasMore) {
         _getData();
       }
     });
@@ -49,29 +52,19 @@ class InfiniteScrollController extends GetxController {
 
     int offset = data.length;
     // 캠페인 추가하는 통신(아니면 다른 정3보) 여기에 작성해야될듯
-    var appendData = List<Campaign>.generate(20, (i) {
-      return Campaign()
-        ..campaignId = i + 1 + offset
-        ..category = '음식'
-        ..productName = '못골정미소 백미 5kg'
-        ..pay = 1000
-        ..campaignSubject = '못골영농조합법인'
-        ..applicantCount = 2
-        ..recruitCount = 5
-        ..selectedPlatform = [
-          "YouTube",
-          // "Instagram",
-          "TikTok",
-        ]
-        ..starRating = 20
-        ..firstImg = 'assets/images/itemImage.jpg';
+
+    // 데이터 몇개씩 보여줄건지? (10개씩 무한스크롤)
+    var appendData = List<Campaign>.generate(10, (i) {
+      var campaign = Campaign();
+      campaign.campaignId = i + 1 + offset;
+      return campaign;
     });
     data.addAll(appendData);
 
     print(data.length);
 
     isLoading = false;
-    hasMore = data.length < 20;
+    hasMore = data.length < 30;
     update();
   }
 
