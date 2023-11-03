@@ -220,6 +220,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                   setText: setBuisnessNumber,
                 ),
                 SizedBox(height: 10),
+                //controller 나오면 그거 맞춰서 주소창 바꾸기
                 Input(
                   placeholder: '업체 주소 입력',
                   setText: setBuisnessAddress,
