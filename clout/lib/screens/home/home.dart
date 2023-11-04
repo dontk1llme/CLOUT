@@ -1,5 +1,6 @@
 // Global
 import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/widgets/image_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -242,6 +243,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: MyDrawer(),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(80),
           child: Header(

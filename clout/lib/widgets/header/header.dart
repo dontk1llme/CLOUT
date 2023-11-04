@@ -26,7 +26,11 @@ class HeaderState extends ConsumerState<Header> {
       centerTitle: widget.header == 4 ? false : true,
       iconTheme: IconThemeData(color: Colors.black),
       leading: widget.header == 0 || widget.header == 1
-          ? IconButton(onPressed: () {}, icon: Icon(Icons.menu_outlined))
+          ? IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              icon: Icon(Icons.menu_outlined))
           : IconButton(
               onPressed: () {
                 ref.invalidate(
