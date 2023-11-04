@@ -5,16 +5,20 @@ import 'package:clout/style.dart' as style;
 
 // Widgets
 import 'package:clout/widgets/input/input_elements/utilities/numeric_range_formatter.dart';
-import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 //이건 getX 쓸때 쓰는 컴포넌트임 일반으로 쓰는 컴포넌트는 followercount_input_dialog.dart
 class FollowercountStateDialog extends StatelessWidget {
   FollowercountStateDialog(
-      {super.key, required this.title, required this.hintText});
+      {super.key,
+      required this.title,
+      required this.hintText,
+      required this.controllerTag});
   final title;
   final hintText;
+  final controllerTag;
+
   void openDialog() {
     Get.defaultDialog(
       title: title,
@@ -70,6 +74,7 @@ class FollowercountStateDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FollowerContoller>(
+      tag: controllerTag,
       builder: (controller) => Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

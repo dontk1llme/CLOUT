@@ -46,76 +46,82 @@ class _ClouterList extends State<ClouterList> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    // Get.put(RegionController());
     return Scaffold(
-        backgroundColor:
-            style.colors['white'], // 기본 backgroundColor 밝은 회색이길래 넣은 코드
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(70),
-            child: Header(
-              header: 1,
-              headerTitle: '클라우터 목록',
-            )),
-        body: BouncingListview(
-          child: Column(
-            children: [
-              MySearchBar(), // 검색바 위젯 추가
-              CategoryList(), // Category 위젯 추가
-              SearchDetailButton(), // 검색 조건 설정 버튼
-              Padding(
-                padding: EdgeInsets.only(left: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start, // 가장 왼쪽으로 정렬
-                  children: <Widget>[
-                    Text(
-                      '전체보기',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 19,
-                      ),
+      backgroundColor:
+          style.colors['white'], // 기본 backgroundColor 밝은 회색이길래 넣은 코드
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+            header: 1,
+            headerTitle: '클라우터 목록',
+          )),
+      body: BouncingListview(
+        child: Column(
+          children: [
+            MySearchBar(), // 검색바 위젯 추가
+            CategoryList(), // Category 위젯 추가
+            SearchDetailButton(), // 검색 조건 설정 버튼
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start, // 가장 왼쪽으로 정렬
+                children: <Widget>[
+                  Text(
+                    '전체보기',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 19,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            FractionallySizedBox(
+              widthFactor: screenWidth > 400 ? 0.9 : 1,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  spacing: screenWidth > 400 ? 20 : 10,
+                  runSpacing: screenWidth > 400 ? 20 : 10,
+                  // alignment: Alignment.,
+                  children: [
+                    ClouterItemBox(
+                      nickname: clouter.nickname,
+                      starRating: clouter.starRating,
+                      fee: clouter.fee,
+                      category: clouter.category,
+                      contractCount: clouter.contractCount,
+                      selectedPlatform: clouter.selectedPlatform,
+                      firstImg: clouter.firstImg,
+                    ),
+                    ClouterItemBox(
+                      nickname: clouter.nickname,
+                      starRating: clouter.starRating,
+                      fee: clouter.fee,
+                      category: clouter.category,
+                      contractCount: clouter.contractCount,
+                      selectedPlatform: clouter.selectedPlatform,
+                      firstImg: clouter.firstImg,
+                    ),
+                    ClouterItemBox(
+                      nickname: clouter.nickname,
+                      starRating: clouter.starRating,
+                      fee: clouter.fee,
+                      category: clouter.category,
+                      contractCount: clouter.contractCount,
+                      selectedPlatform: clouter.selectedPlatform,
+                      firstImg: clouter.firstImg,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              FractionallySizedBox(
-                  widthFactor: screenWidth > 400 ? 0.9 : 1,
-                  child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Wrap(
-                          direction: Axis.horizontal,
-                          spacing: screenWidth > 400 ? 20 : 10,
-                          runSpacing: screenWidth > 400 ? 20 : 10,
-                          // alignment: Alignment.,
-                          children: [
-                            ClouterItemBox(
-                                nickname: clouter.nickname,
-                                starRating: clouter.starRating,
-                                fee: clouter.fee,
-                                category: clouter.category,
-                                contractCount: clouter.contractCount,
-                                selectedPlatform: clouter.selectedPlatform,
-                                firstImg: clouter.firstImg),
-                            ClouterItemBox(
-                                nickname: clouter.nickname,
-                                starRating: clouter.starRating,
-                                fee: clouter.fee,
-                                category: clouter.category,
-                                contractCount: clouter.contractCount,
-                                selectedPlatform: clouter.selectedPlatform,
-                                firstImg: clouter.firstImg),
-                            ClouterItemBox(
-                                nickname: clouter.nickname,
-                                starRating: clouter.starRating,
-                                fee: clouter.fee,
-                                category: clouter.category,
-                                contractCount: clouter.contractCount,
-                                selectedPlatform: clouter.selectedPlatform,
-                                firstImg: clouter.firstImg),
-                          ]))),
-              SizedBox(height: 30),
-            ],
-          ),
-        ));
+            ),
+            SizedBox(height: 30),
+          ],
+        ),
+      ),
+    );
   }
 }

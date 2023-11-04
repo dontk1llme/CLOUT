@@ -5,8 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
-class AdvertiserJoin1 extends StatelessWidget {
-  const AdvertiserJoin1({super.key});
+class AdvertiserJoinOrModify1 extends StatelessWidget {
+  const AdvertiserJoinOrModify1(
+      {super.key, required this.modifying, required this.controllerTag});
+  final modifying;
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +29,7 @@ class AdvertiserJoin1 extends StatelessWidget {
             title: '업체명 입력',
             label: '업체명',
             setState: controller.setBuisnessName,
+            enabled: !modifying,
           ),
           SizedBox(height: 10),
           JoinInput(
@@ -34,6 +38,7 @@ class AdvertiserJoin1 extends StatelessWidget {
             title: '대표 이름 입력',
             label: '대표 이름',
             setState: controller.setHeadName,
+            enabled: !modifying,
           ),
           SizedBox(height: 10),
           JoinInput(
@@ -42,9 +47,10 @@ class AdvertiserJoin1 extends StatelessWidget {
             title: '사업자등록번호 입력',
             label: '사업자등록번호',
             setState: controller.setBuisnessNumber,
+            enabled: !modifying,
           ),
           SizedBox(height: 10),
-          AddressInput(),
+          AddressInput(controllerTag: controllerTag),
         ],
       ),
     );

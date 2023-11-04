@@ -2,6 +2,7 @@ import 'package:clout/providers/address_controller.dart';
 import 'package:clout/providers/date_input_controller.dart';
 import 'package:clout/providers/fee_controller.dart';
 import 'package:clout/providers/follower_controller.dart';
+import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/providers/region_controller.dart';
 import 'package:get/get.dart';
@@ -28,12 +29,6 @@ class ClouterRegisterController extends GetxController {
   var password;
   var checkPassword;
   var nickName = '박재민짱';
-  var images = [
-    'assets/images/clouterImage.jpg',
-    'assets/images/itemImage.jpg',
-    'assets/images/more.png',
-  ];
-  // var images =[];
 
   // List<bool> selections = List.generate(12, (index) => false);
   List<bool> selections = [
@@ -51,12 +46,34 @@ class ClouterRegisterController extends GetxController {
     true,
   ];
 
-  final addressController = Get.put(AddressController());
-  final platformSlectController = Get.put(PlatformSelectController());
-  final followerController = Get.put(FollowerContoller());
-  final feeController = Get.put(FeeController());
-  final regionController = Get.put(RegionController());
-  final dateController = Get.put(DateInputController());
+  final addressController = Get.put(
+    AddressController(),
+    tag: 'clouterRegister',
+  );
+  final platformSlectController = Get.put(
+    PlatformSelectController(),
+    tag: 'clouterRegister',
+  );
+  final followerController = Get.put(
+    FollowerContoller(),
+    tag: 'clouterRegister',
+  );
+  final feeController = Get.put(
+    FeeController(),
+    tag: 'clouterRegister',
+  );
+  final regionController = Get.put(
+    RegionController(),
+    tag: 'clouterRegister',
+  );
+  final dateController = Get.put(
+    DateInputController(),
+    tag: 'clouterRegister',
+  );
+  final imagePickerController = Get.put(
+    ImagePickerController(),
+    tag: 'clouterRegister',
+  );
 
   setName(input) {
     name = input;
@@ -87,11 +104,6 @@ class ClouterRegisterController extends GetxController {
 
   setNickName(input) {
     nickName = input;
-  }
-
-  setImages(input) {
-    images = input;
-    print(images);
   }
 
   setSelection(index) {
@@ -151,7 +163,7 @@ class ClouterRegisterController extends GetxController {
     print('닉네임');
     print(nickName);
     print('사진들');
-    print(images);
+    // print(images);
     print('광고 가능 플랫폼');
     print(platformSlectController.platforms);
     print('각 아이디');

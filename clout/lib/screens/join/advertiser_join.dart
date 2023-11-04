@@ -1,17 +1,13 @@
 import 'package:clout/providers/advertiser_register_controller.dart';
-import 'package:clout/screens/join/widgets/advertiser/advertiser_join_1.dart';
-import 'package:clout/screens/join/widgets/advertiser/advertiser_join_2.dart';
-import 'package:clout/screens/join/widgets/join_input.dart';
+import 'package:clout/screens/join/widgets/advertiser/advertiser_join_or_modify_1.dart';
+import 'package:clout/screens/join/widgets/advertiser/advertiser_join_or_modify_2.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
-import 'package:clout/widgets/input/address_input.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../style.dart' as style;
 import 'package:clout/screens/join/widgets/big_button.dart';
-import 'package:clout/screens/join/widgets/small_button.dart';
-import 'package:clout/screens/join/numberVerify.dart';
 
 class AdvertiserJoin extends StatefulWidget {
   const AdvertiserJoin({super.key});
@@ -155,8 +151,10 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                             flex: 2,
                             child: Column(children: [
                               //페이지별로 보여주기
-                              if (pageNum == 1) AdvertiserJoin1(),
-                              if (pageNum == 2) AdvertiserJoin2(),
+                              if (pageNum == 1)
+                                AdvertiserJoinOrModify1(modifying: false, controllerTag: 'advertiserRegister'),
+                              if (pageNum == 2)
+                                AdvertiserJoinOrModify2(modifying: false),
                             ]),
                           ),
                           SizedBox(height: 20),
