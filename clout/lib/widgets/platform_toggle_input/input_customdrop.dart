@@ -64,6 +64,7 @@ class InputCustomdrop extends StatelessWidget {
                                   ),
                                 ),
                                 FollowercountStateDialog(
+                                  controllerTag: 'clouterRegister',
                                   title: index != 2 ? '팔로워 수' : '구독자 수',
                                   hintText: '팔로워/구독자 수 입력',
                                 ),
@@ -71,12 +72,14 @@ class InputCustomdrop extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             JoinInput(
-                                keyboardType: TextInputType.text,
-                                maxLength: 30,
-                                title: index != 2 ? '계정 링크 입력' : '채널 링크 입력',
-                                label: index != 2 ? '계정 링크' : '채널 링크',
-                                index: index,
-                                setState: controller.setLink),
+                              keyboardType: TextInputType.text,
+                              maxLength: 30,
+                              title: index != 2 ? '계정 링크 입력' : '채널 링크 입력',
+                              label: index != 2 ? '계정 링크' : '채널 링크',
+                              index: index,
+                              setState: controller.setLink,
+                              enabled: true,
+                            ),
                             SizedBox(height: 10),
                             JoinInput(
                               keyboardType: TextInputType.text,
@@ -85,6 +88,7 @@ class InputCustomdrop extends StatelessWidget {
                               label: index != 2 ? '계정명' : '채널명',
                               index: index,
                               setState: controller.setId,
+                              enabled: true,
                             ),
                             SizedBox(height: 10),
                             Text(

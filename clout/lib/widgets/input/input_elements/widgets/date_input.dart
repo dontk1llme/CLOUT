@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 class DateInput extends StatelessWidget {
   DateInput({
     super.key,
+    required this.controllerTag,
   });
+  final controllerTag;
 
   showDatePickerDialog() {
     Get.defaultDialog(
@@ -32,6 +34,7 @@ class DateInput extends StatelessWidget {
         ),
       ],
       content: GetBuilder<DateInputController>(
+        tag: controllerTag,
         builder: (controller) => SizedBox(
           height: 250,
           width: 300,
@@ -55,6 +58,7 @@ class DateInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateInputController>(
+      tag: controllerTag,
       builder: (controller) => OutlinedButton(
         onPressed: showDatePickerDialog,
         style: OutlinedButton.styleFrom(

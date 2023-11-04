@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class RegionMultiSelect extends StatefulWidget {
-  RegionMultiSelect({super.key});
-
+  RegionMultiSelect({super.key, required this.controllerTag});
+  final controllerTag;
   static List<String> regions = [
     '전체',
     '서울',
@@ -42,21 +42,22 @@ class _RegionMultiSelectState extends State<RegionMultiSelect> {
 
   @override
   Widget build(BuildContext context) {
-    final regionController = Get.put(RegionController());
-    var savedItems =
-        regionController.selectedRegions.map((e) => e as String).toList();
+    // final regionController = Get.put(RegionController());
+    // var savedItems =
+    //     regionController.selectedRegions.map((e) => e as String).toList();
 
-    setState(() {
-      valuesHere = savedItems;
-    });
+    // setState(() {
+    //   valuesHere = savedItems;
+    // });
 
     return GetBuilder<RegionController>(
+        tag: widget.controllerTag,
         builder: (controller) => Container(
             decoration: BoxDecoration(
                 border: Border.all(width: 1, color: style.colors['gray']!),
                 borderRadius: BorderRadius.circular(5)),
             child: MultiSelectBottomSheetField<String?>(
-              initialValue: savedItems,
+              initialValue: controller.selectedRegions,
               initialChildSize: 0.7,
               maxChildSize: 0.9,
               minChildSize: 0.5,

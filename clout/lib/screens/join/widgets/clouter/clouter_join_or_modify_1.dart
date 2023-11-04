@@ -7,17 +7,25 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 
-class ClouterJoin1 extends StatefulWidget {
-  ClouterJoin1({Key? key}) : super(key: key);
+class ClouterJoinOrModify1 extends StatefulWidget {
+  ClouterJoinOrModify1({
+    super.key,
+    required this.modifying,
+    required this.controllerTag,
+  });
+
+  final controllerTag;
+  final modifying;
 
   @override
-  ClouterJoin1State createState() => ClouterJoin1State();
+  ClouterJoinOrModify1State createState() => ClouterJoinOrModify1State();
 }
 
-class ClouterJoin1State extends State<ClouterJoin1> {
+class ClouterJoinOrModify1State extends State<ClouterJoinOrModify1> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ClouterRegisterController>(
+      tag: widget.controllerTag,
       builder: (controller) => FractionallySizedBox(
         widthFactor: 0.9,
         child: Column(
@@ -36,9 +44,10 @@ class ClouterJoin1State extends State<ClouterJoin1> {
               label: '이름',
               setState: controller.setName,
               initialValue: controller.name,
+              enabled: !widget.modifying,
             ),
             SizedBox(height: 10),
-            DateInput(),
+            DateInput(controllerTag: widget.controllerTag),
             SizedBox(height: 10),
             Stack(
               children: [
@@ -49,6 +58,7 @@ class ClouterJoin1State extends State<ClouterJoin1> {
                   label: '휴대전화 번호',
                   setState: controller.setPhoneNumber,
                   initialValue: controller.phoneNumber,
+                  enabled: true,
                 ),
                 Positioned(
                   right: 10,
@@ -73,7 +83,7 @@ class ClouterJoin1State extends State<ClouterJoin1> {
               style: style.textTheme.bodyMedium,
               textAlign: TextAlign.left,
             ),
-            AddressInput(),
+            AddressInput(controllerTag: widget.controllerTag),
           ],
         ),
       ),
