@@ -1,3 +1,4 @@
+import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/widgets/search_detail_bottom_sheet/search_detail_button.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -43,6 +44,7 @@ class _MyCampaignList extends State<CampaignList> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+        drawer: MyDrawer(),
         backgroundColor: style.colors['white'],
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70),
