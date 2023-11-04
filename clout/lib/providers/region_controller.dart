@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class RegionController extends GetxController {
-  var selectedRegions = [];
+  List<String> selectedRegions = [];
 
   void setSelectedRegions(input) {
     selectedRegions = input;

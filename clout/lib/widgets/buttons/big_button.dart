@@ -1,4 +1,3 @@
-import 'package:clout/providers/image_picker_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
@@ -11,6 +10,7 @@ class BigButton extends StatelessWidget {
     required this.function,
     this.textColor,
     this.buttonColor,
+    this.icon,
   }) {
     textColor ??= style.colors['white'];
     buttonColor ??= style.colors['main1'];
@@ -21,6 +21,7 @@ class BigButton extends StatelessWidget {
   // 단순 페이지 이동이 아니라 조건(로그인, 검색 조건 설정같은 것이 붙을 경우)
   Color? textColor;
   Color? buttonColor;
+  final icon;
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +34,30 @@ class BigButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      child: Text(
-        title,
-        style: style.textTheme.headlineLarge?.copyWith(
-          color: textColor,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+      child: icon != null
+          ? Row(
+              children: [
+                SizedBox(width: 20),
+                icon,
+                SizedBox(width: 20),
+                Text(
+                  title,
+                  style: style.textTheme.headlineLarge?.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.w600,
+                    height: 1.2,
+                  ),
+                ),
+              ],
+            )
+          : Text(
+              title,
+              style: style.textTheme.headlineLarge?.copyWith(
+                color: textColor,
+                fontWeight: FontWeight.w600,
+                height: 1.2,
+              ),
+            ),
     );
   }
 }

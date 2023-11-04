@@ -1,4 +1,5 @@
 // global
+import 'package:clout/providers/user_controller.dart';
 import 'package:clout/screens/join/find_password.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -54,6 +55,13 @@ class _LoginState extends State<Login> {
 
   doLogin() {
     // 유저가 맞는지 확인하는 api 여기에 두고 맞으면 main으로 이동하게
+    final userController = Get.put(UserController(), permanent: true);
+
+    // 유저가 클라우터일 경우
+    // userController.setClouter();
+    // 유저가 광고주일 경우
+    userController.setAdvertiser();
+
     // Get.ofAllNamed('/home')이걸로 바꾸기 => 이전으로 눌렀을때 로그인 페이지로 안돌아가게
     Get.toNamed('/home');
   }

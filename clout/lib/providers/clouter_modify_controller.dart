@@ -38,12 +38,30 @@ class ClouterModifyController extends GetxController {
     true,
   ];
 
-  final dateController = Get.put(DateInputController());
-  final addressController = Get.put(AddressController());
-  final platformSlectController = Get.put(PlatformSelectController());
-  final followerController = Get.put(FollowerContoller());
-  final feeController = Get.put(FeeController());
-  final regionController = Get.put(RegionController());
+  final dateController = Get.put(
+    DateInputController(),
+    tag: 'clouterModify',
+  );
+  final addressController = Get.put(
+    AddressController(),
+    tag: 'clouterModify',
+  );
+  final platformSlectController = Get.put(
+    PlatformSelectController(),
+    tag: 'clouterModify',
+  );
+  final followerController = Get.put(
+    FollowerContoller(),
+    tag: 'clouterModify',
+  );
+  final feeController = Get.put(
+    FeeController(),
+    tag: 'clouterModify',
+  );
+  final regionController = Get.put(
+    RegionController(),
+    tag: 'clouterModify',
+  );
 
   setName(input) {
     name = input;

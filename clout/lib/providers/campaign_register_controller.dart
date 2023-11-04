@@ -1,6 +1,7 @@
 import 'package:clout/providers/age_controller.dart';
 import 'package:clout/providers/fee_controller.dart';
 import 'package:clout/providers/follower_controller.dart';
+import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/providers/region_controller.dart';
 import 'package:get/get.dart';
@@ -11,14 +12,32 @@ class CampaignRegisterController extends GetxController {
       recruitCount = 1,
       offeringItems,
       itemDetail,
-      images,
       signature;
 
-  final ageController = Get.put(AgeController());
-  final platformController = Get.put(PlatformSelectController());
-  final payController = Get.put(FeeController());
-  final followerController = Get.put(FollowerContoller());
-  final regionController = Get.put(RegionController());
+  final ageController = Get.put(
+    AgeController(),
+    tag: 'campaignRegister',
+  );
+  final platformController = Get.put(
+    PlatformSelectController(),
+    tag: 'campaignRegister',
+  );
+  final payController = Get.put(
+    FeeController(),
+    tag: 'campaignRegister',
+  );
+  final followerController = Get.put(
+    FollowerContoller(),
+    tag: 'campaignRegister',
+  );
+  final regionController = Get.put(
+    RegionController(),
+    tag: 'campaignRegister',
+  );
+  final imagePickerController = Get.put(
+    ImagePickerController(),
+    tag: 'campaignRegister',
+  );
 
   setCategory(input) {
     category = input;
@@ -45,12 +64,6 @@ class CampaignRegisterController extends GetxController {
     update();
   }
 
-  setImages(input) {
-    images = input;
-    update();
-    print(images);
-  }
-
   setSignature(input) {
     signature = input;
 
@@ -63,7 +76,6 @@ class CampaignRegisterController extends GetxController {
     print(recruitCount);
     print(offeringItems);
     print(itemDetail);
-    print(images);
     print(signature);
     print(ageController.ageRanges.start);
     print(ageController.ageRanges.end);
