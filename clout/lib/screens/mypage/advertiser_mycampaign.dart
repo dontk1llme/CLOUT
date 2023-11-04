@@ -1,9 +1,9 @@
-import 'package:clout/widgets/buttons/filter_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
+import 'package:clout/widgets/buttons/filter_button.dart';
 import 'package:clout/screens/mypage/widgets/content_text.dart';
 import 'package:clout/screens/mypage/widgets/gray_title.dart';
 import 'package:clout/screens/mypage/widgets/info_item_box.dart';
