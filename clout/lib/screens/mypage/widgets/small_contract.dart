@@ -17,6 +17,7 @@ class _SmallContractState extends State<SmallContract> {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+      margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         color: style.colors['white'],
         borderRadius: BorderRadius.circular(5),

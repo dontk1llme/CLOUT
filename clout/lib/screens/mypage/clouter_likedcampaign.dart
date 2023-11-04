@@ -10,6 +10,23 @@ import 'package:clout/widgets/list/campaign_item_box.dart';
 // controllers
 import 'package:clout/providers/infinite_scroll_controller.dart';
 
+// class Campaign {
+//   int campaignId = 1;
+//   String category = '음식';
+//   String productName = '못골정미소 백미 5kg';
+//   int pay = 1000;
+//   String campaignSubject = '못골영농조합법인';
+//   int applicantCount = 2;
+//   int recruitCount = 5;
+//   List<String> selectedPlatform = [
+//     "YouTube",
+//     // "Instagram",
+//     "TikTok",
+//   ];
+//   int starRating = 20;
+//   String firstImg = 'assets/images/itemImage.jpg';
+// }
+
 class ClouterLikedCampaign extends GetView<InfiniteScrollController> {
   ClouterLikedCampaign({super.key});
 
