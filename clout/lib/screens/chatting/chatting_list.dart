@@ -1,10 +1,13 @@
-import 'package:clout/screens/chatting/widgets/chatting_item_box.dart';
-import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
+// utilties
+import 'package:clout/utilities/bouncing_listview.dart';
+
 // widgets
+import 'package:clout/screens/chatting/widgets/chatting_item_box.dart';
+import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/widgets/header/header.dart';
 
 class ChattingList extends StatefulWidget {
@@ -43,6 +46,7 @@ class _ChattingListState extends State<ChattingList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyDrawer(),
       backgroundColor: style.colors['white'],
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(70),
