@@ -2,26 +2,14 @@ import 'package:clout/providers/address_controller.dart';
 import 'package:clout/providers/date_input_controller.dart';
 import 'package:clout/providers/fee_controller.dart';
 import 'package:clout/providers/follower_controller.dart';
-import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/providers/region_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class ClouterRegisterController extends GetxController {
-  // var name;
-  // var gender;
-  // var phoneNumber;
-  // var id;
-  // var password;
-  // var checkPassword;
-  // var nickName;
-  // var images;
-  // List<bool> selections = List.generate(12, (index) => false);
-
-// 회원 정보 수정이므로 기존 정보 서버에서 받아와서 저장해야됨
+class ClouterModifyController extends GetxController {
+  // 회원 정보 수정이므로 기존 정보 서버에서 받아와서 저장해야됨
   // 일단은 임시 데이터 설정
-
   var name = '박재민';
   var gender = '';
   var phoneNumber = '01055040749';
@@ -29,11 +17,15 @@ class ClouterRegisterController extends GetxController {
   var password;
   var checkPassword;
   var nickName = '박재민짱';
-
+  var images = [
+    'assets/images/clouterImage.jpg',
+    'assets/images/itemImage.jpg',
+    'assets/images/mone.png',
+  ];
   // List<bool> selections = List.generate(12, (index) => false);
   List<bool> selections = [
-    true,
     false,
+    true,
     false,
     true,
     false,
@@ -46,33 +38,29 @@ class ClouterRegisterController extends GetxController {
     true,
   ];
 
+  final dateController = Get.put(
+    DateInputController(),
+    tag: 'clouterModify',
+  );
   final addressController = Get.put(
     AddressController(),
-    tag: 'clouterRegister',
+    tag: 'clouterModify',
   );
   final platformSlectController = Get.put(
     PlatformSelectController(),
-    tag: 'clouterRegister',
+    tag: 'clouterModify',
   );
   final followerController = Get.put(
     FollowerContoller(),
-    tag: 'clouterRegister',
+    tag: 'clouterModify',
   );
   final feeController = Get.put(
     FeeController(),
-    tag: 'clouterRegister',
+    tag: 'clouterModify',
   );
   final regionController = Get.put(
     RegionController(),
-    tag: 'clouterRegister',
-  );
-  final dateController = Get.put(
-    DateInputController(),
-    tag: 'clouterRegister',
-  );
-  final imagePickerController = Get.put(
-    ImagePickerController(),
-    tag: 'clouterRegister',
+    tag: 'clouterModify',
   );
 
   setName(input) {
@@ -104,6 +92,11 @@ class ClouterRegisterController extends GetxController {
 
   setNickName(input) {
     nickName = input;
+  }
+
+  setImages(input) {
+    images = input;
+    print(images);
   }
 
   setSelection(index) {
@@ -163,7 +156,7 @@ class ClouterRegisterController extends GetxController {
     print('닉네임');
     print(nickName);
     print('사진들');
-    // print(images);
+    print(images);
     print('광고 가능 플랫폼');
     print(platformSlectController.platforms);
     print('각 아이디');

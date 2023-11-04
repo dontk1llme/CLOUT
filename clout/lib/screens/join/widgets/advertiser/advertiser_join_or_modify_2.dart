@@ -7,8 +7,9 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
-class AdvertiserJoin2 extends StatelessWidget {
-  const AdvertiserJoin2({super.key});
+class AdvertiserJoinOrModify2 extends StatelessWidget {
+  const AdvertiserJoinOrModify2({super.key, required this.modifying});
+  final modifying;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class AdvertiserJoin2 extends StatelessWidget {
             title: '담당자 이름 입력',
             label: '담당자 이름',
             setState: controller.setName,
+            enabled: modifying,
           ),
           SizedBox(height: 10),
           JoinInput(
@@ -42,6 +44,7 @@ class AdvertiserJoin2 extends StatelessWidget {
             title: '담당자 휴대전화 번호 입력',
             label: '담당자 휴대전화 번호',
             setState: controller.setPhoneNumber,
+            enabled: modifying,
           ),
           SizedBox(height: 30),
           Text(
@@ -58,6 +61,7 @@ class AdvertiserJoin2 extends StatelessWidget {
                 title: '아이디 입력',
                 label: '아이디',
                 setState: controller.setId,
+                enabled: modifying,
               ),
               Positioned(
                 right: 10,
@@ -111,6 +115,7 @@ class AdvertiserJoin2 extends StatelessWidget {
                 label: '비밀번호',
                 setState: controller.setPassword,
                 obscured: controller.obscured,
+                enabled: modifying,
               ),
               Positioned(
                 top: 3,
@@ -140,6 +145,7 @@ class AdvertiserJoin2 extends StatelessWidget {
                 label: '비밀번호 확인',
                 setState: controller.setCheckPassword,
                 obscured: controller.obscured,
+                enabled: modifying,
               ),
               Positioned(
                 top: 3,

@@ -8,19 +8,22 @@ import 'package:clout/widgets/input/input.dart';
 import 'package:clout/screens/join/widgets/clouter/categoryToggle.dart';
 import 'package:clout/screens/campaign_register/widgets/region_multiselect.dart';
 
-class ClouterJoin4 extends StatefulWidget {
-  ClouterJoin4({Key? key}) : super(key: key);
-
+class ClouterJoinOrModify4 extends StatefulWidget {
+  ClouterJoinOrModify4(
+      {super.key, required this.modifying, required this.controllerTag});
+  final modifying;
+  final controllerTag;
   @override
-  ClouterJoin4State createState() => ClouterJoin4State();
+  ClouterJoinOrModifyState createState() => ClouterJoinOrModifyState();
 }
 
-class ClouterJoin4State extends State<ClouterJoin4> {
+class ClouterJoinOrModifyState extends State<ClouterJoinOrModify4> {
   double percent = 1; // 초기값 설정
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ClouterRegisterController>(
+      tag: widget.controllerTag,
       builder: (controller) => FractionallySizedBox(
         widthFactor: 0.9,
         child: Column(
@@ -65,7 +68,7 @@ class ClouterJoin4State extends State<ClouterJoin4> {
               textAlign: TextAlign.left,
             ),
             SizedBox(height: 10),
-            RegionMultiSelect(),
+            RegionMultiSelect(controllerTag: widget.controllerTag),
             SizedBox(height: 8), //
             // RegionDropdown(region: region, setRegion: setRegion)
           ],
