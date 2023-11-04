@@ -9,6 +9,7 @@ class SnsItemBox extends StatelessWidget {
   final String snsUrl;
 
   SnsItemBox({
+    super.key,
     required this.username, // 채널명 · 계정명
     required this.followers, // 구독자수 · 팔로워수
     required this.snsType, // Youtube · Instagram · TikTok
@@ -22,9 +23,9 @@ class SnsItemBox extends StatelessWidget {
     if (followers >= 10000) {
       if (followers % 10000 == 0) {
         if (followers % 100000000 == 0) {
-          formattedNum = (followers ~/ 100000000).toString() + '억';
+          formattedNum = '${(followers ~/ 100000000)}억';
         } else {
-          formattedNum = (followers ~/ 10000).toString() + '만';
+          formattedNum = '${(followers ~/ 10000)} 만';
         }
       } else {
         if (followers % 100000000 == 0) {
@@ -47,43 +48,41 @@ class SnsItemBox extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(vertical: 15),
           margin: EdgeInsets.only(bottom: 10),
-          child: Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: Image.asset('assets/images/${snsType}.png',
-                      width: 40, height: 40),
-                ),
-                Flexible(
-                  flex: 3,
-                  child: Text(
-                    username,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Flexible(
+                flex: 1,
+                child: Image.asset('assets/images/${snsType}.png',
+                    width: 40, height: 40),
+              ),
+              Flexible(
+                flex: 3,
+                child: Text(
+                  username,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Flexible(
-                  flex: 1,
-                  child: Text(
-                    formattedNum,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Text(
+                  formattedNum,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Flexible(
-                  flex: 1,
-                  child: Icon(Icons.ads_click, color: style.colors['main1']),
-                ),
-              ],
-              // )
-              // ],
-            ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Icon(Icons.ads_click, color: style.colors['main1']),
+              ),
+            ],
+            // )
+            // ],
           ),
         )
         // Container(

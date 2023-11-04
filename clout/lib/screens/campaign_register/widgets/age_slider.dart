@@ -7,12 +7,15 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:clout/style.dart' as style;
 
 class AgeSlider extends StatelessWidget {
-  AgeSlider({super.key});
+  AgeSlider({super.key, required this.controllerTag});
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AgeController>(builder: (controller) {
-      return SfRangeSliderTheme(
+    return GetBuilder<AgeController>(
+      tag: controllerTag,
+      builder: (controller) {
+        return SfRangeSliderTheme(
           data: SfRangeSliderThemeData(
             tooltipBackgroundColor: style.colors['main2'],
             thumbColor: style.colors['white'],
@@ -40,7 +43,9 @@ class AgeSlider extends StatelessWidget {
             onChanged: (SfRangeValues values) {
               controller.setAgeRanges(values);
             },
-          ));
-    });
+          ),
+        );
+      },
+    );
   }
 }

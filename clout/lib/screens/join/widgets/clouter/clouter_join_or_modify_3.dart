@@ -1,6 +1,5 @@
-import 'package:clout/providers/image_picker_provider.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
-import 'package:clout/widgets/image_widget.dart';
+import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:clout/widgets/platform_toggle_input/platform_toggle_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,14 +10,16 @@ import 'package:clout/widgets/sns/platform_toggle.dart';
 import 'package:clout/screens/join/widgets/clouter/followersDropdown.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-class ClouterJoin3 extends StatefulWidget {
-  const ClouterJoin3({super.key});
+class ClouterJoinOrModify3 extends StatefulWidget {
+  const ClouterJoinOrModify3({super.key, required this.modifying, required this.controllerTag});
+  final modifying;
+  final controllerTag;
 
   @override
-  ClouterJoin3State createState() => ClouterJoin3State();
+  ClouterJoinOrModify3State createState() => ClouterJoinOrModify3State();
 }
 
-class ClouterJoin3State extends State<ClouterJoin3> {
+class ClouterJoinOrModify3State extends State<ClouterJoinOrModify3> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,6 +38,7 @@ class ClouterJoin3State extends State<ClouterJoin3> {
               SizedBox(height: 10),
               PlatformToggle(
                 multiAllowed: false,
+                controllerTag: widget.controllerTag,
               ),
             ],
           ),

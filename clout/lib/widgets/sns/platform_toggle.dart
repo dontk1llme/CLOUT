@@ -5,8 +5,10 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 class PlatformToggle extends StatelessWidget {
-  PlatformToggle({super.key, required this.multiAllowed});
+  PlatformToggle(
+      {super.key, required this.multiAllowed, required this.controllerTag});
   final multiAllowed;
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class PlatformToggle extends StatelessWidget {
                 index: 0,
                 title: 'Instagram',
                 multiAllowed: multiAllowed,
+                controllerTag: controllerTag,
               ),
             ),
             SizedBox(width: 10),
@@ -34,6 +37,7 @@ class PlatformToggle extends StatelessWidget {
                 index: 1,
                 title: 'Tiktok',
                 multiAllowed: multiAllowed,
+                controllerTag: controllerTag,
               ),
             ),
             SizedBox(width: 10),
@@ -43,6 +47,7 @@ class PlatformToggle extends StatelessWidget {
                 index: 2,
                 title: 'Youtube',
                 multiAllowed: multiAllowed,
+                controllerTag: controllerTag,
               ),
             ),
           ],

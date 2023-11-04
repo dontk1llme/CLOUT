@@ -1,7 +1,6 @@
 import 'package:clout/providers/clouter_register_controller.dart';
-import 'package:clout/providers/image_picker_provider.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
-import 'package:clout/widgets/image_widget.dart';
+import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clout/style.dart' as style;
@@ -10,14 +9,16 @@ import 'package:clout/screens/join/widgets/small_button.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 import 'package:clout/widgets/input/input.dart';
 
-class ClouterJoin2 extends ConsumerStatefulWidget {
-  ClouterJoin2({super.key});
+class ClouterJoinOrModify2 extends ConsumerStatefulWidget {
+  ClouterJoinOrModify2({super.key, required this.modifying, required this.controllerTag});
+  final modifying;
+  final controllerTag;
 
   @override
-  ClouterJoin2State createState() => ClouterJoin2State();
+  ClouterJoinOrModify2State createState() => ClouterJoinOrModify2State();
 }
 
-class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
+class ClouterJoinOrModify2State extends ConsumerState<ClouterJoinOrModify2> {
   var obscured = true;
   var doubleId = 1;
   Icon suffixIcon = Icon(
@@ -74,6 +75,8 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
               title: '닉네임 입력',
               label: '닉네임',
               setState: controller.setNickName,
+              initialValue: controller.nickName,
+              enabled: widget.modifying,
             ),
             SizedBox(height: 10),
             Stack(
@@ -84,6 +87,8 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                   title: '아이디 입력',
                   label: '아이디',
                   setState: controller.setId,
+                  initialValue: controller.id,
+                  enabled: widget.modifying,
                 ),
                 Positioned(
                   right: 10,
@@ -138,6 +143,7 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                   label: '비밀번호',
                   setState: controller.setPassword,
                   obscured: obscured,
+                  enabled: widget.modifying,
                 ),
                 Positioned(
                   top: 3,
@@ -156,6 +162,7 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                   label: '비밀번호 확인',
                   setState: controller.setCheckPassword,
                   obscured: obscured,
+                  enabled: widget.modifying,
                 ),
                 Positioned(
                   top: 3,
@@ -174,7 +181,7 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                   style: style.textTheme.headlineMedium,
                 ),
                 SizedBox(height: 10),
-                ImageWidget(parentImages: controller.images),
+                ImageWidget(controllerTag: widget.controllerTag),
               ],
             ),
           ],
