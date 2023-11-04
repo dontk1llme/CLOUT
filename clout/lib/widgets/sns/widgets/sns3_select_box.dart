@@ -11,65 +11,69 @@ class Sns3SelectBox extends StatelessWidget {
       required this.img,
       required this.index,
       required this.title,
-      required this.multiAllowed});
+      required this.multiAllowed,
+      required this.controllerTag});
   final img;
   final index;
   final title;
   final multiAllowed;
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PlatformSelectController>(
-        builder: (controller) => Container(
-              decoration: BoxDecoration(
-                  color: controller.platforms[index]
-                      ? style.colors['category']
-                      : style.colors['main3'],
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  boxShadow: controller.platforms[index]
-                      ? [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.7),
-                              spreadRadius: 0,
-                              blurRadius: 5,
-                              offset: Offset(2, 4),
-                              inset: true)
-                        ]
-                      : [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 5,
-                              offset: Offset(0, 0),
-                              inset: true),
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 0,
-                              blurRadius: 5,
-                              offset: Offset(2, 4))
-                        ]),
-              padding: EdgeInsets.all(10),
-              child: InkWell(
-                onTap: () => controller.setSelected(index, multiAllowed),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 5,
-                  runSpacing: 5,
-                  children: [
-                    Image.asset(
-                      img,
-                      width: 50,
-                      fit: BoxFit.fitWidth,
-                    ),
-                    Text(
-                      title,
-                      style: style.textTheme.headlineSmall
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+      tag: controllerTag,
+      builder: (controller) => Container(
+        decoration: BoxDecoration(
+            color: controller.platforms[index]
+                ? style.colors['category']
+                : style.colors['main3'],
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            boxShadow: controller.platforms[index]
+                ? [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        spreadRadius: 0,
+                        blurRadius: 5,
+                        offset: Offset(2, 4),
+                        inset: true)
+                  ]
+                : [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 0),
+                        inset: true),
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 0,
+                        blurRadius: 5,
+                        offset: Offset(2, 4))
+                  ]),
+        padding: EdgeInsets.all(10),
+        child: InkWell(
+          onTap: () => controller.setSelected(index, multiAllowed),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 5,
+            runSpacing: 5,
+            children: [
+              Image.asset(
+                img,
+                width: 50,
+                fit: BoxFit.fitWidth,
               ),
-            ));
+              Text(
+                title,
+                style: style.textTheme.headlineSmall
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

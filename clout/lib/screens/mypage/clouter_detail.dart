@@ -68,7 +68,7 @@ class ClouterDetail extends StatelessWidget {
                           SizedBox(height: 30),
                           DataTitle(text: '광고 희망 플랫폼'),
                           SizedBox(height: 10),
-                          PlatformToggle(multiAllowed: true),
+                          // PlatformToggle(multiAllowed: true, ),
                           SizedBox(height: 20),
                           DataTitle(text: '희망 광고비'),
                           Row(

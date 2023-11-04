@@ -13,7 +13,10 @@ class AdvertiserRegisterController extends GetxController {
   var buisnessNumber;
   var obscured = true;
 
-  final addressController = Get.put(AddressController());
+  final addressController = Get.put(
+    AddressController(),
+    tag: 'advertiserRegister',
+  );
 
   setName(input) {
     name = input;

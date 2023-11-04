@@ -1,5 +1,3 @@
-import 'package:clout/providers/header_controller.dart';
-import 'package:clout/providers/image_picker_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
@@ -18,7 +16,6 @@ class Header extends ConsumerStatefulWidget {
 class HeaderState extends ConsumerState<Header> {
   @override
   Widget build(BuildContext context) {
-    final headerController = Get.put(HeaderController());
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,
@@ -29,9 +26,6 @@ class HeaderState extends ConsumerState<Header> {
           ? IconButton(onPressed: () {}, icon: Icon(Icons.menu_outlined))
           : IconButton(
               onPressed: () {
-                ref.invalidate(
-                    imagePickerProvider); // 뒤로 가기 할 경우 campaignRegister에 있던 사진 내용 provider 초기화 시켜줘야함
-                headerController.resetSearchDetail();
                 Get.back();
               },
               icon: Icon(Icons.arrow_back_ios_new_outlined)),

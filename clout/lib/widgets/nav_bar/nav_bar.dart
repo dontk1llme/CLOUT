@@ -1,4 +1,6 @@
 // global
+import 'package:clout/providers/campaign_register_controller.dart';
+import 'package:clout/providers/search_detail_controller.dart';
 import 'package:clout/providers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,16 +10,13 @@ import '../../style.dart' as style;
 import '../../providers/nav_bar_controller.dart';
 
 class NavBar extends StatelessWidget {
-  NavBar({super.key, this.tab, this.setTab});
+  NavBar({super.key});
 
-  final tab;
-
-  final setTab;
+  final userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
     Get.put(NavBarController(), permanent: true);
-    final userController = Get.put(UserController(), permanent: true);
     return Container(
         height: 70,
         decoration: BoxDecoration(
@@ -54,7 +53,8 @@ class NavBar extends StatelessWidget {
                   ],
                   onTap: (value) {
                     if (!userController.clouter && value == 2) {
-                      controller.resetSearchDetail();
+                      // Get.delete<SearchDetailController>();
+                      // Get.delete<CampaignRegisterController>();
                       Get.toNamed('campaignRegister');
                     } else {
                       controller.setTab(value);

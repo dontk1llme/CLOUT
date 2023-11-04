@@ -13,17 +13,17 @@ class NavBarController extends GetxController {
     update();
   }
 
-  final platformController = Get.put(PlatformSelectController());
-  final feeController = Get.put(FeeController());
-  final followerContoller = Get.put(FollowerContoller());
-  final ageController = Get.put(AgeController());
-  final regionController = Get.put(RegionController());
+  // final platformController = Get.put(PlatformSelectController());
+  // final feeController = Get.put(FeeController());
+  // final followerContoller = Get.put(FollowerContoller());
+  // final ageController = Get.put(AgeController());
+  // final regionController = Get.put(RegionController());
 
-  void resetSearchDetail() {
-    Get.delete<PlatformSelectController>(force: true);
-    Get.delete<FeeController>(force: true);
-    Get.delete<FollowerContoller>(force: true);
-    Get.delete<AgeController>(force: true);
-    Get.delete<RegionController>(force: true);
-  }
+  // void resetSearchDetail() {
+  //   Get.delete<PlatformSelectController>(force: true);
+  //   Get.delete<FeeController>(force: true);
+  //   Get.delete<FollowerContoller>(force: true);
+  //   Get.delete<AgeController>(force: true);
+  //   Get.delete<RegionController>(force: true);
+  // }
 }
