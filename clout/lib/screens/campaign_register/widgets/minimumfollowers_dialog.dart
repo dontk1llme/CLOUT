@@ -7,7 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class MinimumfollowersDialog extends StatelessWidget {
-  MinimumfollowersDialog({super.key});
+  MinimumfollowersDialog({super.key, required this.controllerTag});
+  final controllerTag;
 
   openMinFollowerDialog() {
     Get.defaultDialog(
@@ -28,6 +29,7 @@ class MinimumfollowersDialog extends StatelessWidget {
         ),
       ],
       content: GetBuilder<FollowerContoller>(
+        tag: controllerTag,
         builder: (controller) => SizedBox(
           height: 75,
           child: Column(
@@ -66,6 +68,7 @@ class MinimumfollowersDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FollowerContoller>(
+      tag: controllerTag,
       builder: (controller) => SizedBox(
         height: 50,
         child: Row(

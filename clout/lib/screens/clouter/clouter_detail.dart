@@ -18,7 +18,6 @@ import 'package:clout/widgets/buttons/like_button.dart';
 import 'package:clout/screens/chatting/chatting_list.dart';
 
 // controller
-import 'package:clout/providers/user_controller.dart';
 
 class Clouter {
   int clouterId = 1;
@@ -132,17 +131,19 @@ class _ClouterDetailState extends State<ClouterDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: style.colors['white'],
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(70),
-            child: Header(
-              header: 3,
-              headerTitle: clouter.nickname, // 채널명 또는 계정명
-            )),
-        body: Container(
-          color: Colors.white,
-          width: double.infinity,
-          child: Stack(alignment: Alignment.topCenter, children: [
+      backgroundColor: style.colors['white'],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: Header(
+          header: 3,
+          headerTitle: clouter.nickname, // 채널명 또는 계정명
+        ),
+      ),
+      body: SizedBox(
+        width: double.infinity,
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
             BouncingListview(
               child: FractionallySizedBox(
                 widthFactor: 0.9,
@@ -282,7 +283,9 @@ class _ClouterDetailState extends State<ClouterDetail> {
                       ),
                     ),
                   )
-          ]),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }
