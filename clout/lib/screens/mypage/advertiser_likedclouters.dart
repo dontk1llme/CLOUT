@@ -1,10 +1,14 @@
-import 'package:clout/widgets/buttons/filter_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 // widgets
+import 'package:clout/widgets/buttons/filter_button.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
+
+// controllers
+import 'package:clout/providers/clouter_infinite_scroll_controller.dart';
 
 class Clouter {
   int clouterId = 1;
@@ -29,42 +33,65 @@ class AdvertiserLikedclouters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    Get.put(ClouterInfiniteScrollController());
+    return GetBuilder<ClouterInfiniteScrollController>(
+        builder: (controller) => Scaffold(
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(70),
+                child: Header(
+                  header: 4,
+                  headerTitle: '관심있는 클라우터 목록',
+                ),
+              ),
+              body: Padding(
+                padding: const EdgeInsets.all(10.0),
+                // FilterButton(),
+                child: Obx(
+                  () => GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: screenWidth > 600 ? 4 : 2,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 0.7,
+                      mainAxisSpacing: screenWidth > 400 ? 15 : 10,
+                    ),
+                    controller: controller.scrollController.value,
+                    itemBuilder: (_, index) {
+                      print(controller.hasMore);
+                      if (index < controller.data.length) {
+                        return ClouterItemBox(
+                          nickname: controller.data[index].nickname,
+                          starRating: controller.data[index].starRating,
+                          fee: controller.data[index].fee,
+                          category: controller.data[index].category,
+                          contractCount: controller.data[index].contractCount,
+                          selectedPlatform:
+                              controller.data[index].selectedPlatform,
+                          firstImg: controller.data[index].firstImg,
+                        );
+                      }
 
-    return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70),
-          child: Header(
-            header: 4,
-            headerTitle: '관심있는 클라우터 목록',
-          ),
-        ),
-        body: Container(
-            color: Colors.white,
-            width: double.infinity,
-            height: double.infinity,
-            child: BouncingListview(
-                child: FractionallySizedBox(
-                    widthFactor: screenWidth > 400 ? 0.9 : 1,
-                    child: Column(children: [
-                      FilterButton(),
-                      Align(
-                          alignment: Alignment.topCenter,
-                          child: Wrap(
-                              direction: Axis.horizontal,
-                              spacing: screenWidth > 400 ? 20 : 10,
-                              runSpacing: screenWidth > 400 ? 20 : 10,
-                              // alignment: Alignment.,
-                              children: [
-                                ClouterItemBox(
-                                    nickname: clouter.nickname,
-                                    starRating: clouter.starRating,
-                                    fee: clouter.fee,
-                                    category: clouter.category,
-                                    contractCount: clouter.contractCount,
-                                    selectedPlatform: clouter.selectedPlatform,
-                                    firstImg: clouter.firstImg),
-                              ])),
-                      SizedBox(height: 30)
-                    ])))));
+                      if (controller.hasMore || controller.isLoading) {
+                        return Center(child: RefreshProgressIndicator());
+                      }
+
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('데이터의 마지막 입니다'),
+                          IconButton(
+                            onPressed: () {
+                              controller.reload();
+                            },
+                            icon: Icon(Icons.refresh_outlined),
+                          ),
+                        ],
+                      );
+                    },
+                    itemCount: controller.data.length + 1,
+                  ),
+                ),
+              ),
+            ));
   }
 }
