@@ -1,3 +1,4 @@
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -45,6 +46,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
     });
   }
 
+  final userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -88,8 +91,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     ]),
                   ),
                 ),
-                // 좋아요 버튼
-                LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
+                if (userController.user != 0)
+                  LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
             NameTag(title: widget.category),
