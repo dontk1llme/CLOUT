@@ -1,4 +1,6 @@
+import 'package:clout/screens/campaign_list/campaign_infinite_scroll_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
@@ -8,6 +10,7 @@ import 'package:clout/widgets/list/campaign_item_box.dart';
 
 // controllers
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 // class Campaign {
 //   int campaignId = 1;
@@ -33,7 +36,6 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final infiniteController = Get.put(InfiniteScrollController());
     infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
@@ -49,56 +51,7 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
         body: Padding(
           padding: const EdgeInsets.all(0),
           // FilterButton(),
-          child: GridView.builder(
-            physics: BouncingScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: screenWidth > 600 ? 4 : 2,
-              crossAxisSpacing: 0,
-              childAspectRatio: 0.7,
-              mainAxisSpacing: screenWidth > 400 ? 3 : 0,
-            ),
-            controller: controller.scrollController.value,
-            itemBuilder: (_, index) {
-              print(controller.hasMore);
-              print(controller.data);
-              print(controller.data.length);
-              if (index < controller.data.length) {
-                return Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: CampaignItemBox(
-                    category: controller.data[index].category,
-                    productName: controller.data[index].productName,
-                    pay: controller.data[index].pay,
-                    campaignSubject: controller.data[index].campaignSubject,
-                    applicantCount: controller.data[index].applicantCount,
-                    recruitCount: controller.data[index].recruitCount,
-                    selectedPlatform: controller.data[index].selectedPlatform,
-                    starRating: controller.data[index].starRating,
-                    firstImg: controller.data[index].firstImg,
-                  ),
-                );
-              }
-
-              if (controller.hasMore || controller.isLoading) {
-                return Center(child: RefreshProgressIndicator());
-              }
-
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('데이터의 마지막 입니다'),
-                  IconButton(
-                    onPressed: () {
-                      controller.reload();
-                    },
-                    icon: Icon(Icons.refresh_outlined),
-                  ),
-                ],
-              );
-            },
-            itemCount: controller.data.length + 1,
-          ),
+          child: CampaignInfiniteScrollBody(),
         ),
       ),
     );

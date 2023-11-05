@@ -1,3 +1,4 @@
+import 'package:clout/screens/clouter/clouter_infinite_scroll_body.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -73,57 +74,8 @@ class ClouterList extends GetView<InfiniteScrollController> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: screenWidth > 600 ? 4 : 2,
-                      crossAxisSpacing: 0,
-                      childAspectRatio: 0.7,
-                      mainAxisSpacing: screenWidth > 400 ? 3 : 0,
-                    ),
-                    controller: controller.scrollController.value,
-                    itemBuilder: (_, index) {
-                      print(controller.hasMore);
-                      print(controller.data);
-                      print(controller.data.length);
-                      if (index < controller.data.length) {
-                        return Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ClouterItemBox(
-                              nickname: controller.data[index].nickname,
-                              starRating: controller.data[index].starRating,
-                              fee: controller.data[index].fee,
-                              category: controller.data[index].category,
-                              contractCount:
-                                  controller.data[index].contractCount,
-                              selectedPlatform:
-                                  controller.data[index].selectedPlatform,
-                              firstImg: controller.data[index].firstImg,
-                            ));
-                      }
-
-                      if (controller.hasMore || controller.isLoading) {
-                        return Center(child: RefreshProgressIndicator());
-                      }
-
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('데이터의 마지막 입니다'),
-                          IconButton(
-                            onPressed: () {
-                              controller.reload();
-                            },
-                            icon: Icon(Icons.refresh_outlined),
-                          ),
-                        ],
-                      );
-                    },
-                    itemCount: controller.data.length + 1,
-                  ),
+                  SizedBox(height: 10),
+                  ClouterInfiniteScrollBody(),
                   SizedBox(height: 30),
                 ],
               ),

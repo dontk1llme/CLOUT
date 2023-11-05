@@ -58,7 +58,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
         // 여기 arguments에 해당 캠페인의 id를 넣어야 함
         onTap: () => Get.toNamed('/campaignDetail', arguments: 1),
         child: Container(
-          width: 170,
+          width: screenWidth / 2 - 25,
           // height: 100,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -74,8 +74,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 children: [
                   Image.asset(
                     widget.firstImg,
-                    width: 170,
-                    height: 140,
+                    width: screenWidth / 2 - 40,
+                    // height: screenHeight / 2 - 65,
                     fit: BoxFit.cover,
                   ),
                   Positioned(
