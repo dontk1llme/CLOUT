@@ -4,7 +4,7 @@ import 'package:clout/providers/search_detail_controller.dart';
 import 'package:clout/providers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../style.dart' as style;
+import 'package:clout/style.dart' as style;
 
 // providers
 import '../../providers/nav_bar_controller.dart';
@@ -43,7 +43,7 @@ class NavBar extends StatelessWidget {
                     BottomNavigationBarItem(
                         icon: Icon(Icons.content_paste_search_outlined),
                         label: '목록'),
-                    if (!userController.clouter)
+                    if (userController.user == 1)
                       BottomNavigationBarItem(
                           icon: Icon(Icons.add_box_outlined), label: '캠페인 등록'),
                     BottomNavigationBarItem(
@@ -52,7 +52,7 @@ class NavBar extends StatelessWidget {
                         icon: Icon(Icons.person_2_outlined), label: '마이페이지'),
                   ],
                   onTap: (value) {
-                    if (!userController.clouter && value == 2) {
+                    if (userController.user == 1 && value == 2) {
                       // Get.delete<SearchDetailController>();
                       // Get.delete<CampaignRegisterController>();
                       Get.toNamed('campaignRegister');
