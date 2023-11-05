@@ -5,7 +5,10 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 class SmallContract extends StatefulWidget {
-  const SmallContract({super.key});
+  final String name;
+  final String pay;
+
+  const SmallContract({super.key, required this.name, required this.pay});
 
   @override
   State<SmallContract> createState() => _SmallContractState();
