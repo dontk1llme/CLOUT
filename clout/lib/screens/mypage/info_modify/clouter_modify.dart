@@ -50,11 +50,14 @@ class ClouterModify extends StatelessWidget {
               controllerTag: 'clouterModify',
             ),
             SizedBox(height: 20),
-            BigButton(
-              title: '완료', // pageNum에 따라 버튼 텍스트 변경
-              function: () {
-                Get.offNamed('/cloutermypage');
-              },
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: BigButton(
+                title: '완료', // pageNum에 따라 버튼 텍스트 변경
+                function: () {
+                  Get.offNamed('/cloutermypage');
+                },
+              ),
             ),
             SizedBox(height: 30),
           ],
