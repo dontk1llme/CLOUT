@@ -28,6 +28,8 @@ import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:clout/screens/campaign_detail/campaign_detail.dart';
 import 'package:clout/screens/mypage/contract_list.dart';
 import 'package:clout/binding/app_binding.dart';
+import 'package:clout/screens/mypage/clouter_likedcampaign.dart';
+import 'package:clout/screens/mypage/clouter_mycampaign.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("백그라운드 메시지 처리.. ${message.notification!.body!}");
@@ -140,6 +142,9 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/withdrawsecond', page: () => WithdrawSecond()),
         GetPage(name: '/withdrawcomplete', page: () => WithdrawComplete()),
         GetPage(name: '/contractlist', page: () => ContractList()),
+        GetPage(
+            name: '/clouterlikedcampaign', page: () => ClouterLikedCampaign()),
+        GetPage(name: '/cloutermycampaign', page: () => ClouterMyCampaign()),
       ],
     );
   }
