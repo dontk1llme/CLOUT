@@ -54,7 +54,7 @@ class CampaignList extends GetView<InfiniteScrollController> {
                   headerTitle: '캠페인 목록',
                 ),
               ),
-              body: SingleChildScrollView(
+              body: BouncingListview(
                 child: Column(
                   children: [
                     MySearchBar(),
