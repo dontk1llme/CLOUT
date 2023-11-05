@@ -57,4 +57,9 @@ public class Contract extends BaseEntity {
         this.clouterInfo.updateResidentRegistrationNumber(rnn);
         return this;
     }
+
+    public Contract updateState() {
+        this.state = State.COMPLETE;
+        return this;
+    }
 }
