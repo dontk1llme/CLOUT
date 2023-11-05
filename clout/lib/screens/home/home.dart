@@ -1,4 +1,5 @@
 // Global
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/widgets/image_carousel.dart';
@@ -14,6 +15,7 @@ import 'package:clout/screens/home/widgets/main_carousel_text1.dart';
 import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
+import 'package:get/get.dart';
 
 class Clouter {
   int clouterId = 1;
@@ -46,6 +48,8 @@ class Campaign {
   int starRating = 20;
   String firstImg = 'assets/images/itemImage.jpg';
 }
+
+final userController = Get.find<UserController>();
 
 class Home extends StatelessWidget {
   Home({super.key});
@@ -243,9 +247,10 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       drawer: MyDrawer(),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
+        preferredSize: Size.fromHeight(70),
         child: Header(
           header: 0,
         ),
@@ -336,7 +341,8 @@ class Home extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            ),
+            userController.user == 0 ? SizedBox(height: 150) : Container(),
           ],
         ),
       ),

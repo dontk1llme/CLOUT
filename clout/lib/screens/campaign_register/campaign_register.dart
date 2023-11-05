@@ -152,6 +152,7 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                       ? PayDialog(
                           title: '희망 광고비',
                           hintText: '희망 광고비 입력',
+                          controllerTag: 'campaignRegister',
                         )
                       : Container(),
                   SizedBox(height: 10),

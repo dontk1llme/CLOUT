@@ -1,14 +1,7 @@
-import 'package:clout/providers/clouter_register_controller.dart';
+import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
-
-class CategoryToggle extends StatefulWidget {
-  const CategoryToggle({Key? key}) : super(key: key);
-
-  @override
-  _CategoryToggleState createState() => _CategoryToggleState();
-}
 
 class Category {
   final String name;
@@ -17,25 +10,30 @@ class Category {
   Category(this.name, this.title);
 }
 
-class _CategoryToggleState extends State<CategoryToggle> {
-  final List<Category> imgList = [
-    Category('all', '전체'),
-    Category('cosmetics', '패션/뷰티'),
-    Category('barbell', '건강/생활'),
-    Category('airplane', '여행/레저'),
-    Category('baby', '육아'),
-    Category('electronics', '전자제품'),
-    Category('food', '음식'),
-    Category('location', '방문/체험'),
-    Category('paw', '반려동물'),
-    Category('game', '게임'),
-    Category('money', '경제/사업'),
-    Category('more', '기타')
-  ];
+final List<Category> imgList = [
+  Category('all', '전체'),
+  Category('cosmetics', '패션/뷰티'),
+  Category('barbell', '건강/생활'),
+  Category('airplane', '여행/레저'),
+  Category('baby', '육아'),
+  Category('electronics', '전자제품'),
+  Category('food', '음식'),
+  Category('location', '방문/체험'),
+  Category('paw', '반려동물'),
+  Category('game', '게임'),
+  Category('money', '경제/사업'),
+  Category('more', '기타')
+];
+
+class CategoryToggle extends StatelessWidget {
+  const CategoryToggle({super.key, required this.controllerTag});
+
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ClouterRegisterController>(
+    return GetBuilder<ClouterInfoController>(
+      tag: controllerTag,
       builder: (controller) => Center(
         child: Wrap(
           children: List.generate(3, (rowIndex) {

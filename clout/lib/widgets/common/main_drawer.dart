@@ -1,3 +1,4 @@
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -6,14 +7,13 @@ import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/common/nametag.dart';
 
 // controller
-import 'package:clout/providers/user_controller.dart';
 
 class MyDrawer extends StatefulWidget {
   @override
-  _MyDrawerState createState() => _MyDrawerState();
+  MyDrawerState createState() => MyDrawerState();
 }
 
-class _MyDrawerState extends State<MyDrawer> {
+class MyDrawerState extends State<MyDrawer> {
   final userController = Get.find<UserController>();
 
   @override

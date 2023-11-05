@@ -1,4 +1,4 @@
-import 'package:clout/providers/user_controller.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/screens/chatting/widgets/chatting_item_box.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -126,7 +126,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
     });
   }
 
-  final userController = Get.put(UserController());
+  final userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {

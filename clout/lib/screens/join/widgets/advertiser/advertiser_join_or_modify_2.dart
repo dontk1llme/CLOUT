@@ -1,19 +1,21 @@
-import 'package:clout/providers/advertiser_register_controller.dart';
+import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
+import 'package:clout/screens/join/numberVerify.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
-import 'package:clout/screens/join/widgets/small_button.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
 class AdvertiserJoinOrModify2 extends StatelessWidget {
-  const AdvertiserJoinOrModify2({super.key, required this.modifying});
+  const AdvertiserJoinOrModify2(
+      {super.key, required this.modifying, required this.controllerTag});
   final modifying;
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AdvertiserRegisterController>(
+    return GetBuilder<AdvertiserInfoController>(
+      tag: controllerTag,
       builder: (controller) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -35,16 +37,36 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
             title: '담당자 이름 입력',
             label: '담당자 이름',
             setState: controller.setName,
-            enabled: modifying,
+            enabled: true,
           ),
           SizedBox(height: 10),
-          JoinInput(
-            keyboardType: TextInputType.number,
-            maxLength: 20,
-            title: '담당자 휴대전화 번호 입력',
-            label: '담당자 휴대전화 번호',
-            setState: controller.setPhoneNumber,
-            enabled: modifying,
+          Stack(
+            children: [
+              JoinInput(
+                keyboardType: TextInputType.phone,
+                maxLength: 11,
+                title: '담당자 휴대전화 번호 입력',
+                label: '담당자 휴대전화 번호',
+                setState: controller.setPhoneNumber,
+                initialValue: controller.phoneNumber,
+                enabled: true,
+              ),
+              Positioned(
+                right: 10,
+                top: 2,
+                child: ElevatedButton(
+                  onPressed: () => Get.to(NumberVerify()),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: style.colors['main1'],
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Text('인증'),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 30),
           Text(
@@ -61,51 +83,55 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                 title: '아이디 입력',
                 label: '아이디',
                 setState: controller.setId,
-                enabled: modifying,
+                enabled: !modifying,
               ),
-              Positioned(
-                right: 10,
-                top: 2,
-                child: ElevatedButton(
-                  onPressed: () => controller.setDoubleId(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: style.colors['main1'],
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Text('중복 확인'),
-                ),
-              ),
+              controllerTag != 'advertiserModify'
+                  ? Positioned(
+                      right: 10,
+                      top: 2,
+                      child: ElevatedButton(
+                        onPressed: () => controller.setDoubleId(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: style.colors['main1'],
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Text('중복 확인'),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: controller.doubleId == 1
-                ? Text(
-                    '아이디 중복 확인이 필요해요',
-                    style: style.textTheme.bodySmall?.copyWith(
-                      color: style.colors['gray'],
-                      height: 1.5,
-                    ),
-                  )
-                : controller.doubleId == 2
-                    ? Text(
-                        '사용 가능한 아이디입니다',
-                        style: style.textTheme.bodySmall?.copyWith(
-                          color: style.colors['main1'],
-                          height: 1.5,
-                        ),
-                      )
-                    : Text(
-                        '이미 사용 중인 아이디입니다',
-                        style: style.textTheme.bodySmall?.copyWith(
-                          color: style.colors['Darkgray'],
-                          height: 1.5,
-                        ),
-                      ),
-          ),
+          controllerTag != 'advertiserModify'
+              ? Align(
+                  alignment: Alignment.centerRight,
+                  child: controller.doubleId == 1
+                      ? Text(
+                          '아이디 중복 확인이 필요해요',
+                          style: style.textTheme.bodySmall?.copyWith(
+                            color: style.colors['gray'],
+                            height: 1.5,
+                          ),
+                        )
+                      : controller.doubleId == 2
+                          ? Text(
+                              '사용 가능한 아이디입니다',
+                              style: style.textTheme.bodySmall?.copyWith(
+                                color: style.colors['main1'],
+                                height: 1.5,
+                              ),
+                            )
+                          : Text(
+                              '이미 사용 중인 아이디입니다',
+                              style: style.textTheme.bodySmall?.copyWith(
+                                color: style.colors['Darkgray'],
+                                height: 1.5,
+                              ),
+                            ),
+                )
+              : SizedBox(height: 10),
           Stack(
             children: [
               JoinInput(
@@ -115,7 +141,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                 label: '비밀번호',
                 setState: controller.setPassword,
                 obscured: controller.obscured,
-                enabled: modifying,
+                enabled: true,
               ),
               Positioned(
                 top: 3,
@@ -145,7 +171,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                 label: '비밀번호 확인',
                 setState: controller.setCheckPassword,
                 obscured: controller.obscured,
-                enabled: modifying,
+                enabled: true,
               ),
               Positioned(
                 top: 3,
