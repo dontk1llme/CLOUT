@@ -12,7 +12,7 @@ import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/header/header.dart';
 
 // controllers
-import 'package:clout/providers/infinite_scroll_controller.dart';
+import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
 
 // class Campaign {
 //   int campaignId = 1;

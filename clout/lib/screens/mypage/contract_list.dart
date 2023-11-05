@@ -9,6 +9,7 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/screens/mypage/widgets/small_contract.dart';
 
 class Contract {
+  int contractId = 1;
   String name = '못골영농조합법인';
   String pay = '1,000 포인트'; // 포인트 또는 제공물품
 }
