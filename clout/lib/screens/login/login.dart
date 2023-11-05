@@ -60,9 +60,9 @@ class _LoginState extends State<Login> {
     final userController = Get.find<UserController>();
 
     // 유저가 클라우터일 경우
-    userController.setClouter();
+    // userController.setClouter();
     // 유저가 광고주일 경우
-    // userController.setAdvertiser();
+    userController.setAdvertiser();
 
     Get.offAllNamed('/home');
     // Fluttertoast.showToast(msg: '아이디 혹은 비밀번호를 확인해주세요');
