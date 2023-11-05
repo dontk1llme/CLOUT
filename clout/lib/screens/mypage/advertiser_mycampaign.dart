@@ -3,12 +3,6 @@ import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
-import 'package:clout/widgets/buttons/filter_button.dart';
-import 'package:clout/screens/mypage/widgets/content_text.dart';
-import 'package:clout/screens/mypage/widgets/gray_title.dart';
-import 'package:clout/screens/mypage/widgets/info_item_box.dart';
-import 'package:clout/screens/mypage/widgets/update_button.dart';
-import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 
@@ -40,7 +34,8 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    Get.put(InfiniteScrollController());
+    final infiniteController = Get.put(InfiniteScrollController());
+    infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
         builder: (controller) => Scaffold(
               appBar: PreferredSize(
@@ -64,12 +59,8 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
                     controller: controller.scrollController.value,
                     itemBuilder: (_, index) {
                       print(controller.hasMore);
-                      // if (index < controller.data.length) {
-                      //   var datum = controller.data[index];
-                      //   return ListTile(
-                      //     title: Text('$datum 번째 데이터'),
-                      //   );
-                      // }
+                      print(controller.data);
+                      print(controller.data.length);
                       if (index < controller.data.length) {
                         return CampaignItemBox(
                           category: controller.data[index].category,
@@ -89,12 +80,6 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
                       if (controller.hasMore || controller.isLoading) {
                         return Center(child: RefreshProgressIndicator());
                       }
-
-                      // if (index == controller.data.length) {
-                      //   return controller.hasMore
-                      //       ? Center(child: CircularProgressIndicator())
-                      //       : Container();
-                      // }
 
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
