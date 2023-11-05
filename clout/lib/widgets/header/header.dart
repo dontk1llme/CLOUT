@@ -37,7 +37,13 @@ class HeaderState extends ConsumerState<Header> {
                     Get.back();
                   },
                   icon: Icon(Icons.arrow_back_ios_new_outlined))
-          : Container(),
+          : widget.header == 3
+              ? IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(Icons.arrow_back_ios_new_outlined))
+              : Container(),
       title: widget.header == 0
           ? Image.asset(
               'assets/images/Clout_Logo.png',
