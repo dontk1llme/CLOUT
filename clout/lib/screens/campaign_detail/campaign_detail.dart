@@ -162,7 +162,7 @@ class CampaignDetail extends StatelessWidget {
                 ),
               ),
             ),
-            userController.clouter
+            userController.user == -1
                 ? Positioned(
                     bottom: 10,
                     left: 10,
@@ -175,50 +175,52 @@ class CampaignDetail extends StatelessWidget {
                       ),
                     ),
                   )
-                : Positioned(
-                    bottom: 10,
-                    left: 10,
-                    right: 10,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 6,
-                          child: SizedBox(
-                            height: 50,
-                            child: BigButton(
-                              title: '신청자 목록보기',
-                              function: () => Get.to(
-                                () => ClouterSelect(),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            height: 50,
-                            child: ElevatedButton(
-                              // 편집 삭제 bottomSheetModal 띄우는 함수 넣어야 함
-                              onPressed: showBottomSheet,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: style.colors['category'],
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                : userController.user == 1
+                    ? Positioned(
+                        bottom: 10,
+                        left: 10,
+                        right: 10,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 6,
+                              child: SizedBox(
+                                height: 50,
+                                child: BigButton(
+                                  title: '신청자 목록보기',
+                                  function: () => Get.to(
+                                    () => ClouterSelect(),
+                                  ),
                                 ),
-                                padding: EdgeInsets.all(0),
-                              ),
-                              child: Icon(
-                                Icons.more_vert_outlined,
-                                color: style.colors['main1'],
-                                size: 30,
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
+                            SizedBox(width: 10),
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                height: 50,
+                                child: ElevatedButton(
+                                  // 편집 삭제 bottomSheetModal 띄우는 함수 넣어야 함
+                                  onPressed: showBottomSheet,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: style.colors['category'],
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    padding: EdgeInsets.all(0),
+                                  ),
+                                  child: Icon(
+                                    Icons.more_vert_outlined,
+                                    color: style.colors['main1'],
+                                    size: 30,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    : Container(),
           ],
         ),
       ),

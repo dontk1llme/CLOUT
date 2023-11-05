@@ -10,75 +10,89 @@ class Landing extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Flexible(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
             flex: 8,
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Padding(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
                   padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              '광고주와 인플루언서',
-                              style: style.textTheme.titleSmall
-                                  ?.copyWith(color: style.colors['darkgray']),
-                            )),
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              '매칭부터 계약서 작성까지',
-                              style: style.textTheme.titleSmall
-                                  ?.copyWith(color: style.colors['darkgray']),
-                            )),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                          child: SizedBox(
-                              width: double.infinity,
-                              child: Image.asset(
-                                'assets/images/Clout_Logo.png',
-                                height: 40,
-                                alignment: Alignment.centerLeft,
-                              )),
-                        )
-                      ])),
-              Image.asset('assets/images/landingPage.jpeg')
-            ])),
-        Flexible(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          '광고주와 인플루언서',
+                          style: style.textTheme.titleSmall?.copyWith(
+                            color: style.colors['darkgray'],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          '매칭부터 계약서 작성까지',
+                          style: style.textTheme.titleSmall?.copyWith(
+                            color: style.colors['darkgray'],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Image.asset(
+                            'assets/images/Clout_Logo.png',
+                            height: 40,
+                            alignment: Alignment.centerLeft,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Image.asset('assets/images/landingPage.jpeg')
+              ],
+            ),
+          ),
+          Flexible(
             flex: 2,
             child: Padding(
               padding: EdgeInsets.only(bottom: 50),
               child: FractionallySizedBox(
                 widthFactor: 0.9,
                 // heightFactor: 1.3,
-                child:
-                    Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: BigButton(
-                      title: '로그인',
-                      function: () => Get.offNamed('/login'),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: BigButton(
+                        title: '로그인',
+                        function: () => Get.offNamed('/login'),
+                      ),
                     ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/join');
-                      },
-                      onHover: (isHovered) {
-                        //색깔 바뀌게 추가해야 함
-                      },
-                      child: Text('회원가입',
-                          style: style.textTheme.headlineSmall?.copyWith(
-                              color: style.colors['main1'],
-                              fontWeight: FontWeight.w600)))
-                ]),
+                    TextButton(
+                      onPressed: () => Get.toNamed('/join'),
+                      child: Text(
+                        '회원가입',
+                        style: style.textTheme.headlineSmall?.copyWith(
+                            color: style.colors['main1'],
+                            fontWeight: FontWeight.w600),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ))
-      ]),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

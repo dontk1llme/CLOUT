@@ -266,7 +266,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                 ),
               ),
             ),
-            userController.clouter
+            userController.user != 1
                 ? Container()
                 : Positioned(
                     bottom: 20,
