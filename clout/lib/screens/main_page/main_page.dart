@@ -1,10 +1,11 @@
 // global
-import 'package:clout/providers/user_controller.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/screens/clouter/clouter_list.dart';
 import 'package:clout/screens/main_page/widgets/guest_nav_bar.dart';
 import 'package:clout/screens/mypage/advertiser_mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:clout/style.dart' as style;
 
 // providers
 import 'package:clout/providers/nav_bar_controller.dart';
@@ -54,8 +55,20 @@ class MainPage extends StatelessWidget {
             children: [
               Home(),
               Positioned(
-                bottom: 10,
-                child: GuestNavBar(),
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: style.colors['category'],
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: GuestNavBar(),
+                ),
               ),
             ],
           ),
