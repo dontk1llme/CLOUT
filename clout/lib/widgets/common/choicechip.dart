@@ -38,39 +38,39 @@ class _ActionChoiceExampleState extends State<ActionChoiceExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      // mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Wrap(
-          spacing: 5,
-          children: List<Widget>.generate(
-            widget.chipCount,
-            (int index) {
-              return ChoiceChip(
-                label: Text(widget.labels[index]),
-                selected: _value == index,
-                onSelected: (bool selected) {
-                  setState(() {
-                    _value = selected ? index : null;
-                  });
+    return Padding(
+        padding: EdgeInsets.only(left: 20),
+        child: Row(
+          children: <Widget>[
+            Wrap(
+              spacing: 5,
+              children: List<Widget>.generate(
+                widget.chipCount,
+                (int index) {
+                  return ChoiceChip(
+                    label: Text(widget.labels[index]),
+                    selected: _value == index,
+                    onSelected: (bool selected) {
+                      setState(() {
+                        _value = selected ? index : null;
+                      });
+                    },
+                    backgroundColor: _value == index
+                        ? style.colors['main2']
+                        : Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: style.colors['category']!,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    selectedColor: style.colors['category'],
+                  );
                 },
-                backgroundColor: _value == index
-                    ? style.colors['main2']
-                    : Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: style.colors['category']!,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                selectedColor: style.colors['category'],
-              );
-            },
-          ).toList(),
-        ),
-      ],
-    );
+              ).toList(),
+            ),
+          ],
+        ));
   }
 }

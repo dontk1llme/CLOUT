@@ -61,12 +61,13 @@ class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 30),
             Text(
               '2. 계정 설정',
-              style: style.textTheme.titleSmall,
+              style: style.textTheme.headlineMedium,
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             JoinInput(
               keyboardType: TextInputType.text,
               maxLength: 20,
@@ -173,10 +174,10 @@ class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10),
+                // SizedBox(height: 10),
                 Text(
                   '활동 대표 사진',
-                  style: style.textTheme.headlineMedium,
+                  style: style.textTheme.headlineSmall,
                 ),
                 SizedBox(height: 10),
                 ImageWidget(controllerTag: widget.controllerTag),

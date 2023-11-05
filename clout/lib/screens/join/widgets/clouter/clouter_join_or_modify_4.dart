@@ -25,8 +25,8 @@ class ClouterJoinOrModify4 extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             Text(
-              '3. 희망 광고 정보',
-              style: style.textTheme.titleSmall,
+              '4. 희망 광고 정보',
+              style: style.textTheme.headlineMedium,
               textAlign: TextAlign.left,
             ),
             SizedBox(height: 10),
@@ -35,7 +35,7 @@ class ClouterJoinOrModify4 extends StatelessWidget {
               children: [
                 Text(
                   '희망 광고비\n(최소 금액)',
-                  style: style.textTheme.headlineMedium
+                  style: style.textTheme.headlineSmall
                       ?.copyWith(fontWeight: FontWeight.w500, height: 1.2),
                   textAlign: TextAlign.left,
                 ),
@@ -49,20 +49,20 @@ class ClouterJoinOrModify4 extends StatelessWidget {
             SizedBox(height: 20),
             Text(
               '희망 카테고리',
-              style: style.textTheme.headlineMedium
+              style: style.textTheme.headlineSmall
                   ?.copyWith(fontWeight: FontWeight.w500, height: 1.2),
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
             CategoryToggle(controllerTag: controllerTag),
             SizedBox(height: 20),
             Text(
               '희망 지역',
-              style: style.textTheme.headlineMedium
+              style: style.textTheme.headlineSmall
                   ?.copyWith(fontWeight: FontWeight.w500, height: 1.2),
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
             RegionMultiSelect(controllerTag: controllerTag),
             SizedBox(height: 8), //
           ],

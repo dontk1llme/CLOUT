@@ -28,10 +28,10 @@ class ClouterJoinOrModify1 extends StatelessWidget {
           children: <Widget>[
             Text(
               '1. 기본 정보',
-              style: style.textTheme.titleSmall,
+              style: style.textTheme.headlineMedium,
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             JoinInput(
               keyboardType: TextInputType.text,
               maxLength: 20,
@@ -72,12 +72,13 @@ class ClouterJoinOrModify1 extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 15),
-            Text(
-              '주소 정보 입력',
-              style: style.textTheme.bodyMedium,
-              textAlign: TextAlign.left,
-            ),
+            SizedBox(height: 10),
+            // Text(
+            //   '주소 정보 입력',
+            //   style: style.textTheme.bodyMedium,
+            //   textAlign: TextAlign.left,
+            // ),
+            // SizedBox(height: 3),
             AddressInput(controllerTag: controllerTag),
           ],
         ),
