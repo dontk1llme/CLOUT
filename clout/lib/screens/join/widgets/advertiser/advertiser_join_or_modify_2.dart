@@ -19,9 +19,10 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
       builder: (controller) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          SizedBox(height: 30),
           Text(
             '2. 담당자 정보 및 계정 설정',
-            style: style.textTheme.titleSmall,
+            style: style.textTheme.headlineMedium,
             textAlign: TextAlign.left,
           ),
           SizedBox(height: 20),
@@ -71,7 +72,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
           SizedBox(height: 30),
           Text(
             '계정 설정',
-            style: style.textTheme.headlineMedium,
+            style: style.textTheme.headlineSmall,
             textAlign: TextAlign.left,
           ),
           SizedBox(height: 10),

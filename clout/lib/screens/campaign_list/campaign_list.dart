@@ -12,6 +12,9 @@ import 'package:clout/widgets/input/search_bar.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/header/header.dart';
 
+// utilities
+import 'package:clout/utilities/bouncing_listview.dart';
+
 // controllers
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
 
