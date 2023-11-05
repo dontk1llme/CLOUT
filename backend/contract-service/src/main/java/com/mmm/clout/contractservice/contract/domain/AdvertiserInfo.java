@@ -13,6 +13,8 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AdvertiserInfo {
 
+    private Long advertiserId;
+
     private String representativeName;
 
     private String advertiserAddress;

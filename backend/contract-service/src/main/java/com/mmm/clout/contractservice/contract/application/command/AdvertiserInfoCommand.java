@@ -8,6 +8,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AdvertiserInfoCommand {
 
+    private Long advertiserId;
+
     private String representativeName;
 
     private String advertiserAddress;
@@ -18,6 +20,7 @@ public class AdvertiserInfoCommand {
 
     public AdvertiserInfo toValueType() {
         return new AdvertiserInfo(
+                this.advertiserId,
                 this.representativeName,
                 this.advertiserAddress,
                 this.companyName,

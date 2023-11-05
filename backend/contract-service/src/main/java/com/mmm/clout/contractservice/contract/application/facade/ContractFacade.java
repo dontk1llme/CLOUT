@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @Service
@@ -20,6 +22,8 @@ public class ContractFacade {
     private final UpdateStateContractProcessor updateStateContractProcessor;
     private final DeleteContractProcessor deleteContractProcessor;
     private final SelectContractProcessor selectContractProcessor;
+    private final SelectAllContractClouterProcessor selectAllContractClouterProcessor;
+    private final SelectAllContractAdvertiserProcessor selectAllContractAdvertiserProcessor;
 
     public Contract create(CreateContractCommand command) {
         return createContractProcessor.execute(command);
@@ -39,5 +43,13 @@ public class ContractFacade {
 
     public Contract select(Long id) {
         return selectContractProcessor.execute(id);
+    }
+
+    public List<Contract> selectAllClouter(Long clouterId) {
+        return selectAllContractClouterProcessor.execute(clouterId);
+    }
+
+    public List<Contract> selectAllAdvertiser(Long advertiserId) {
+        return selectAllContractAdvertiserProcessor.execute(advertiserId);
     }
 }

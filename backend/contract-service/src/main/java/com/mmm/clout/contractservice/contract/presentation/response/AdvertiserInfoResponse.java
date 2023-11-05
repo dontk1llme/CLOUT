@@ -9,6 +9,9 @@ import lombok.Getter;
 @Getter
 public class AdvertiserInfoResponse {
 
+    @Schema(description = "조회된 계약 회사 id")
+    private Long advertiserId;
+
     @Schema(description = "조회된 계약 회사 대표 이름")
     private String representativeName;
 
@@ -22,6 +25,7 @@ public class AdvertiserInfoResponse {
     private String regNum;
 
     public AdvertiserInfoResponse(AdvertiserInfo info) {
+        this.advertiserId = info.getAdvertiserId();
         this.representativeName = info.getRepresentativeName();
         this.advertiserAddress = info.getAdvertiserAddress();
         this.companyName = info.getCompanyName();
