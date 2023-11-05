@@ -117,8 +117,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-        child: GetMaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(
         fontFamily: 'NotoSansKR',
       ),
@@ -147,6 +146,6 @@ class _MyAppState extends State<MyApp> {
             name: '/clouterlikedcampaign', page: () => ClouterLikedCampaign()),
         GetPage(name: '/cloutermycampaign', page: () => ClouterMyCampaign()),
       ],
-    ));
+    );
   }
 }

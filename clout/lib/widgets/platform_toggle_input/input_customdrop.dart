@@ -9,12 +9,14 @@ import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class InputCustomdrop extends StatelessWidget {
-  InputCustomdrop({super.key, this.index});
+  InputCustomdrop({super.key, this.index, required this.controllerTag});
   final index;
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PlatformSelectController>(
+        tag: controllerTag,
         builder: (controller) => AnimatedContainer(
               duration: Duration(milliseconds: 500),
               padding: EdgeInsets.all(0),
@@ -64,7 +66,7 @@ class InputCustomdrop extends StatelessWidget {
                                   ),
                                 ),
                                 FollowercountStateDialog(
-                                  controllerTag: 'clouterRegister',
+                                  controllerTag: controllerTag,
                                   title: index != 2 ? '팔로워 수' : '구독자 수',
                                   hintText: '팔로워/구독자 수 입력',
                                 ),

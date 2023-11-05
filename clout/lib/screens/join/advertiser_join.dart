@@ -1,4 +1,5 @@
-import 'package:clout/providers/advertiser_register_controller.dart';
+import 'package:clout/providers/user_controllers/advertiser_controller.dart';
+import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/join/widgets/advertiser/advertiser_join_or_modify_1.dart';
 import 'package:clout/screens/join/widgets/advertiser/advertiser_join_or_modify_2.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
@@ -20,7 +21,9 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
   int pageNum = 1;
   double percent = 1 / 2;
 
-  final advertiserRegisterController = Get.put(AdvertiserRegisterController());
+  final advertiserController = Get.put(AdvertiserController());
+  final advertiserRegisterController =
+      Get.put(AdvertiserInfoController(), tag: 'advertiserRegister');
 
   showSnackBar() {
     Get.snackbar(
@@ -66,10 +69,10 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
   }
 
   void setPageNum(int newPageNum) {
-    bool canGoNext = false;
+    bool canGoNext = true;
     switch (newPageNum) {
       case 2:
-        canGoNext = advertiserRegisterController.canGoSecondPage();
+        // canGoNext = advertiserRegisterController.canGoSecondPage();
         break;
       case 3:
         if (advertiserRegisterController.canGoThirdPage() == 0) {
@@ -96,7 +99,10 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AdvertiserRegisterController>(
+    advertiserController.setControllerTag('advertiserRegister');
+    advertiserRegisterController.runOtherControllers();
+    return GetBuilder<AdvertiserInfoController>(
+      tag: 'advertiserRegister',
       builder: (controller) => Scaffold(
         body: LayoutBuilder(
           builder: (context, constraint) {
@@ -152,9 +158,14 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                             child: Column(children: [
                               //페이지별로 보여주기
                               if (pageNum == 1)
-                                AdvertiserJoinOrModify1(modifying: false, controllerTag: 'advertiserRegister'),
+                                AdvertiserJoinOrModify1(
+                                    modifying: false,
+                                    controllerTag: 'advertiserRegister'),
                               if (pageNum == 2)
-                                AdvertiserJoinOrModify2(modifying: false),
+                                AdvertiserJoinOrModify2(
+                                  modifying: false,
+                                  controllerTag: 'advertiserRegister',
+                                ),
                             ]),
                           ),
                           SizedBox(height: 20),
