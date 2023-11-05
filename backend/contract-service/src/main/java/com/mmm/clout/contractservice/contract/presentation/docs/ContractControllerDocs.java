@@ -2,9 +2,7 @@ package com.mmm.clout.contractservice.contract.presentation.docs;
 
 import com.mmm.clout.contractservice.contract.presentation.request.CreateContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.request.UpdateRRNContractRequest;
-import com.mmm.clout.contractservice.contract.presentation.response.CreateContractResponse;
-import com.mmm.clout.contractservice.contract.presentation.response.DeleteContractResponse;
-import com.mmm.clout.contractservice.contract.presentation.response.UpdateRRNContractResponse;
+import com.mmm.clout.contractservice.contract.presentation.response.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,6 +43,18 @@ public interface ContractControllerDocs {
             @RequestBody UpdateRRNContractRequest request
     );
 
+    @Operation(summary = "계약 상태 확정",
+            responses =
+            @ApiResponse(responseCode = "200", description = "확정된 계약 id 리턴",
+                    content =
+                    @Content(mediaType="application/json",
+                            schema=@Schema(implementation= UpdateStateContractResponse.class))
+            )
+    )
+    public ResponseEntity<UpdateStateContractResponse> updateState(
+            @PathVariable("contractId") Long id
+    );
+
     @Operation(summary = "계약 취소/삭제",
             responses =
             @ApiResponse(responseCode = "200", description = "삭제된 계약 id 리턴",
@@ -54,6 +64,18 @@ public interface ContractControllerDocs {
             )
     )
     public ResponseEntity<DeleteContractResponse> delete(
+            @PathVariable("contractId") Long id
+    );
+
+    @Operation(summary = "계약 조회",
+            responses =
+            @ApiResponse(responseCode = "200", description = "조회된 계약 리턴",
+                    content =
+                    @Content(mediaType="application/json",
+                            schema=@Schema(implementation=SelectContractResponse.class))
+            )
+    )
+    public ResponseEntity<SelectContractResponse> select(
             @PathVariable("contractId") Long id
     );
 }

@@ -4,9 +4,7 @@ import com.mmm.clout.contractservice.contract.application.facade.ContractFacade;
 import com.mmm.clout.contractservice.contract.presentation.docs.ContractControllerDocs;
 import com.mmm.clout.contractservice.contract.presentation.request.CreateContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.request.UpdateRRNContractRequest;
-import com.mmm.clout.contractservice.contract.presentation.response.CreateContractResponse;
-import com.mmm.clout.contractservice.contract.presentation.response.DeleteContractResponse;
-import com.mmm.clout.contractservice.contract.presentation.response.UpdateRRNContractResponse;
+import com.mmm.clout.contractservice.contract.presentation.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +40,16 @@ public class ContractController implements ContractControllerDocs {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PatchMapping("/{contractId}/complete")
+    public ResponseEntity<UpdateStateContractResponse> updateState(
+            @PathVariable("contractId") Long id
+    ) {
+        UpdateStateContractResponse response = UpdateStateContractResponse.from(
+                contractFacade.updateState(id)
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{contractId}")
     public ResponseEntity<DeleteContractResponse> delete(
             @PathVariable("contractId") Long id
@@ -52,4 +60,13 @@ public class ContractController implements ContractControllerDocs {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/{contractId}")
+    public ResponseEntity<SelectContractResponse> select(
+            @PathVariable("contractId") Long id
+    ) {
+        SelectContractResponse response = SelectContractResponse.from(
+                contractFacade.select(id)
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
