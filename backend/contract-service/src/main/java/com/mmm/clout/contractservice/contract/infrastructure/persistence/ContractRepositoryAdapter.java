@@ -22,4 +22,9 @@ public class ContractRepositoryAdapter implements ContractRepository {
     public Optional<Contract> findById(Long id) {
         return JpaContractRepository.findById(id);
     }
+
+    @Override
+    public void delete(Contract contract) {
+        JpaContractRepository.delete(contract);
+    }
 }

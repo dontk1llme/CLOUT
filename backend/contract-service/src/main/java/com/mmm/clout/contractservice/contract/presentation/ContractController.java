@@ -5,6 +5,7 @@ import com.mmm.clout.contractservice.contract.presentation.docs.ContractControll
 import com.mmm.clout.contractservice.contract.presentation.request.CreateContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.request.UpdateRRNContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.response.CreateContractResponse;
+import com.mmm.clout.contractservice.contract.presentation.response.DeleteContractResponse;
 import com.mmm.clout.contractservice.contract.presentation.response.UpdateRRNContractResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,4 +41,15 @@ public class ContractController implements ContractControllerDocs {
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{contractId}")
+    public ResponseEntity<DeleteContractResponse> delete(
+            @PathVariable("contractId") Long id
+    ) {
+        DeleteContractResponse response = DeleteContractResponse.from(
+                contractFacade.delete(id)
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }
