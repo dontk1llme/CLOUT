@@ -64,12 +64,9 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
                     controller: controller.scrollController.value,
                     itemBuilder: (_, index) {
                       print(controller.hasMore);
-                      // if (index < controller.data.length) {
-                      //   var datum = controller.data[index];
-                      //   return ListTile(
-                      //     title: Text('$datum 번째 데이터'),
-                      //   );
-                      // }
+                      controller.isClouterData =
+                          false; // 💥 캠페인 정보라고 여기서 알려주는게 아닌가..?
+                      controller.isClouterData = false;
                       if (index < controller.data.length) {
                         return CampaignItemBox(
                           category: controller.data[index].category,
@@ -104,6 +101,7 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
                           IconButton(
                             onPressed: () {
                               controller.reload();
+                              controller.toggleData();
                             },
                             icon: Icon(Icons.refresh_outlined),
                           ),

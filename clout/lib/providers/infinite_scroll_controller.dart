@@ -18,15 +18,28 @@ class Campaign {
   String firstImg = 'assets/images/itemImage.jpg';
 }
 
+class Clouter {
+  int clouterId = 1;
+  String nickname = '모카우유';
+  int starRating = 20;
+  int fee = 500000;
+  String category = '반려동물';
+  int contractCount = 5;
+  List<String> selectedPlatform = [
+    "YouTube",
+    "Instagram",
+    "TikTok",
+  ];
+  String firstImg = 'assets/images/clouterImage.jpg';
+}
+
 class InfiniteScrollController extends GetxController {
   var scrollController = ScrollController().obs;
 
-  Campaign campaign = Campaign();
-  int pageSize = 20;
-  // List<Campaign> data = [campaign];
-  // List data = <int>[].obs;
-  List<Campaign> data = <Campaign>[].obs;
+  var isClouterData = true; // 💥 클라우터 정보인지 아닌지
+  List<dynamic> data = [].obs;
 
+  int pageSize = 20;
   var isLoading = false;
   var hasMore = false;
 
@@ -53,12 +66,18 @@ class InfiniteScrollController extends GetxController {
     int offset = data.length;
     // 캠페인 추가하는 통신(아니면 다른 정3보) 여기에 작성해야될듯
 
-    // 데이터 몇개씩 보여줄건지? (10개씩 무한스크롤)
-    var appendData = List<Campaign>.generate(10, (i) {
-      var campaign = Campaign();
-      campaign.campaignId = i + 1 + offset;
-      return campaign;
-    });
+    // 데이터 몇개씩 보여줄건지? (10개씩 무한스크롤) 💥
+    var appendData = isClouterData
+        ? List<Clouter>.generate(10, (i) {
+            var clouter = Clouter();
+            clouter.clouterId = i + 1 + offset;
+            return clouter;
+          })
+        : List<Campaign>.generate(10, (i) {
+            var campaign = Campaign();
+            campaign.campaignId = i + 1 + offset;
+            return campaign;
+          });
     data.addAll(appendData);
 
     print(data.length);
@@ -75,6 +94,12 @@ class InfiniteScrollController extends GetxController {
     await Future.delayed(Duration(seconds: 2));
 
     _getData();
+    update();
+  }
+
+  toggleData() {
+    isClouterData = !isClouterData;
+    data.clear();
     update();
   }
 }
