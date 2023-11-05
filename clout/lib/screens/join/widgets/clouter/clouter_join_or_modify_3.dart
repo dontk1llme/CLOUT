@@ -17,11 +17,12 @@ class ClouterJoinOrModify3 extends StatelessWidget {
           widthFactor: 0.9,
           child: Column(
             children: [
+              SizedBox(height: 30),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
                   '3. SNS 정보',
-                  style: style.textTheme.titleSmall,
+                  style: style.textTheme.headlineMedium,
                 ),
               ),
               SizedBox(height: 10),
