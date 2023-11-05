@@ -7,7 +7,7 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 
 // controllers
-import 'package:clout/providers/infinite_scroll_controller.dart';
+import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
 
 class Clouter {
   int clouterId = 1;
