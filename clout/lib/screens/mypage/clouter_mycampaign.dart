@@ -30,7 +30,7 @@ import 'package:clout/providers/infinite_scroll_controller.dart';
 class ClouterMyCampaign extends GetView<InfiniteScrollController> {
   ClouterMyCampaign({super.key});
 
-  Campaign campaign = Campaign();
+  // Campaign campaign = Campaign();
 
   @override
   Widget build(BuildContext context) {

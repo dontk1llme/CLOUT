@@ -8,7 +8,7 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 
 // controllers
-import 'package:clout/providers/clouter_infinite_scroll_controller.dart';
+import 'package:clout/providers/infinite_scroll_controller.dart';
 
 class Clouter {
   int clouterId = 1;
@@ -33,8 +33,8 @@ class AdvertiserLikedclouters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    Get.put(ClouterInfiniteScrollController());
-    return GetBuilder<ClouterInfiniteScrollController>(
+    Get.put(InfiniteScrollController());
+    return GetBuilder<InfiniteScrollController>(
         builder: (controller) => Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(70),
@@ -57,6 +57,8 @@ class AdvertiserLikedclouters extends StatelessWidget {
                     controller: controller.scrollController.value,
                     itemBuilder: (_, index) {
                       print(controller.hasMore);
+                      controller.isClouterData =
+                          true; // 💥 클라우터 정보라고 여기서 알려주는게 아닌가..?
                       if (index < controller.data.length) {
                         return ClouterItemBox(
                           nickname: controller.data[index].nickname,
