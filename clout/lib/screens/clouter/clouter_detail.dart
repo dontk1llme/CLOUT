@@ -279,7 +279,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                         height: 50,
                         child: BigButton(
                           title: '채팅하기',
-                          function: () => Get.to(() => Chatting()),
+                          function: () => Get.to(Chatting()),
                         ),
                       ),
                     ),
