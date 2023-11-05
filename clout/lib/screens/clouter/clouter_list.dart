@@ -3,7 +3,7 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // controllers
-import 'package:clout/providers/infinite_scroll_controller.dart';
+import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
 
 // widgets
 import 'package:clout/widgets/list/category_list.dart';
