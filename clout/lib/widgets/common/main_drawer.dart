@@ -1,8 +1,12 @@
-import 'package:clout/screens/join/widgets/clouter/categoryToggle.dart';
-import 'package:clout/widgets/common/nametag.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
+
+// widgets
+import 'package:clout/widgets/common/nametag.dart';
+
+// controller
+import 'package:clout/providers/user_controller.dart';
 
 class MyDrawer extends StatefulWidget {
   @override
@@ -10,6 +14,8 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
+  final userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,55 +35,72 @@ class _MyDrawerState extends State<MyDrawer> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    NameTag(title: '클라우터'),
+                    NameTag(title: userController.user == -1 ? '클라우터' : '광고주'),
                     SizedBox(height: 3),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text('김보연님',
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        Icon(
-                          Icons.chevron_right,
-                        ),
-                      ],
+                    InkWell(
+                      onTap: () => Get.toNamed(userController.user == -1
+                          ? '/cloutermypage'
+                          : 'advertisermypage'),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('김보연님',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          Icon(
+                            Icons.chevron_right,
+                          ),
+                        ],
+                      ),
                     )
                   ])),
         ),
         ListTile(
-          // leading: Icon(Icons.home),
-          title: Text('홈', style: style.textTheme.headlineSmall),
-          onTap: () {
-            Get.toNamed('/home');
-            Scaffold.of(context).closeDrawer();
-          },
-          trailing: Icon(Icons.chevron_right),
-        ),
-        ListTile(
-          // leading: Icon(Icons.home),
           title: Text('내 계약서', style: style.textTheme.headlineSmall),
           onTap: () {
-            Get.toNamed('/home');
+            Get.toNamed('/contractlist');
             Scaffold.of(context).closeDrawer();
           },
           trailing: Icon(Icons.chevron_right),
         ),
-        ListTile(
-          title: Text('캠페인 목록', style: style.textTheme.headlineSmall),
-          onTap: () {
-            Scaffold.of(context).closeDrawer();
-          },
-          trailing: Icon(Icons.chevron_right),
-        ),
-        ListTile(
-          title: Text('클라우터 목록', style: style.textTheme.headlineSmall),
-          onTap: () {
-            Scaffold.of(context).closeDrawer();
-          },
-          trailing: Icon(Icons.chevron_right),
-        ),
+        if (userController.user == -1)
+          ListTile(
+            title: Text('신청한 캠페인', style: style.textTheme.headlineSmall),
+            onTap: () {
+              Get.toNamed('/cloutermycampaign');
+              Scaffold.of(context).closeDrawer();
+            },
+            trailing: Icon(Icons.chevron_right),
+          )
+        else if (userController.user == 1)
+          ListTile(
+            title: Text('내 캠페인', style: style.textTheme.headlineSmall),
+            onTap: () {
+              Get.toNamed('/advertisermycampaign');
+              Scaffold.of(context).closeDrawer();
+            },
+            trailing: Icon(Icons.chevron_right),
+          ),
+        if (userController.user == -1)
+          ListTile(
+            title: Text('관심있는 캠페인', style: style.textTheme.headlineSmall),
+            onTap: () {
+              Get.toNamed('/clouterlikedcampaign');
+              Scaffold.of(context).closeDrawer();
+            },
+            trailing: Icon(Icons.chevron_right),
+          )
+        else if (userController.user == 1)
+          ListTile(
+            title: Text('관심있는 클라우터', style: style.textTheme.headlineSmall),
+            onTap: () {
+              Get.toNamed('/advertiserlikedclouter');
+              Scaffold.of(context).closeDrawer();
+            },
+            trailing: Icon(Icons.chevron_right),
+          ),
         ExpansionTile(
           iconColor: style.colors['main1'],
           textColor: style.colors['main1'],
@@ -86,54 +109,44 @@ class _MyDrawerState extends State<MyDrawer> {
             title: Text('포인트 관리', style: style.textTheme.headlineSmall),
           ),
           children: [
-            ListTile(
-              tileColor: style.colors['main3'],
-              selectedColor: style.colors['main1'], // 이건지
-              splashColor: style.colors['main1'], // 이건지
-              title: Text('포인트 출금', style: style.textTheme.bodyLarge),
-              onTap: () {
-                Get.toNamed('/withdrawfirst');
-                Scaffold.of(context).closeDrawer();
-              },
-            ),
-            ListTile(
-              tileColor: style.colors['main3'],
-              title: Text('포인트 내역', style: style.textTheme.bodyLarge),
-              onTap: () {
-                Get.toNamed('/clouterpointlist');
-                Scaffold.of(context).closeDrawer();
-              },
-            ),
+            if (userController.user == -1)
+              ListTile(
+                tileColor: style.colors['main3'],
+                title: Text('포인트 출금', style: style.textTheme.bodyLarge),
+                onTap: () {
+                  Get.toNamed('/withdrawfirst');
+                  Scaffold.of(context).closeDrawer();
+                },
+              )
+            else if (userController.user == 1)
+              ListTile(
+                tileColor: style.colors['main3'],
+                title: Text('포인트 충전', style: style.textTheme.bodyLarge),
+                onTap: () {
+                  Get.toNamed('/');
+                  Scaffold.of(context).closeDrawer();
+                },
+              ),
+            if (userController.user == -1)
+              ListTile(
+                tileColor: style.colors['main3'],
+                title: Text('포인트 내역', style: style.textTheme.bodyLarge),
+                onTap: () {
+                  Get.toNamed('/clouterpointlist');
+                  Scaffold.of(context).closeDrawer();
+                },
+              )
+            else if (userController.user == 1)
+              ListTile(
+                tileColor: style.colors['main3'],
+                title: Text('포인트 내역', style: style.textTheme.bodyLarge),
+                onTap: () {
+                  Get.toNamed('/advertiserpointlist');
+                  Scaffold.of(context).closeDrawer();
+                },
+              ),
           ],
         ),
-        ExpansionTile(
-          iconColor: style.colors['main1'],
-          textColor: style.colors['main1'],
-          tilePadding: EdgeInsets.only(right: 15),
-          title: ListTile(
-            title: Text('마이페이지', style: style.textTheme.headlineSmall),
-          ),
-          children: [
-            ListTile(
-              title: Text('신청한 캠페인', style: style.textTheme.bodyLarge),
-              onTap: () {
-                Get.toNamed('/cloutercampaign');
-                Scaffold.of(context).closeDrawer();
-              },
-            ),
-            ListTile(
-              title: Text('관심있는 캠페인', style: style.textTheme.bodyLarge),
-              onTap: () {
-                Get.toNamed('/clouterlikedcampaign');
-                Scaffold.of(context).closeDrawer();
-              },
-            ),
-          ],
-        ),
-        // Divider(
-        //   color: style.colors['main2'],
-        //   thickness: 0.1,
-        // ),
         ListTile(
           title: Text('이용약관'),
           onTap: () {
