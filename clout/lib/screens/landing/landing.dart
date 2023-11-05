@@ -1,3 +1,4 @@
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/buttons/big_button.dart';
@@ -8,13 +9,14 @@ class Landing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(UserController(), permanent: true);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
-            flex: 8,
+            flex: 7,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -60,7 +62,7 @@ class Landing extends StatelessWidget {
             ),
           ),
           Flexible(
-            flex: 2,
+            flex: 3,
             child: Padding(
               padding: EdgeInsets.only(bottom: 50),
               child: FractionallySizedBox(
@@ -69,6 +71,16 @@ class Landing extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: BigButton(
+                        title: '둘러보기',
+                        function: () => Get.toNamed('/home'),
+                        buttonColor: style.colors['main2'],
+                      ),
+                    ),
+                    SizedBox(height: 10),
                     SizedBox(
                       height: 50,
                       width: double.infinity,

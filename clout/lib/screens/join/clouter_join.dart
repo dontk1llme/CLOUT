@@ -1,4 +1,5 @@
-import 'package:clout/providers/clouter_register_controller.dart';
+import 'package:clout/providers/user_controllers/clouter_controller.dart';
+import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/join/widgets/clouter/clouter_join_or_modify_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import '../../style.dart' as style;
+import 'package:clout/style.dart' as style;
 
 import 'package:clout/screens/join/widgets/big_button.dart';
 
@@ -26,11 +27,13 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
   int pageNum = 1;
   double percent = 1 / 4;
 
+  final clouterController = Get.put(ClouterController());
+
   final registerController =
-      Get.put(ClouterRegisterController(), tag: 'clouterRegister');
+      Get.put(ClouterInfoController(), tag: 'clouterRegister');
 
   void setPageNum(int newPageNum) {
-    bool canGoNext = false;
+    bool canGoNext = true;
     switch (newPageNum) {
       case 2:
         if (registerController.canGoSecondPage()) {
@@ -109,6 +112,8 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
 
   @override
   Widget build(BuildContext context) {
+    clouterController.setControllerTag('clouterRegister');
+    registerController.runOtherControllers();
     // 회원 가입도중 뒤로 갈 경우 사진을 담아뒀던 state가 만료될 수 있도록 초기화
     return Scaffold(
       backgroundColor: Colors.white,
@@ -205,7 +210,7 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
                               } else {
                                 registerController.printAll();
                                 showSnackBar();
-                                Get.offNamed('/login');
+                                Get.offAllNamed('/login');
                               }
                             },
                           ),

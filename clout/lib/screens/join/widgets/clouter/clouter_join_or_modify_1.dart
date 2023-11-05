@@ -1,4 +1,4 @@
-import 'package:clout/providers/clouter_register_controller.dart';
+import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/widgets/input/address_input.dart';
 import 'package:clout/widgets/input/input_elements/widgets/date_input.dart';
@@ -7,7 +7,7 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 
-class ClouterJoinOrModify1 extends StatefulWidget {
+class ClouterJoinOrModify1 extends StatelessWidget {
   ClouterJoinOrModify1({
     super.key,
     required this.modifying,
@@ -18,14 +18,9 @@ class ClouterJoinOrModify1 extends StatefulWidget {
   final modifying;
 
   @override
-  ClouterJoinOrModify1State createState() => ClouterJoinOrModify1State();
-}
-
-class ClouterJoinOrModify1State extends State<ClouterJoinOrModify1> {
-  @override
   Widget build(BuildContext context) {
-    return GetBuilder<ClouterRegisterController>(
-      tag: widget.controllerTag,
+    return GetBuilder<ClouterInfoController>(
+      tag: controllerTag,
       builder: (controller) => FractionallySizedBox(
         widthFactor: 0.9,
         child: Column(
@@ -44,10 +39,10 @@ class ClouterJoinOrModify1State extends State<ClouterJoinOrModify1> {
               label: '이름',
               setState: controller.setName,
               initialValue: controller.name,
-              enabled: !widget.modifying,
+              enabled: !modifying,
             ),
             SizedBox(height: 10),
-            DateInput(controllerTag: widget.controllerTag),
+            DateInput(controllerTag: controllerTag),
             SizedBox(height: 10),
             Stack(
               children: [
@@ -83,7 +78,7 @@ class ClouterJoinOrModify1State extends State<ClouterJoinOrModify1> {
               style: style.textTheme.bodyMedium,
               textAlign: TextAlign.left,
             ),
-            AddressInput(controllerTag: widget.controllerTag),
+            AddressInput(controllerTag: controllerTag),
           ],
         ),
       ),
