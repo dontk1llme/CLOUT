@@ -30,12 +30,13 @@ import 'package:clout/providers/infinite_scroll_controller.dart';
 class ClouterMyCampaign extends GetView<InfiniteScrollController> {
   ClouterMyCampaign({super.key});
 
-  Campaign campaign = Campaign();
+  // Campaign campaign = Campaign();
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    Get.put(InfiniteScrollController());
+    final infiniteController = Get.put(InfiniteScrollController());
+    infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
         builder: (controller) => Scaffold(
               appBar: PreferredSize(
