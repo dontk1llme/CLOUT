@@ -56,7 +56,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
         onTap: () => Get.toNamed('/campaignDetail', arguments: 1),
         child: Container(
           width: 170,
-          height: 300,
+          // height: 100,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: style.colors['white'],
@@ -121,7 +121,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Flexible(
-                    flex: 3,
+                    flex: 2,
                     child: Text(widget.campaignSubject,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
