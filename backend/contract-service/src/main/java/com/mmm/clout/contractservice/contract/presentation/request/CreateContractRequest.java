@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.Embedded;
 import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor

@@ -16,4 +16,10 @@ public class ClouterInfo {
     private String clouterAddress;
 
     private String residentRegistrationNumber;
+
+    public ClouterInfo updateResidentRegistrationNumber(String residentRegistrationNumber) {
+        this.residentRegistrationNumber = residentRegistrationNumber;
+        return this;
+    }
+
 }

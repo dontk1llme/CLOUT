@@ -1,5 +1,6 @@
 package com.mmm.clout.contractservice.contract.domain;
 
+import com.mmm.clout.contractservice.common.State;
 import com.mmm.clout.contractservice.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,10 @@ public class Contract extends BaseEntity {
     @Embedded
     private AdvertiserInfo advertiserInfo;
 
+    @Enumerated(EnumType.STRING)
+    private State state;
+
+
     public Contract(String name, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo) {
         this.name = name;
         this.price = price;
@@ -42,8 +47,14 @@ public class Contract extends BaseEntity {
         this.contents = contents;
         this.clouterInfo = clouterInfo;
         this.advertiserInfo = advertiserInfo;
+        this.state = State.WATING;
     }
     public static Contract create(String name, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo) {
         return new Contract(name,price,postDeadline,contractExpiration,contents,clouterInfo,advertiserInfo);
+    }
+
+    public Contract updateResidentRegistrationNumber(String rnn) {
+        this.clouterInfo.updateResidentRegistrationNumber(rnn);
+        return this;
     }
 }

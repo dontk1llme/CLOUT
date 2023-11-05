@@ -6,6 +6,8 @@ import com.mmm.clout.contractservice.contract.domain.repository.ContractReposito
 import com.mmm.clout.contractservice.contract.infrastructure.persistence.jpa.JpaContractRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class ContractRepositoryAdapter implements ContractRepository {
 
@@ -14,5 +16,10 @@ public class ContractRepositoryAdapter implements ContractRepository {
     @Override
     public Contract save(Contract contract) {
         return JpaContractRepository.save(contract);
+    }
+
+    @Override
+    public Optional<Contract> findById(Long id) {
+        return JpaContractRepository.findById(id);
     }
 }

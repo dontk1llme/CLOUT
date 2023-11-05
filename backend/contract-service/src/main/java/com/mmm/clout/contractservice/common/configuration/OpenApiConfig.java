@@ -12,7 +12,7 @@ public class OpenApiConfig {
     @Bean
     public GroupedOpenApi api() {
         return GroupedOpenApi.builder()
-            .group("user-service")
+            .group("contract-service")
             .pathsToMatch("/**")
             .build();
     }
