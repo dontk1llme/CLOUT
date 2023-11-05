@@ -73,6 +73,8 @@ dependencies:
   flutter_local_notifications: ^16.1.0
   syncfusion_flutter_pdf: ^23.1.43
   open_file: ^3.3.2
+  flutter_staggered_grid_view: ^0.7.0
+  loading_indicator: ^3.1.1
 
 flutter_icons:
   android: "clout"
