@@ -1,7 +1,7 @@
 // global
 import 'package:clout/providers/campaign_register_controller.dart';
 import 'package:clout/providers/search_detail_controller.dart';
-import 'package:clout/providers/user_controller.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;

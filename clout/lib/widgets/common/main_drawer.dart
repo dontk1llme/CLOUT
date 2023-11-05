@@ -1,4 +1,4 @@
-import 'package:clout/screens/join/widgets/clouter/categoryToggle.dart';
+import 'package:clout/screens/join/widgets/clouter/category_toggle.dart';
 import 'package:clout/widgets/common/nametag.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,10 +6,10 @@ import 'package:clout/style.dart' as style;
 
 class MyDrawer extends StatefulWidget {
   @override
-  _MyDrawerState createState() => _MyDrawerState();
+  MyDrawerState createState() => MyDrawerState();
 }
 
-class _MyDrawerState extends State<MyDrawer> {
+class MyDrawerState extends State<MyDrawer> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

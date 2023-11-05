@@ -1,4 +1,4 @@
-import 'package:clout/providers/advertiser_register_controller.dart';
+import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/widgets/input/address_input.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +13,8 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AdvertiserRegisterController>(
+    return GetBuilder<AdvertiserInfoController>(
+      tag: controllerTag,
       builder: (controller) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -29,7 +30,7 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
             title: '업체명 입력',
             label: '업체명',
             setState: controller.setBuisnessName,
-            enabled: !modifying,
+            enabled: true,
           ),
           SizedBox(height: 10),
           JoinInput(
@@ -38,7 +39,7 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
             title: '대표 이름 입력',
             label: '대표 이름',
             setState: controller.setHeadName,
-            enabled: !modifying,
+            enabled: true,
           ),
           SizedBox(height: 10),
           JoinInput(
@@ -47,7 +48,7 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
             title: '사업자등록번호 입력',
             label: '사업자등록번호',
             setState: controller.setBuisnessNumber,
-            enabled: !modifying,
+            enabled: true,
           ),
           SizedBox(height: 10),
           AddressInput(controllerTag: controllerTag),

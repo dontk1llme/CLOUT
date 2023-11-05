@@ -1,5 +1,4 @@
 import 'package:clout/providers/fee_controller.dart';
-import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:clout/widgets/input/input_elements/utilities/numeric_range_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -7,9 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class PayDialog extends StatelessWidget {
-  PayDialog({super.key, required this.title, required this.hintText});
+  PayDialog(
+      {super.key,
+      required this.title,
+      required this.hintText,
+      required this.controllerTag});
   final title;
   final hintText;
+  final controllerTag;
 
   openPayDialog() {
     Get.defaultDialog(
@@ -17,6 +21,7 @@ class PayDialog extends StatelessWidget {
       titlePadding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 20),
       content: GetBuilder<FeeController>(
+        tag: controllerTag,
         builder: (controller) => SizedBox(
           height: 75,
           child: Column(
@@ -66,6 +71,7 @@ class PayDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<FeeController>(
+      tag: controllerTag,
       builder: (controller) => SizedBox(
         height: 50,
         child: Row(
