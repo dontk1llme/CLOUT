@@ -1,5 +1,5 @@
 import 'package:clout/main.dart';
-import 'package:clout/providers/user_controller.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_content.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_delivery_info.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_info_box.dart';

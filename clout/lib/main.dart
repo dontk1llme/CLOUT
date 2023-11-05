@@ -29,7 +29,6 @@ import 'package:clout/screens/campaign_detail/campaign_detail.dart';
 import 'package:clout/screens/mypage/contract_list.dart';
 import 'package:clout/binding/app_binding.dart';
 
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("백그라운드 메시지 처리.. ${message.notification!.body!}");
 }
@@ -60,6 +59,7 @@ void initializeNotification() async {
     sound: true,
   );
 }
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -76,7 +76,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-var messageString = "";
+  var messageString = "";
 
   void getMyDeviceToken() async {
     final token = await FirebaseMessaging.instance.getToken();
@@ -88,8 +88,8 @@ var messageString = "";
     print('initstate 들어옴');
     getMyDeviceToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-    RemoteNotification? notification = message.notification;
-      
+      RemoteNotification? notification = message.notification;
+
       if (notification != null) {
         print('notification 수신');
         FlutterLocalNotificationsPlugin().show(
@@ -115,33 +115,32 @@ var messageString = "";
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: GetMaterialApp(
-    theme: ThemeData(
-      fontFamily: 'NotoSansKR',
-    ),
-    initialBinding: AppBinding(),
-    getPages: [
-      GetPage(name: '/', page: () => Landing()),
-      GetPage(name: '/login', page: () => Login()),
-      GetPage(name: '/join', page: () => Join()),
-      GetPage(name: '/home', page: () => MainPage()),
-      GetPage(name: '/campaignRegister', page: () => CampaignRegister()),
-      GetPage(name: '/notification', page: () => NotificationPage()),
-      GetPage(name: '/reviewcomplete', page: () => ReviewComplete()),
-      GetPage(name: '/chattinglist', page: () => ChattingList()),
-      GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
-      GetPage(name: '/cloutermypage', page: () => ClouterMyPage()),
-      GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
-      GetPage(name: '/campaignDetail', page: () => CampaignDetail()),
-      GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
-      GetPage(name: '/advertiserdetail', page: () => AdvertiserDetail()),
-      GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
-      GetPage(name: '/withdrawfirst', page: () => WithdrawFirst()),
-      GetPage(name: '/withdrawsecond', page: () => WithdrawSecond()),
-      GetPage(name: '/withdrawcomplete', page: () => WithdrawComplete()),
-      GetPage(name: '/contractlist', page: () => ContractList()),
-    ],
-  ));
+    return GetMaterialApp(
+      theme: ThemeData(
+        fontFamily: 'NotoSansKR',
+      ),
+      initialBinding: AppBinding(),
+      getPages: [
+        GetPage(name: '/', page: () => Landing()),
+        GetPage(name: '/login', page: () => Login()),
+        GetPage(name: '/join', page: () => Join()),
+        GetPage(name: '/home', page: () => MainPage()),
+        GetPage(name: '/campaignRegister', page: () => CampaignRegister()),
+        GetPage(name: '/notification', page: () => NotificationPage()),
+        GetPage(name: '/reviewcomplete', page: () => ReviewComplete()),
+        GetPage(name: '/chattinglist', page: () => ChattingList()),
+        GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
+        GetPage(name: '/cloutermypage', page: () => ClouterMyPage()),
+        GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
+        GetPage(name: '/campaignDetail', page: () => CampaignDetail()),
+        GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
+        GetPage(name: '/advertiserdetail', page: () => AdvertiserDetail()),
+        GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
+        GetPage(name: '/withdrawfirst', page: () => WithdrawFirst()),
+        GetPage(name: '/withdrawsecond', page: () => WithdrawSecond()),
+        GetPage(name: '/withdrawcomplete', page: () => WithdrawComplete()),
+        GetPage(name: '/contractlist', page: () => ContractList()),
+      ],
+    );
   }
 }

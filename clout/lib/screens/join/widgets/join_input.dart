@@ -1,5 +1,3 @@
-import 'package:clout/providers/clouter_register_controller.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 

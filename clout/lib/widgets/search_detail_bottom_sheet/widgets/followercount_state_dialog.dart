@@ -25,6 +25,7 @@ class FollowercountStateDialog extends StatelessWidget {
       titlePadding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 20),
       content: GetBuilder<FollowerContoller>(
+        tag: controllerTag,
         builder: (controller) => SizedBox(
           height: 75,
           child: Column(
