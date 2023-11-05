@@ -1,17 +1,20 @@
-import 'package:clout/main.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:clout/style.dart' as style;
+
+// controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
+
+// widgets
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_content.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_delivery_info.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_info_box.dart';
 import 'package:clout/screens/clouter/clouter_select.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/buttons/like_button.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/image_carousel.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:clout/style.dart' as style;
-import 'package:carousel_slider/carousel_slider.dart';
 
 class Campaign {
   int campaignId = 1;
@@ -49,17 +52,29 @@ String caution = '법적 고지, 책임은 계약 당사자 간 있다, 등등..
 
 //////////////////////////////////////////////////////////////////////////////
 
-class CampaignDetail extends StatelessWidget {
+class CampaignDetail extends StatefulWidget {
   CampaignDetail({super.key});
 
+  @override
+  State<CampaignDetail> createState() => _CampaignDetailState();
+}
+
+class _CampaignDetailState extends State<CampaignDetail> {
   // campaignId GetX에서 argument로 얻어서 api 통신으로 어떤 캠페인 정보 보여줄지 표시해야함
   var campaignId = Get.arguments;
 
   Campaign campaign = Campaign();
 
   // GetX Controller에 클라우터인지 광고주인지 저장해놓고(리코일처럼)
-  // 버튼 다르게 보이게 해야함
   final userController = Get.find<UserController>();
+
+  bool isItemLiked = false;
+
+  void handleItemTap() {
+    setState(() {
+      isItemLiked = !isItemLiked;
+    });
+  }
 
   showBottomSheet() {
     Get.bottomSheet(
@@ -117,7 +132,16 @@ class CampaignDetail extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 20),
+                    userController.user == 0
+                        ? SizedBox(height: 20)
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text('Like'),
+                              LikeButton(
+                                  isLiked: isItemLiked, onTap: handleItemTap),
+                            ],
+                          ),
                     // 사진 캐러셀
                     ImageCarousel(
                         imageSliders: imageSliders,
