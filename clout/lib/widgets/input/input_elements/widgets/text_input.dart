@@ -10,13 +10,20 @@ class TextInput extends StatelessWidget {
       required this.placeholder,
       this.keyboardType,
       required this.maxLength,
-      required this.maxValue});
+      required this.maxValue,
+      this.minLines,
+      this.maxLines}) {
+    minLines ??= 5;
+    maxLines ??= 5;
+  }
 
   final setData;
   final placeholder;
   final keyboardType;
   final maxLength;
   final maxValue;
+  var minLines;
+  var maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +36,8 @@ class TextInput extends StatelessWidget {
           : [],
       onChanged: (value) => setData(value),
       keyboardType: keyboardType,
-      minLines: 5,
-      maxLines: 5,
+      minLines: minLines,
+      maxLines: maxLines,
       maxLength: maxLength,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
