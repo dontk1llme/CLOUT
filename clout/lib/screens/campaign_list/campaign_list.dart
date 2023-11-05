@@ -44,16 +44,18 @@ class _MyCampaignList extends State<CampaignList> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        drawer: MyDrawer(),
-        backgroundColor: style.colors['white'],
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70),
-          child: Header(
-            header: 1,
-            headerTitle: '캠페인 목록',
-          ),
+      drawer: MyDrawer(),
+      backgroundColor: style.colors['white'],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: Header(
+          header: 1,
+          headerTitle: '캠페인 목록',
         ),
-        body: ListView(children: [
+      ),
+      body: ListView(
+        physics: BouncingScrollPhysics(),
+        children: [
           MySearchBar(),
           CategoryList(),
           SearchDetailButton(),
@@ -73,48 +75,57 @@ class _MyCampaignList extends State<CampaignList> {
             ),
           ),
           SizedBox(height: 20),
+          
           FractionallySizedBox(
-              widthFactor: screenWidth > 400 ? 0.9 : 1,
-              child: Align(alignment: Alignment.topCenter, child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: screenWidth > 400 ? 20 : 10,
-                  runSpacing: screenWidth > 400 ? 20 : 10,
-                  // alignment: Alignment.,
-                  children: []))),
+            widthFactor: screenWidth > 400 ? 0.9 : 1,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: 10,
+                runSpacing: 10,
+                // alignment: Alignment.,
+                children: [
+                  CampaignItemBox(
+                    category: campaign.category,
+                    productName: campaign.productName,
+                    pay: campaign.pay,
+                    campaignSubject: campaign.campaignSubject,
+                    applicantCount: campaign.applicantCount,
+                    recruitCount: campaign.recruitCount,
+                    selectedPlatform: campaign.selectedPlatform,
+                    starRating: campaign.starRating,
+                    firstImg: campaign.firstImg,
+                  ),
+                  CampaignItemBox(
+                    category: campaign.category,
+                    productName: campaign.productName,
+                    pay: campaign.pay,
+                    campaignSubject: campaign.campaignSubject,
+                    applicantCount: campaign.applicantCount,
+                    recruitCount: campaign.recruitCount,
+                    selectedPlatform: campaign.selectedPlatform,
+                    starRating: campaign.starRating,
+                    firstImg: campaign.firstImg,
+                  ),
+                  CampaignItemBox(
+                    category: campaign.category,
+                    productName: campaign.productName,
+                    pay: campaign.pay,
+                    campaignSubject: campaign.campaignSubject,
+                    applicantCount: campaign.applicantCount,
+                    recruitCount: campaign.recruitCount,
+                    selectedPlatform: campaign.selectedPlatform,
+                    starRating: campaign.starRating,
+                    firstImg: campaign.firstImg,
+                  ),
+                ],
+              ),
+            ),
+          ),
           SizedBox(height: 30),
-          CampaignItemBox(
-            category: campaign.category,
-            productName: campaign.productName,
-            pay: campaign.pay,
-            campaignSubject: campaign.campaignSubject,
-            applicantCount: campaign.applicantCount,
-            recruitCount: campaign.recruitCount,
-            selectedPlatform: campaign.selectedPlatform,
-            starRating: campaign.starRating,
-            firstImg: campaign.firstImg,
-          ),
-          CampaignItemBox(
-            category: campaign.category,
-            productName: campaign.productName,
-            pay: campaign.pay,
-            campaignSubject: campaign.campaignSubject,
-            applicantCount: campaign.applicantCount,
-            recruitCount: campaign.recruitCount,
-            selectedPlatform: campaign.selectedPlatform,
-            starRating: campaign.starRating,
-            firstImg: campaign.firstImg,
-          ),
-          CampaignItemBox(
-            category: campaign.category,
-            productName: campaign.productName,
-            pay: campaign.pay,
-            campaignSubject: campaign.campaignSubject,
-            applicantCount: campaign.applicantCount,
-            recruitCount: campaign.recruitCount,
-            selectedPlatform: campaign.selectedPlatform,
-            starRating: campaign.starRating,
-            firstImg: campaign.firstImg,
-          ),
-        ]));
+        ],
+      ),
+    );
   }
 }

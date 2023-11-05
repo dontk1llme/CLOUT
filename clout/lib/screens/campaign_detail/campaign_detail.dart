@@ -1,5 +1,6 @@
 import 'package:clout/main.dart';
 import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:clout/screens/apply_campaign/apply_campaign.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_content.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_delivery_info.dart';
 import 'package:clout/screens/campaign_detail/widgets/campaign_detail_info_box.dart';
@@ -170,8 +171,9 @@ class CampaignDetail extends StatelessWidget {
                     child: SizedBox(
                       height: 50,
                       child: BigButton(
-                        title: '신청하기',
-                        function: () => Get.toNamed('/home'),
+                        title:
+                            '신청하기', // 이미 지원한 캠페인일 경우 title 다르게 설정하고 버튼 비활성화 해야함
+                        function: () => Get.to(ApplyCampaign()),
                       ),
                     ),
                   )
