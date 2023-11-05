@@ -20,7 +20,7 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
         children: <Widget>[
           Text(
             '1. 업체 정보',
-            style: style.textTheme.titleSmall,
+            style: style.textTheme.headlineMedium,
             textAlign: TextAlign.left,
           ),
           SizedBox(height: 20),
