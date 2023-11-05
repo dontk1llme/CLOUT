@@ -14,7 +14,7 @@ class UpdateButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
-        userController.clouter
+        userController.user == -1
             ? Get.to(ClouterUpdate())
             : Get.to(AdvertiserUpdate());
       }, //클라우터
