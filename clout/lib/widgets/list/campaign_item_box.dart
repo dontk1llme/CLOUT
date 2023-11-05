@@ -1,3 +1,4 @@
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:intl/intl.dart';
@@ -47,6 +48,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
     });
   }
 
+  final userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -88,7 +91,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                       ]),
                     ),
                   ),
-                  LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
+                  if (userController.user != 0)
+                    LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
                 ],
               ),
               Row(

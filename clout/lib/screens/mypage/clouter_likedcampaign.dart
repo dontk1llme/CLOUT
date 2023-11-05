@@ -35,7 +35,8 @@ class ClouterLikedCampaign extends GetView<InfiniteScrollController> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    Get.put(InfiniteScrollController());
+    final infiniteController = Get.put(InfiniteScrollController());
+    infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
       builder: (controller) => Scaffold(
         appBar: PreferredSize(
@@ -46,27 +47,25 @@ class ClouterLikedCampaign extends GetView<InfiniteScrollController> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(0),
           // FilterButton(),
-          child: Obx(
-            () => GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: screenWidth > 600 ? 4 : 2,
-                crossAxisSpacing: 10,
-                childAspectRatio: 0.7,
-                mainAxisSpacing: screenWidth > 400 ? 15 : 10,
-              ),
-              controller: controller.scrollController.value,
-              itemBuilder: (_, index) {
-                print(controller.hasMore);
-                // if (index < controller.data.length) {
-                //   var datum = controller.data[index];
-                //   return ListTile(
-                //     title: Text('$datum 번째 데이터'),
-                //   );
-                // }
-                if (index < controller.data.length) {
-                  return CampaignItemBox(
+          child: GridView.builder(
+            physics: BouncingScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: screenWidth > 600 ? 4 : 2,
+              crossAxisSpacing: 0,
+              childAspectRatio: 0.7,
+              mainAxisSpacing: screenWidth > 400 ? 3 : 0,
+            ),
+            controller: controller.scrollController.value,
+            itemBuilder: (_, index) {
+              print(controller.hasMore);
+              print(controller.data);
+              print(controller.data.length);
+              if (index < controller.data.length) {
+                return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CampaignItemBox(
                     category: controller.data[index].category,
                     productName: controller.data[index].productName,
                     pay: controller.data[index].pay,
@@ -76,35 +75,29 @@ class ClouterLikedCampaign extends GetView<InfiniteScrollController> {
                     selectedPlatform: controller.data[index].selectedPlatform,
                     starRating: controller.data[index].starRating,
                     firstImg: controller.data[index].firstImg,
-                  );
-                }
-
-                if (controller.hasMore || controller.isLoading) {
-                  return Center(child: RefreshProgressIndicator());
-                }
-
-                // if (index == controller.data.length) {
-                //   return controller.hasMore
-                //       ? Center(child: CircularProgressIndicator())
-                //       : Container();
-                // }
-
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('데이터의 마지막 입니다'),
-                    IconButton(
-                      onPressed: () {
-                        controller.reload();
-                      },
-                      icon: Icon(Icons.refresh_outlined),
-                    ),
-                  ],
+                  ),
                 );
-              },
-              itemCount: controller.data.length + 1,
-            ),
+              }
+
+              if (controller.hasMore || controller.isLoading) {
+                return Center(child: RefreshProgressIndicator());
+              }
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('데이터의 마지막 입니다'),
+                  IconButton(
+                    onPressed: () {
+                      controller.reload();
+                    },
+                    icon: Icon(Icons.refresh_outlined),
+                  ),
+                ],
+              );
+            },
+            itemCount: controller.data.length + 1,
           ),
         ),
       ),

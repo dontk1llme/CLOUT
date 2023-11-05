@@ -1,5 +1,3 @@
-import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:clout/screens/chatting/widgets/chatting_item_box.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -13,11 +11,13 @@ import 'package:clout/widgets/image_carousel.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/buttons/like_button.dart';
+import 'package:clout/screens/chatting/widgets/chatting_item_box.dart';
 
 // screen
 import 'package:clout/screens/chatting/chatting_list.dart';
 
 // controller
+import 'package:clout/providers/user_controllers/user_controller.dart';
 
 class Clouter {
   int clouterId = 1;
@@ -161,13 +161,14 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                 style: TextStyle(fontWeight: FontWeight.w800)),
                           ],
                         ),
-                        Row(
-                          children: [
-                            Text('Like'),
-                            LikeButton(
-                                isLiked: isItemLiked, onTap: handleItemTap),
-                          ],
-                        )
+                        if (userController.user != 0)
+                          Row(
+                            children: [
+                              Text('Like'),
+                              LikeButton(
+                                  isLiked: isItemLiked, onTap: handleItemTap),
+                            ],
+                          )
                       ],
                     ),
                     // 사진 캐러셀
