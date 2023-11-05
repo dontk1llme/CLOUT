@@ -1,4 +1,3 @@
-import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -10,6 +9,9 @@ import 'package:clout/widgets/list/category_list.dart';
 import 'package:clout/widgets/input/search_bar.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/header/header.dart';
+
+// utilities
+import 'package:clout/utilities/bouncing_listview.dart';
 
 // controllers
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
