@@ -35,7 +35,8 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    Get.put(InfiniteScrollController());
+    final infiniteController = Get.put(InfiniteScrollController());
+    infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
         builder: (controller) => Scaffold(
               appBar: PreferredSize(

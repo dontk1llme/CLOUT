@@ -36,7 +36,7 @@ class Clouter {
 class InfiniteScrollController extends GetxController {
   var scrollController = ScrollController().obs;
 
-  var isClouterData = true; // 💥 클라우터 정보인지 아닌지
+  var isClouterData = true; // 클라우터 정보인지 아닌지
   List<dynamic> data = [].obs;
 
   int pageSize = 20;
@@ -45,8 +45,6 @@ class InfiniteScrollController extends GetxController {
 
   @override
   void onInit() {
-    _getData();
-
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels ==
               scrollController.value.position.maxScrollExtent &&
@@ -66,7 +64,7 @@ class InfiniteScrollController extends GetxController {
     int offset = data.length;
     // 캠페인 추가하는 통신(아니면 다른 정3보) 여기에 작성해야될듯
 
-    // 데이터 몇개씩 보여줄건지? (10개씩 무한스크롤) 💥
+    // 데이터 몇개씩 보여줄건지? (10개씩 무한스크롤)
     var appendData = isClouterData
         ? List<Clouter>.generate(10, (i) {
             var clouter = Clouter();
@@ -97,9 +95,10 @@ class InfiniteScrollController extends GetxController {
     update();
   }
 
-  toggleData() {
-    isClouterData = !isClouterData;
-    data.clear();
+  toggleData(input) {
+    isClouterData = input;
+    data = [];
+    _getData();
     update();
   }
 }
