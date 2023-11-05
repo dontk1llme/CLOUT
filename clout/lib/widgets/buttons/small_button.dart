@@ -20,7 +20,7 @@ class SmallButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _textSize = (buttonHeight * 0.3)
+    final textSize = (buttonHeight * 0.3)
         .clamp(13.0, double.infinity); // 버튼 높이에 따라 fontSize 계산
 
     return SizedBox(
@@ -47,7 +47,7 @@ class SmallButton extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-            fontSize: _textSize,
+            fontSize: textSize,
             color: style.colors['white'],
             fontWeight: FontWeight.w400,
             height: 1.2,
