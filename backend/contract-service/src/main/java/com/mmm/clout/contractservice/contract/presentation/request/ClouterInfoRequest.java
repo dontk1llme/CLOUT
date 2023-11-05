@@ -6,10 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @Getter
 public class ClouterInfoRequest {
+
+    @Schema(description = "클라우터 id")
+    @NotNull
+    private Long clouterId;
 
     @Schema(description = "클라우터 이름")
     @NotBlank
@@ -21,6 +26,7 @@ public class ClouterInfoRequest {
 
     public ClouterInfoCommand toCommand() {
         return new ClouterInfoCommand(
+                this.clouterId,
                 this.clouterName,
                 this.clouterAddress
         );

@@ -6,10 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @Getter
 public class AdvertiserInfoRequest {
+
+    @Schema(description = "회사 id")
+    @NotNull
+    private Long advertiserId;
 
     @Schema(description = "회사 대표 이름")
     @NotBlank
@@ -29,6 +34,7 @@ public class AdvertiserInfoRequest {
 
     public AdvertiserInfoCommand toCommand() {
         return new AdvertiserInfoCommand(
+                this.advertiserId,
                 this.representativeName,
                 this.advertiserAddress,
                 this.companyName,

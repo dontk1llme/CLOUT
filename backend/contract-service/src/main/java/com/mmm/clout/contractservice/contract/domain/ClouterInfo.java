@@ -13,6 +13,8 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ClouterInfo {
 
+    private Long clouterId;
+
     private String clouterName;
 
     private String clouterAddress;

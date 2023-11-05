@@ -69,4 +69,24 @@ public class ContractController implements ContractControllerDocs {
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/cloter")
+    public ResponseEntity<AllSelectContractsResponse> selectClouter(
+            @RequestParam("clouterId") Long clouterId
+    ) {
+        AllSelectContractsResponse response = AllSelectContractsResponse.from(
+                contractFacade.selectAllClouter(clouterId)
+        );
+        return new ResponseEntity<AllSelectContractsResponse>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/advertiser")
+    public ResponseEntity<AllSelectContractsResponse> selectAdvertiser(
+            @RequestParam("advertiserId") Long advertiserId
+    ) {
+        AllSelectContractsResponse response = AllSelectContractsResponse.from(
+                contractFacade.selectAllAdvertiser(advertiserId)
+        );
+        return new ResponseEntity<AllSelectContractsResponse>(response, HttpStatus.OK);
+    }
 }

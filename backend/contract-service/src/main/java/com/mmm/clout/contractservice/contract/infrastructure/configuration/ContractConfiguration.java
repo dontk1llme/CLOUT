@@ -32,4 +32,14 @@ public class ContractConfiguration {
     public SelectContractProcessor selectContractProcessor(ContractRepository contractRepository) {
         return new SelectContractProcessor(contractRepository);
     }
+
+    @Bean
+    public SelectAllContractClouterProcessor selectAllContractClouterProcessor(ContractRepository contractRepository) {
+        return new SelectAllContractClouterProcessor(contractRepository);
+    }
+
+    @Bean
+    public SelectAllContractAdvertiserProcessor selectAllContractAdvertiserProcessor(ContractRepository contractRepository) {
+        return new SelectAllContractAdvertiserProcessor(contractRepository);
+    }
 }

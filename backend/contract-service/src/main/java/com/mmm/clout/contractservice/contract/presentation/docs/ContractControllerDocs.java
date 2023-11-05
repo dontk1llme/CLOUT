@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -77,6 +78,30 @@ public interface ContractControllerDocs {
     )
     public ResponseEntity<SelectContractResponse> select(
             @PathVariable("contractId") Long id
+    );
+
+    @Operation(summary = "클라우터 계약 전체 조회",
+            responses =
+            @ApiResponse(responseCode = "200", description = "조회된 클라우터 계약들 리턴",
+                    content =
+                    @Content(mediaType="application/json",
+                            schema=@Schema(implementation=AllSelectContractsResponse.class))
+            )
+    )
+    public ResponseEntity<AllSelectContractsResponse> selectClouter(
+            @RequestParam("clouterId") Long clouterId
+    );
+
+    @Operation(summary = "광고주 계약 전체 조회",
+            responses =
+            @ApiResponse(responseCode = "200", description = "조회된 광고주 계약들 리턴",
+                    content =
+                    @Content(mediaType="application/json",
+                            schema=@Schema(implementation=AllSelectContractsResponse.class))
+            )
+    )
+    public ResponseEntity<AllSelectContractsResponse> selectAdvertiser(
+            @RequestParam("advertiserId") Long advertiserId
     );
 }
 
