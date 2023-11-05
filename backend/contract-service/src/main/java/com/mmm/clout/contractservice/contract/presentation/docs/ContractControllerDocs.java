@@ -3,6 +3,7 @@ package com.mmm.clout.contractservice.contract.presentation.docs;
 import com.mmm.clout.contractservice.contract.presentation.request.CreateContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.request.UpdateRRNContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.response.CreateContractResponse;
+import com.mmm.clout.contractservice.contract.presentation.response.DeleteContractResponse;
 import com.mmm.clout.contractservice.contract.presentation.response.UpdateRRNContractResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,7 +25,7 @@ public interface ContractControllerDocs {
             @ApiResponse(responseCode = "201", description = "생성된 계약 id 리턴",
                     content =
                     @Content(mediaType="application/json",
-                            schema=@Schema(implementation= CreateContractRequest.class))
+                            schema=@Schema(implementation=CreateContractResponse.class))
             )
     )
     public ResponseEntity<CreateContractResponse> create(
@@ -36,12 +37,24 @@ public interface ContractControllerDocs {
             @ApiResponse(responseCode = "200", description = "수정된 계약 id 리턴",
                     content =
                     @Content(mediaType="application/json",
-                            schema=@Schema(implementation= UpdateRRNContractResponse.class))
+                            schema=@Schema(implementation=UpdateRRNContractResponse.class))
             )
     )
     public ResponseEntity<UpdateRRNContractResponse> updateRNN(
             @PathVariable("contractId") Long id,
             @RequestBody UpdateRRNContractRequest request
+    );
+
+    @Operation(summary = "계약 취소/삭제",
+            responses =
+            @ApiResponse(responseCode = "200", description = "삭제된 계약 id 리턴",
+                    content =
+                    @Content(mediaType="application/json",
+                            schema=@Schema(implementation=DeleteContractResponse.class))
+            )
+    )
+    public ResponseEntity<DeleteContractResponse> delete(
+            @PathVariable("contractId") Long id
     );
 }
 

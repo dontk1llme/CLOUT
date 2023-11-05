@@ -10,4 +10,6 @@ public interface ContractRepository {
     Contract save(Contract contract);
 
     Optional<Contract> findById(Long id);
+
+    void delete(Contract contract);
 }
