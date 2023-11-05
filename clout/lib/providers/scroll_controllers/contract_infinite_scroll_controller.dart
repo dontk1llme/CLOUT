@@ -10,10 +10,10 @@ class Contract {
 class ContractInfiniteScrollController extends GetxController {
   var scrollController = ScrollController().obs;
 
-  Contract clouter = Contract();
-  int pageSize = 20;
+  Contract contract = Contract();
   List<Contract> data = <Contract>[].obs;
 
+  int pageSize = 20;
   var isLoading = false;
   var hasMore = false;
 
@@ -36,7 +36,7 @@ class ContractInfiniteScrollController extends GetxController {
     await Future.delayed(Duration(seconds: 2));
 
     int offset = data.length;
-    // 캠페인 추가하는 통신(아니면 다른 정3보) 여기에 작성해야될듯
+    // 계약서 추가하는 통신(아니면 다른 정3보) 여기에 작성해야될듯
 
     // 데이터 몇개씩 보여줄건지? (10개씩 무한스크롤)
     var appendData = List<Contract>.generate(10, (i) {
