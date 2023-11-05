@@ -52,7 +52,7 @@ class ClouterList extends GetView<InfiniteScrollController> {
                   header: 1,
                   headerTitle: '클라우터 목록',
                 )),
-            body: SingleChildScrollView(
+            body: BouncingListview(
               child: Column(
                 children: [
                   MySearchBar(),
