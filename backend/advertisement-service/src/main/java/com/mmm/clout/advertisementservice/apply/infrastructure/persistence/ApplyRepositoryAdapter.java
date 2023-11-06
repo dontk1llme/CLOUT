@@ -36,5 +36,15 @@ public class ApplyRepositoryAdapter implements ApplyRepository {
         return jpaApplyRepository.findByApplicant_ApplicantIdAndApplyStatus(applicantId, applyStatus);
     }
 
+    @Override
+    public List<Apply> findApplicantList(Long advertisementId) {
+        return jpaApplyRepository.findByCampaignId(advertisementId);
+    }
+
+    @Override
+    public List<Apply> findByCampaign(Campaign campaign) {
+        return jpaApplyRepository.findByCampaign(campaign);
+    }
+
 
 }
