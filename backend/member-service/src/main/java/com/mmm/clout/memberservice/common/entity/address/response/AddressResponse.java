@@ -1,6 +1,7 @@
 package com.mmm.clout.memberservice.common.entity.address.response;
 
 import com.mmm.clout.memberservice.common.entity.address.Address;
+import com.mmm.clout.memberservice.common.entity.address.reader.AddressReader;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,12 @@ public class AddressResponse {
 
     @Schema(description = "상세 주소")
     private String detailAddress;
+
+    public AddressResponse(AddressReader addressReader) {
+        this.zipCode = addressReader.getZipCode();
+        this.mainAddress = addressReader.getMainAddress();
+        this.detailAddress = addressReader.getDetailAddress();
+    }
 
     public AddressResponse(Address address) {
         this.zipCode = address.getZipCode();

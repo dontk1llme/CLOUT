@@ -19,6 +19,9 @@ public class CompanyInfo {
 
     private String regNum;
 
+    @Column(length = 15)
+    private String ceoName;
+
     @Column(length = 20)
     private String managerName;
 

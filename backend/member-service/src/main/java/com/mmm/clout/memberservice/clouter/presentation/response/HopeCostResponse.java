@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.clouter.presentation.response;
 
+import com.mmm.clout.memberservice.clouter.application.reader.HopeCostReader;
 import com.mmm.clout.memberservice.clouter.domain.HopeCost;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ public class HopeCostResponse {
     @Schema(description = "원하는 최대 금액")
     private Long maxCost;
 
-    public HopeCostResponse(HopeCost hopeCost) {
+    public HopeCostResponse(HopeCostReader hopeCost) {
         this.minCost = hopeCost.getMinCost();
         this.maxCost = hopeCost.getMaxCost();
     }
