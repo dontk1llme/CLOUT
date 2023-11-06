@@ -8,7 +8,7 @@ spring:
   application:
     name: member-service
   datasource:
-    url: jdbc:mariadb://localhost:3306/test
+    url: jdbc:mariadb://localhost:13306/test
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: 1234
@@ -21,7 +21,7 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
   data:
     redis:
       host: localhost
