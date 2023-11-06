@@ -1,20 +1,19 @@
-import 'package:clout/screens/point/clouter_point_list.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // widgets
-import 'package:clout/screens/mypage/clouter_mycampaign.dart';
-import 'package:clout/screens/mypage/clouter_likedcampaign.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
-import 'package:clout/widgets/buttons/small_outlined_button.dart';
-import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:clout/screens/mypage/widgets/mypage_list.dart';
 import 'package:clout/screens/point/widgets/my_wallet.dart';
 import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/widgets/common/nametag.dart';
-import 'package:clout/widgets/list/campaign_item_box.dart';
+
+// screens
+import 'package:clout/screens/mypage/clouter_likedcampaign.dart';
+import 'package:clout/screens/mypage/clouter_mycampaign.dart';
+import 'package:clout/screens/point/clouter_point_list.dart';
 
 class ClouterMyPage extends StatelessWidget {
   const ClouterMyPage({super.key});
