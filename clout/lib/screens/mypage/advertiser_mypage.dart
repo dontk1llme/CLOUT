@@ -3,6 +3,7 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // widgets
+import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/buttons/small_outlined_button.dart';
@@ -20,6 +21,7 @@ class AdvertiserMyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: MyDrawer(),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(80),
           child: Header(

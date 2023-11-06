@@ -1,5 +1,4 @@
-import 'package:clout/providers/header_controller.dart';
-import 'package:clout/providers/image_picker_provider.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
@@ -15,26 +14,36 @@ class Header extends ConsumerStatefulWidget {
   HeaderState createState() => HeaderState();
 }
 
+final userController = Get.find<UserController>();
+
 class HeaderState extends ConsumerState<Header> {
   @override
   Widget build(BuildContext context) {
-    final headerController = Get.put(HeaderController());
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,
       toolbarHeight: 70,
       centerTitle: widget.header == 4 ? false : true,
       iconTheme: IconThemeData(color: Colors.black),
-      leading: widget.header == 0 || widget.header == 1
-          ? IconButton(onPressed: () {}, icon: Icon(Icons.menu_outlined))
-          : IconButton(
-              onPressed: () {
-                ref.invalidate(
-                    imagePickerProvider); // 뒤로 가기 할 경우 campaignRegister에 있던 사진 내용 provider 초기화 시켜줘야함
-                headerController.resetSearchDetail();
-                Get.back();
-              },
-              icon: Icon(Icons.arrow_back_ios_new_outlined)),
+      leading: userController.user != 0
+          ? widget.header == 0 || widget.header == 1
+              ? IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  icon: Icon(Icons.menu_outlined))
+              : IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(Icons.arrow_back_ios_new_outlined))
+          : widget.header == 3
+              ? IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(Icons.arrow_back_ios_new_outlined))
+              : Container(),
       title: widget.header == 0
           ? Image.asset(
               'assets/images/Clout_Logo.png',
@@ -47,12 +56,14 @@ class HeaderState extends ConsumerState<Header> {
                       fontWeight: FontWeight.w700,
                       height: 1))
               : null,
-      actions: widget.header != 3 && widget.header != 4
-          ? [
-              IconButton(
-                  onPressed: () => Get.toNamed('/notification'),
-                  icon: Icon(Icons.notifications_outlined))
-            ]
+      actions: userController.user != 0
+          ? widget.header != 3 && widget.header != 4
+              ? [
+                  IconButton(
+                      onPressed: () => Get.toNamed('/notification'),
+                      icon: Icon(Icons.notifications_outlined))
+                ]
+              : null
           : null,
     );
   }

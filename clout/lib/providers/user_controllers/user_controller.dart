@@ -1,15 +1,20 @@
 import 'package:get/get.dart';
 
 class UserController extends GetxController {
-  bool clouter = false;
+  int user = 0;
 
   void setAdvertiser() {
-    clouter = false;
+    user = 1;
     update();
   }
 
   void setClouter() {
-    clouter = true;
+    user = -1;
+    update();
+  }
+
+  void setGuest(){
+    user = 0;
     update();
   }
 }

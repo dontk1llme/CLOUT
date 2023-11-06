@@ -1,4 +1,4 @@
-import 'package:clout/providers/clouter_register_controller.dart';
+import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/widgets/input/address_input.dart';
 import 'package:clout/widgets/input/input_elements/widgets/date_input.dart';
@@ -7,17 +7,20 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 
-class ClouterJoin1 extends StatefulWidget {
-  ClouterJoin1({Key? key}) : super(key: key);
+class ClouterJoinOrModify1 extends StatelessWidget {
+  ClouterJoinOrModify1({
+    super.key,
+    required this.modifying,
+    required this.controllerTag,
+  });
 
-  @override
-  ClouterJoin1State createState() => ClouterJoin1State();
-}
+  final controllerTag;
+  final modifying;
 
-class ClouterJoin1State extends State<ClouterJoin1> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ClouterRegisterController>(
+    return GetBuilder<ClouterInfoController>(
+      tag: controllerTag,
       builder: (controller) => FractionallySizedBox(
         widthFactor: 0.9,
         child: Column(
@@ -25,19 +28,21 @@ class ClouterJoin1State extends State<ClouterJoin1> {
           children: <Widget>[
             Text(
               '1. 기본 정보',
-              style: style.textTheme.titleSmall,
+              style: style.textTheme.headlineMedium,
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             JoinInput(
               keyboardType: TextInputType.text,
               maxLength: 20,
               title: '이름 입력',
               label: '이름',
               setState: controller.setName,
+              initialValue: controller.name,
+              enabled: !modifying,
             ),
             SizedBox(height: 10),
-            DateInput(),
+            DateInput(controllerTag: controllerTag),
             SizedBox(height: 10),
             Stack(
               children: [
@@ -47,6 +52,8 @@ class ClouterJoin1State extends State<ClouterJoin1> {
                   title: '휴대전화 번호 입력',
                   label: '휴대전화 번호',
                   setState: controller.setPhoneNumber,
+                  initialValue: controller.phoneNumber,
+                  enabled: true,
                 ),
                 Positioned(
                   right: 10,
@@ -65,13 +72,14 @@ class ClouterJoin1State extends State<ClouterJoin1> {
                 ),
               ],
             ),
-            SizedBox(height: 15),
-            Text(
-              '주소 정보 입력',
-              style: style.textTheme.bodyMedium,
-              textAlign: TextAlign.left,
-            ),
-            AddressInput(),
+            SizedBox(height: 10),
+            // Text(
+            //   '주소 정보 입력',
+            //   style: style.textTheme.bodyMedium,
+            //   textAlign: TextAlign.left,
+            // ),
+            // SizedBox(height: 3),
+            AddressInput(controllerTag: controllerTag),
           ],
         ),
       ),

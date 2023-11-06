@@ -1,23 +1,21 @@
-import 'package:clout/providers/clouter_register_controller.dart';
-import 'package:clout/providers/image_picker_provider.dart';
+import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
-import 'package:clout/widgets/image_widget.dart';
+import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
-import 'package:clout/screens/join/widgets/small_button.dart';
-import 'package:clout/screens/join/numberVerify.dart';
-import 'package:clout/widgets/input/input.dart';
 
-class ClouterJoin2 extends ConsumerStatefulWidget {
-  ClouterJoin2({super.key});
+class ClouterJoinOrModify2 extends StatefulWidget {
+  ClouterJoinOrModify2(
+      {super.key, required this.modifying, required this.controllerTag});
+  final modifying;
+  final controllerTag;
 
   @override
-  ClouterJoin2State createState() => ClouterJoin2State();
+  ClouterJoinOrModify2State createState() => ClouterJoinOrModify2State();
 }
 
-class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
+class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
   var obscured = true;
   var doubleId = 1;
   Icon suffixIcon = Icon(
@@ -56,24 +54,28 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ClouterRegisterController>(
+    return GetBuilder<ClouterInfoController>(
+      tag: widget.controllerTag,
       builder: (controller) => FractionallySizedBox(
         widthFactor: 0.9,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 30),
             Text(
               '2. 계정 설정',
-              style: style.textTheme.titleSmall,
+              style: style.textTheme.headlineMedium,
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             JoinInput(
               keyboardType: TextInputType.text,
               maxLength: 20,
               title: '닉네임 입력',
               label: '닉네임',
               setState: controller.setNickName,
+              initialValue: controller.nickName,
+              enabled: true,
             ),
             SizedBox(height: 10),
             Stack(
@@ -84,6 +86,8 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                   title: '아이디 입력',
                   label: '아이디',
                   setState: controller.setId,
+                  initialValue: controller.id,
+                  enabled: !widget.modifying,
                 ),
                 Positioned(
                   right: 10,
@@ -138,6 +142,7 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                   label: '비밀번호',
                   setState: controller.setPassword,
                   obscured: obscured,
+                  enabled: true,
                 ),
                 Positioned(
                   top: 3,
@@ -156,6 +161,7 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
                   label: '비밀번호 확인',
                   setState: controller.setCheckPassword,
                   obscured: obscured,
+                  enabled: true,
                 ),
                 Positioned(
                   top: 3,
@@ -168,13 +174,13 @@ class ClouterJoin2State extends ConsumerState<ClouterJoin2> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10),
+                // SizedBox(height: 10),
                 Text(
                   '활동 대표 사진',
-                  style: style.textTheme.headlineMedium,
+                  style: style.textTheme.headlineSmall,
                 ),
                 SizedBox(height: 10),
-                ImageWidget(parentImages: controller.images),
+                ImageWidget(controllerTag: widget.controllerTag),
               ],
             ),
           ],

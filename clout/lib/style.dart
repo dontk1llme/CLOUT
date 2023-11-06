@@ -27,6 +27,10 @@ var textTheme = TextTheme(
 // 물음표 없으면 에러
 var colors = {
   'main1': Color(0xFF6B4EFF),
+  'main1-1': Color.fromARGB(255, 126, 100, 255),
+  'main1-2': Color.fromARGB(255, 140, 118, 255),
+  'main1-3': Color.fromARGB(255, 157, 137, 255),
+  'main1-4': Color.fromARGB(255, 176, 160, 255),
   'main2': Color(0xFF927EFF),
   'main3': Color(0xFFF6F4FF),
   'gray': Color(0xFF979C9E),

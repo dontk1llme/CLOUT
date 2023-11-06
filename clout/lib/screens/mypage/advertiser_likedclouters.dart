@@ -1,10 +1,16 @@
-import 'package:clout/widgets/buttons/filter_button.dart';
+import 'package:clout/screens/clouter/clouter_infinite_scroll_body.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
+import 'package:clout/style.dart' as style;
 // widgets
-import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/buttons/filter_button.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
+
+// controllers
+import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class Clouter {
   int clouterId = 1;
@@ -23,14 +29,15 @@ class Clouter {
 
 class AdvertiserLikedclouters extends StatelessWidget {
   AdvertiserLikedclouters({super.key});
-
   Clouter clouter = Clouter();
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Scaffold(
+    final infiniteController = Get.put(InfiniteScrollController());
+    infiniteController.toggleData(true);
+    return GetBuilder<InfiniteScrollController>(
+      builder: (controller) => Scaffold(
+        backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70),
           child: Header(
@@ -38,33 +45,8 @@ class AdvertiserLikedclouters extends StatelessWidget {
             headerTitle: '관심있는 클라우터 목록',
           ),
         ),
-        body: Container(
-            color: Colors.white,
-            width: double.infinity,
-            height: double.infinity,
-            child: BouncingListview(
-                child: FractionallySizedBox(
-                    widthFactor: screenWidth > 400 ? 0.9 : 1,
-                    child: Column(children: [
-                      FilterButton(),
-                      Align(
-                          alignment: Alignment.topCenter,
-                          child: Wrap(
-                              direction: Axis.horizontal,
-                              spacing: screenWidth > 400 ? 20 : 10,
-                              runSpacing: screenWidth > 400 ? 20 : 10,
-                              // alignment: Alignment.,
-                              children: [
-                                ClouterItemBox(
-                                    nickname: clouter.nickname,
-                                    starRating: clouter.starRating,
-                                    fee: clouter.fee,
-                                    category: clouter.category,
-                                    contractCount: clouter.contractCount,
-                                    selectedPlatform: clouter.selectedPlatform,
-                                    firstImg: clouter.firstImg),
-                              ])),
-                      SizedBox(height: 30)
-                    ])))));
+        body: ClouterInfiniteScrollBody(),
+      ),
+    );
   }
 }

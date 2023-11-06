@@ -1,5 +1,7 @@
 // Global
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/widgets/image_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -13,6 +15,7 @@ import 'package:clout/screens/home/widgets/main_carousel_text1.dart';
 import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
+import 'package:get/get.dart';
 
 class Clouter {
   int clouterId = 1;
@@ -45,6 +48,8 @@ class Campaign {
   int starRating = 20;
   String firstImg = 'assets/images/itemImage.jpg';
 }
+
+final userController = Get.find<UserController>();
 
 class Home extends StatelessWidget {
   Home({super.key});
@@ -242,89 +247,105 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(80),
-          child: Header(
-            header: 0,
-          ),
+      backgroundColor: Colors.white,
+      drawer: MyDrawer(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: Header(
+          header: 0,
         ),
-        body: BouncingListview(
-            child: Column(
+      ),
+      body: BouncingListview(
+        child: Column(
           children: [
-            // 여기 아래 컨테이너에 캐러셀 넣어야 함(아래 컨테이너 전체를 캐러셀에 포함시켜야 함)
             Container(
-                color: Colors.black,
-                // height: 200,
-                width: double.infinity,
-                child: ImageCarousel(
-                  imageSliders: carouselList,
-                  aspectRatio: 0,
-                  enlarge: false,
-                )),
+              color: Colors.black,
+              // height: 200,
+              width: double.infinity,
+              child: ImageCarousel(
+                imageSliders: carouselList,
+                aspectRatio: 0,
+                enlarge: false,
+              ),
+            ),
             Container(
               color: style.colors['white'],
               child: Column(
                 children: [
-                  Column(children: [
-                    MenuTitle(
-                      text: '인기있는 클라우터',
-                      destination: 1,
-                    ),
-                    BouncingListview(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5, right: 5),
-                        child: Row(children: [
-                          for (num i = 0; i < 10; i++)
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                              child: ClouterItemBox(
-                                  nickname: clouter.nickname,
-                                  starRating: clouter.starRating,
-                                  fee: clouter.fee,
-                                  category: clouter.category,
-                                  contractCount: clouter.contractCount,
-                                  selectedPlatform: clouter.selectedPlatform,
-                                  firstImg: clouter.firstImg),
-                            )
-                        ]),
+                  Column(
+                    children: [
+                      MenuTitle(
+                        text: '인기있는 클라우터',
+                        destination: 1,
                       ),
-                    )
-                  ]),
+                      BouncingListview(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 5, right: 5),
+                          child: Row(
+                            children: [
+                              for (num i = 0; i < 10; i++)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                                  child: ClouterItemBox(
+                                      nickname: clouter.nickname,
+                                      starRating: clouter.starRating,
+                                      fee: clouter.fee,
+                                      category: clouter.category,
+                                      contractCount: clouter.contractCount,
+                                      selectedPlatform:
+                                          clouter.selectedPlatform,
+                                      firstImg: clouter.firstImg),
+                                )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                   Container(
                     color: style.colors['main3'],
                     height: 10,
                   ),
-                  Column(children: [
-                    MenuTitle(text: '인기있는 캠페인', destination: 2),
-                    BouncingListview(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5, right: 5),
-                        child: Row(children: [
-                          for (num i = 0; i < 10; i++)
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                              child: CampaignItemBox(
-                                category: campaign.category,
-                                productName: campaign.productName,
-                                pay: campaign.pay,
-                                campaignSubject: campaign.campaignSubject,
-                                applicantCount: campaign.applicantCount,
-                                recruitCount: campaign.recruitCount,
-                                selectedPlatform: campaign.selectedPlatform,
-                                starRating: campaign.starRating,
-                                firstImg: campaign.firstImg,
-                              ),
-                            )
-                        ]),
-                      ),
-                    )
-                  ])
+                  Column(
+                    children: [
+                      MenuTitle(text: '인기있는 캠페인', destination: 2),
+                      BouncingListview(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 5, right: 5),
+                          child: Row(
+                            children: [
+                              for (num i = 0; i < 10; i++)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                                  child: CampaignItemBox(
+                                    category: campaign.category,
+                                    productName: campaign.productName,
+                                    pay: campaign.pay,
+                                    campaignSubject: campaign.campaignSubject,
+                                    applicantCount: campaign.applicantCount,
+                                    recruitCount: campaign.recruitCount,
+                                    selectedPlatform: campaign.selectedPlatform,
+                                    starRating: campaign.starRating,
+                                    firstImg: campaign.firstImg,
+                                  ),
+                                )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  )
                 ],
               ),
-            )
+            ),
+            userController.user == 0 ? SizedBox(height: 150) : Container(),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }

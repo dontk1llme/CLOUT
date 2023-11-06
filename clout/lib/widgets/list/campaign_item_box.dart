@@ -1,3 +1,4 @@
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:intl/intl.dart';
@@ -47,6 +48,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
     });
   }
 
+  final userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -55,8 +58,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
         // 여기 arguments에 해당 캠페인의 id를 넣어야 함
         onTap: () => Get.toNamed('/campaignDetail', arguments: 1),
         child: Container(
-          width: 170,
-          height: 300,
+          width: screenWidth / 2 - 25,
+          // height: 100,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: style.colors['white'],
@@ -71,8 +74,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 children: [
                   Image.asset(
                     widget.firstImg,
-                    width: 170,
-                    height: 140,
+                    width: screenWidth / 2 - 40,
+                    // height: screenHeight / 2 - 65,
                     fit: BoxFit.cover,
                   ),
                   Positioned(
@@ -88,7 +91,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                       ]),
                     ),
                   ),
-                  LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
+                  if (userController.user != 0)
+                    LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
                 ],
               ),
               Row(
@@ -121,7 +125,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Flexible(
-                    flex: 3,
+                    flex: 2,
                     child: Text(widget.campaignSubject,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
