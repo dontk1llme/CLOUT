@@ -13,4 +13,5 @@ public interface ClouterRepository {
 
     Clouter findById(Long userId);
 
+    List<Clouter> findTop10ByOrderByAvgScoreDesc();
 }
