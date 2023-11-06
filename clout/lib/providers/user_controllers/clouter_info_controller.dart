@@ -10,45 +10,17 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ClouterInfoController extends GetxController {
-  // var name;
-  // var gender;
-  // var phoneNumber;
-  // var id;
-  // var password;
-  // var checkPassword;
-  // var nickName;
-  // var images;
-  // List<bool> selections = List.generate(12, (index) => false);
-
-  // 회원 정보 수정이므로 기존 정보 서버에서 받아와서 저장해야됨
-  // 일단은 임시 데이터 설정
-  var name = '박재민';
-  var gender = '';
-  var phoneNumber = '01055040749';
-  var id = 'catbirdseat';
+  var name;
+  var gender;
+  var phoneNumber;
+  var id;
   var password;
   var checkPassword;
-  var nickName = '박재민짱';
-  var images = [
-    'assets/images/clouterImage.jpg',
-    'assets/images/itemImage.jpg',
-    'assets/images/mone.png',
-  ];
-  // List<bool> selections = List.generate(12, (index) => false);
-  List<bool> selections = [
-    false,
-    true,
-    false,
-    true,
-    false,
-    true,
-    false,
-    true,
-    false,
-    true,
-    false,
-    true,
-  ];
+  var nickName;
+  var images;
+  List<bool> selections = List.generate(12, (index) => false);
+  var obscured = true;
+  // Clouter? clouter;
 
   final clouterController = Get.find<ClouterController>();
   var addressController;
