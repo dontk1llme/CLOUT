@@ -1,5 +1,5 @@
 // Global
-import 'package:clout/screens/point/advertiser_point_list.dart';
+import 'package:clout/screens/point/add/add_complete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
@@ -31,6 +31,10 @@ import 'package:clout/screens/mypage/contract_list.dart';
 import 'package:clout/binding/app_binding.dart';
 import 'package:clout/screens/mypage/clouter_likedcampaign.dart';
 import 'package:clout/screens/mypage/clouter_mycampaign.dart';
+import 'package:clout/screens/point/add/add_first.dart';
+import 'package:clout/screens/point/add/add_second.dart';
+import 'package:clout/screens/point/add/add_complete.dart';
+import 'package:clout/screens/point/advertiser_point_list.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("백그라운드 메시지 처리.. ${message.notification!.body!}");
@@ -149,6 +153,9 @@ class _MyAppState extends State<MyApp> {
         GetPage(
             name: '/advertiserpointlist', page: () => AdvertiserPointList()),
         GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
+        GetPage(name: '/addfirst', page: () => AddFirst()),
+        GetPage(name: '/addsecond', page: () => AddSecond()),
+        GetPage(name: '/addcomplete', page: () => AddComplete()),
       ],
     );
   }

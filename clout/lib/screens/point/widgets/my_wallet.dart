@@ -30,115 +30,6 @@ class _MyWalletState extends State<MyWallet> {
     return formattedPoints;
   }
 
-  void _showModal() {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      builder: (BuildContext context) {
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 30, horizontal: 40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  InkWell(
-                    child: Icon(
-                      Icons.close,
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-              Icon(
-                Icons.warning,
-                size: 30,
-                color: Colors.amber,
-              ),
-              SizedBox(height: 15),
-              MediumText(text: '포인트 충전 후'),
-              MediumText(text: '보유한 포인트는'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  MediumText(text: '현금으로'),
-                  SizedBox(width: 5),
-                  BoldText(text: '재환전이'),
-                  SizedBox(width: 3),
-                  Text('불가',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.red)),
-                  MediumText(text: '합니다.')
-                ],
-              ),
-              SizedBox(height: 15),
-              Text('포인트는 사용할 만큼만'),
-              Text('충전하여 사용해주세요!'),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 25),
-                child: SizedBox(
-                  height: 30,
-                  width: 230,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: style.colors['category'],
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
-                      children: [
-                        Icon(Icons.check, color: style.colors['main1']),
-                        SizedBox(width: 3),
-                        Text('내용을 확인했습니다.'),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 140,
-                    height: 50,
-                    child: BigButton(
-                        title: '아니요',
-                        textColor: Colors.black,
-                        buttonColor: style.colors['lightgray'],
-                        function: () {
-                          Get.back();
-                        }),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  SizedBox(
-                    width: 140,
-                    height: 50,
-                    child: BigButton(
-                      title: '충전하기',
-                      function: () {},
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Widget buttons;
@@ -150,8 +41,8 @@ class _MyWalletState extends State<MyWallet> {
             flex: 1,
             child: SmallButton(
               title: '충전하기',
-              // destination: 'chargemessage',
-              function: _showModal,
+              destination: '/addfirst',
+              // function: _showModal,
             ),
           ),
           // SizedBox(width: 5),
