@@ -1,7 +1,6 @@
 package com.mmm.clout.advertisementservice.advertisements.domain;
 
 import com.mmm.clout.advertisementservice.common.entity.BaseEntity;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +23,10 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.Length;
 
 @Getter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @DynamicInsert
