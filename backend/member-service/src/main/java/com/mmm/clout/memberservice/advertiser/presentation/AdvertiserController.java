@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/advertisers")
+@RequestMapping("/v1/advertisers")
 @RequiredArgsConstructor
 public class AdvertiserController implements AdvertiserControllerDocs {
 
