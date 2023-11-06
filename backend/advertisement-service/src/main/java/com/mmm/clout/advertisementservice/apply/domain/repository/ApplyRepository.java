@@ -12,8 +12,11 @@ public interface ApplyRepository {
 
     Optional<Apply> findById(Long applyId);
 
-
     boolean checkApplyExists(Campaign campaign, Long clouterId);
 
     List<Apply> getAllByStatus(Long applicantId, ApplyStatus applyStatus);
+
+    List<Apply> findApplicantList(Long advertisementId);
+
+    List<Apply> findByCampaign(Campaign campaign);
 }

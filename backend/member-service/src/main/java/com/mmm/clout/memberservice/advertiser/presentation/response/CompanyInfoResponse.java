@@ -15,6 +15,9 @@ public class CompanyInfoResponse {
     @Schema(description = "사업자 등록 번호")
     private String regNum;
 
+    @Schema(description = "회사 대표 이름")
+    private String ceoName;
+
     @Schema(description = "담당자 이름")
     private String managerName;
 
@@ -24,6 +27,7 @@ public class CompanyInfoResponse {
     public CompanyInfoResponse(CompanyInfo companyInfo) {
         this.companyName = companyInfo.getCompanyName();
         this.regNum = companyInfo.getRegNum();
+        this.ceoName = companyInfo.getCeoName();
         this.managerName = companyInfo.getManagerName();
         this.managerPhoneNumber = companyInfo.getManagerPhoneNumber();
     }
