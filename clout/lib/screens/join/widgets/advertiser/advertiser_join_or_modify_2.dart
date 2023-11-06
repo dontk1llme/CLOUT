@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:clout/hooks/advertiser_register_api.dart';
+import 'package:clout/hooks/register_api.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/type.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
@@ -29,8 +28,6 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
     print('이게 되야되는데');
     print(CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue);
     print(responseBody);
-    // print(CheckDuplicated.fromJson(responseBody));
-    // print(responseBody['checkValue']);
   }
 
   @override

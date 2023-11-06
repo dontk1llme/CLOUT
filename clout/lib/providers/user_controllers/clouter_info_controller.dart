@@ -6,6 +6,7 @@ import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/providers/region_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_controller.dart';
+import 'package:clout/type.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +21,8 @@ class ClouterInfoController extends GetxController {
   var images;
   List<bool> selections = List.generate(12, (index) => false);
   var obscured = true;
-  // Clouter? clouter;
+
+  var clouter;
 
   final clouterController = Get.find<ClouterController>();
   var addressController;
@@ -60,6 +62,66 @@ class ClouterInfoController extends GetxController {
       ImagePickerController(),
       tag: clouterController.controllerTag,
     );
+  }
+
+  var categories = [
+    'ALL',
+    'FASHION_BEAUTY',
+    'HEALTH_LIVING',
+    'TRAVEL_LEISURE',
+    'PARENTING',
+    'ELECTRONICS',
+    'FOOD',
+    'VISIT_EXPERIENCE',
+    'PET',
+    'GAME',
+    'FINANCE_BUSINESS',
+    'ETC'
+  ];
+
+  setClouter() {
+    List<ChannelList> channelList = [];
+    for (int i = 0; i < 3; i++) {
+      if (platformSelectController!.platforms[i]) {
+        ChannelList channel = ChannelList(
+            platformSelectController!.id[i],
+            i == 0
+                ? 'INSTAGRAM'
+                : id == 1
+                    ? 'TIKTOK'
+                    : 'YOUTUBE',
+            platformSelectController!.link[i],
+            platformSelectController!.followerCount[i]);
+        channelList.add(channel);
+      }
+    }
+
+    List<String> categoryList = [];
+    for (int i = 0; i < 12; i++) {
+      if (selections[i]) {
+        categoryList.add(categories[i]);
+      }
+    }
+
+    Address address = Address(
+      addressController!.zipCode,
+      addressController!.daumAddress,
+      addressController!.detailAddress,
+    );
+
+    clouter = Clouter(
+        id,
+        password,
+        nickName,
+        name,
+        DateFormat('yyyy.MM.dd').format(dateController!.selectedDate),
+        phoneNumber,
+        channelList,
+        // feeController!.minFee,
+        categoryList,
+        regionController!.selectedRegions,
+        address);
+    update();
   }
 
   setName(input) {
@@ -106,11 +168,11 @@ class ClouterInfoController extends GetxController {
 
   canGoSecondPage() {
     if (name != null &&
-        DateFormat('yyyy.MM.dd').format(dateController.selectedDate) !=
+        DateFormat('yyyy.MM.dd').format(dateController!.selectedDate) !=
             DateFormat('yyyy.MM.dd').format(DateTime.now()) &&
         phoneNumber != null &&
-        addressController.daumAddress != '주소 검색' &&
-        addressController.detailAddress != null) {
+        addressController!.daumAddress != '주소 검색' &&
+        addressController!.detailAddress != null) {
       return true;
     } else {
       return false;
@@ -136,11 +198,11 @@ class ClouterInfoController extends GetxController {
     print('이름');
     print(name);
     print('생년월일');
-    print(dateController.selectedDate);
+    print(dateController!.selectedDate);
     print('휴대폰 번호');
     print(phoneNumber);
     print('주소');
-    print(DateFormat('yyyy.MM.dd').format(dateController.selectedDate));
+    print(DateFormat('yyyy.MM.dd').format(dateController!.selectedDate));
     print('아이디');
     print(id);
     print('비번');
@@ -152,18 +214,18 @@ class ClouterInfoController extends GetxController {
     print('사진들');
     // print(images);
     print('광고 가능 플랫폼');
-    print(platformSelectController.platforms);
+    print(platformSelectController!.platforms);
     print('각 아이디');
-    print(platformSelectController.id);
+    print(platformSelectController!.id);
     print('각 링크');
-    print(platformSelectController.link);
+    print(platformSelectController!.link);
     print('각 팔로워 수');
-    print(platformSelectController.followerCount);
+    print(platformSelectController!.followerCount);
     print('최소 희망 광고비');
-    print(feeController.pay);
+    print(feeController!.pay);
     print('희망 카테고리');
     print(selections);
     print('희망 지역');
-    print(regionController.selectedRegions);
+    print(regionController!.selectedRegions);
   }
 }

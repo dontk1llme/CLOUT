@@ -25,7 +25,7 @@ class ClouterJoinOrModify1 extends StatelessWidget {
         widthFactor: 0.9,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+          children: [
             Text(
               '1. 기본 정보',
               style: style.textTheme.headlineMedium,
@@ -73,12 +73,6 @@ class ClouterJoinOrModify1 extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
-            // Text(
-            //   '주소 정보 입력',
-            //   style: style.textTheme.bodyMedium,
-            //   textAlign: TextAlign.left,
-            // ),
-            // SizedBox(height: 3),
             AddressInput(controllerTag: controllerTag),
           ],
         ),

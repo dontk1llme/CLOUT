@@ -1,4 +1,4 @@
-import 'package:clout/hooks/advertiser_register_api.dart';
+import 'package:clout/hooks/register_api.dart';
 import 'package:clout/providers/user_controllers/advertiser_controller.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/join/widgets/advertiser/advertiser_join_or_modify_1.dart';
@@ -73,7 +73,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
     bool canGoNext = true;
     switch (newPageNum) {
       case 2:
-        // canGoNext = advertiserRegisterController.canGoSecondPage();
+        canGoNext = advertiserRegisterController.canGoSecondPage();
         break;
       case 3:
         if (advertiserRegisterController.canGoThirdPage() == 0) {
@@ -168,8 +168,9 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                               //페이지별로 보여주기
                               if (pageNum == 1)
                                 AdvertiserJoinOrModify1(
-                                    modifying: false,
-                                    controllerTag: 'advertiserRegister'),
+                                  modifying: false,
+                                  controllerTag: 'advertiserRegister',
+                                ),
                               if (pageNum == 2)
                                 AdvertiserJoinOrModify2(
                                   modifying: false,

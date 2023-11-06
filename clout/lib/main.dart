@@ -35,6 +35,7 @@ import 'package:clout/screens/point/add/add_first.dart';
 import 'package:clout/screens/point/add/add_second.dart';
 import 'package:clout/screens/point/add/add_complete.dart';
 import 'package:clout/screens/point/advertiser_point_list.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("백그라운드 메시지 처리.. ${message.notification!.body!}");
@@ -71,7 +72,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   initializeNotification();
-
+  await dotenv.load(fileName: 'assets/config/.env');
   runApp(MyApp());
 }
 
