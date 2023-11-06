@@ -1,4 +1,4 @@
-package com.mmm.clout.memberservice.clouter.domain.exceptuion;
+package com.mmm.clout.memberservice.clouter.domain.exception;
 
 import com.mmm.clout.memberservice.common.exception.CustomBaseException;
 import com.mmm.clout.memberservice.common.exception.ErrorCode;
