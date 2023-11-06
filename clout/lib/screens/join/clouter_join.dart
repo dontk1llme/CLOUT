@@ -1,3 +1,4 @@
+import 'package:clout/hooks/register_api.dart';
 import 'package:clout/providers/user_controllers/clouter_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/join/widgets/clouter/clouter_join_or_modify_2.dart';
@@ -15,6 +16,7 @@ import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/screens/join/widgets/clouter/clouter_join_or_modify_1.dart';
 import 'package:clout/screens/join/widgets/clouter/clouter_join_or_modify_3.dart';
 import 'package:clout/screens/join/widgets/clouter/clouter_join_or_modify_4.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ClouterJoin extends ConsumerStatefulWidget {
   const ClouterJoin({super.key});
@@ -26,6 +28,8 @@ class ClouterJoin extends ConsumerStatefulWidget {
 class ClouterJoinState extends ConsumerState<ClouterJoin> {
   int pageNum = 1;
   double percent = 1 / 4;
+
+  // String baseUrl = dotenv.env['BASE_URL']!;
 
   final clouterController = Get.put(ClouterController());
 
@@ -63,15 +67,10 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
     }
   }
 
-  // Future runImageProvider() async {
-  //   final newImages = ref.watch(imagePickerProvider);
-  // }
-
   showSnackBar() {
     Get.snackbar(
       '',
       '',
-      // snackPosition: SnackPosition.BOTTOM,
       duration: Duration(seconds: 4),
       titleText: Text(
         '🥳 회원 가입 완료',
@@ -108,6 +107,19 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
         right: 20,
       ),
     );
+  }
+
+  register() async {
+    await registerController.setClouter();
+    registerController.printAll();
+
+    RegisterApi registerApi = RegisterApi();
+
+    String responseBody = await registerApi.postRequest(
+        '/v1/clouters', registerController.clouter);
+    print(responseBody);
+    showSnackBar();
+    Get.offAllNamed('/login');
   }
 
   @override
@@ -199,18 +211,15 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
                             title: pageNum == 4
                                 ? '완료'
                                 : '다음', // pageNum에 따라 버튼 텍스트 변경
-                            function: () async {
+                            function: () {
                               if (pageNum < 4) {
                                 if (pageNum != 2) {
                                   setPageNum(pageNum + 1);
                                 } else {
-                                  // await runImageProvider();
                                   setPageNum(pageNum + 1);
                                 }
                               } else {
-                                registerController.printAll();
-                                showSnackBar();
-                                Get.offAllNamed('/login');
+                                register();
                               }
                             },
                           ),
