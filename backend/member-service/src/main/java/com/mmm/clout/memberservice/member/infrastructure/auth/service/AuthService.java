@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.member.infrastructure.auth.service;
 
+import com.mmm.clout.memberservice.member.domain.exception.DuplicateUserIdException;
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.AuthDto;
 import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.member.infrastructure.auth.exception.PasswordException;
@@ -149,5 +150,12 @@ public class AuthService {
         if (refreshTokenInRedis != null) {
             redisService.deleteValues("RT(" + SERVER + "):" + principal);
         }
+    }
+
+    public boolean dupicateCheck(String userId) {
+
+        Member member = memberService.getUserByUserId(userId);
+        if(member != null) throw new DuplicateUserIdException();
+        return true;
     }
 }
