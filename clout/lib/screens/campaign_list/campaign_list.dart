@@ -1,10 +1,12 @@
-import 'package:clout/screens/campaign_list/campaign_infinite_scroll_body.dart';
-import 'package:clout/utilities/bouncing_listview.dart';
+import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 // widgets
+import 'package:clout/screens/campaign_list/campaign_infinite_scroll_body.dart';
 import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/widgets/search_detail_bottom_sheet/search_detail_button.dart';
 import 'package:clout/widgets/list/category_list.dart';
@@ -18,29 +20,20 @@ import 'package:clout/utilities/bouncing_listview.dart';
 // controllers
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
 
-// class Campaign {
-//   int campaignId = 1;
-//   String category = '음식';
-//   String productName = '못골정미소 백미 5kg';
-//   int pay = 1000;
-//   String campaignSubject = '못골영농조합법인';
-//   int applicantCount = 2;
-//   int recruitCount = 5;
-//   List<String> selectedPlatform = [
-//     "YouTube",
-//     // "Instagram",
-//     "TikTok",
-//   ];
-//   int starRating = 20;
-//   String firstImg = 'assets/images/itemImage.jpg';
-// }
-
-class CampaignList extends GetView<InfiniteScrollController> {
+class CampaignList extends StatefulWidget {
   CampaignList({super.key});
 
-  var campaignId = Get.arguments;
+  @override
+  _CampaignListState createState() => _CampaignListState();
+}
 
-  Campaign campaign = Campaign();
+class _CampaignListState extends State<CampaignList> {
+  late Future<Campaign> futureCampaign;
+  @override
+  void initState() {
+    super.initState();
+    futureCampaign = fetchCampaign('advertisements');
+  }
 
   @override
   Widget build(BuildContext context) {

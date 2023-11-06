@@ -1,22 +1,27 @@
+import 'dart:convert';
+import 'dart:async';
+import 'package:clout/type.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:clout/style.dart' as style;
 
-class Campaign {
-  int campaignId = 1;
-  String category = '음식';
-  String productName = '못골정미소 백미 5kg';
-  int pay = 1000;
-  String campaignSubject = '못골영농조합법인';
-  int applicantCount = 2;
-  int recruitCount = 5;
-  List<String> selectedPlatform = [
-    "YouTube",
-    // "Instagram",
-    "TikTok",
-  ];
-  int starRating = 20;
-  String firstImg = 'assets/images/itemImage.jpg';
+// widgets
+import 'package:clout/widgets/list/campaign_item_box.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+
+Future<Campaign> fetchCampaign(String endpoint) async {
+  final response = await http
+      .get(Uri.parse('http://70.12.247.35:8889/v1/advertisements/$endpoint'));
+
+  if (response.statusCode == 200) {
+    print('👻✨ response body: ${response.body}');
+    return Campaign.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('캠페인 불러오기 실패 💨');
+  }
 }
+
 
 class Clouter {
   int clouterId = 1;
@@ -43,6 +48,8 @@ class InfiniteScrollController extends GetxController {
   var isLoading = false;
   var hasMore = false;
 
+  late Future<Campaign> futureCampaign;
+
   @override
   void onInit() {
     scrollController.value.addListener(() {
@@ -62,7 +69,44 @@ class InfiniteScrollController extends GetxController {
     await Future.delayed(Duration(seconds: 2));
 
     int offset = data.length;
-    // 캠페인 추가하는 통신(아니면 다른 정3보) 여기에 작성해야될듯
+
+    var campaignItemBox = FutureBuilder<Campaign>(
+      future: futureCampaign,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return CampaignItemBox(
+            category: snapshot.data!.adCategory,
+            productName: snapshot.data!.title,
+            pay: snapshot.data!.price,
+            campaignSubject: snapshot.data!.companyName,
+            applicantCount: snapshot.data!.numberOfSelectedMembers,
+            recruitCount: snapshot.data!.numberOfRecruiter,
+            selectedPlatform: snapshot.data!.adPlatformList,
+            starRating: snapshot.data!.advertiserAvgstar,
+            firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
+          );
+        } else if (snapshot.hasError) {
+          return Text('⛔ Campaign item error: ${snapshot.error}');
+        }
+        return Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 40),
+          child: SizedBox(
+            height: 50,
+            child: Center(
+                child: LoadingIndicator(
+              indicatorType: Indicator.ballRotateChase,
+              colors: [
+                style.colors['main1-4']!,
+                style.colors['main1-3']!,
+                style.colors['main1-2']!,
+                style.colors['main1-1']!,
+                style.colors['main1']!,
+              ],
+            )),
+          ),
+        );
+      },
+    );
 
     // 데이터 몇개씩 보여줄건지? (10개씩 무한스크롤)
     var appendData = isClouterData
@@ -71,11 +115,7 @@ class InfiniteScrollController extends GetxController {
             clouter.clouterId = i + 1 + offset;
             return clouter;
           })
-        : List<Campaign>.generate(10, (i) {
-            var campaign = Campaign();
-            campaign.campaignId = i + 1 + offset;
-            return campaign;
-          });
+        : [campaignItemBox];
     data.addAll(appendData);
 
     print(data.length);
