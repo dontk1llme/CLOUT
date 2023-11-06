@@ -73,7 +73,7 @@ public interface ClouterControllerDocs {
                 schema=@Schema(implementation=SelectClrResponse.class))
         )
     )
-    public ResponseEntity<SelectClrResponse> select(
+    public ResponseEntity<SelectClrResponse> selectClouter(
         @PathVariable("clouterId") Long clouterId
     );
 

@@ -43,7 +43,7 @@ public class AdvertiserController implements AdvertiserControllerDocs {
     }
 
     @GetMapping("/{advertiserId}")
-    public ResponseEntity<SelectAdrResponse> select(
+    public ResponseEntity<SelectAdrResponse> selectAdvertiser(
             @PathVariable("advertiserId") Long advertiserId
     ) {
         SelectAdrResponse result = SelectAdrResponse.from(advertiserFacade.select(advertiserId));
