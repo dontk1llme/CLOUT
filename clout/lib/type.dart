@@ -1,42 +1,60 @@
-class Campaign {
-  int campaignId;
-  final String adCategory;
-  final String title; // '못골정미소 백미 5kg';
-  final String price; // "1000 포인트";
-  final String companyName; // '못골영농조합법인';
-  final int numberOfSelectedMembers; // 채택된 인원
-  final int numberOfRecruiter; // 모집 인원
-  final List<String> adPlatformList;
-  final int advertiserAvgstar;
-  // String firstImg = 'assets/images/itemImage.jpg';
+import 'dart:convert';
 
-  Campaign({
-    required this.campaignId,
-    required this.adCategory,
-    required this.title,
-    required this.price,
-    required this.companyName,
-    required this.numberOfSelectedMembers,
-    required this.numberOfRecruiter,
-    required this.adPlatformList,
-    required this.advertiserAvgstar,
-  });
+class Address {
+  String zipCode;
+  String mainAddress;
+  String detailAddress;
 
-  factory Campaign.fromJson(Map<String, dynamic> json) {
-    final campaignInfo = json['campaignInfo'];
-    final companyInfo = json['companyInfo'];
-    final advertiserInfo = json['advertiserInfo'];
+  Address(this.zipCode, this.mainAddress, this.detailAddress);
 
-    return Campaign(
-      campaignId: campaignInfo['campaginId'],
-      adCategory: campaignInfo['adCategory'],
-      title: campaignInfo['title'],
-      price: campaignInfo['price'],
-      companyName: companyInfo['companyName'],
-      numberOfSelectedMembers: campaignInfo['numberOfSelectedMembers'],
-      numberOfRecruiter: campaignInfo['numberOfRecruiter'],
-      adPlatformList: campaignInfo['adPlatformList'],
-      advertiserAvgstar: advertiserInfo['advertiserAvgstar'],
-    );
+  Map<String, dynamic> toJson() => {
+        'zipCode': zipCode,
+        'mainAddress': mainAddress,
+        'detailAddress': detailAddress,
+      };
+}
+
+class CompanyInfo {
+  String companyName;
+  String regNum;
+  String ceoName;
+  String managerName;
+  String managerPhoneNumber;
+
+  CompanyInfo(this.companyName, this.regNum, this.ceoName, this.managerName,
+      this.managerPhoneNumber);
+
+  Map<String, dynamic> toJson() => {
+        'companyName': companyName,
+        'regNum': regNum,
+        'ceoName': ceoName,
+        'managerName': managerName,
+        'managerPhoneNumber': managerPhoneNumber,
+      };
+}
+
+class Advertiser {
+  String userId;
+  String pwd;
+  Address address;
+  CompanyInfo companyInfo;
+
+  Advertiser(this.userId, this.pwd, this.address, this.companyInfo);
+
+  Map<String, dynamic> toJson() => {
+        'userId': userId,
+        'pwd': pwd,
+        'address': address,
+        'companyInfo': companyInfo,
+      };
+}
+
+class CheckDuplicated {
+  bool checkValue;
+
+  CheckDuplicated({required this.checkValue});
+
+  factory CheckDuplicated.fromJson(Map<String, dynamic> json) {
+    return CheckDuplicated(checkValue: json['checkValue']);
   }
 }
