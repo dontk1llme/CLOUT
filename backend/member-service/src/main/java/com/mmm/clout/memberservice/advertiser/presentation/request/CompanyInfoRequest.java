@@ -21,6 +21,10 @@ public class CompanyInfoRequest {
     private String regNum;
 
     @NotBlank
+    @Schema(description = "회사 대표자 이름")
+    private String ceoName;
+
+    @NotBlank
     @Size(max = 10)
     @Schema(description = "담당자 이름")
     private String managerName;
@@ -34,6 +38,7 @@ public class CompanyInfoRequest {
         return new CompanyInfoCommand(
             this.companyName,
             this.regNum,
+            this.ceoName,
             this.managerName,
             this.managerPhoneNumber
         );
