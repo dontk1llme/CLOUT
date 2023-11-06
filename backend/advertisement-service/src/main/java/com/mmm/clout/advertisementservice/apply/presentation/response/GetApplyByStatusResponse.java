@@ -18,6 +18,6 @@ public class GetApplyByStatusResponse {
     private Integer numberOfRecruiter;
 //    private List<ImageResponse> imageList;
     private String companyName;
-    private Integer companyAvgStars;
+    private Integer advertiserAvgStar;
 
 }
