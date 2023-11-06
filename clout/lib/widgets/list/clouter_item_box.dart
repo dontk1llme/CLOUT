@@ -91,7 +91,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     ]),
                   ),
                 ),
-                if (userController.user != 0)
+                if (userController.user == 1)
                   LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
