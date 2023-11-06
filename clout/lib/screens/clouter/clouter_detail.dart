@@ -161,7 +161,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                 style: TextStyle(fontWeight: FontWeight.w800)),
                           ],
                         ),
-                        if (userController.user != 0)
+                        if (userController.user == 1)
                           Row(
                             children: [
                               Text('Like'),

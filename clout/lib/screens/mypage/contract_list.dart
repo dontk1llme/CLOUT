@@ -10,6 +10,7 @@ import 'package:clout/screens/mypage/widgets/small_contract.dart';
 
 // controllers
 import 'package:clout/providers/scroll_controllers/contract_infinite_scroll_controller.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 // class Contract {
 //   int contractId = 1;
@@ -60,11 +61,29 @@ class ContractList extends GetView<ContractInfiniteScrollController> {
                           padding: EdgeInsets.symmetric(vertical: 5),
                           child: SmallContract(
                               name: controller.data[index].name,
-                              pay: controller.data[index].pay),
+                              pay: controller.data[index].pay,
+                              progress: false),
                         );
                       }
+
                       if (controller.hasMore || controller.isLoading) {
-                        return Center(child: RefreshProgressIndicator());
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 40),
+                          child: SizedBox(
+                            height: 50,
+                            child: Center(
+                                child: LoadingIndicator(
+                              indicatorType: Indicator.ballRotateChase,
+                              colors: [
+                                style.colors['main1-4']!,
+                                style.colors['main1-3']!,
+                                style.colors['main1-2']!,
+                                style.colors['main1-1']!,
+                                style.colors['main1']!,
+                              ],
+                            )),
+                          ),
+                        );
                       }
 
                       return Row(
