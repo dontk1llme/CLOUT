@@ -3,11 +3,9 @@ package com.mmm.clout.pointservice.point.domain;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum PointCategory {
+public enum PaymentType {
 
-    CREATE_AD("광고 캠페인 등록"), CONTRACT("계약"), PAY("결제");
+    KAKAO("카카오페이");
 
     private final String description;
-
-
 }
