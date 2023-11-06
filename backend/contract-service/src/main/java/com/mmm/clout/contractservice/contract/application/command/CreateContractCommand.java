@@ -1,6 +1,10 @@
 package com.mmm.clout.contractservice.contract.application.command;
 
+import com.mmm.clout.contractservice.contract.domain.AdvertiserInfo;
+import com.mmm.clout.contractservice.contract.domain.ClouterInfo;
 import com.mmm.clout.contractservice.contract.domain.Contract;
+import com.mmm.clout.contractservice.contract.domain.info.SelectAdrInfo;
+import com.mmm.clout.contractservice.contract.domain.info.SelectClrInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -18,19 +22,19 @@ public class CreateContractCommand {
 
     private String contents;
 
-    private ClouterInfoCommand clouterInfo;
+    private Long clouterId;
 
-    private AdvertiserInfoCommand advertiserInfo;
+    private Long advertiserId;
 
-    public Contract toEntity() {
+    public Contract toEntity(SelectClrInfo clouter, SelectAdrInfo advertiser) {
         return Contract.create(
               this.name,
               this.price,
               this.postDeadline,
               this.contractExpiration,
               this.contents,
-              this.clouterInfo.toValueType(),
-              this.advertiserInfo.toValueType()
+              new ClouterInfo(clouter),
+              new AdvertiserInfo(advertiser)
         );
     }
 }

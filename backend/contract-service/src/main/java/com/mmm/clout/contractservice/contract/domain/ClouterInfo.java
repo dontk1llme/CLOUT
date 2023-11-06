@@ -1,5 +1,6 @@
 package com.mmm.clout.contractservice.contract.domain;
 
+import com.mmm.clout.contractservice.contract.domain.info.SelectClrInfo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,13 @@ public class ClouterInfo {
     private String clouterAddress;
 
     private String residentRegistrationNumber;
+
+    public ClouterInfo(SelectClrInfo info) {
+        this.clouterId = info.getClouterId();
+        this.clouterName = info.getName();
+        this.clouterAddress = info.getAddress().getMainAddress() + " " + info.getAddress().getDetailAddress();
+        this.residentRegistrationNumber = "";
+    }
 
     public ClouterInfo updateResidentRegistrationNumber(String residentRegistrationNumber) {
         this.residentRegistrationNumber = residentRegistrationNumber;

@@ -32,9 +32,9 @@ public class CreateContractRequest {
     @NotBlank
     private String contents;
 
-    private ClouterInfoRequest clouterInfo;
+    private Long clouterId;
 
-    private AdvertiserInfoRequest advertiserInfo;
+    private Long advertiserId;
 
     public CreateContractCommand toCommand() {
            return new CreateContractCommand(
@@ -43,8 +43,8 @@ public class CreateContractRequest {
                    this.postDeadline,
                    this.contractExpiration,
                    this.contents,
-                   this.clouterInfo.toCommand(),
-                   this.advertiserInfo.toCommand()
+                   this.clouterId,
+                   this.advertiserId
            );
     }
 }

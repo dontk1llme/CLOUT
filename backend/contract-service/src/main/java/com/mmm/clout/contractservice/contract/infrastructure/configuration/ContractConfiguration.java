@@ -1,7 +1,9 @@
 package com.mmm.clout.contractservice.contract.infrastructure.configuration;
 
 import com.mmm.clout.contractservice.contract.application.*;
+import com.mmm.clout.contractservice.contract.domain.provider.MemberProvider;
 import com.mmm.clout.contractservice.contract.domain.repository.ContractRepository;
+import com.mmm.clout.contractservice.contract.infrastructure.persistence.feign.MemberServiceFeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class ContractConfiguration {
 
     @Bean
-    public CreateContractProcessor createContractProcessor(ContractRepository contractRepository) {
-        return new CreateContractProcessor(contractRepository);
+    public CreateContractProcessor createContractProcessor(ContractRepository contractRepository, MemberProvider memberProvider) {
+        return new CreateContractProcessor(contractRepository, memberProvider);
     }
 
     @Bean
