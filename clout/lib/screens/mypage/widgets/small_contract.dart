@@ -1,3 +1,4 @@
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:clout/screens/mypage/contract.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +8,22 @@ import 'package:get/get.dart';
 class SmallContract extends StatefulWidget {
   final String name;
   final String pay;
+  final bool progress;
 
-  const SmallContract({super.key, required this.name, required this.pay});
+  const SmallContract({
+    super.key,
+    required this.name,
+    required this.pay,
+    required this.progress,
+  });
 
   @override
   State<SmallContract> createState() => _SmallContractState();
 }
 
 class _SmallContractState extends State<SmallContract> {
+  final userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +39,7 @@ class _SmallContractState extends State<SmallContract> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DataTitle(text: '못골영농조합법인'),
+            DataTitle(text: widget.name),
             SizedBox(height: 7),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +50,7 @@ class _SmallContractState extends State<SmallContract> {
                     style: TextStyle(
                       fontSize: 13,
                     )),
-                Text('1,000 포인트',
+                Text('${widget.pay} 포인트',
                     style: TextStyle(
                       fontSize: 13,
                       color: style.colors['main1'],
@@ -50,11 +59,11 @@ class _SmallContractState extends State<SmallContract> {
             )
           ],
         ),
-        // 💥 클라우터 전자서명 미진행시
-        // 👉 클라우터한테는 << 계약서 작성 >> 버튼
-        // 👉 광고주한테는 << 계약서 대기 >> 버튼
-        // 광고주, 클라우터 전자서명  진행시 << 계약서 보기 >> 버튼
-        Contract(),
+        widget.progress == false
+            ? userController.user == -1
+                ? ContractButton(title: '계약서 작성')
+                : ContractButton(title: '계약서 대기')
+            : ContractButton(title: '계약서 보기'),
       ]),
     );
   }
