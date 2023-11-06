@@ -21,7 +21,7 @@ class Landing extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                  padding: EdgeInsets.fromLTRB(30, 130, 0, 0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -75,28 +75,33 @@ class Landing extends StatelessWidget {
                       height: 50,
                       width: double.infinity,
                       child: BigButton(
-                        title: '둘러보기',
-                        function: () => Get.toNamed('/home'),
-                        buttonColor: style.colors['main2'],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    SizedBox(
-                      height: 50,
-                      width: double.infinity,
-                      child: BigButton(
                         title: '로그인',
                         function: () => Get.offNamed('/login'),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () => Get.toNamed('/join'),
-                      child: Text(
-                        '회원가입',
-                        style: style.textTheme.headlineSmall?.copyWith(
-                            color: style.colors['main1'],
-                            fontWeight: FontWeight.w600),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () => Get.toNamed('/join'),
+                          child: Text(
+                            '회원가입',
+                            style: style.textTheme.headlineSmall?.copyWith(
+                                color: style.colors['main1'],
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Text('|'),
+                        TextButton(
+                          onPressed: () => Get.toNamed('/home'),
+                          child: Text(
+                            '둘러보기',
+                            style: style.textTheme.headlineSmall?.copyWith(
+                                color: style.colors['main1'],
+                                fontWeight: FontWeight.w600),
+                          ),
+                        )
+                      ],
                     )
                   ],
                 ),
