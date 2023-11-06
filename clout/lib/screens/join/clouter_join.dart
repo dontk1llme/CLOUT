@@ -115,6 +115,7 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
 
     RegisterApi registerApi = RegisterApi();
 
+    // await을 안붙히면 Future<dynamic> 형식으로 넘어와서 데이터 처리하기 힘듦 => await을 붙히면 String으로 오더라고(항상 이런건지를 모르겠음)
     String responseBody = await registerApi.postRequest(
         '/v1/clouters', registerController.clouter);
     print(responseBody);

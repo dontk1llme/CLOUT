@@ -17,7 +17,7 @@ class RegisterApi {
     ); // 여기에 authorization header를 넣어야 될듯?
 
     // print('여기까지 내려오나?');
-    // var statusCode = response.statusCode;
+    var statusCode = response.statusCode;
     // var headers = response.headers;
     // var body = utf8.decode(response.bodyBytes);
 
@@ -30,8 +30,11 @@ class RegisterApi {
     // print(headers);
     // print('response 바디');
     // print(body);
-
-    return response.body;
+    if (statusCode == 201) {
+      return response.body; //{'clouterId'/'advertiserId' : integer}
+    } else {
+      return false;
+    }
   }
 
   getRequest(apiUrl, parameter) async {

@@ -72,7 +72,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   initializeNotification();
-  await dotenv.load(fileName: 'assets/config/.env');
+  await dotenv.load(fileName: 'assets/config/.env'); //✨✨✨ 중요~
   runApp(MyApp());
 }
 
