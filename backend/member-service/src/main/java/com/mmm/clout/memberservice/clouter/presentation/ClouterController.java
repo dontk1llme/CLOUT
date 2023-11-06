@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/clouters")
+@RequestMapping("/v1/clouters")
 @RequiredArgsConstructor
 public class ClouterController implements ClouterControllerDocs {
 

@@ -12,6 +12,8 @@ public class CompanyInfoCommand {
 
     private String regNum;
 
+    private String ceoName;
+
     private String managerName;
 
     private String managerPhoneNumber;
@@ -20,6 +22,7 @@ public class CompanyInfoCommand {
         return new CompanyInfo(
             this.companyName,
             this.regNum,
+            this.ceoName,
             this.managerName,
             this.managerPhoneNumber
         );
