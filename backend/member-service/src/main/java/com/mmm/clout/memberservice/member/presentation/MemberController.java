@@ -4,6 +4,8 @@ import com.mmm.clout.memberservice.common.entity.sms.SmsService;
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.AuthDto;
 import com.mmm.clout.memberservice.member.infrastructure.auth.service.AuthService;
 import com.mmm.clout.memberservice.member.infrastructure.auth.service.MemberService;
+import com.mmm.clout.memberservice.member.presentation.docs.MemberControllerDocs;
+import com.mmm.clout.memberservice.member.presentation.response.IdDuplicateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,14 +13,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Id;
 import javax.validation.Valid;
 import java.util.Map;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/members")
+@RequestMapping("/v1/members")
 @RequiredArgsConstructor
-public class MemberController {
+public class MemberController implements MemberControllerDocs {
 
     private final AuthService authService;
     private final SmsService smsService;
@@ -39,20 +42,19 @@ public class MemberController {
             .build();
     }
 
-    @PostMapping("/validate")
-    public ResponseEntity<?> validate(@RequestHeader("Authorization") String requestAccessToken) {
-        if (!authService.validate(requestAccessToken)) {
-            return ResponseEntity.status(HttpStatus.OK).build(); // 재발급 필요X
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // 재발급 필요
-        }
+    @GetMapping("/duplicate")
+    public ResponseEntity<IdDuplicateResponse> duplicateCheck(
+        @RequestParam("userId") String userId
+    ) {
+        IdDuplicateResponse response = new IdDuplicateResponse(authService.dupicateCheck(userId));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     // 토큰 재발급
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader() Map<String, String> headers) {
-        System.out.println("headers: "+headers);
-        String requestAccessToken = headers.get("authorization");
-        String requestRefreshToken = headers.get("refresh_token");
+    public ResponseEntity<?> reissue(
+            @RequestHeader("REFRESH_TOKEN") String requestRefreshToken,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String requestAccessToken
+                                     ) {
         AuthDto.TokenDto reissuedTokenDto = authService.reissue(requestAccessToken, requestRefreshToken);
 
         if (reissuedTokenDto != null) { // 토큰 재발급 성공
