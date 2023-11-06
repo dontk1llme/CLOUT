@@ -94,6 +94,7 @@ var messageString = "";
       
       if (notification != null) {
         print('notification 수신');
+        print(notification);
         FlutterLocalNotificationsPlugin().show(
           notification.hashCode,
           notification.title,
