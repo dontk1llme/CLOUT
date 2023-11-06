@@ -6,31 +6,23 @@ import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
-class Contract extends StatefulWidget {
-  Contract({super.key});
+class ContractButton extends StatelessWidget {
+  ContractButton({super.key, required this.title});
 
-  @override
-  State<Contract> createState() => _ContractState();
-}
+  final title;
 
-class _ContractState extends State<Contract> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: style.colors['main1'],
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          ),
-          onPressed: generateContract,
-          child: Text('계약서 보기'),
-        )
-      ],
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: style.colors['main1'],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      ),
+      onPressed: generateContract,
+      child: Text(title),
     );
   }
 
@@ -138,6 +130,7 @@ class _ContractState extends State<Contract> {
     return PdfTextElement(text: start, font: contentFont).draw(
         page: page, bounds: Rect.fromLTWH(30, 100, pageSize.width - 45, 50))!;
   }
+
   ///////////////////////////////////////////////////////////////////////////////////////
 
   //Draws the grid
