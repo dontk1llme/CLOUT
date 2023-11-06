@@ -1,3 +1,4 @@
+import 'package:clout/hooks/advertiser_register_api.dart';
 import 'package:clout/providers/user_controllers/advertiser_controller.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/join/widgets/advertiser/advertiser_join_or_modify_1.dart';
@@ -68,7 +69,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
     );
   }
 
-  void setPageNum(int newPageNum) {
+  setPageNum(int newPageNum) {
     bool canGoNext = true;
     switch (newPageNum) {
       case 2:
@@ -90,7 +91,15 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
       });
       canGoNext = false;
     } else if (newPageNum == 3 && canGoNext) {
-      Get.offNamed('/login');
+      // Get.offNamed('/login');
+
+      advertiserRegisterController.setAdvertiser();
+      advertiserRegisterController.printAll();
+      // 가입 api 호출
+      final RegisterApi registerApi = RegisterApi();
+
+      registerApi.postRequest(
+          '/v1/advertisers', advertiserRegisterController.advertiser);
       showSnackBar();
     } else {
       Fluttertoast.showToast(msg: '모든 항목을 입력해주세요 🤗');
@@ -179,7 +188,6 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                                 if (pageNum == 1) {
                                   setPageNum(pageNum + 1);
                                 } else {
-                                  controller.printAll();
                                   setPageNum(pageNum + 1);
                                 }
                               },
