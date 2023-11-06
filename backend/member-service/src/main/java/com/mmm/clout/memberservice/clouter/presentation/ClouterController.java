@@ -43,7 +43,7 @@ public class ClouterController implements ClouterControllerDocs {
     }
 
     @GetMapping("/{clouterId}")
-    public ResponseEntity<SelectClrResponse> select(
+    public ResponseEntity<SelectClrResponse> selectClouter(
             @PathVariable("clouterId") Long clouterId
     ) {
         SelectClrResponse result = SelectClrResponse.from(

@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 public class IdDuplicateResponse {
 
-    private boolean chekcValue;
+    private boolean checkValue;
 }
