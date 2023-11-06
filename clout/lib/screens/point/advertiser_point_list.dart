@@ -1,3 +1,5 @@
+import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/common/choicechip.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -17,16 +19,20 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: style.colors['white'],
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70),
-          child: Header(
-            header: 4,
-            headerTitle: '포인트 관리', // 채널명 또는 계정명
-          ),
+      backgroundColor: style.colors['white'],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: Header(
+          header: 4,
+          headerTitle: '포인트 관리', // 채널명 또는 계정명
         ),
-        body: ListView(children: [
-          FractionallySizedBox(
+      ),
+      body: Container(
+        color: Colors.white,
+        width: double.infinity,
+        child: BouncingListview(
+          child: FractionallySizedBox(
+            alignment: Alignment.center,
             widthFactor: 0.9,
             child: Column(
               children: [
@@ -39,6 +45,12 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 19)),
                 ),
+                ActionChoiceExample(
+                    labels: ['전체 내역', '사용 내역', '충전 내역'], chipCount: 3),
+                Divider(
+                  color: style.colors['lightgray'],
+                  thickness: 1,
+                ),
                 PointItemBox(type: '출금'),
                 PointItemBox(type: '충전'),
                 PointItemBox(type: '사용'),
@@ -46,7 +58,9 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
                 PointItemBox(type: '출금'),
               ],
             ),
-          )
-        ]));
+          ),
+        ),
+      ),
+    );
   }
 }
