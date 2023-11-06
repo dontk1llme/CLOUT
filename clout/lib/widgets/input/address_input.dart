@@ -25,6 +25,7 @@ class AddressInput extends StatelessWidget {
               );
               if (value != null) {
                 final DataModel dataModel = value;
+                controller.setZipCode(dataModel.zonecode);
                 controller.setDaumAddress(dataModel.address);
               }
             },

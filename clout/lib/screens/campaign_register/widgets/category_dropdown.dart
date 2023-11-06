@@ -8,6 +8,7 @@ class CategoryDropdown extends StatelessWidget {
   final setCategory;
 
   var categories = [
+    '전체',
     '패션/뷰티',
     '건강/생활',
     '여행/레저',
