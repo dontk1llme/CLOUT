@@ -5,7 +5,9 @@ import com.mmm.clout.memberservice.member.infrastructure.auth.dto.AuthDto;
 import com.mmm.clout.memberservice.member.infrastructure.auth.service.AuthService;
 import com.mmm.clout.memberservice.member.infrastructure.auth.service.MemberService;
 import com.mmm.clout.memberservice.member.presentation.docs.MemberControllerDocs;
+import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
 import com.mmm.clout.memberservice.member.presentation.response.IdDuplicateResponse;
+import com.mmm.clout.memberservice.member.presentation.response.PwdUpdateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -92,6 +94,16 @@ public class MemberController implements MemberControllerDocs {
     ) {
         String result = smsService.smsSend(phoneNumber, makeAuthKey());
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PatchMapping("/pwd")
+    public ResponseEntity<PwdUpdateResponse> pwdUpdate(
+        @RequestBody PwdUpdateRequst request
+    ) {
+        PwdUpdateResponse response = PwdUpdateResponse.from(
+            memberService.updateUserPassword(request)
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     private String makeAuthKey() {
