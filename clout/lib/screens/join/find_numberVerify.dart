@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:clout/screens/join/widgets/big_button.dart';
+import 'package:clout/screens/join/widgets/VerifyAlert.dart';
 import 'package:clout/widgets/input/input.dart';
 
 
@@ -14,7 +15,15 @@ class FindNumberVerify extends StatefulWidget {
 }
 
 class _FindNumberVerifyState extends State<FindNumberVerify>{
+  // 백엔드에서 사용자와 프론트로 랜덤코드 전송해 줌
+  // 여기에서 받아서 사용자에게 보이지 않게 가지고 있음
+  // 사용자가 입력한 값이 백엔드에서 받은 값과 일치하면 인증 성공 
+  // 성공하면 저 머냐 ... 버튼 인증->완료 로 바꾸는 로직도 짜야 함
+  // 임시로 한번 짜보겠음.
+
   var number;
+
+  String backNum = '1119';
 
   setNumber(input) {
     setState(() {
@@ -53,11 +62,18 @@ class _FindNumberVerifyState extends State<FindNumberVerify>{
                   ),
                   SizedBox(height: 40), 
                   BigButton(
-                    title: '인증하기',
-                    function: () {
-                      Get.to(FindNewPassword());
-                    },
-                  ),
+                      title: '인증하기',
+                      function: () {
+                        if (number==backNum){
+                          // 인증 성공
+                          Get.back();
+                        }
+                        else{
+                          print('응안돼');
+                          VerifyAlert.show(context, '인증에 실패했습니다');
+                        }
+                      },
+                    ),
                 ],
               ),
             ),
