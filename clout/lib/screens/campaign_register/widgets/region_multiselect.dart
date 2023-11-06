@@ -42,14 +42,6 @@ class _RegionMultiSelectState extends State<RegionMultiSelect> {
 
   @override
   Widget build(BuildContext context) {
-    // final regionController = Get.put(RegionController());
-    // var savedItems =
-    //     regionController.selectedRegions.map((e) => e as String).toList();
-
-    // setState(() {
-    //   valuesHere = savedItems;
-    // });
-
     return GetBuilder<RegionController>(
         tag: widget.controllerTag,
         builder: (controller) => Container(
