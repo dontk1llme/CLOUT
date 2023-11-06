@@ -7,12 +7,14 @@ import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 class CampaignInfiniteScrollBody extends StatelessWidget {
-  const CampaignInfiniteScrollBody({super.key});
+  const CampaignInfiniteScrollBody({super.key, required this.controllerTag});
+
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return GetBuilder<InfiniteScrollController>(
+      tag: controllerTag,
       builder: (controller) => MasonryGridView.builder(
         shrinkWrap: true,
         physics: BouncingScrollPhysics(),
