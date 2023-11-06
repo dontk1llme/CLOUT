@@ -10,6 +10,7 @@ import 'package:clout/widgets/buttons/small_outlined_button.dart';
 import 'package:clout/screens/point/widgets/my_wallet.dart';
 
 // screens
+import 'package:clout/screens/point/advertiser_point_list.dart';
 import 'package:clout/screens/mypage/advertiser_mycampaign.dart';
 import 'package:clout/screens/mypage/advertiser_likedclouters.dart';
 import 'package:clout/screens/mypage/contract_list.dart';
@@ -70,8 +71,15 @@ class AdvertiserMyPage extends StatelessWidget {
                         title: '관심있는 클라우터',
                         btnTitle: '더보기',
                         onButtonPressed: () =>
-                            Get.to(AdvertiserLikedclouters())), //
-
+                            Get.to(AdvertiserLikedclouters())),
+                    Divider(
+                        thickness: 1,
+                        height: 1,
+                        color: style.colors['lightgray']),
+                    MyPageList(
+                        title: '포인트 관리',
+                        btnTitle: '더보기',
+                        onButtonPressed: () => Get.to(AdvertiserPointList())),
                     Divider(
                         thickness: 1,
                         height: 1,
