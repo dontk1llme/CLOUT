@@ -1,3 +1,4 @@
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -45,6 +46,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
     });
   }
 
+  final userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -54,7 +57,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
         Get.to(() => ClouterDetail());
       },
       child: Container(
-        width: 170,
+        width: screenWidth / 2 - 25,
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: style.colors['white'],
@@ -70,8 +73,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                 // 제일 큰 이미지
                 Image.asset(
                   widget.firstImg,
-                  width: 170,
-                  height: 140,
+                  width: screenWidth / 2 - 40,
+                  height: screenWidth / 2 - 65,
                   fit: BoxFit.cover,
                 ),
                 // 이미지에 떠있는 플랫폼 이미지
@@ -88,8 +91,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     ]),
                   ),
                 ),
-                // 좋아요 버튼
-                LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
+                if (userController.user != 0)
+                  LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
             NameTag(title: widget.category),

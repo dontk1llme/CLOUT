@@ -1,7 +1,8 @@
 import 'package:clout/providers/address_controller.dart';
+import 'package:clout/providers/user_controllers/advertiser_controller.dart';
 import 'package:get/get.dart';
 
-class AdvertiserRegisterController extends GetxController {
+class AdvertiserInfoController extends GetxController {
   var name;
   var phoneNumber;
   var id;
@@ -13,7 +14,14 @@ class AdvertiserRegisterController extends GetxController {
   var buisnessNumber;
   var obscured = true;
 
-  final addressController = Get.put(AddressController());
+  final advertiserController = Get.find<AdvertiserController>();
+  var addressController;
+  runOtherControllers() {
+    addressController = Get.put(
+      AddressController(),
+      tag: advertiserController.controllerTag,
+    );
+  }
 
   setName(input) {
     name = input;

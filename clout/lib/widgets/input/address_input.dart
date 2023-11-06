@@ -7,11 +7,13 @@ import 'package:clout/widgets/address/library_daum_post_webview.dart';
 import 'package:clout/style.dart' as style;
 
 class AddressInput extends StatelessWidget {
-  AddressInput({super.key});
+  AddressInput({super.key, required this.controllerTag});
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddressController>(
+      tag: controllerTag,
       builder: (controller) => Column(
         children: [
           OutlinedButton(
@@ -60,6 +62,8 @@ class AddressInput extends StatelessWidget {
             title: '상세 주소 입력',
             label: '상세 주소',
             setState: controller.setDetailAddress,
+            initialValue: controller.detailAddress,
+            enabled: true,
           ),
         ],
       ),

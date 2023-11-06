@@ -106,26 +106,30 @@ class _MyWalletState extends State<MyWallet> {
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Flexible(
-                    flex: 1,
+                  SizedBox(
+                    width: 140,
+                    height: 50,
                     child: BigButton(
                         title: '아니요',
                         textColor: Colors.black,
                         buttonColor: style.colors['lightgray'],
                         function: () {
-                          Navigator.of(context).pop();
+                          Get.back();
                         }),
                   ),
                   SizedBox(
                     width: 5,
                   ),
-                  Flexible(
-                      flex: 1,
-                      child: BigButton(
-                        title: '충전하기',
-                        function: () {},
-                      )),
+                  SizedBox(
+                    width: 140,
+                    height: 50,
+                    child: BigButton(
+                      title: '충전하기',
+                      function: () {},
+                    ),
+                  ),
                 ],
               )
             ],

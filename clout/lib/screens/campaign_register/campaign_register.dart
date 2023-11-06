@@ -1,7 +1,6 @@
 // global
 import 'dart:ui';
 import 'package:clout/providers/campaign_register_controller.dart';
-import 'package:clout/providers/image_picker_provider.dart';
 import 'package:clout/screens/campaign_register/widgets/age_slider.dart';
 import 'package:clout/screens/campaign_register/widgets/category_dropdown.dart';
 import 'package:clout/screens/campaign_register/widgets/itemdetail_textinput.dart';
@@ -16,7 +15,7 @@ import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/signature.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/buttons/toggle_button.dart';
-import 'package:clout/widgets/image_widget.dart';
+import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:clout/widgets/sns/platform_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -40,12 +39,10 @@ class CampaignRegister extends ConsumerStatefulWidget {
 }
 
 class CampaignRegisterState extends ConsumerState<CampaignRegister> {
-  final campaignRegisterController = Get.put(CampaignRegisterController());
-
-  Future runImageProvider() async {
-    final newImages = ref.watch(imagePickerProvider);
-    campaignRegisterController.setImages(newImages);
-  }
+  final campaignRegisterController = Get.put(
+    CampaignRegisterController(),
+    tag: 'campaignRegister',
+  );
 
   register() async {
     // if (category != null &&
@@ -55,7 +52,6 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
     //     itemDetail != null) {
     //   //등록하는 api 요청 들어가야 함
     // } else {
-    await runImageProvider();
     await handleSaveButtonPressed(); // 서명 갤러리 저장함수
     await campaignRegisterController.printAll();
     // 1. 여기서 axios 통신 해서 db에 내용 저장하고
@@ -99,8 +95,8 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
 
   @override
   Widget build(BuildContext context) {
-    ref.invalidate(imagePickerProvider);
     return GetBuilder<CampaignRegisterController>(
+      tag: 'campaignRegister',
       builder: (controller) => Scaffold(
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(70),
@@ -156,6 +152,7 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                       ? PayDialog(
                           title: '희망 광고비',
                           hintText: '희망 광고비 입력',
+                          controllerTag: 'campaignRegister',
                         )
                       : Container(),
                   SizedBox(height: 10),
@@ -171,21 +168,28 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                   SizedBox(height: 20),
                   DataTitle(text: '제품 사진 첨부(최대 4장)'),
                   SizedBox(height: 10),
-                  ImageWidget(parentImages: controller.images),
+                  ImageWidget(controllerTag: 'campaignRegister'),
                   SizedBox(height: 20),
                   DataTitle(text: '광고 희망 플랫폼'),
                   SizedBox(height: 10),
-                  PlatformToggle(multiAllowed: true),
+                  PlatformToggle(
+                    multiAllowed: true,
+                    controllerTag: 'campaignRegister',
+                  ),
                   SizedBox(height: 20),
                   DataTitle(text: '희망 클라우터 나이'),
-                  AgeSlider(),
+                  AgeSlider(controllerTag: 'campaignRegister'),
                   SizedBox(height: 20),
                   DataTitle(text: '희망 최소 팔로워 수'),
-                  MinimumfollowersDialog(),
+                  MinimumfollowersDialog(
+                    controllerTag: 'campaignRegister',
+                  ),
                   SizedBox(height: 10),
                   DataTitle(text: '지역 선택'),
                   SizedBox(height: 10),
-                  RegionMultiSelect(),
+                  RegionMultiSelect(
+                    controllerTag: 'campaignRegister',
+                  ),
                   SizedBox(height: 20),
                   Signature(
                       globalKey: stackGlobalKey,

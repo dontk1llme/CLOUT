@@ -19,15 +19,9 @@ class Utils {
 }
 
 class PermissionUtil {
-  /// 安卓权限
-  static List<Permission> androidPermissions = <Permission>[
-    Permission.storage
-  ];
+  static List<Permission> androidPermissions = <Permission>[Permission.storage];
 
-  /// ios权限
-  static List<Permission> iosPermissions = <Permission>[
-    Permission.storage
-  ];
+  static List<Permission> iosPermissions = <Permission>[Permission.storage];
 
   static Future<Map<Permission, PermissionStatus>> requestAll() async {
     if (Platform.isIOS) {
@@ -53,7 +47,6 @@ class PermissionUtil {
     return isDenied;
   }
 
-  /// 检查权限
   static Future<bool> checkGranted(Permission permission) async {
     PermissionStatus storageStatus = await permission.status;
     if (storageStatus == PermissionStatus.granted) {

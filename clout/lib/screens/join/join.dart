@@ -3,7 +3,7 @@ import 'package:clout/screens/join/widgets/big_button.dart';
 
 //pages
 import 'package:clout/screens/join/advertiser_join.dart';
-import 'package:clout/screens/join/clouterJoin.dart';
+import 'package:clout/screens/join/clouter_join.dart';
 
 //global
 import 'package:flutter/material.dart';
