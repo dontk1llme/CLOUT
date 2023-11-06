@@ -7,6 +7,8 @@ import com.mmm.clout.memberservice.clouter.infrastructure.persistence.jpa.JpaClo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class ClouterRepositoryAdapter implements ClouterRepository {
@@ -24,4 +26,11 @@ public class ClouterRepositoryAdapter implements ClouterRepository {
             () -> new NotFoundClouterException()
         );
     }
+
+    @Override
+    public List<Clouter> findTop10ByOrderByAvgScoreDesc() {
+        return jpaClouterRepository.findTop10ByOrderByAvgScoreDesc();
+    }
+
+
 }
