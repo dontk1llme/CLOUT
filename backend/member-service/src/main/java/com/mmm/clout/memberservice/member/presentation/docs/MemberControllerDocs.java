@@ -1,7 +1,9 @@
 package com.mmm.clout.memberservice.member.presentation.docs;
 
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.AuthDto;
+import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
 import com.mmm.clout.memberservice.member.presentation.response.IdDuplicateResponse;
+import com.mmm.clout.memberservice.member.presentation.response.PwdUpdateResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -63,4 +65,15 @@ public interface MemberControllerDocs {
     )
     public ResponseEntity<String> sendSms(
         @RequestParam String phoneNumber);
+
+    @Operation(summary = "비밀번호 변경",
+        responses =
+        @ApiResponse(responseCode = "200", description = "멤버의 비밀번호를 바꿔주는 api",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation=PwdUpdateResponse.class))
+        )
+    )
+    public ResponseEntity<PwdUpdateResponse> pwdUpdate(
+        @RequestBody PwdUpdateRequst request);
 }
