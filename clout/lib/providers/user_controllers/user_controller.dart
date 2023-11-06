@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class UserController extends GetxController {
   int user = 0;
+  var userId;
 
   void setAdvertiser() {
     user = 1;
@@ -13,8 +14,13 @@ class UserController extends GetxController {
     update();
   }
 
-  void setGuest(){
+  void setGuest() {
     user = 0;
+    update();
+  }
+
+  setUserId(input) {
+    userId = input;
     update();
   }
 }

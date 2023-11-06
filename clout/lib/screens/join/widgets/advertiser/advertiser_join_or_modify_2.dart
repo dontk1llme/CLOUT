@@ -27,6 +27,14 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
     );
     print('이게 되야되는데');
     print(CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue);
+    var unique = CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue;
+    if (unique) {
+      //중복이 아닌 아이디
+      // 계속 다음 페이지로 갈 수 있음
+    } else {
+      // 중복된 아이디
+      // 아이디 다시 설정하세요.
+    }
     print(responseBody);
   }
 

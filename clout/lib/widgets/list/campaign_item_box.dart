@@ -113,7 +113,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth > 400 ? 17 : 15,
                   )),
-              Text('${f.format(widget.pay)} 포인트',
+              Text('${f.format(int.parse(widget.pay))} 포인트',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

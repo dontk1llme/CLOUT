@@ -15,34 +15,22 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/widgets/search_detail_bottom_sheet/search_detail_button.dart';
 
-// class Clouter {
-//   int clouterId = 1;
-//   String nickname = '모카우유';
-//   int starRating = 20;
-//   int fee = 500000;
-//   String category = '반려동물';
-//   int contractCount = 5;
-//   List<String> selectedPlatform = [
-//     "YouTube",
-//     "Instagram",
-//     "TikTok",
-//   ];
-//   String firstImg = 'assets/images/clouterImage.jpg';
-// }
-
 class ClouterList extends GetView<InfiniteScrollController> {
   ClouterList({super.key});
 
   var clouterId = Get.arguments;
 
   Clouter clouter = Clouter();
+  final infiniteController =
+      Get.put(InfiniteScrollController(), tag: 'clouterList');
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final infiniteController = Get.put(InfiniteScrollController());
+    infiniteController.setEndPoint('/clouters');
     infiniteController.toggleData(true);
     return GetBuilder<InfiniteScrollController>(
+        tag: 'clouterList',
         builder: (controller) => Scaffold(
             drawer: MyDrawer(),
             backgroundColor:
@@ -75,7 +63,7 @@ class ClouterList extends GetView<InfiniteScrollController> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  ClouterInfiniteScrollBody(),
+                  ClouterInfiniteScrollBody(controllerTag: 'clouterList'),
                   SizedBox(height: 30),
                 ],
               ),
