@@ -1,4 +1,5 @@
 // Global
+import 'package:clout/screens/point/advertiser_point_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
@@ -145,6 +146,9 @@ class _MyAppState extends State<MyApp> {
         GetPage(
             name: '/clouterlikedcampaign', page: () => ClouterLikedCampaign()),
         GetPage(name: '/cloutermycampaign', page: () => ClouterMyCampaign()),
+        GetPage(
+            name: '/advertiserpointlist', page: () => AdvertiserPointList()),
+        GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
       ],
     );
   }
