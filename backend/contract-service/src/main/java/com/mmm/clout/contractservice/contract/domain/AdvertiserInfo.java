@@ -1,5 +1,6 @@
 package com.mmm.clout.contractservice.contract.domain;
 
+import com.mmm.clout.contractservice.contract.domain.info.SelectAdrInfo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,12 @@ public class AdvertiserInfo {
     private String companyName;
 
     private String regNum;
+
+    public AdvertiserInfo(SelectAdrInfo info) {
+        this.advertiserId = info.getAdvertiserId();
+        this.representativeName = info.getCompanyInfo().getCeoName();
+        this.advertiserAddress = info.getAddressInfo().getMainAddress() + " " + info.getAddressInfo().getDetailAddress();
+        this.companyName = info.getCompanyInfo().getCompanyName();
+        this.regNum = info.getCompanyInfo().getRegNum();
+    }
 }
