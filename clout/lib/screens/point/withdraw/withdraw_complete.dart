@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:clout/style.dart';
 
 // widgets
 import 'package:clout/widgets/common/complete.dart';
