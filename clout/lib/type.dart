@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 class Address {
-  String zipCode;
-  String mainAddress;
-  String detailAddress;
+  String? zipCode;
+  String? mainAddress;
+  String? detailAddress;
 
   Address(this.zipCode, this.mainAddress, this.detailAddress);
 
@@ -15,11 +15,11 @@ class Address {
 }
 
 class CompanyInfo {
-  String companyName;
-  String regNum;
-  String ceoName;
-  String managerName;
-  String managerPhoneNumber;
+  String? companyName;
+  String? regNum;
+  String? ceoName;
+  String? managerName;
+  String? managerPhoneNumber;
 
   CompanyInfo(this.companyName, this.regNum, this.ceoName, this.managerName,
       this.managerPhoneNumber);
@@ -34,18 +34,21 @@ class CompanyInfo {
 }
 
 class Advertiser {
-  String userId;
-  String pwd;
-  Address address;
-  CompanyInfo companyInfo;
+  String? userId;
+  String? pwd;
+  Address? address;
+  CompanyInfo? companyInfo;
+  int? advertiserAvgstar;
 
-  Advertiser(this.userId, this.pwd, this.address, this.companyInfo);
+  Advertiser(this.userId, this.pwd, this.address, this.companyInfo,
+      this.advertiserAvgstar);
 
   Map<String, dynamic> toJson() => {
         'userId': userId,
         'pwd': pwd,
         'address': address,
         'companyInfo': companyInfo,
+        'advertiserAvgstar': advertiserAvgstar,
       };
 }
 
@@ -176,4 +179,3 @@ class Campaign {
     );
   }
 }
-
