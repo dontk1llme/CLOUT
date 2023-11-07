@@ -2,6 +2,7 @@ package com.mmm.clout.pointservice.point.infrastructure.config;
 
 import com.mmm.clout.pointservice.point.application.ChargePointProcessor;
 import com.mmm.clout.pointservice.point.application.ReducePointProcessor;
+import com.mmm.clout.pointservice.point.application.WithdrawPointProcessor;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
 import com.mmm.clout.pointservice.point.domain.repository.PointTransactionRepository;
 import org.springframework.context.annotation.Bean;
@@ -30,5 +31,10 @@ public class PointConfig {
             pointRepository,
             pointTransactionRepository
         );
+    }
+
+    @Bean
+    public WithdrawPointProcessor withdrawPointProcessor() {
+        return new WithdrawPointProcessor();
     }
 }

@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ReduceRequest {
+public class ReducePointRequest {
 
     @NotNull
     private Long memberId;
