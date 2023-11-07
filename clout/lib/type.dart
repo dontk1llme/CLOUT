@@ -49,6 +49,10 @@ class CompanyInfo {
       json['managerPhoneNumber'],
     );
   }
+
+  String toString() {
+    return "${companyName}, ${regNum}, ${ceoName}, ${managerName}, ${managerPhoneNumber} ";
+  }
 }
 
 class Advertiser {
@@ -291,14 +295,40 @@ class AdvertiserInfo {
       };
 
   factory AdvertiserInfo.fromJson(Map<String, dynamic> json) {
-    return AdvertiserInfo(
-      json['advertiserId'],
-      json['userId'],
-      json['totalPoint'],
-      json['role'],
-      json['advertiserAvgStar'],
-      json['address'],
-      json['companyInfo'],
+    if (json['companyInfo'] == null) {
+      return AdvertiserInfo(
+        json['advertiserId'],
+        json['userId'],
+        json['totalPoint'],
+        json['role'],
+        json['advertiserAvgStar'],
+        json['address'] != null ? Address.fromJson(json['address']) : null,
+        null, // companyInfo가 없는 경우 null로 설정
+      );
+    } else {
+      return AdvertiserInfo(
+        json['advertiserId'],
+        json['userId'],
+        json['totalPoint'],
+        json['role'],
+        json['advertiserAvgStar'],
+        json['address'] != null ? Address.fromJson(json['address']) : null,
+        CompanyInfo.fromJson(json['companyInfo']),
+      );
+    }
+  }
+}
+
+class CampaignList {
+  List<dynamic> campaignList;
+  AdvertiserInfo advertiserInfo;
+
+  CampaignList({required this.campaignList, required this.advertiserInfo});
+
+  factory CampaignList.fromJson(Map<String, dynamic> json) {
+    return CampaignList(
+      campaignList: json['campaignList'],
+      advertiserInfo: AdvertiserInfo.fromJson(json['advertiserInfo']),
     );
   }
 }
