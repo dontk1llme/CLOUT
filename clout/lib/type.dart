@@ -136,14 +136,26 @@ class Clouter {
 
 class Campaign {
   int campaignId;
-  final String adCategory;
-  final String title; // '못골정미소 백미 5kg';
-  final String price; // "1000 포인트";
-  final String companyName; // '못골영농조합법인';
-  final int numberOfSelectedMembers; // 채택된 인원
-  final int numberOfRecruiter; // 모집 인원
-  final List<String> adPlatformList;
-  final int advertiserAvgstar;
+  String adCategory;
+  String title;
+  String price;
+  String details;
+  String companyName;
+  int numberOfSelectedMembers;
+  int numberOfRecruiter;
+  int numberOfApplicants;
+  List<String> adPlatformList;
+  int advertiserAvgstar;
+  String deletedAt;
+  bool isPriceChangeable;
+  bool isDeliveryRequired;
+  String offeringDetails;
+  String sellingLink;
+  String applyStartDate;
+  String applyEndDate;
+  int minClouterAge;
+  int maxClouterAge;
+  int minFollower;
   // String firstImg = 'assets/images/itemImage.jpg';
 
   Campaign({
@@ -151,29 +163,50 @@ class Campaign {
     required this.adCategory,
     required this.title,
     required this.price,
+    required this.details,
     required this.companyName,
     required this.numberOfSelectedMembers,
     required this.numberOfRecruiter,
+    required this.numberOfApplicants,
     required this.adPlatformList,
     required this.advertiserAvgstar,
+    required this.deletedAt,
+    required this.isPriceChangeable,
+    required this.isDeliveryRequired,
+    required this.offeringDetails,
+    required this.sellingLink,
+    required this.applyStartDate,
+    required this.applyEndDate,
+    required this.minClouterAge,
+    required this.maxClouterAge,
+    required this.minFollower,
+    // required this.firstImg,
   });
 
   factory Campaign.fromJson(Map<String, dynamic> json) {
-    final campaignInfo = json['campaignInfo'];
-    final companyInfo = json['companyInfo'];
-    final advertiserInfo = json['advertiserInfo'];
-
     return Campaign(
-      campaignId: campaignInfo['campaginId'],
-      adCategory: campaignInfo['adCategory'],
-      title: campaignInfo['title'],
-      price: campaignInfo['price'],
-      companyName: companyInfo['companyName'],
-      numberOfSelectedMembers: campaignInfo['numberOfSelectedMembers'],
-      numberOfRecruiter: campaignInfo['numberOfRecruiter'],
-      adPlatformList: campaignInfo['adPlatformList'],
-      advertiserAvgstar: advertiserInfo['advertiserAvgstar'],
+      campaignId: json['campaignId'],
+      adCategory: json['adCategory'],
+      title: json['title'],
+      price: json['price'],
+      details: json['details'],
+      companyName: json['companyName'],
+      numberOfSelectedMembers: json['numberOfSelectedMembers'],
+      numberOfRecruiter: json['numberOfRecruiter'],
+      numberOfApplicants: json['numberOfApplicants'],
+      adPlatformList: json['adPlatformList'],
+      advertiserAvgstar: json['advertiserAvgstar'],
+      deletedAt: json['deletedAt'],
+      isPriceChangeable: json['isPriceChangeable'],
+      isDeliveryRequired: json['isDeliveryRequired'],
+      offeringDetails: json['offeringDetails'],
+      sellingLink: json['sellingLink'],
+      applyStartDate: json['applyStartDate'],
+      applyEndDate: json['applyEndDate'],
+      minClouterAge: json['minClouterAge'],
+      maxClouterAge: json['maxClouterAge'],
+      minFollower: json['minFollower'],
+      // firstImg: json['firstImg'],
     );
   }
 }
-
