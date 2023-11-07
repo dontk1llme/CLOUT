@@ -1,6 +1,7 @@
 package com.mmm.clout.pointservice.point.domain;
 
 import com.mmm.clout.pointservice.common.entity.BaseEntity;
+import com.mmm.clout.pointservice.point.domain.exception.LackOfPointException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,8 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 public class Point extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "point_id")
     private Long id;
 
@@ -36,7 +38,18 @@ public class Point extends BaseEntity {
     }
 
 
-    public static Point charge(Long memberId, Long chargePoint) {
+    public static Point create(Long memberId, Long chargePoint) {
         return new Point(memberId, chargePoint);
+    }
+
+    public void addPoints(Long chargePoint) {
+        this.totalPoint += chargePoint;
+    }
+
+    public void reducePoint(Long reducingPoint) {
+        if (this.totalPoint - reducingPoint < 0) {
+            throw new LackOfPointException();
+        }
+        this.totalPoint -= reducingPoint;
     }
 }

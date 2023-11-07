@@ -22,18 +22,10 @@ public enum ErrorCode {
     UN_AUTHORIZATION(HttpStatus.FORBIDDEN, "UN_AUTHORIZATION", "접근 권한이 없습니다."),
 
     /*
-     * Advertisement - campaign
+     * 포인트
      */
-
-    CAMPAIGN_NOT_FOUND(HttpStatus.NOT_FOUND, "CAMPAIGN_ENTITY_NOT_FOUND", "등록되지 않은 광고 캠페인입니다."),
-    END_RECUITS(HttpStatus.BAD_REQUEST, "END_RECRUITS", "모집 인원/날짜가 초과된 광고 캠페인입니다."),
-
-    /*
-     * Apply
-     */
-    ALREADY_ACCEPTED_APPLY(HttpStatus.BAD_REQUEST, "ALREADY_ACCEPTED_APPLY",
-        "해당 광고 캠페인은 채택(계약) 완료 되었습니다."),
-    ALREADY_CREATED_APPLY(HttpStatus.BAD_REQUEST, "ALREADY_ACCEPTED_APPLY", "이미 신청한 광고 캠페인입니다.");
+    POINT_NOT_FOUND(HttpStatus.NOT_FOUND, "POINT_NOT_FOUND", "포인트가 존재하지 않습니다. 충전해주세요."),
+    LACK_OF_POINT(HttpStatus.BAD_REQUEST, "LACK_OF_POINT", "포인트 잔액이 부족합니다. 충전해주세요.");
 
 
     private final HttpStatus status;
