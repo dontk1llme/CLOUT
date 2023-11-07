@@ -32,7 +32,6 @@ class _ChattingState extends State<ChattingPage> {
   @override
   void initState() {
     super.initState();
-    StompClient? stompClient;
 
     try {
       // Stomp 초기화 및 연결
@@ -42,7 +41,7 @@ class _ChattingState extends State<ChattingPage> {
           onConnect: (StompFrame frame) {
             print('Stomp connected');
             // 채팅 메시지
-            stompClient!.subscribe(
+            stompClient.subscribe(
               destination: '/topic/chats',
               callback: (frame) {
                 // 수신 메시지 처리
@@ -108,17 +107,17 @@ class _ChattingState extends State<ChattingPage> {
     if (response.statusCode == 200) {
       // 채팅방ㅇㅣ 존재한다면 채팅방 상세 정보와 이전 채팅 목록 받아오기
       final responseBody = response.body as Map<String, dynamic>;
-      final chatRoomId = responseBody['chatRoomId'].toString();
-      final advertisementId = responseBody['advertisementId'].toString();
-      final hostId = responseBody['hostId'].toString();
-      final guestId = responseBody['guestId'].toString();
+      final chatRoomId = responseBody['chatRoomId'];
+      final advertisementId = responseBody['advertisementId'];
+      final hostId = responseBody['hostId'];
+      final guestId = responseBody['guestId'];
       final chatHistories = responseBody['chatHistories'] as List<dynamic>;
 
       for (final history in chatHistories) {
-        final chatIdx = history['chatIdx'].toString();
-        final senderName = history['senderName'].toString();
-        final senderId = history['senderId'].toString();
-        final message = history['msg'].toString();
+        final chatIdx = history['chatIdx'];
+        final senderName = history['senderName'];
+        final senderId = history['senderId'];
+        final message = history['msg'];
         final dateTime = DateTime.parse(history['dateTime'] as String);
       }
     } else if (response.status.isNotFound) {
@@ -135,9 +134,15 @@ class _ChattingState extends State<ChattingPage> {
   // 새로운 채팅방 생성
   Future<String> createChatRoom() async {
     try {
+      final requestBody = {
+        // "hostId": '', 
+        // "guestId": ,
+      };
+
       final response = await GetConnect().post(
         'http://3.35.132.84:8080/chats',
-        json.encode({"hostId": 0, "guestId": 0}),
+        json.encode(requestBody),
+        // json.encode({"hostId": 0, "guestId": 0}),
         headers: {'Content-Type': 'application/json'},
       );
 
