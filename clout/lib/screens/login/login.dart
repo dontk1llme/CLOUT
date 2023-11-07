@@ -75,11 +75,11 @@ class _LoginState extends State<Login> {
     userController.setAdvertiser();
 
     // 3. 만약 0 리턴되면 showtoast
-    Get.offAllNamed('/home');
 
     if (userController.user == 0){
       Fluttertoast.showToast(msg: '아이디 혹은 비밀번호를 확인해주세요');
     }
+    Get.offAllNamed('/home');
   }
 
   @override

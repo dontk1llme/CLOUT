@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:clout/hooks/phone_number_formatter.dart';
 import 'package:clout/hooks/register_api.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
-import 'package:clout/screens/join/numberVerify.dart';
+import 'package:clout/screens/join/number_verify.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
-import 'package:clout/type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
@@ -17,25 +18,21 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
 
   final advertiserRegisterController =
       Get.find<AdvertiserInfoController>(tag: 'advertiserRegister');
+
   checkDuplicted() async {
-    // 가입 api 호출
     final RegisterApi registerApi = RegisterApi();
 
-    String responseBody = await registerApi.getRequest(
+    var responseBody = await registerApi.getRequest(
       '/v1/members/duplicate',
       '?userId=${advertiserRegisterController.id}',
     );
-    print('이게 되야되는데');
-    print(CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue);
-    var unique = CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue;
-    if (unique) {
-      //중복이 아닌 아이디
-      // 계속 다음 페이지로 갈 수 있음
-    } else {
-      // 중복된 아이디
-      // 아이디 다시 설정하세요.
-    }
+    print('중복확인');
     print(responseBody);
+    if (responseBody[0] == 200) {
+      advertiserRegisterController.setDoubleId(2);
+    } else {
+      advertiserRegisterController.setDoubleId(0);
+    }
   }
 
   @override
@@ -77,12 +74,18 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                 setState: controller.setPhoneNumber,
                 initialValue: controller.phoneNumber,
                 enabled: true,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  PhoneNumberFormatter(),
+                ],
               ),
               Positioned(
                 right: 10,
                 top: 2,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(NumberVerify()),
+                  onPressed: () => Get.to(NumberVerify(
+                    phoneNumber: controller.phoneNumber,
+                  )),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: style.colors['main1'],
                     elevation: 5,
@@ -106,7 +109,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
             children: [
               JoinInput(
                 keyboardType: TextInputType.text,
-                maxLength: 20,
+                maxLength: 15,
                 title: '아이디 입력',
                 label: '아이디',
                 setState: controller.setId,
