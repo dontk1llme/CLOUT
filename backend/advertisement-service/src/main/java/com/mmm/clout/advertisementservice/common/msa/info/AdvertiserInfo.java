@@ -14,8 +14,6 @@ public class AdvertiserInfo {
 
     private String userId; // 아이디
 
-    private Long totalPoint;
-
     private String role;
 
     private Long advertiserAvgStar;

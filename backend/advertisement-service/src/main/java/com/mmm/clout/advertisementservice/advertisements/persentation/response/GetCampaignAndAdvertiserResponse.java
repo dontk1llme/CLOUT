@@ -15,14 +15,14 @@ public class GetCampaignAndAdvertiserResponse {
 
     private CampaignResponse campaignInfo;
 
-    private AdvertiserInfo advertiserInfo;
+    private AdvertiserResponse advertiserInfo;
 
     public static GetCampaignAndAdvertiserResponse from(CampaignReader reader) {
         Campaign campaign = reader.getCampaign();
         AdvertiserInfo advertiser = reader.getAdvertiserInfo();
         return new GetCampaignAndAdvertiserResponse(
             CampaignResponse.from(campaign),
-            advertiser
+            AdvertiserResponse.from(advertiser)
         );
     }
 }

@@ -14,14 +14,14 @@ public class GetCampainListByAdvertiserResponse {
 
     private List<CampaignResponse> campaignList;
 
-    private AdvertiserInfo advertiserInfo;
+    private AdvertiserResponse advertiserInfo;
 
     public static GetCampainListByAdvertiserResponse from(CampaignListReader reader) {
         List<Campaign> campaigns = reader.getCampaignList();
         AdvertiserInfo advertiser = reader.getAdvertiserInfo();
         return new GetCampainListByAdvertiserResponse(
             campaigns.stream().map(CampaignResponse::from).collect(Collectors.toList()),
-            advertiser
+            AdvertiserResponse.from(advertiser)
         );
     }
 }

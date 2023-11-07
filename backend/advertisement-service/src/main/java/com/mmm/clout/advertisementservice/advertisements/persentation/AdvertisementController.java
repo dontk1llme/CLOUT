@@ -1,8 +1,6 @@
 package com.mmm.clout.advertisementservice.advertisements.persentation;
 
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
-import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
@@ -13,7 +11,6 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.response.G
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetTop10CampainListResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -84,7 +81,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
      */
 
     @GetMapping("/{advertisementId}")
-    public ResponseEntity<GetCampaignAndAdvertiserResponse> getCampaign(
+    public ResponseEntity<GetCampaignAndAdvertiserResponse> getCampaignDetails(
         @PathVariable Long advertisementId
     ) {
         GetCampaignAndAdvertiserResponse result = GetCampaignAndAdvertiserResponse.from(
