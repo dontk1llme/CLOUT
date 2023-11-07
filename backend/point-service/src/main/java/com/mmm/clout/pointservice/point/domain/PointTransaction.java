@@ -60,4 +60,13 @@ public class PointTransaction extends BaseEntity {
             PointCategory.PAY
         );
     }
+
+    public static PointTransaction usePoint(
+        Point point,
+        Long reducingPoint,
+        PointCategory pointCategory
+
+    ) {
+        return new PointTransaction(point, reducingPoint, PointStatus.USED, pointCategory);
+    }
 }

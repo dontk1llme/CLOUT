@@ -9,5 +9,8 @@ public enum PointCategory {
 
     private final String description;
 
+    public PointCategory convertToPointCategory(String categoryStr) {
+        return PointCategory.valueOf(categoryStr.toUpperCase());
+    }
 
 }
