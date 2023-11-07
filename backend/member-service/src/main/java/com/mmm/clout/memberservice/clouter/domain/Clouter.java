@@ -1,6 +1,7 @@
 package com.mmm.clout.memberservice.clouter.domain;
 
 import com.mmm.clout.memberservice.common.Region;
+import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.common.entity.address.Address;
 import com.mmm.clout.memberservice.common.Category;
 import com.mmm.clout.memberservice.member.domain.Member;
@@ -63,7 +64,7 @@ public class Clouter extends Member {
     public Clouter(String userid, String pwd, String nickName, String name, LocalDate birthday, Integer age,
                    String phoneNumber,List<Channel> channelList, HopeCost hopeCost, boolean negoable,
                    List<Category> categoryList,List<Region> regionList, Address address) {
-        super(userid, pwd);
+        super(userid, pwd, Role.CLOUTER);
         this.nickName = nickName;
         this.name = name;
         this.birthday = birthday;

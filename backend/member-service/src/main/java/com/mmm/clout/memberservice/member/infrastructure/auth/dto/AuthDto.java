@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.member.infrastructure.auth.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 public class AuthDto {
@@ -9,6 +10,7 @@ public class AuthDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class LoginDto {
         private String userId;
+        @Schema(defaultValue = "stringst")
         private String password;
 
         @Builder

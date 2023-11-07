@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @EnableJpaAuditing
-public class UserserviceApplication {
+public class MemberserviceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserserviceApplication.class, args);
+		SpringApplication.run(MemberserviceApplication.class, args);
 	}
 
 }

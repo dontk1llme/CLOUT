@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.advertiser.domain;
 
+import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.common.entity.address.Address;
 import com.mmm.clout.memberservice.member.domain.Member;
 import lombok.*;
@@ -27,7 +28,7 @@ public class Advertiser extends Member {
     private CompanyInfo companyInfo;
 
     public Advertiser(String userid, String pwd, Address address, CompanyInfo companyInfo) {
-        super(userid, pwd);
+        super(userid, pwd, Role.ADVERTISER);
         this.address = address;
         this.companyInfo = companyInfo;
     }

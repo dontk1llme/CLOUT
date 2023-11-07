@@ -1,8 +1,8 @@
-package com.mmm.clout.memberservice.common.configuration;
+package com.mmm.clout.contractservice.common.configuration;
 
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springdoc.core.GroupedOpenApi;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
 
@@ -12,7 +12,7 @@ public class OpenApiConfig {
     @Bean
     public GroupedOpenApi api() {
         return GroupedOpenApi.builder()
-            .group("user-service")
+            .group("contract-service")
             .pathsToMatch("/**")
             .build();
     }
