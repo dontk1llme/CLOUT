@@ -1,7 +1,6 @@
 // Global
 import 'package:clout/screens/point/add/add_complete.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
 //notification
@@ -33,7 +32,6 @@ import 'package:clout/screens/mypage/clouter_likedcampaign.dart';
 import 'package:clout/screens/mypage/clouter_mycampaign.dart';
 import 'package:clout/screens/point/add/add_first.dart';
 import 'package:clout/screens/point/add/add_second.dart';
-import 'package:clout/screens/point/add/add_complete.dart';
 import 'package:clout/screens/point/advertiser_point_list.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
