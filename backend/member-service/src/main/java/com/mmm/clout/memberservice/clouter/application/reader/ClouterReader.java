@@ -25,8 +25,6 @@ public class ClouterReader {
 
     private Long avgScore;
 
-    private Long totalPoint;
-
     private Role role;
 
     private String nickName;
@@ -56,7 +54,6 @@ public class ClouterReader {
         this.clouterId = clouter.getId();
         this.userId = clouter.getUserId();
         this.avgScore = clouter.getAvgScore();
-        this.totalPoint = clouter.getTotalPoint();
         this.role = clouter.getRole();
         this.nickName = clouter.getNickName();
         this.name = clouter.getName();

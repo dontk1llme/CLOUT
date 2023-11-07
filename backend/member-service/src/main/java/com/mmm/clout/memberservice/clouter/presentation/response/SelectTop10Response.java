@@ -1,7 +1,6 @@
 package com.mmm.clout.memberservice.clouter.presentation.response;
 
 import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
-import com.mmm.clout.memberservice.clouter.domain.Clouter;
 import com.mmm.clout.memberservice.common.entity.address.response.AddressResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +21,6 @@ public class SelectTop10Response {
                 clouterReader.getClouterId(),
                 clouterReader.getUserId(),
                 clouterReader.getAvgScore(),
-                clouterReader.getTotalPoint(),
                 clouterReader.getRole(),
                 clouterReader.getNickName(),
                 clouterReader.getName(),

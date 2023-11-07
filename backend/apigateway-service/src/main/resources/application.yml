@@ -5,7 +5,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: https://eureka.clouter.kr/eureka
 
 spring:
   application:
@@ -24,7 +24,7 @@ spring:
         - id: member-service
           uri: lb://MEMBER-SERVICE
           predicates:
-            - Path=/member-service/v1/members/**
+            - Path=/member-service/members/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
@@ -32,28 +32,20 @@ spring:
         - id: member-service
           uri: lb://MEMBER-SERVICE
           predicates:
-            - Path=/member-service/v1/advertisers/**
+            - Path=/member-service/advertisers/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+        #            - AuthorizationHeaderFilter
         # 클라우터 api
         - id: member-service
           uri: lb://MEMBER-SERVICE
           predicates:
-            - Path=/member-service/v1/clouters/**
+            - Path=/member-service/clouters/**
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
-        - id: member-service
-          uri: lb://MEMBER-SERVICE
-          predicates:
-            - Path=/member-service/**
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
-      #            - AuthorizationHeaderFilter
+        #            - AuthorizationHeaderFilter
         # Image api
         - id: image-service
           uri: lb://IMAGE-SERVICE
@@ -61,24 +53,24 @@ spring:
             - Path=/image-service/images/**
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/image-service/v1/(?<segment>.*), /$\{segment}
+            - RewritePath=/image-service/(?<segment>.*), /$\{segment}
         #            - AuthorizationHeaderFilter
-#        # swagger 요청
-#        - id: member-service
-#          uri: lb://MEMBER-SERVICE
-#          predicates:
-#            - Path=/member-service/swagger-ui
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
-#        #    - AuthorizationHeaderFilter
-#        - id: member-service
-#          uri: lb://MEMBER-SERVICE
-#          predicates:
-#            - Path=/member-service/swagger-ui/**
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#        #    - AuthorizationHeaderFilter
+        # swagger 요청
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
+          predicates:
+            - Path=/member-service/swagger-ui
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/member-service/(?<segment>.*), /$\{segment}
+        #    - AuthorizationHeaderFilter
+        - id: member-service
+          uri: lb://MEMBER-SERVICE
+          predicates:
+            - Path=/member-service/swagger-ui/**
+          filters:
+            - RemoveRequestHeader=Cookie
+        #    - AuthorizationHeaderFilter
         - id: advertisement-service
           uri: lb://ADVERTISEMENT-SERVICE
           predicates:
@@ -87,6 +79,13 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/advertisement-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
+        - id: contract-service
+          uri: lb://CONTRACT-SERVICE
+          predicates:
+            - Path=/contract-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/contract-service/(?<segment>.*), /$\{segment}
 #        - id: MEMBER-service
 #          uri: lb://MEMBER-SERVICE
 #          predicates:

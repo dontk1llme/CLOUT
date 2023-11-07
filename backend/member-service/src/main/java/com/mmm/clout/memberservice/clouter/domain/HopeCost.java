@@ -14,6 +14,4 @@ import javax.persistence.Embeddable;
 public class HopeCost {
 
     private Long minCost;
-
-    private Long maxCost;
 }
