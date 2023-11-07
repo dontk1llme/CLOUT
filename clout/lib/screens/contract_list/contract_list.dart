@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:clout/widgets/common/choicechip.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
-import 'package:clout/screens/contract/widgets/small_contract.dart';
+import 'package:clout/screens/contract_list/widgets/small_contract.dart';
 
 // controllers
 import 'package:clout/providers/scroll_controllers/contract_infinite_scroll_controller.dart';
