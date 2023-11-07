@@ -1,7 +1,10 @@
-import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:clout/style.dart' as style;
 import 'package:intl/intl.dart';
+import 'package:clout/style.dart' as style;
+import 'package:clout/type.dart';
+
+// controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
@@ -10,26 +13,26 @@ import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 
 class CampaignItemBox extends StatefulWidget {
-  final String category;
-  final String productName;
-  final String pay;
-  final String campaignSubject;
-  final int applicantCount;
-  final int recruitCount;
-  final List<String> selectedPlatform;
-  final int starRating;
+  final String adCategory;
+  final String details; // 💥 title로 바꾸기
+  final int price;
+  final CompanyInfo companyInfo;
+  final int numberOfSelectedMembers;
+  final int numberOfRecruiter;
+  final List<String> adPlatformList;
+  final AdvertiserInfo advertiserInfo;
   final String firstImg;
 
   const CampaignItemBox({
     super.key,
-    required this.category,
-    required this.productName,
-    required this.pay,
-    required this.campaignSubject,
-    required this.applicantCount,
-    required this.recruitCount,
-    required this.selectedPlatform,
-    required this.starRating,
+    required this.adCategory,
+    required this.details,
+    required this.price,
+    required this.companyInfo,
+    required this.numberOfSelectedMembers,
+    required this.numberOfRecruiter,
+    required this.adPlatformList,
+    required this.advertiserInfo,
     required this.firstImg,
   });
 
@@ -87,7 +90,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                           color: style.colors['white'],
                           borderRadius: BorderRadius.circular(5)),
                       child: Row(children: [
-                        Sns2(selectedPlatform: widget.selectedPlatform)
+                        Sns2(selectedPlatform: widget.adPlatformList)
                       ]),
                     ),
                   ),
@@ -99,21 +102,22 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  NameTag(title: widget.category),
-                  Text('${widget.applicantCount}명 / ${widget.recruitCount}명',
+                  NameTag(title: widget.adCategory),
+                  Text(
+                      '${widget.numberOfSelectedMembers}명 / ${widget.numberOfRecruiter}명',
                       style: TextStyle(
                         fontSize: 12,
                       )),
                 ],
               ),
-              Text(widget.productName,
+              Text(widget.details,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth > 400 ? 17 : 15,
                   )),
-              Text('${f.format(int.parse(widget.pay))} 포인트',
+              Text('${f.format(widget.price)} 포인트',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -126,7 +130,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 children: [
                   Flexible(
                     flex: 2,
-                    child: Text(widget.campaignSubject,
+                    child: Text(widget.companyInfo.companyName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -142,7 +146,9 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                             color: Colors.yellow,
                             size: screenWidth > 400 ? 18 : 15,
                           ),
-                          Text(widget.starRating.toString(),
+                          Text(
+                              widget.advertiserInfo.advertiserAvgStar
+                                  .toString(),
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth > 400 ? 13 : 11,
