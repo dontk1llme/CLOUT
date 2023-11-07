@@ -28,16 +28,33 @@ class Clouter {
 
 String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
-Future<Campaign> fetchCampaign(String endPoint, String parameter) async {
-  final response =
-      await http.get(Uri.parse('${baseUrl}/v1/${endPoint}${parameter}'));
+// Future<Campaign> fetchCampaign(String endPoint, String parameter) async {
+//   final response =
+//       await http.get(Uri.parse('${baseUrl}/v1/${endPoint}${parameter}'));
+
+//   if (response.statusCode == 200) {
+//     print('👻✨ response body: ${response.body}');
+//     return Campaign.fromJson(jsonDecode(response.body));
+//   } else {
+//     throw Exception('캠페인 불러오기 실패 💨');
+//   }
+// }
+
+getRequest(endPoint, parameter) async {
+  var url = Uri.parse('${baseUrl}${endPoint}${parameter}');
+  print(url);
+  print(json.encode(parameter));
+  final response = await http.get(
+    url,
+    headers: {"Content-Type": "application/json"},
+  );
 
   if (response.statusCode == 200) {
-    print('👻✨ response body: ${response.body}');
-    return Campaign.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('캠페인 불러오기 실패 💨');
+    print(
+        '👻✨ response body: ${response.body} // 👉 infinite_scroll_controller.dart');
   }
+  print('뿌에에에엥 🎉 infinite_scroll_controller.dart');
+  return response.body;
 }
 
 class InfiniteScrollController extends GetxController {
@@ -63,7 +80,7 @@ class InfiniteScrollController extends GetxController {
     update();
   }
 
-  late Future<Campaign> futureCampaign;
+  // late Future<Campaign> futureCampaign;
 
   @override
   void onInit() {
@@ -88,42 +105,35 @@ class InfiniteScrollController extends GetxController {
 
     int offset = data.length;
 
-    var campaignItemBox = FutureBuilder<Campaign>(
-      future: fetchCampaign(endPoint, parameter),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return CampaignItemBox(
-            category: snapshot.data!.adCategory,
-            productName: snapshot.data!.title,
-            pay: snapshot.data!.price,
-            campaignSubject: snapshot.data!.companyName,
-            applicantCount: snapshot.data!.numberOfSelectedMembers,
-            recruitCount: snapshot.data!.numberOfRecruiter,
-            selectedPlatform: snapshot.data!.adPlatformList,
-            starRating: snapshot.data!.advertiserAvgstar,
-            firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
-          );
-        } else if (snapshot.hasError) {
-          return Text('⛔ Campaign item error: ${snapshot.error}');
-        }
-        return Padding(
-          padding: const EdgeInsets.only(top: 20, bottom: 40),
-          child: SizedBox(
-            height: 50,
-            child: Center(
-                child: LoadingIndicator(
-              indicatorType: Indicator.ballRotateChase,
-              colors: [
-                style.colors['main1-4']!,
-                style.colors['main1-3']!,
-                style.colors['main1-2']!,
-                style.colors['main1-1']!,
-                style.colors['main1']!,
-              ],
-            )),
-          ),
-        );
-      },
+    var response = await getRequest(endPoint, parameter);
+    print('여기까지 오나요? 👉 infinite_scroll_controller.dart');
+    print(response);
+    var campaignData = Campaign.fromJson(json.decode(response));
+
+    var campaignItemBox = CampaignItemBox(
+      adCategory: campaignData.adCategory ?? "",
+      details: campaignData.details ?? "제목없음", // 💥 나중에 title로 바꾸기
+      price: campaignData.price ?? 0,
+      companyInfo: CompanyInfo(
+        campaignData.companyInfo!.companyName,
+        campaignData.companyInfo!.regNum,
+        campaignData.companyInfo!.ceoName,
+        campaignData.companyInfo!.managerName,
+        campaignData.companyInfo!.managerPhoneNumber,
+      ),
+      numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
+      numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
+      adPlatformList: campaignData.adPlatformList ?? [],
+      advertiserInfo: AdvertiserInfo(
+        campaignData.advertiserInfo!.advertiserId,
+        campaignData.advertiserInfo!.userId,
+        campaignData.advertiserInfo!.totalPoint,
+        campaignData.advertiserInfo!.role,
+        campaignData.advertiserInfo!.advertiserAvgStar,
+        campaignData.advertiserInfo!.address,
+        campaignData.advertiserInfo!.companyInfo,
+      ),
+      firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
     );
 
     var appendData = isClouterData
@@ -135,12 +145,9 @@ class InfiniteScrollController extends GetxController {
         : [campaignItemBox];
     data.addAll(appendData);
 
-    print(data.length);
-
     isLoading = false;
     // hasMore = data.length < 30;
     hasMore = appendData.isNotEmpty;
-    print('데이터의 개수입니다.${data.length}');
     update();
   }
 
