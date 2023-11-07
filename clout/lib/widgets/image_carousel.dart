@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:clout/screens/campaign_detail/campaign_detail.dart';
+import 'package:clout/screens/detail/campaign/campaign_detail.dart';
 import 'package:flutter/material.dart';
 
 class ImageCarousel extends StatefulWidget {

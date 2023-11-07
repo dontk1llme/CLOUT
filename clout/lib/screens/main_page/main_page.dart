@@ -1,8 +1,8 @@
 // global
 import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:clout/screens/clouter/clouter_list.dart';
+import 'package:clout/screens/list/clouter/clouter_list.dart';
 import 'package:clout/screens/main_page/widgets/guest_nav_bar.dart';
-import 'package:clout/screens/mypage/advertiser_mypage.dart';
+import 'package:clout/screens/mypage/advertiser/advertiser_mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -11,10 +11,10 @@ import 'package:clout/style.dart' as style;
 import 'package:clout/providers/nav_bar_controller.dart';
 
 // screens
-import 'package:clout/screens/home/home.dart';
-import 'package:clout/screens/campaign_list/campaign_list.dart';
+import 'package:clout/screens/main_page/home.dart';
+import 'package:clout/screens/list/campaign/campaign_list.dart';
 import 'package:clout/screens/chatting/chatting_list.dart';
-import 'package:clout/screens/mypage/clouter_mypage.dart';
+import 'package:clout/screens/mypage/clouter/clouter_mypage.dart';
 
 // widgets
 import 'package:clout/widgets/nav_bar/nav_bar.dart';
