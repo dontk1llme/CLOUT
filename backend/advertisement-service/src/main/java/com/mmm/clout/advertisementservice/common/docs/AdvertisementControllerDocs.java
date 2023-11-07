@@ -6,6 +6,7 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.response.C
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.EndedCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampainListByAdvertiserResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetTop10CampainListResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -101,6 +102,18 @@ public interface AdvertisementControllerDocs {
         Long advertisementId
     );
 
+    @Operation(summary = "인기 있는 광고 리스트 (10개) 조회",
+        description = "모집기간 내의 캠페인 중 신청자 수 많은 순 / 우선순위가 같을경우, 최신순",
+        responses =
+        @ApiResponse(responseCode = "200", description = "인기 있는 광고 리스트 (10개) 조회 성공",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation= GetTop10CampainListResponse.class))
+        )
+    )
+    ResponseEntity<GetTop10CampainListResponse> getTop10Campaigns();
+
+
     @Operation(summary = "광고주 자신이 올린 광고 목록 조회 (최신순)",
         description = "광고주가 본인이 등록한 광고 캠페인 목록을 조회합니다.",
         parameters = {
@@ -141,7 +154,7 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<GetCampainListByAdvertiserResponse> getCampaignsByAdvertisers(
-        Long advertisementId,
+        Long advertiserId,
         int page,
         int size
     );
