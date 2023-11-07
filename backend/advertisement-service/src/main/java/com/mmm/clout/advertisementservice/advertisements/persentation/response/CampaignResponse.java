@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,43 +17,65 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CampaignResponse {
 
+    @Schema(description = "광고 캠페인 식별자")
     private Long campaignId;
 
+    @Schema(description = "광고 플랫폼 리스트")
     private List<AdPlatform> adPlatformList;
 
+    @Schema(description = "광고비")
     private Long price;
 
+    @Schema(description = "광고 상세 설명")
     private String details;
 
+    @Schema(description = "광고 삭제 여부")
     private LocalDateTime deletedAt;
 
+    @Schema(description = "광고 캠페인 등록명/제품명")
     private String title;
 
+    @Schema(description = "광고 카테고리")
     private AdCategory adCategory; // 광고 카테고리
 
+    @Schema(description = "광고비 협의 여부")
     private Boolean isPriceChangeable; // 광고비 협의 여부
 
+    @Schema(description = "배송 여부")
     private Boolean isDeliveryRequired; // 배송 여부
 
+    @Schema(description = "모집인원")
     private Integer numberOfRecruiter; // 모집인원
 
+    @Schema(description = "신청인원")
     private Integer numberOfApplicants; // 신청인원
 
+    @Schema(description = "채택 인원")
     private Integer numberOfSelectedMembers; // 채택 인원
 
+    @Schema(description = "제공 내역 설명")
     private String offeringDetails; // 제공 내역 설명
 
+    @Schema(description = "판매처 링크 (선택사항)")
     private String sellingLink; // 판매처 링크 (선택사항)
 
+    @Schema(description = "모집 시작 날짜")
     private LocalDate applyStartDate; // 모집 시작 날짜
 
+    @Schema(description = "모집 종료 날짜")
     private LocalDate applyEndDate; // 모집 종료 날짜
 
+    @Schema(description = "최소 클라우터 나이")
     private Integer minClouterAge; // 최소 클라우터 나이
 
+    @Schema(description = "최대 클라우터 나이")
     private Integer maxClouterAge; // 최대 클라우터 나이
 
+    @Schema(description = "최소 팔로워 수")
     private Integer minFollower; // 최소 팔로워 수
+
+    @Schema(description = "모집 종료 여부")
+    private Boolean isEnded; // 모집 종료 여부
 
     public static CampaignResponse from(Campaign campaign) {
         return new CampaignResponse(
@@ -74,7 +97,8 @@ public class CampaignResponse {
             campaign.getApplyEndDate(),
             campaign.getMinClouterAge(),
             campaign.getMaxClouterAge(),
-            campaign.getMinFollower()
+            campaign.getMinFollower(),
+            campaign.getIsEnded()
         );
     }
 }
