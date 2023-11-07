@@ -26,6 +26,8 @@ public class CampaignResponse {
 
     private LocalDateTime deletedAt;
 
+    private String title;
+
     private AdCategory adCategory; // 광고 카테고리
 
     private Boolean isPriceChangeable; // 광고비 협의 여부
@@ -59,6 +61,7 @@ public class CampaignResponse {
             campaign.getPrice(),
             campaign.getDetails(),
             campaign.getDeletedAt(),
+            campaign.getTitle(),
             campaign.getAdCategory(),
             campaign.getIsPriceChangeable(),
             campaign.getIsDeliveryRequired(),
