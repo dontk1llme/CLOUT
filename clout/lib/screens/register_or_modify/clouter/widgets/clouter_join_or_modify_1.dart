@@ -2,14 +2,14 @@ import 'package:clout/hooks/phone_number_formatter.dart';
 import 'package:clout/hooks/register_api.dart';
 import 'package:clout/providers/four_digits_input_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
-import 'package:clout/screens/join/widgets/join_input.dart';
+import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
 import 'package:clout/widgets/input/address_input.dart';
 import 'package:clout/widgets/input/input_elements/widgets/date_input.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:clout/screens/join/number_verify.dart';
+import 'package:clout/screens/register_or_modify/widgets/number_verify.dart';
 
 class ClouterJoinOrModify1 extends StatelessWidget {
   ClouterJoinOrModify1({

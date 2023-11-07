@@ -13,7 +13,7 @@ import 'package:clout/screens/point/widgets/my_wallet.dart';
 import 'package:clout/screens/point/advertiser_point_list.dart';
 import 'package:clout/screens/mypage/advertiser/advertiser_mycampaign.dart';
 import 'package:clout/screens/mypage/advertiser/advertiser_likedclouters.dart';
-import 'package:clout/screens/contract/contract_list.dart';
+import 'package:clout/screens/contract_list/contract_list.dart';
 import 'package:clout/screens/mypage/widgets/mypage_list.dart';
 
 class AdvertiserMyPage extends StatelessWidget {

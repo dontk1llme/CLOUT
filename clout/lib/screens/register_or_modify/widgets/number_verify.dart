@@ -1,4 +1,4 @@
-import 'package:clout/screens/join/widgets/four_digits_input.dart';
+import 'package:clout/screens/register_or_modify/widgets/four_digits_input.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 

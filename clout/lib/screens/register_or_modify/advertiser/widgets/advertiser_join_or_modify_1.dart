@@ -1,6 +1,6 @@
 import 'package:clout/hooks/reg_numaber_formatter.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
-import 'package:clout/screens/join/widgets/join_input.dart';
+import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
 import 'package:clout/widgets/input/address_input.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
