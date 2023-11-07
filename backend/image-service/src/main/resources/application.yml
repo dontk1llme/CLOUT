@@ -10,7 +10,7 @@ spring:
   datasource:
     url: jdbc:mariadb://3.38.213.43:3306/imagedb
     driver-class-name: org.mariadb.jdbc.Driver
-    username: clout
+    username: root
     password: zmffkdnxm409!
 
   jpa:
