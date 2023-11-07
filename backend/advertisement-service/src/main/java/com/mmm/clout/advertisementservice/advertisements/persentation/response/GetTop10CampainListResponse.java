@@ -2,6 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.persentation.response;
 
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,10 +11,16 @@ import lombok.Getter;
 public class GetTop10CampainListResponse {
 
 //    private ImageResponse imageResponse;
-    private List<CampaignReader> top10CampaignList;
+    private List<CampaignReaderResponse> top10CampaignList;
+
+
+
 
     public static GetTop10CampainListResponse from(List<CampaignReader> result) {
-        return new GetTop10CampainListResponse(result);
+        List<CampaignReaderResponse> top10List = result.stream().map(
+            CampaignReaderResponse::from
+        ).collect(Collectors.toList());
+        return new GetTop10CampainListResponse(top10List);
     }
 }
 /*
