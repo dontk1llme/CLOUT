@@ -49,6 +49,10 @@ class CompanyInfo {
       json['managerPhoneNumber'],
     );
   }
+
+  String toString() {
+    return "${companyName}, ${regNum}, ${ceoName}, ${managerName}, ${managerPhoneNumber} ";
+  }
 }
 
 class Advertiser {
@@ -155,13 +159,13 @@ class Clouter {
       };
 }
 
-// 💥 다정이가 title 추가하면 확인 후 추가하기
 class Campaign {
   int? campaignId;
   List<String>? adPlatformList;
   int? price;
   String? details;
   String? deletedAt;
+  String? title;
   String? adCategory;
   bool? isPriceChangeable;
   bool? isDeliveryRequired;
@@ -187,6 +191,7 @@ class Campaign {
     required this.price,
     required this.details,
     required this.deletedAt,
+    required this.title,
     required this.adCategory,
     required this.isPriceChangeable,
     required this.isDeliveryRequired,
@@ -215,6 +220,7 @@ class Campaign {
       price: json['price'],
       details: json['details'],
       deletedAt: json['deletedAt'],
+      title: json['title'],
       adCategory: json['adCategory'],
       isPriceChangeable: json['isPriceChangeable'],
       isDeliveryRequired: json['isDeliveryRequired'],
@@ -270,14 +276,40 @@ class AdvertiserInfo {
       };
 
   factory AdvertiserInfo.fromJson(Map<String, dynamic> json) {
-    return AdvertiserInfo(
-      json['advertiserId'],
-      json['userId'],
-      json['totalPoint'],
-      json['role'],
-      json['advertiserAvgStar'],
-      json['address'],
-      json['companyInfo'],
+    if (json['companyInfo'] == null) {
+      return AdvertiserInfo(
+        json['advertiserId'],
+        json['userId'],
+        json['totalPoint'],
+        json['role'],
+        json['advertiserAvgStar'],
+        json['address'] != null ? Address.fromJson(json['address']) : null,
+        null, // companyInfo가 없는 경우 null로 설정
+      );
+    } else {
+      return AdvertiserInfo(
+        json['advertiserId'],
+        json['userId'],
+        json['totalPoint'],
+        json['role'],
+        json['advertiserAvgStar'],
+        json['address'] != null ? Address.fromJson(json['address']) : null,
+        CompanyInfo.fromJson(json['companyInfo']),
+      );
+    }
+  }
+}
+
+class CampaignList {
+  List<dynamic> campaignList;
+  AdvertiserInfo advertiserInfo;
+
+  CampaignList({required this.campaignList, required this.advertiserInfo});
+
+  factory CampaignList.fromJson(Map<String, dynamic> json) {
+    return CampaignList(
+      campaignList: json['campaignList'],
+      advertiserInfo: AdvertiserInfo.fromJson(json['advertiserInfo']),
     );
   }
 }
