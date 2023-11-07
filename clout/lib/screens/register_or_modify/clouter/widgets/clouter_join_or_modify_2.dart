@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:clout/hooks/register_api.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
-import 'package:clout/screens/join/widgets/join_input.dart';
+import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
 import 'package:clout/type.dart';
 import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:flutter/material.dart';
