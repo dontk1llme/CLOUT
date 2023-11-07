@@ -12,7 +12,7 @@ import 'package:clout/widgets/sns/sns2.dart';
 class CampaignItemBox extends StatefulWidget {
   final String category;
   final String productName;
-  final int pay;
+  final String pay;
   final String campaignSubject;
   final int applicantCount;
   final int recruitCount;
@@ -73,7 +73,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 alignment: Alignment.topRight,
                 children: [
                   Image.asset(
-                    widget.firstImg,
+                    widget.firstImg, // 💥 사진 수정하기
                     width: screenWidth / 2 - 40,
                     // height: screenHeight / 2 - 65,
                     fit: BoxFit.cover,
@@ -113,7 +113,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth > 400 ? 17 : 15,
                   )),
-              Text('${f.format(widget.pay)} 포인트',
+              Text('${f.format(int.parse(widget.pay))} 포인트',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

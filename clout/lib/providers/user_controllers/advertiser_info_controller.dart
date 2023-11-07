@@ -1,5 +1,6 @@
 import 'package:clout/providers/address_controller.dart';
 import 'package:clout/providers/user_controllers/advertiser_controller.dart';
+import 'package:clout/type.dart';
 import 'package:get/get.dart';
 
 class AdvertiserInfoController extends GetxController {
@@ -9,18 +10,32 @@ class AdvertiserInfoController extends GetxController {
   var doubleId = 1;
   var password;
   var checkPassword;
-  var buisnessName;
+  var businessName;
   var headName;
-  var buisnessNumber;
+  var businessNumber;
   var obscured = true;
 
+  var advertiser;
+
   final advertiserController = Get.find<AdvertiserController>();
+
   var addressController;
   runOtherControllers() {
     addressController = Get.put(
       AddressController(),
       tag: advertiserController.controllerTag,
     );
+  }
+
+  setAdvertiser() {
+    advertiser = Advertiser(
+      id,
+      password,
+      Address(addressController.zipCode, addressController.daumAddress,
+          addressController.detailAddress),
+      CompanyInfo(businessName, businessNumber, headName, name, phoneNumber),
+    );
+    update();
   }
 
   setName(input) {
@@ -57,8 +72,8 @@ class AdvertiserInfoController extends GetxController {
     update();
   }
 
-  setBuisnessName(input) {
-    buisnessName = input;
+  setBusinessName(input) {
+    businessName = input;
     update();
   }
 
@@ -67,8 +82,8 @@ class AdvertiserInfoController extends GetxController {
     update();
   }
 
-  setBuisnessNumber(input) {
-    buisnessNumber = input;
+  setBusinessNumber(input) {
+    businessNumber = input;
     update();
   }
 
@@ -78,9 +93,9 @@ class AdvertiserInfoController extends GetxController {
   }
 
   canGoSecondPage() {
-    if (buisnessName != null &&
+    if (businessName != null &&
         headName != null &&
-        buisnessNumber != null &&
+        businessNumber != null &&
         addressController.finalAddress != '') {
       return true;
     } else {
@@ -104,21 +119,41 @@ class AdvertiserInfoController extends GetxController {
   }
 
   printAll() {
-    print('담당자 이름');
-    print(name);
-    print('담당자 폰번호');
-    print(phoneNumber);
+    // print('담당자 이름');
+    // print(name);
+    // print('담당자 폰번호');
+    // print(phoneNumber);
+    // print('아이디');
+    // print(id);
+    // print('비밀번호');
+    // print(password);
+    // print('업체명');
+    // print(businessName);
+    // print('대표이름');
+    // print(headName);
+    // print('사업자등록번호');
+    // print(businessNumber);
+    // print('소재지');
+    // print(addressController.finalAddress);
     print('아이디');
-    print(id);
+    print(advertiser?.userId);
     print('비밀번호');
-    print(password);
-    print('업체명');
-    print(buisnessName);
-    print('대표이름');
-    print(headName);
-    print('사업자등록번호');
-    print(buisnessNumber);
+    print(advertiser?.pwd);
+    print('지역코드');
+    print(advertiser?.address.zipCode);
     print('소재지');
-    print(addressController.finalAddress);
+    print(advertiser?.address.mainAddress);
+    print('상세주소');
+    print(advertiser?.address.detailAddress);
+    print('회사 이름');
+    print(advertiser?.companyInfo.companyName);
+    print('대표 이름');
+    print(advertiser?.companyInfo.ceoName);
+    print('사업자등록번호');
+    print(advertiser?.companyInfo.regNum);
+    print('담당자 이름');
+    print(advertiser?.companyInfo.managerName);
+    print('담당자 폰번호');
+    print(advertiser?.companyInfo.managerPhoneNumber);
   }
 }

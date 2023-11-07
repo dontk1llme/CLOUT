@@ -7,12 +7,15 @@ import 'package:clout/style.dart' as style;
 import 'package:loading_indicator/loading_indicator.dart';
 
 class ClouterInfiniteScrollBody extends StatelessWidget {
-  const ClouterInfiniteScrollBody({super.key});
+  const ClouterInfiniteScrollBody({super.key, required this.controllerTag});
+
+  final controllerTag;
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return GetBuilder<InfiniteScrollController>(
+      tag: controllerTag,
       builder: (controller) => MasonryGridView.builder(
         shrinkWrap: true,
         physics: BouncingScrollPhysics(),
