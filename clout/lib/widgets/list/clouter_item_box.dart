@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 // screens
-import 'package:clout/screens/clouter/clouter_detail.dart';
+import 'package:clout/screens/detail/clouter/clouter_detail.dart';
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
