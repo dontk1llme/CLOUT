@@ -49,7 +49,7 @@ public class PointController {
     /**
      * 출금
      */
-    @PostMapping("/withdraw")
+    @PostMapping("/withdrawal")
     public ResponseEntity<Void> withdraw(
         @RequestBody WithdrawPointRequest request
     ) {
