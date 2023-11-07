@@ -25,17 +25,17 @@ import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 import 'package:get/get.dart';
 
-Future<Campaign> fetchCampaign() async {
-  final response = await http
-      .get(Uri.parse('http://70.12.247.35:8889/v1/advertisements/top10'));
+// Future<Campaign> fetchCampaign() async {
+//   final response = await http
+//       .get(Uri.parse('http://70.12.247.35:8889/v1/advertisements/top10'));
 
-  if (response.statusCode == 200) {
-    print('👻✨ response body: ${response.body}');
-    return Campaign.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('캠페인 불러오기 실패 💨');
-  }
-}
+//   if (response.statusCode == 200) {
+//     print('👻✨ response body: ${response.body}');
+//     return Campaign.fromJson(jsonDecode(response.body));
+//   } else {
+//     throw Exception('캠페인 불러오기 실패 💨');
+//   }
+// }
 
 // 클라우터 api는 나오는대로...
 class Clouter {
@@ -66,12 +66,12 @@ class _HomeState extends State<Home> {
   late Future<Campaign> futureCampaign;
   // late Future<Clouter> futureClouter;
 
-  @override
-  void initState() {
-    super.initState();
-    futureCampaign = fetchCampaign();
-    // futureClouter = fetchClouter();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   futureCampaign = fetchCampaign();
+  //   // futureClouter = fetchClouter();
+  // }
 
   List<String> imgList = [
     'assets/images/main_carousel_1.jpg',
@@ -324,32 +324,32 @@ class _HomeState extends State<Home> {
                       )
                     ],
                   ),
-                  Container(
-                      color: style.colors['main3'],
-                      height: 10,
-                      child: FutureBuilder<Campaign>(
-                        future: futureCampaign,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return CampaignItemBox(
-                              category: snapshot.data!.adCategory,
-                              productName: snapshot.data!.title,
-                              pay: snapshot.data!.price,
-                              campaignSubject: snapshot.data!.companyName,
-                              applicantCount:
-                                  snapshot.data!.numberOfSelectedMembers,
-                              recruitCount: snapshot.data!.numberOfRecruiter,
-                              selectedPlatform: snapshot.data!.adPlatformList,
-                              starRating: snapshot.data!.advertiserAvgstar,
-                              firstImg:
-                                  'images/assets/itemImage.jpg', // 💥 사진 수정하기
-                            );
-                          } else if (snapshot.hasError) {
-                            return Text('⛔ 캠페인 아이템 에러!! : ${snapshot.error}');
-                          }
-                          return const CircularProgressIndicator();
-                        },
-                      )),
+                  // Container(
+                  //     color: style.colors['main3'],
+                  //     height: 10,
+                  //     child: FutureBuilder<Campaign>(
+                  //       future: futureCampaign,
+                  //       builder: (context, snapshot) {
+                  //         if (snapshot.hasData) {
+                  //           return CampaignItemBox(
+                  //             category: snapshot.data!.adCategory,
+                  //             productName: snapshot.data!.title,
+                  //             pay: snapshot.data!.price,
+                  //             campaignSubject: snapshot.data!.companyName,
+                  //             applicantCount:
+                  //                 snapshot.data!.numberOfSelectedMembers,
+                  //             recruitCount: snapshot.data!.numberOfRecruiter,
+                  //             selectedPlatform: snapshot.data!.adPlatformList,
+                  //             starRating: snapshot.data!.advertiserAvgstar,
+                  //             firstImg:
+                  //                 'images/assets/itemImage.jpg', // 💥 사진 수정하기
+                  //           );
+                  //         } else if (snapshot.hasError) {
+                  //           return Text('⛔ 캠페인 아이템 에러!! : ${snapshot.error}');
+                  //         }
+                  //         return const CircularProgressIndicator();
+                  //       },
+                  //     )),
                   // Column(
                   //   children: [
                   //     MenuTitle(text: '인기있는 캠페인', destination: 2),

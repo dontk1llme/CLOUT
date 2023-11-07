@@ -1,4 +1,3 @@
-import 'package:clout/screens/clouter/clouter_infinite_scroll_body.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -7,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
 
 // widgets
+import 'package:clout/screens/clouter/clouter_infinite_scroll_body.dart';
 import 'package:clout/widgets/list/category_list.dart';
-import 'package:clout/widgets/list/clouter_item_box.dart';
 import 'package:clout/widgets/input/search_bar.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
@@ -28,13 +27,13 @@ class ClouterList extends GetView<InfiniteScrollController> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     infiniteController.setEndPoint('/clouters');
+    infiniteController.setParameter('search...'); // 💥 search condition 추가하기
     infiniteController.toggleData(true);
     return GetBuilder<InfiniteScrollController>(
         tag: 'clouterList',
         builder: (controller) => Scaffold(
             drawer: MyDrawer(),
-            backgroundColor:
-                style.colors['white'], // 기본 backgroundColor 밝은 회색이길래 넣은 코드
+            backgroundColor: style.colors['white'],
             appBar: PreferredSize(
                 preferredSize: Size.fromHeight(70),
                 child: Header(

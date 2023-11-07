@@ -24,7 +24,9 @@ class CampaignList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    infiniteController.setEndPoint('/');
+    infiniteController.setEndPoint('/advertisements');
+    infiniteController.setParameter(
+        '/search?...&&page=${infiniteController.currentPage}&&size=${10}'); // 💥 search condition 추가하기
     final screenWidth = MediaQuery.of(context).size.width;
     infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
