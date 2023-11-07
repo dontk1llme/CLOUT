@@ -10,9 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class GetTop10CampainListResponse {
 
-//    private ImageResponse imageResponse;
     private List<CampaignReaderResponse> top10CampaignList;
-
 
 
 

@@ -11,7 +11,6 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.response.G
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetTop10CampainListResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
-import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -82,7 +81,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
      */
 
     @GetMapping("/{advertisementId}")
-    public ResponseEntity<GetCampaignAndAdvertiserResponse> getCampaign(
+    public ResponseEntity<GetCampaignAndAdvertiserResponse> getCampaignDetails(
         @PathVariable Long advertisementId
     ) {
         GetCampaignAndAdvertiserResponse result = GetCampaignAndAdvertiserResponse.from(
