@@ -12,6 +12,14 @@ class Address {
         'mainAddress': mainAddress,
         'detailAddress': detailAddress,
       };
+
+  factory Address.fromJson(Map<String, dynamic> json) {
+    return Address(
+      json['zipCode'],
+      json['mainAddress'],
+      json['detailAddress'],
+    );
+  }
 }
 
 class CompanyInfo {
@@ -31,6 +39,16 @@ class CompanyInfo {
         'managerName': managerName,
         'managerPhoneNumber': managerPhoneNumber,
       };
+
+  factory CompanyInfo.fromJson(Map<String, dynamic> json) {
+    return CompanyInfo(
+      json['companyName'],
+      json['regNum'],
+      json['ceoName'],
+      json['managerName'],
+      json['managerPhoneNumber'],
+    );
+  }
 }
 
 class Advertiser {
@@ -157,44 +175,44 @@ class Login{
 }
 
 class Campaign {
-  int campaignId;
-  String adCategory;
-  String title;
-  String price;
-  String details;
-  String companyName;
-  int numberOfSelectedMembers;
-  int numberOfRecruiter;
-  int numberOfApplicants;
-  List<String> adPlatformList;
-  int advertiserAvgstar;
-  String deletedAt;
-  bool isPriceChangeable;
-  bool isDeliveryRequired;
-  String offeringDetails;
-  String sellingLink;
-  String applyStartDate;
-  String applyEndDate;
-  int minClouterAge;
-  int maxClouterAge;
-  int minFollower;
+  int? campaignId;
+  List<String>? adPlatformList;
+  int? price;
+  String? details;
+  String? deletedAt;
+  String? title;
+  String? adCategory;
+  bool? isPriceChangeable;
+  bool? isDeliveryRequired;
+  int? numberOfRecruiter;
+  int? numberOfApplicants;
+  int? numberOfSelectedMembers;
+  String? offeringDetails;
+  String? sellingLink;
+  String? applyStartDate;
+  String? applyEndDate;
+  int? minClouterAge;
+  int? maxClouterAge;
+  int? minFollower;
+  CompanyInfo? companyInfo;
+  Address? address;
+  AdvertiserInfo? advertiserInfo;
+
   // String firstImg = 'assets/images/itemImage.jpg';
 
   Campaign({
     required this.campaignId,
-    required this.adCategory,
-    required this.title,
+    required this.adPlatformList,
     required this.price,
     required this.details,
-    required this.companyName,
-    required this.numberOfSelectedMembers,
-    required this.numberOfRecruiter,
-    required this.numberOfApplicants,
-    required this.adPlatformList,
-    required this.advertiserAvgstar,
     required this.deletedAt,
+    required this.title,
+    required this.adCategory,
     required this.isPriceChangeable,
     required this.isDeliveryRequired,
+    required this.numberOfRecruiter,
+    required this.numberOfApplicants,
+    required this.numberOfSelectedMembers,
     required this.offeringDetails,
     required this.sellingLink,
     required this.applyStartDate,
@@ -202,25 +220,28 @@ class Campaign {
     required this.minClouterAge,
     required this.maxClouterAge,
     required this.minFollower,
+    required this.companyInfo,
+    required this.address,
+    required this.advertiserInfo,
     // required this.firstImg,
   });
 
   factory Campaign.fromJson(Map<String, dynamic> json) {
     return Campaign(
       campaignId: json['campaignId'],
-      adCategory: json['adCategory'],
-      title: json['title'],
+      adPlatformList: json['adPlatformList'] != null
+          ? List<String>.from(json['adPlatformList'])
+          : null,
       price: json['price'],
       details: json['details'],
-      companyName: json['companyName'],
-      numberOfSelectedMembers: json['numberOfSelectedMembers'],
-      numberOfRecruiter: json['numberOfRecruiter'],
-      numberOfApplicants: json['numberOfApplicants'],
-      adPlatformList: json['adPlatformList'],
-      advertiserAvgstar: json['advertiserAvgstar'],
       deletedAt: json['deletedAt'],
+      title: json['title'],
+      adCategory: json['adCategory'],
       isPriceChangeable: json['isPriceChangeable'],
       isDeliveryRequired: json['isDeliveryRequired'],
+      numberOfRecruiter: json['numberOfRecruiter'],
+      numberOfApplicants: json['numberOfApplicants'],
+      numberOfSelectedMembers: json['numberOfSelectedMembers'],
       offeringDetails: json['offeringDetails'],
       sellingLink: json['sellingLink'],
       applyStartDate: json['applyStartDate'],
@@ -228,7 +249,56 @@ class Campaign {
       minClouterAge: json['minClouterAge'],
       maxClouterAge: json['maxClouterAge'],
       minFollower: json['minFollower'],
-      // firstImg: json['firstImg'],
+      companyInfo: json['companyInfo'] != null
+          ? CompanyInfo.fromJson(json['companyInfo'])
+          : null,
+      address:
+          json['address'] != null ? Address.fromJson(json['address']) : null,
+      advertiserInfo: json['advertiserInfo'] != null
+          ? AdvertiserInfo.fromJson(json['advertiserInfo'])
+          : null,
+    );
+  }
+}
+
+class AdvertiserInfo {
+  int? advertiserId;
+  String? userId;
+  int? totalPoint;
+  String? role;
+  int? advertiserAvgStar;
+  Address? address;
+  CompanyInfo? companyInfo;
+
+  AdvertiserInfo(
+    this.advertiserId,
+    this.userId,
+    this.totalPoint,
+    this.role,
+    this.advertiserAvgStar,
+    this.address,
+    this.companyInfo,
+  );
+
+  Map<String, dynamic> toJson() => {
+        'advertiserId': advertiserId,
+        'userId': userId,
+        'totalPoint': totalPoint,
+        'role': role,
+        'advertiserAvgStar': advertiserAvgStar,
+        'address': address,
+        'companyInfo': companyInfo,
+      };
+
+  factory AdvertiserInfo.fromJson(Map<String, dynamic> json) {
+    return AdvertiserInfo(
+      json['advertiserId'],
+      json['userId'],
+      json['totalPoint'],
+      json['role'],
+      json['advertiserAvgStar'],
+      json['address'],
+      json['companyInfo'],
     );
   }
 }
