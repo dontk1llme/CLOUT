@@ -33,7 +33,7 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
           if (index < controller.data.length / 2 &&
               controller.data.isNotEmpty) {
             final campaign1 = controller.data[2 * index];
-            // final campaign2 = controller.data[2 * index + 1];
+            final campaign2 = controller.data[2 * index + 1];
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -44,30 +44,28 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
                     adCategory: campaign1.adCategory!,
                     title: campaign1.title!,
                     price: campaign1.price!,
-                    companyInfo: campaign1.companyInfo!.companyName!,
+                    companyInfo: campaign1.companyInfo!,
                     numberOfSelectedMembers: campaign1.numberOfSelectedMembers!,
                     numberOfRecruiter: campaign1.numberOfRecruiter!,
                     adPlatformList: campaign1.adPlatformList!,
-                    advertiserInfo:
-                        campaign1.advertiserInfo!.advertiserAvgStar!,
+                    advertiserInfo: campaign1.advertiserInfo!,
                     firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.all(10),
-                //   child: CampaignItemBox(
-                //     adCategory: campaign2.adCategory!,
-                //     title: campaign2.title!,
-                //     price: campaign2.price!,
-                //     companyInfo: campaign2.companyInfo!.companyName!,
-                //     numberOfSelectedMembers: campaign2.numberOfSelectedMembers!,
-                //     numberOfRecruiter: campaign2.numberOfRecruiter!,
-                //     adPlatformList: campaign2.adPlatformList!,
-                //     advertiserInfo:
-                //         campaign2.advertiserInfo!.advertiserAvgStar!,
-                //     firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
-                //   ),
-                // ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CampaignItemBox(
+                    adCategory: campaign2.adCategory!,
+                    title: campaign2.title!,
+                    price: campaign2.price!,
+                    companyInfo: campaign2.companyInfo!,
+                    numberOfSelectedMembers: campaign2.numberOfSelectedMembers!,
+                    numberOfRecruiter: campaign2.numberOfRecruiter!,
+                    adPlatformList: campaign2.adPlatformList!,
+                    advertiserInfo: campaign2.advertiserInfo!,
+                    firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
+                  ),
+                ),
               ],
             );
           }

@@ -21,7 +21,7 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
   Widget build(BuildContext context) {
     infiniteController.setEndPoint('/v1/advertisements/advertisements');
     infiniteController.setParameter(
-        '?advertiserId=${userController.userId}&&page=${infiniteController.currentPage}&&size=${10}');
+        '?advertiserId=${userController.userId}&page=${infiniteController.currentPage}&size=${10}');
     infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
       tag: 'advertiserMyCampaign',
