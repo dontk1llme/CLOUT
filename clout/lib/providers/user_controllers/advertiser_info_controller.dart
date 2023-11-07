@@ -1,4 +1,5 @@
 import 'package:clout/providers/address_controller.dart';
+import 'package:clout/providers/four_digits_input_controller.dart';
 import 'package:clout/providers/user_controllers/advertiser_controller.dart';
 import 'package:clout/type.dart';
 import 'package:get/get.dart';
@@ -20,9 +21,14 @@ class AdvertiserInfoController extends GetxController {
   final advertiserController = Get.find<AdvertiserController>();
 
   var addressController;
+  var fourDigitsInputController;
   runOtherControllers() {
     addressController = Get.put(
       AddressController(),
+      tag: advertiserController.controllerTag,
+    );
+    fourDigitsInputController = Get.put(
+      FourDigitsInputController(),
       tag: advertiserController.controllerTag,
     );
   }
@@ -102,7 +108,7 @@ class AdvertiserInfoController extends GetxController {
     if (businessNumber == null || businessNumber.length == 0) {
       return '사업자등록번호를 입력해주세요 📃';
     }
-    if (businessNumber.length != 10) {
+    if (businessNumber.length != 12) {
       return '사업자등록번호를 확인해주세요 📃';
     }
     if (addressController.zipCode == null ||
@@ -124,9 +130,14 @@ class AdvertiserInfoController extends GetxController {
       return '담당자 휴대전화 번호를 입력해주세요 📱';
     }
     // 휴대전화 인증 여부
-
     if (id == null || id.length == 0) {
       return '아이디를 입력해주세요 📃';
+    }
+    if (doubleId == 1) {
+      return '아이디 중복을 확인해주세요';
+    }
+    if (doubleId == 0) {
+      return '중복된 아이디입니다 😥';
     }
     if (id.length < 5 || id.length > 15) {
       return '아이디는 5자 ~ 15자로 입력해주세요';

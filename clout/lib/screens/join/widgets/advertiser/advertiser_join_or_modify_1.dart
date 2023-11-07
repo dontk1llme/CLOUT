@@ -1,3 +1,4 @@
+import 'package:clout/hooks/reg_numaber_formatter.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/widgets/input/address_input.dart';
@@ -45,12 +46,15 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
           SizedBox(height: 10),
           JoinInput(
             keyboardType: TextInputType.number,
-            maxLength: 10,
+            maxLength: 12,
             title: '사업자등록번호 입력',
             label: '사업자등록번호',
             setState: controller.setBusinessNumber,
             enabled: true,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              RegNumberFormatter(),
+            ],
           ),
           SizedBox(height: 10),
           AddressInput(controllerTag: controllerTag),
