@@ -16,7 +16,7 @@ public class ChannelCommand {
 
     private String link;
 
-    private FollowerScale followerScale;
+    private Long followerScale;
 
     public Channel toValueType() {
         return new Channel(

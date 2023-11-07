@@ -59,4 +59,9 @@ public class ClouterController implements ClouterControllerDocs {
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return new ResponseEntity<>("ok", HttpStatus.OK);
+    }
 }
