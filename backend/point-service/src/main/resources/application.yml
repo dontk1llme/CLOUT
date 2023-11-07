@@ -2,7 +2,7 @@ spring:
   application:
     name: advertisement-service
   datasource:
-    url: jdbc:mariadb://3.35.132.84:3306/point
+    url: jdbc:mariadb://3.35.132.84:3306/pointdb
     driver-class-name: org.mariadb.jdbc.Driver
     username: clout
     password: zmffkdnxj409!
