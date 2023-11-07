@@ -42,6 +42,7 @@ String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
 getRequest(endPoint, parameter) async {
   var url = Uri.parse('${baseUrl}${endPoint}${parameter}');
+  print('2️⃣');
   print(url);
   print(json.encode(parameter));
   final response = await http.get(
@@ -49,11 +50,11 @@ getRequest(endPoint, parameter) async {
     headers: {"Content-Type": "application/json"},
   );
 
+  print('3️⃣');
   if (response.statusCode == 200) {
     print(
         '👻✨ response body: ${response.body} // 👉 infinite_scroll_controller.dart');
   }
-  print('뿌에에에엥 🎉 infinite_scroll_controller.dart');
   return response.body;
 }
 
@@ -105,33 +106,35 @@ class InfiniteScrollController extends GetxController {
 
     int offset = data.length;
 
+    print('4️⃣');
     var response = await getRequest(endPoint, parameter);
     print('여기까지 오나요? 👉 infinite_scroll_controller.dart');
-    print(response);
     var campaignData = Campaign.fromJson(json.decode(response));
+    print('5️⃣');
+    print(response);
 
     var campaignItemBox = CampaignItemBox(
       adCategory: campaignData.adCategory ?? "",
-      details: campaignData.details ?? "제목없음", // 💥 나중에 title로 바꾸기
+      title: campaignData.title ?? "제목없음",
       price: campaignData.price ?? 0,
       companyInfo: CompanyInfo(
-        campaignData.companyInfo!.companyName,
-        campaignData.companyInfo!.regNum,
-        campaignData.companyInfo!.ceoName,
-        campaignData.companyInfo!.managerName,
-        campaignData.companyInfo!.managerPhoneNumber,
+        campaignData.companyInfo?.companyName,
+        campaignData.companyInfo?.regNum,
+        campaignData.companyInfo?.ceoName,
+        campaignData.companyInfo?.managerName,
+        campaignData.companyInfo?.managerPhoneNumber,
       ),
       numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
       numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
       adPlatformList: campaignData.adPlatformList ?? [],
       advertiserInfo: AdvertiserInfo(
-        campaignData.advertiserInfo!.advertiserId,
-        campaignData.advertiserInfo!.userId,
-        campaignData.advertiserInfo!.totalPoint,
-        campaignData.advertiserInfo!.role,
-        campaignData.advertiserInfo!.advertiserAvgStar,
-        campaignData.advertiserInfo!.address,
-        campaignData.advertiserInfo!.companyInfo,
+        campaignData.advertiserInfo?.advertiserId,
+        campaignData.advertiserInfo?.userId,
+        campaignData.advertiserInfo?.totalPoint,
+        campaignData.advertiserInfo?.role,
+        campaignData.advertiserInfo?.advertiserAvgStar,
+        campaignData.advertiserInfo?.address,
+        campaignData.advertiserInfo?.companyInfo,
       ),
       firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
     );
