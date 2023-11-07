@@ -3,7 +3,7 @@ import 'package:clout/widgets/pay_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
-import 'package:clout/screens/join/widgets/clouter/category_toggle.dart';
+import 'package:clout/screens/register_or_modify/clouter/widgets/category_toggle.dart';
 import 'package:clout/widgets/region_multiselect.dart';
 
 class ClouterJoinOrModify4 extends StatelessWidget {

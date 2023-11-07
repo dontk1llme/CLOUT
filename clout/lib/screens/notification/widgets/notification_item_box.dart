@@ -1,5 +1,5 @@
 import 'package:clout/screens/list/campaign/campaign_list.dart';
-import 'package:clout/screens/contract/widgets/contract_button.dart';
+import 'package:clout/screens/contract_list/widgets/contract_button.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
