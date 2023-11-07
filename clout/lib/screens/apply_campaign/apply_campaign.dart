@@ -1,6 +1,6 @@
 import 'package:clout/providers/campaign_apply_controller.dart';
-import 'package:clout/screens/campaign_register/widgets/pay_dialog.dart';
-import 'package:clout/screens/join/widgets/big_button.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/pay_dialog.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/input/input_elements/widgets/text_input.dart';

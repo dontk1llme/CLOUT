@@ -8,8 +8,8 @@ import 'package:clout/style.dart' as style;
 
 // widgets
 import 'package:clout/widgets/sns/platform_toggle.dart';
-import 'package:clout/screens/campaign_register/widgets/age_slider.dart';
-import 'package:clout/screens/campaign_register/widgets/region_multiselect.dart';
+import 'package:clout/widgets/age_slider.dart';
+import 'package:clout/widgets/region_multiselect.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 
 // Screens
