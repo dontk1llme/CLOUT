@@ -24,8 +24,9 @@ spring:
       ddl-auto: update
   data:
     redis:
-      host: localhost
+      host: 3.38.213.43
       port: 6379
+      password: BboBpf1zv}5.lE)a&C[5=L_{^xQ!Y.u#itKO.]5g5rmXC!,BGe
 
 eureka:
   instance:
@@ -34,7 +35,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: https://eureka.clouter.kr/eureka
+      defaultZone: http://localhost:8761/eureka
 
 jwt:
   secret: VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4=VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4=

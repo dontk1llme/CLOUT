@@ -7,6 +7,7 @@ import com.mmm.clout.advertisementservice.apply.presentation.response.ApplicantR
 import com.mmm.clout.advertisementservice.apply.presentation.response.ApplyMessageResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.CreateApplyResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.GetAllByStatusResponse;
+import com.mmm.clout.advertisementservice.common.docs.ApplyControllerDocs;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/applies")
 @RequiredArgsConstructor
-public class ApplyController {
+public class ApplyController implements ApplyControllerDocs {
 
     private final ApplyFacade applyFacade;
 
