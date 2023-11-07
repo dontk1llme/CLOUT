@@ -6,6 +6,7 @@ import com.mmm.clout.memberservice.clouter.presentation.request.CreateClrRequest
 import com.mmm.clout.memberservice.clouter.presentation.request.UpdateClrRequest;
 import com.mmm.clout.memberservice.clouter.presentation.response.CreateClrResponse;
 import com.mmm.clout.memberservice.clouter.presentation.response.SelectClrResponse;
+import com.mmm.clout.memberservice.clouter.presentation.response.SelectTop10Response;
 import com.mmm.clout.memberservice.clouter.presentation.response.UpdateClrResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class ClouterController implements ClouterControllerDocs {
     }
 
     @GetMapping("/{clouterId}")
-    public ResponseEntity<SelectClrResponse> select(
+    public ResponseEntity<SelectClrResponse> selectClouter(
             @PathVariable("clouterId") Long clouterId
     ) {
         SelectClrResponse result = SelectClrResponse.from(
@@ -51,4 +52,16 @@ public class ClouterController implements ClouterControllerDocs {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/top10")
+    public ResponseEntity<SelectTop10Response> getClouterTop10() {
+        SelectTop10Response response = SelectTop10Response.from(
+            clouterFacade.selectTop10()
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return new ResponseEntity<>("ok", HttpStatus.OK);
+    }
 }

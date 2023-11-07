@@ -4,6 +4,7 @@ import com.mmm.clout.memberservice.clouter.presentation.request.CreateClrRequest
 import com.mmm.clout.memberservice.clouter.presentation.request.UpdateClrRequest;
 import com.mmm.clout.memberservice.clouter.presentation.response.CreateClrResponse;
 import com.mmm.clout.memberservice.clouter.presentation.response.SelectClrResponse;
+import com.mmm.clout.memberservice.clouter.presentation.response.SelectTop10Response;
 import com.mmm.clout.memberservice.clouter.presentation.response.UpdateClrResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -72,7 +73,26 @@ public interface ClouterControllerDocs {
                 schema=@Schema(implementation=SelectClrResponse.class))
         )
     )
-    public ResponseEntity<SelectClrResponse> select(
+    public ResponseEntity<SelectClrResponse> selectClouter(
         @PathVariable("clouterId") Long clouterId
     );
+
+    @Operation(summary = "클라우터 top10 조회",
+        parameters = {
+            @Parameter(
+                in = ParameterIn.HEADER,
+                name = "Authorization",
+                required = true,
+                schema = @Schema(type = "string"),
+                description = "인증 토큰"
+            )
+        },
+        responses =
+        @ApiResponse(responseCode = "200", description = "클라우터 top10 리스트 리턴",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation=SelectTop10Response.class))
+        )
+    )
+    public ResponseEntity<SelectTop10Response> getClouterTop10();
 }

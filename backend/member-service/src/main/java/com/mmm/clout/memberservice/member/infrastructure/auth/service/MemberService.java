@@ -5,6 +5,8 @@ import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.MemberDTO;
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.RequestMemberDto;
 import com.mmm.clout.memberservice.member.infrastructure.auth.exception.NoMatchPasswordException;
+import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
+import com.mmm.clout.memberservice.star.domain.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,13 +39,10 @@ public class MemberService {
     }
 
     @Transactional
-    public void updateUser(RequestMemberDto dto) {
-        Member member = this.memberRepository.findByUserId(dto.getUserId()).get();
-        if(encoder.matches(dto.getOldPassword(), member.getPwd())) {
-            member.passwordUpdate(encoder.encode(dto.getNewPassword()));
-        } else {
-            throw new NoMatchPasswordException("이전 비밀번호가 일치하지 않습니다.");
-        }
+    public Member updateUserPassword(PwdUpdateRequst request) {
+        Member findMember = memberRepository.findById(request.getId()).orElseThrow(NotFoundMemberException::new);
+        findMember.changePwd(encoder.encode(request.getPwd()));
+        return findMember;
     }
 
     public List<MemberDTO> getUsers() {

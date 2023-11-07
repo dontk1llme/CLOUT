@@ -74,7 +74,7 @@ public interface AdvertiserControllerDocs {
                 schema=@Schema(implementation=SelectAdrResponse.class))
         )
     )
-    public ResponseEntity<SelectAdrResponse> select(
+    public ResponseEntity<SelectAdrResponse> selectAdvertiser(
         @PathVariable("advertiserId") Long advertiserId
     );
 }

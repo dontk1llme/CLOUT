@@ -10,11 +10,9 @@ public class HopeCostCommand {
 
     private Long minCost;
 
-    private Long maxCost;
-
     public HopeCost toValueType() {
         return new HopeCost(
-            this.minCost,
-            this.maxCost);
+            this.minCost
+        );
     }
 }

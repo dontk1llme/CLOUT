@@ -17,7 +17,6 @@ public class HopeCostReader {
 
     public HopeCostReader(HopeCost hopeCost) {
         this.minCost = hopeCost.getMinCost();
-        this.maxCost = hopeCost.getMaxCost();
     }
 
 }
