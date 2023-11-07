@@ -14,7 +14,7 @@ import 'package:clout/widgets/sns/sns2.dart';
 
 class CampaignItemBox extends StatefulWidget {
   final String adCategory;
-  final String details; // 💥 title로 바꾸기
+  final String title;
   final int price;
   final CompanyInfo companyInfo;
   final int numberOfSelectedMembers;
@@ -26,7 +26,7 @@ class CampaignItemBox extends StatefulWidget {
   const CampaignItemBox({
     super.key,
     required this.adCategory,
-    required this.details,
+    required this.title,
     required this.price,
     required this.companyInfo,
     required this.numberOfSelectedMembers,
@@ -110,7 +110,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                       )),
                 ],
               ),
-              Text(widget.details,
+              Text(widget.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -130,7 +130,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 children: [
                   Flexible(
                     flex: 2,
-                    child: Text(widget.companyInfo.companyName,
+                    child: Text(widget.companyInfo.companyName!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

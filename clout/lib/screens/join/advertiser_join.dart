@@ -19,7 +19,7 @@ class AdvertiserJoin extends StatefulWidget {
 }
 
 class _AdvertiserJoinState extends State<AdvertiserJoin> {
-  int pageNum = 2;
+  int pageNum = 1;
   double percent = 1 / 2;
 
   final advertiserController = Get.put(AdvertiserController());

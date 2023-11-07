@@ -155,13 +155,32 @@ class Clouter {
       };
 }
 
-// 💥 다정이가 title 추가하면 확인 후 추가하기
+class Login{
+  // int user; //??
+  String userId;
+  String password;
+
+  Login(
+    // this.user,
+    this.userId,
+    this.password
+  );
+
+  Map<String, dynamic> toJson() => {
+    // 'user' : user,
+    'userId' : userId,
+    'password' : password
+  };
+
+}
+
 class Campaign {
   int? campaignId;
   List<String>? adPlatformList;
   int? price;
   String? details;
   String? deletedAt;
+  String? title;
   String? adCategory;
   bool? isPriceChangeable;
   bool? isDeliveryRequired;
@@ -187,6 +206,7 @@ class Campaign {
     required this.price,
     required this.details,
     required this.deletedAt,
+    required this.title,
     required this.adCategory,
     required this.isPriceChangeable,
     required this.isDeliveryRequired,
@@ -215,6 +235,7 @@ class Campaign {
       price: json['price'],
       details: json['details'],
       deletedAt: json['deletedAt'],
+      title: json['title'],
       adCategory: json['adCategory'],
       isPriceChangeable: json['isPriceChangeable'],
       isDeliveryRequired: json['isDeliveryRequired'],
