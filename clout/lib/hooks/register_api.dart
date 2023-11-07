@@ -23,10 +23,10 @@ class RegisterApi {
 
     // var returnVal = {statusCode, headers, body};
 
-    // // return returnVal;
-    // print('상태코드');
-    // print(statusCode);
-    // print('response 헤더');
+    // return returnVal;
+    print('상태코드');
+    print(statusCode);
+    print('response 헤더');
     // print(headers);
     // print('response 바디');
     // print(body);
@@ -45,7 +45,10 @@ class RegisterApi {
       url,
       headers: {"Content-Type": "application/json"},
     );
-    print('여기까지 내려오나?');
-    return response.body;
+    var statusCode = response.statusCode;
+    var body = utf8.decode(response.bodyBytes);
+    var returnVal = [statusCode, body];
+
+    return returnVal;
   }
 }

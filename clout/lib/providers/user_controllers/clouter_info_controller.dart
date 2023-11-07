@@ -20,7 +20,9 @@ class ClouterInfoController extends GetxController {
   var nickName;
   var images;
   List<bool> selections = List.generate(12, (index) => false);
+  var doubleId = 1;
   var obscured = true;
+  var phoneNumberVerified;
 
   var clouter;
 
@@ -163,6 +165,25 @@ class ClouterInfoController extends GetxController {
       selections[0] = false;
       selections[index] = !selections[index];
     }
+    update();
+  }
+
+  setDoubleId(input) {
+    //defulat 1
+    //가능하면 2
+    //중복이면 3
+    //지금은 편의상 중복 아니라고 함
+    doubleId = input;
+    update();
+  }
+
+  setObscured() {
+    obscured = !obscured;
+    update();
+  }
+
+  setPhoneNumberVerified(input) {
+    phoneNumberVerified = input;
     update();
   }
 

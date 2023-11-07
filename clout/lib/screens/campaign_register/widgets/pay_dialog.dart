@@ -1,5 +1,5 @@
 import 'package:clout/providers/fee_controller.dart';
-import 'package:clout/widgets/input/input_elements/utilities/numeric_range_formatter.dart';
+import 'package:clout/hooks/numeric_range_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:flutter/services.dart';
