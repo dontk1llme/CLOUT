@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "member-service")
 public interface MemberFeignClient {
 
-    @GetMapping("/advertisers/{advertiserId}")
+    @GetMapping("/v1/advertisers/{advertiserId}")
     AdvertiserInfo selectAdvertiser(@PathVariable Long advertiserId);
 
-    @GetMapping("/clouters/{clouterId}")
+    @GetMapping("/v1/clouters/{clouterId}")
     ClouterInfo selectClouter(Long clouterId);
 }

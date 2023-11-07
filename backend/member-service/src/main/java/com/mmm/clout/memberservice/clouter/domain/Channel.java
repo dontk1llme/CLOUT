@@ -24,5 +24,5 @@ public class Channel {
     @Column(length = 600)
     private String link;
 
-    private FollowerScale followerScale;
+    private Long followerScale;
 }

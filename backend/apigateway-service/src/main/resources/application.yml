@@ -5,7 +5,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: https://eureka.clouter.kr/eureka
+      defaultZone: http://localhost:8761/eureka
 
 spring:
   application:
@@ -36,7 +36,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+        #            - AuthorizationHeaderFilter
         # 클라우터 api
         - id: member-service
           uri: lb://MEMBER-SERVICE
@@ -45,7 +45,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+        #            - AuthorizationHeaderFilter
         # Image api
         - id: image-service
           uri: lb://IMAGE-SERVICE
