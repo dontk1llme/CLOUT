@@ -4,8 +4,6 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.request.Cr
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
-import com.mmm.clout.advertisementservice.advertisements.persentation.response.EndedCampaignResponse;
-import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampainListByAdvertiserResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,10 +15,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
 
-@Tag(name = "광고 api", description = "광고 관련 api")
-public interface AdvertisementControllerDocs {
+@Tag(name = "캠페인 모집 신청 api", description = "캠페인 모집 신청 관련 api")
+public interface ApplyControllerDocs {
 
-    @Operation(summary = "광고 캠페인 등록",
+    /*
+    @Operation(summary = "신청",
         description = "등록자(광고주)id와 캠페인에 필요한 필드를 받아 캠페인 등록합니다.",
         parameters = {
             @Parameter(
@@ -101,78 +100,5 @@ public interface AdvertisementControllerDocs {
         Long advertisementId
     );
 
-    @Operation(summary = "광고주 자신이 올린 광고 목록 조회 (최신순)",
-        description = "광고주가 본인이 등록한 광고 캠페인 목록을 조회합니다.",
-        parameters = {
-            @Parameter(
-                in = ParameterIn.HEADER,
-                name = "Authorization",
-                required = true,
-                schema = @Schema(type = "string"),
-                description = "인증 토큰"
-            ),
-            @Parameter(
-                in = ParameterIn.QUERY,
-                name = "advertisementId",
-                required = true,
-                schema = @Schema(type = "long"),
-                description = "광고주의 고유 식별자"
-            ),
-            @Parameter(
-                in = ParameterIn.QUERY,
-                name = "page",
-                required = true,
-                schema = @Schema(type = "int"),
-                description = "페이지 번호 (0부터 시작)"
-            ),
-            @Parameter(
-                in = ParameterIn.QUERY,
-                name = "size",
-                required = true,
-                schema = @Schema(type = "int"),
-                description = "한 페이지당 보여줄 글 갯수"
-            )
-        },
-        responses =
-        @ApiResponse(responseCode = "200", description = "광고주가 올린 광고 목록 조회 성공",
-            content =
-            @Content(mediaType="application/json",
-                schema=@Schema(implementation= GetCampainListByAdvertiserResponse.class))
-        )
-    )
-    ResponseEntity<GetCampainListByAdvertiserResponse> getCampaignsByAdvertisers(
-        Long advertisementId,
-        int page,
-        int size
-    );
-
-    @Operation(summary = "캠페인 모집 종료",
-        description = "광고주가 캠페인 모집을 종료합니다.",
-        parameters = {
-            @Parameter(
-                in = ParameterIn.HEADER,
-                name = "Authorization",
-                required = true,
-                schema = @Schema(type = "string"),
-                description = "인증 토큰"
-            ),
-            @Parameter(
-                in = ParameterIn.PATH,
-                name = "advertisementId",
-                required = true,
-                schema = @Schema(type = "long"),
-                description = "광고 캠페인의 고유 식별자"
-            )
-        },
-        responses =
-        @ApiResponse(responseCode = "200", description = "광고 캠페인 모집 종료 처리 성공",
-            content =
-            @Content(mediaType="application/json",
-                schema=@Schema(implementation= EndedCampaignResponse.class))
-        )
-    )
-    ResponseEntity<EndedCampaignResponse> endCampaign(
-        Long advertisementId
-    );
-
+     */
 }
