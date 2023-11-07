@@ -8,10 +8,10 @@ spring:
     import: secret/application-secret.yml
 
   datasource:
-    url: jdbc:mariadb://localhost:3303/test
+    url: jdbc:mariadb://3.38.213.43:3303/imagedb
     driver-class-name: org.mariadb.jdbc.Driver
-    username: root
-    password: 1234
+    username: clout
+    password: zmffkdnxm409!
 
   jpa:
     open-in-view: false
@@ -27,7 +27,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: http://eureka.clouter.kr/eureka
 
 
 logging.level:
