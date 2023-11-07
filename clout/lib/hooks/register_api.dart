@@ -24,17 +24,13 @@ class RegisterApi {
     // var returnVal = {statusCode, headers, body};
 
     // return returnVal;
+    print('post 통신 실행 완료');
     print('상태코드');
     print(statusCode);
-    print('response 헤더');
-    // print(headers);
-    // print('response 바디');
-    // print(body);
-    if (statusCode == 201) {
-      return response.body; //{'clouterId'/'advertiserId' : integer}
-    } else {
-      return false;
-    }
+    var body = utf8.decode(response.bodyBytes);
+    var returnVal = [statusCode, body];
+
+    return returnVal;
   }
 
   getRequest(apiUrl, parameter) async {
@@ -45,7 +41,10 @@ class RegisterApi {
       url,
       headers: {"Content-Type": "application/json"},
     );
+    print('get 통신 실행 완료');
+    print('상태코드');
     var statusCode = response.statusCode;
+    print(statusCode);
     var body = utf8.decode(response.bodyBytes);
     var returnVal = [statusCode, body];
 

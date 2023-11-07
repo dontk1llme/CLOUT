@@ -79,6 +79,7 @@ dependencies:
   http: ^1.1.0
   pinput: ^3.0.1
   format: ^1.4.0
+  flutter_animated_icons: ^1.0.1
 
 flutter_icons:
   android: "clout"
