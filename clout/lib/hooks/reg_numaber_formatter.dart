@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-class PhoneNumberFormatter extends TextInputFormatter {
+class RegNumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
@@ -19,7 +19,7 @@ class PhoneNumberFormatter extends TextInputFormatter {
           buffer.write('-'); // Add double spaces.
         }
       } else {
-        if (nonZeroIndex % 7 == 0 &&
+        if (nonZeroIndex % 5 == 0 &&
             nonZeroIndex != text.length &&
             nonZeroIndex > 4) {
           buffer.write('-');

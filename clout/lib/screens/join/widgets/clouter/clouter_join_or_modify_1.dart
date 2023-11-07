@@ -1,3 +1,6 @@
+import 'package:clout/hooks/phone_number_formatter.dart';
+import 'package:clout/hooks/register_api.dart';
+import 'package:clout/providers/four_digits_input_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/widgets/input/address_input.dart';
@@ -17,6 +20,22 @@ class ClouterJoinOrModify1 extends StatelessWidget {
 
   final controllerTag;
   final modifying;
+  final RegisterApi registerApi = RegisterApi();
+
+  verify() async {
+    final clouterRegisterController =
+        Get.find<ClouterInfoController>(tag: controllerTag);
+    var responseBody = await registerApi.getRequest('/v1/members/sendsms',
+        '?phoneNumber=${clouterRegisterController.phoneNumber}');
+    print('인증키 sms 발송');
+    final pinController =
+        Get.find<FourDigitsInputController>(tag: controllerTag);
+    pinController.setCorrectPin(responseBody[1]);
+    print(pinController.correctPin);
+    Get.to(() => NumberVerify(
+        phoneNumber: clouterRegisterController.phoneNumber,
+        controllerTag: controllerTag));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +68,14 @@ class ClouterJoinOrModify1 extends StatelessWidget {
               children: [
                 JoinInput(
                   keyboardType: TextInputType.phone,
-                  maxLength: 11,
+                  maxLength: 13,
                   title: '휴대전화 번호 입력',
                   label: '휴대전화 번호',
                   setState: controller.setPhoneNumber,
                   initialValue: controller.phoneNumber,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
+                    PhoneNumberFormatter(),
                   ],
                   enabled: true,
                 ),
@@ -63,7 +83,7 @@ class ClouterJoinOrModify1 extends StatelessWidget {
                   right: 10,
                   top: 2,
                   child: ElevatedButton(
-                    onPressed: () => Get.to(() => NumberVerify(phoneNumber: controller.phoneNumber,)),
+                    onPressed: verify,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: style.colors['main1'],
                       elevation: 5,

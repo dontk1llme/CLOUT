@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:clout/hooks/phone_number_formatter.dart';
 import 'package:clout/hooks/register_api.dart';
+import 'package:clout/providers/four_digits_input_controller.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/join/number_verify.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
@@ -19,9 +20,9 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
   final advertiserRegisterController =
       Get.find<AdvertiserInfoController>(tag: 'advertiserRegister');
 
-  checkDuplicted() async {
-    final RegisterApi registerApi = RegisterApi();
+  final RegisterApi registerApi = RegisterApi();
 
+  checkDuplicted() async {
     var responseBody = await registerApi.getRequest(
       '/v1/members/duplicate',
       '?userId=${advertiserRegisterController.id}',
@@ -33,6 +34,19 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
     } else {
       advertiserRegisterController.setDoubleId(0);
     }
+  }
+
+  verify() async {
+    var responseBody = await registerApi.getRequest('/v1/members/sendsms',
+        '?phoneNumber=${advertiserRegisterController.phoneNumber}');
+    print('인증키 sms 발송');
+    final pinController =
+        Get.find<FourDigitsInputController>(tag: controllerTag);
+    pinController.setCorrectPin(responseBody[1]);
+    print(pinController.correctPin);
+    Get.to(() => NumberVerify(
+        phoneNumber: advertiserRegisterController.phoneNumber,
+        controllerTag: 'advertiserRegister'));
   }
 
   @override
@@ -68,7 +82,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
             children: [
               JoinInput(
                 keyboardType: TextInputType.phone,
-                maxLength: 11,
+                maxLength: 13,
                 title: '담당자 휴대전화 번호 입력',
                 label: '담당자 휴대전화 번호',
                 setState: controller.setPhoneNumber,
@@ -83,9 +97,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                 right: 10,
                 top: 2,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(NumberVerify(
-                    phoneNumber: controller.phoneNumber,
-                  )),
+                  onPressed: verify,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: style.colors['main1'],
                     elevation: 5,

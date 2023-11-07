@@ -2,6 +2,7 @@ import 'package:clout/providers/address_controller.dart';
 import 'package:clout/providers/date_input_controller.dart';
 import 'package:clout/providers/fee_controller.dart';
 import 'package:clout/providers/follower_controller.dart';
+import 'package:clout/providers/four_digits_input_controller.dart';
 import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/providers/region_controller.dart';
@@ -27,6 +28,7 @@ class ClouterInfoController extends GetxController {
   var clouter;
 
   final clouterController = Get.find<ClouterController>();
+  var fourDigitsInputController;
   var addressController;
   var platformSelectController;
   var followerController;
@@ -36,6 +38,10 @@ class ClouterInfoController extends GetxController {
   var imagePickerController;
 
   runOtherControllers() {
+    fourDigitsInputController = Get.put(
+      FourDigitsInputController(),
+      tag: clouterController.controllerTag,
+    );
     addressController = Get.put(
       AddressController(),
       tag: clouterController.controllerTag,
