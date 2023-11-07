@@ -1,15 +1,20 @@
 package com.mmm.clout.pointservice.point.presentation;
 
+import com.mmm.clout.pointservice.point.application.GetMemberPointProcessor;
 import com.mmm.clout.pointservice.point.application.facade.PointFacade;
 import com.mmm.clout.pointservice.point.presentation.request.ChargePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.ReducePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.WithdrawPointRequest;
+import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -52,4 +57,14 @@ public class PointController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * 유저 포인트 잔액 조회
+     */
+    @GetMapping
+    public ResponseEntity<GetMemberTotalPointResponse> getMemberPoint(
+        @RequestParam Long memberId
+    ) {
+        GetMemberTotalPointResponse result = GetMemberTotalPointResponse.from(pointFacade.getMemberPoint(memberId));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
