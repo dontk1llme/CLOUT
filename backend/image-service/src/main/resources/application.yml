@@ -14,6 +14,10 @@ spring:
     password: zmffkdnxm409!
 
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
     open-in-view: false
     generate-ddl: true
     show-sql: true
