@@ -21,8 +21,8 @@ public class ReadAllApplyProcessor {
     private final MemberProvider advertiserInfoProvider;
 
     @Transactional
-    public List<ApplyListByClouterReader> execute(Long applicantId, ApplyStatus applyStatus) {
-        List<Apply> applyList = applyRepository.getAllByStatus(applicantId, applyStatus);
+    public List<ApplyListByClouterReader> execute(Long applicantId, String applyStatus) {
+        List<Apply> applyList = applyRepository.getAllByStatus(applicantId, ApplyStatus.valueOf(applyStatus));
         List<ApplyListByClouterReader> readerList = new ArrayList<>();
         for (Apply apply: applyList) {
             Long advertiserId = apply.getCampaign().getAdvertiserId();

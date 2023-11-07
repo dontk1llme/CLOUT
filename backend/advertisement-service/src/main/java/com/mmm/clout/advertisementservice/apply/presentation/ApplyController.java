@@ -1,7 +1,6 @@
 package com.mmm.clout.advertisementservice.apply.presentation;
 
 import com.mmm.clout.advertisementservice.apply.application.facade.ApplyFacade;
-import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import com.mmm.clout.advertisementservice.apply.presentation.request.CreateApplyRequest;
 import com.mmm.clout.advertisementservice.apply.presentation.response.ApplicantResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.ApplyMessageResponse;
@@ -49,7 +48,7 @@ public class ApplyController implements ApplyControllerDocs {
     @GetMapping("/clouters")
     public ResponseEntity<GetAllByStatusResponse> getApplyListByStatus(
         @RequestParam Long clouterId,
-        @RequestParam ApplyStatus type
+        @RequestParam String type
     ) {
         GetAllByStatusResponse result = GetAllByStatusResponse.from(
             applyFacade.getAllByApplyStatus(clouterId, type));
