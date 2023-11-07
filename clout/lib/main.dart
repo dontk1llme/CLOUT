@@ -12,7 +12,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // Screens
 import 'screens/landing/landing.dart';
 import 'package:clout/screens/login/login.dart';
-import 'package:clout/screens/join/join.dart';
+import 'package:clout/screens/join_select/join.dart';
 import 'package:clout/screens/main_page/main_page.dart';
 import 'package:clout/screens/notification/notification.dart';
 import 'package:clout/screens/review_register/review_complete.dart';
@@ -27,7 +27,7 @@ import 'package:clout/screens/point/withdraw/withdraw_second.dart';
 import 'package:clout/screens/point/withdraw/withdraw_complete.dart';
 import 'package:clout/screens/campaign_register/campaign_register.dart';
 import 'package:clout/screens/detail/campaign/campaign_detail.dart';
-import 'package:clout/screens/contract/contract_list.dart';
+import 'package:clout/screens/contract_list/contract_list.dart';
 import 'package:clout/binding/app_binding.dart';
 import 'package:clout/screens/mypage/clouter/clouter_likedcampaign.dart';
 import 'package:clout/screens/mypage/clouter/clouter_mycampaign.dart';
