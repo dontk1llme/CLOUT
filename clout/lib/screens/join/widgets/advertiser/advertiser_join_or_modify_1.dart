@@ -1,6 +1,7 @@
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
 import 'package:clout/widgets/input/address_input.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -49,6 +50,7 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
             label: '사업자등록번호',
             setState: controller.setBusinessNumber,
             enabled: true,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
           SizedBox(height: 10),
           AddressInput(controllerTag: controllerTag),

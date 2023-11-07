@@ -1,61 +1,48 @@
+import 'dart:convert';
+
+import 'package:clout/hooks/register_api.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
+import 'package:clout/type.dart';
 import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
-class ClouterJoinOrModify2 extends StatefulWidget {
+class ClouterJoinOrModify2 extends StatelessWidget {
   ClouterJoinOrModify2(
       {super.key, required this.modifying, required this.controllerTag});
   final modifying;
   final controllerTag;
 
-  @override
-  ClouterJoinOrModify2State createState() => ClouterJoinOrModify2State();
-}
+  final clouterRegisterController =
+      Get.find<ClouterInfoController>(tag: 'clouterRegister');
 
-class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
-  var obscured = true;
-  var doubleId = 1;
-  Icon suffixIcon = Icon(
-    Icons.visibility_outlined,
-    color: Colors.grey,
-  );
+  //중복 체크 함수
+  checkDuplicted() async {
+    final RegisterApi registerApi = RegisterApi();
 
-  setDoubleId(input) {
-    setState(() {
-      //없을 때 0
-      //중복이면 1
-      //가능하면 2
-      //지금은 편의상 중복 아니라고 함
-      doubleId = 2;
-      print(doubleId);
-    });
-  }
-
-  setObscured() {
-    setState(() {
-      obscured = !obscured;
-      print(obscured);
-      if (obscured) {
-        suffixIcon = Icon(
-          Icons.visibility_outlined,
-          color: Colors.grey,
-        );
-      } else {
-        suffixIcon = Icon(
-          Icons.visibility_off_outlined,
-          color: Colors.grey,
-        );
-      }
-    });
+    var responseBody = await registerApi.getRequest(
+      '/v1/members/duplicate',
+      '?userId=${clouterRegisterController.id}',
+    );
+    print(responseBody);
+    if (responseBody[0] == 200) {
+      clouterRegisterController.setDoubleId(2);
+    } else {
+      clouterRegisterController.setDoubleId(0);
+    }
+    // print(CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue);
+    // if (responseBody != false) {
+    //   var unique =
+    //       CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue;
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ClouterInfoController>(
-      tag: widget.controllerTag,
+      tag: controllerTag,
       builder: (controller) => FractionallySizedBox(
         widthFactor: 0.9,
         child: Column(
@@ -87,28 +74,30 @@ class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
                   label: '아이디',
                   setState: controller.setId,
                   initialValue: controller.id,
-                  enabled: !widget.modifying,
+                  enabled: !modifying,
                 ),
-                Positioned(
-                  right: 10,
-                  top: 2,
-                  child: ElevatedButton(
-                    onPressed: () => setDoubleId(1),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: style.colors['main1'],
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: Text('중복 확인'),
-                  ),
-                ),
+                controllerTag != 'clouterModify'
+                    ? Positioned(
+                        right: 10,
+                        top: 2,
+                        child: ElevatedButton(
+                          onPressed: checkDuplicted,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: style.colors['main1'],
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: Text('중복 확인'),
+                        ),
+                      )
+                    : Container(),
               ],
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: doubleId == 1
+              child: controller.doubleId == 1
                   ? Text(
                       '아이디 중복 확인이 필요해요',
                       style: style.textTheme.bodySmall?.copyWith(
@@ -116,7 +105,7 @@ class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
                         height: 1.5,
                       ),
                     )
-                  : doubleId == 2
+                  : controller.doubleId == 2
                       ? Text(
                           '사용 가능한 아이디입니다',
                           style: style.textTheme.bodySmall?.copyWith(
@@ -127,7 +116,7 @@ class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
                       : Text(
                           '이미 사용 중인 아이디입니다',
                           style: style.textTheme.bodySmall?.copyWith(
-                            color: style.colors['Darkgray'],
+                            color: Colors.red[300],
                             height: 1.5,
                           ),
                         ),
@@ -141,13 +130,18 @@ class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
                   title: '비밀번호 입력',
                   label: '비밀번호',
                   setState: controller.setPassword,
-                  obscured: obscured,
+                  obscured: controller.obscured,
                   enabled: true,
                 ),
                 Positioned(
                   top: 3,
                   right: 5,
-                  child: IconButton(onPressed: setObscured, icon: suffixIcon),
+                  child: IconButton(
+                    onPressed: controller.setObscured,
+                    icon: controller.obscured
+                        ? Icon(Icons.visibility_outlined)
+                        : Icon(Icons.visibility_off_outlined),
+                  ),
                 )
               ],
             ),
@@ -160,13 +154,18 @@ class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
                   title: '비밀번호 확인',
                   label: '비밀번호 확인',
                   setState: controller.setCheckPassword,
-                  obscured: obscured,
+                  obscured: controller.obscured,
                   enabled: true,
                 ),
                 Positioned(
                   top: 3,
                   right: 5,
-                  child: IconButton(onPressed: setObscured, icon: suffixIcon),
+                  child: IconButton(
+                    onPressed: controller.setObscured,
+                    icon: controller.obscured
+                        ? Icon(Icons.visibility_outlined)
+                        : Icon(Icons.visibility_off_outlined),
+                  ),
                 )
               ],
             ),
@@ -180,7 +179,7 @@ class ClouterJoinOrModify2State extends State<ClouterJoinOrModify2> {
                   style: style.textTheme.headlineSmall,
                 ),
                 SizedBox(height: 10),
-                ImageWidget(controllerTag: widget.controllerTag),
+                ImageWidget(controllerTag: controllerTag),
               ],
             ),
           ],
