@@ -1,4 +1,6 @@
+
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
+import 'package:clout/type.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -23,10 +25,15 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
         ),
         controller: controller.scrollController.value,
         itemBuilder: (_, index) {
-          print(controller.hasMore);
-          print(controller.data);
-          print(controller.data.length);
-          if (index < controller.data.length / 2) {
+          print('1️⃣');
+          print(
+              '💥 데이터 : ${controller.data} 👉 campaign_infinite_scroll_body.dart');
+          print(
+              '💥 데이터 개수 : ${controller.data.length} 👉 campaign_infinite_scroll_body.dart');
+          if (index < controller.data.length / 2 &&
+              controller.data.isNotEmpty) {
+            final campaign1 = controller.data[2 * index];
+            // final campaign2 = controller.data[2 * index + 1];
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -34,35 +41,33 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: CampaignItemBox(
-                    category: controller.data[2 * index].category,
-                    productName: controller.data[2 * index].productName,
-                    pay: controller.data[2 * index].pay,
-                    campaignSubject: controller.data[2 * index].campaignSubject,
-                    applicantCount: controller.data[2 * index].applicantCount,
-                    recruitCount: controller.data[2 * index].recruitCount,
-                    selectedPlatform:
-                        controller.data[2 * index].selectedPlatform,
-                    starRating: controller.data[2 * index].starRating,
-                    firstImg: controller.data[2 * index].firstImg,
+                    adCategory: campaign1.adCategory!,
+                    title: campaign1.title!,
+                    price: campaign1.price!,
+                    companyInfo: campaign1.companyInfo!.companyName!,
+                    numberOfSelectedMembers: campaign1.numberOfSelectedMembers!,
+                    numberOfRecruiter: campaign1.numberOfRecruiter!,
+                    adPlatformList: campaign1.adPlatformList!,
+                    advertiserInfo:
+                        campaign1.advertiserInfo!.advertiserAvgStar!,
+                    firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: CampaignItemBox(
-                    category: controller.data[2 * index + 1].category,
-                    productName: controller.data[2 * index + 1].productName,
-                    pay: controller.data[2 * index + 1].pay,
-                    campaignSubject:
-                        controller.data[2 * index + 1].campaignSubject,
-                    applicantCount:
-                        controller.data[2 * index + 1].applicantCount,
-                    recruitCount: controller.data[2 * index + 1].recruitCount,
-                    selectedPlatform:
-                        controller.data[2 * index + 1].selectedPlatform,
-                    starRating: controller.data[2 * index + 1].starRating,
-                    firstImg: controller.data[2 * index + 1].firstImg,
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(10),
+                //   child: CampaignItemBox(
+                //     adCategory: campaign2.adCategory!,
+                //     title: campaign2.title!,
+                //     price: campaign2.price!,
+                //     companyInfo: campaign2.companyInfo!.companyName!,
+                //     numberOfSelectedMembers: campaign2.numberOfSelectedMembers!,
+                //     numberOfRecruiter: campaign2.numberOfRecruiter!,
+                //     adPlatformList: campaign2.adPlatformList!,
+                //     advertiserInfo:
+                //         campaign2.advertiserInfo!.advertiserAvgStar!,
+                //     firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
+                //   ),
+                // ),
               ],
             );
           }
