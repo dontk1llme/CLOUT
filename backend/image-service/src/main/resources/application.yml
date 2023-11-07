@@ -27,7 +27,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://eureka.clouter.kr/eureka
+      defaultZone: https://eureka.clouter.kr/eureka
 
 
 logging.level:

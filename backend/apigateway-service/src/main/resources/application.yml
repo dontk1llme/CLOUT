@@ -5,7 +5,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://eureka.clouter.kr/eureka
+      defaultZone: https://eureka.clouter.kr/eureka
 
 spring:
   application:
@@ -79,6 +79,13 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/advertisement-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
+        - id: contract-service
+          uri: lb://CONTRACT-SERVICE
+          predicates:
+            - Path=/contract-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/contract-service/(?<segment>.*), /$\{segment}
 #        - id: MEMBER-service
 #          uri: lb://MEMBER-SERVICE
 #          predicates:
