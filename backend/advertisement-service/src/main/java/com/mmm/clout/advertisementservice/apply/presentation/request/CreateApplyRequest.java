@@ -22,9 +22,11 @@ public class CreateApplyRequest {
 
     @NotBlank
     @Size(min = 1, max = 300)
+    @Schema(description = "신청 한마디")
     private String applyMessage;
 
     @NotNull
+    @Schema(description = "제안하는 광고비")
     private Long hodeAdFee;
 
 

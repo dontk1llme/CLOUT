@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface MemberFeignClient {
 
     @GetMapping("/advertisers/{advertiserId}")
-    AdvertiserInfo getAdvertiser(@PathVariable Long advertiserId);
+    AdvertiserInfo selectAdvertiser(@PathVariable Long advertiserId);
 
     @GetMapping("/clouters/{clouterId}")
-    ClouterInfo getClouter(Long clouterId);
+    ClouterInfo selectClouter(Long clouterId);
 }

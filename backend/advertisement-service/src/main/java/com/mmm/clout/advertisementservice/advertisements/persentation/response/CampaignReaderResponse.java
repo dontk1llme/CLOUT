@@ -1,7 +1,6 @@
 package com.mmm.clout.advertisementservice.advertisements.persentation.response;
 
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
