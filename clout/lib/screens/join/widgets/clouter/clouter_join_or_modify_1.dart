@@ -4,8 +4,9 @@ import 'package:clout/widgets/input/address_input.dart';
 import 'package:clout/widgets/input/input_elements/widgets/date_input.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:clout/screens/join/numberVerify.dart';
+import 'package:clout/screens/join/number_verify.dart';
 
 class ClouterJoinOrModify1 extends StatelessWidget {
   ClouterJoinOrModify1({
@@ -53,13 +54,16 @@ class ClouterJoinOrModify1 extends StatelessWidget {
                   label: '휴대전화 번호',
                   setState: controller.setPhoneNumber,
                   initialValue: controller.phoneNumber,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   enabled: true,
                 ),
                 Positioned(
                   right: 10,
                   top: 2,
                   child: ElevatedButton(
-                    onPressed: () => Get.to(() => NumberVerify()),
+                    onPressed: () => Get.to(() => NumberVerify(phoneNumber: controller.phoneNumber,)),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: style.colors['main1'],
                       elevation: 5,

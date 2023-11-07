@@ -19,7 +19,7 @@ class AdvertiserJoin extends StatefulWidget {
 }
 
 class _AdvertiserJoinState extends State<AdvertiserJoin> {
-  int pageNum = 1;
+  int pageNum = 2;
   double percent = 1 / 2;
 
   final advertiserController = Get.put(AdvertiserController());
@@ -69,41 +69,37 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
     );
   }
 
-  setPageNum(int newPageNum) {
-    bool canGoNext = true;
-    switch (newPageNum) {
-      case 2:
-        canGoNext = advertiserRegisterController.canGoSecondPage();
-        break;
-      case 3:
-        if (advertiserRegisterController.canGoThirdPage() == 0) {
-          Fluttertoast.showToast(msg: '비밀번호 확인이 일치하지 않습니다 😅');
-          return;
-        } else if (advertiserRegisterController.canGoThirdPage() == 1) {
-          canGoNext = true;
-        }
-        break;
-    }
-    if (newPageNum != 3 && canGoNext) {
-      setState(() {
-        pageNum = newPageNum;
-        percent = newPageNum / 2;
-      });
-      canGoNext = false;
-    } else if (newPageNum == 3 && canGoNext) {
-      // Get.offNamed('/login');
-
-      advertiserRegisterController.setAdvertiser();
-      advertiserRegisterController.printAll();
-      // 가입 api 호출
-      final RegisterApi registerApi = RegisterApi();
-
-      registerApi.postRequest(
-          '/v1/advertisers', advertiserRegisterController.advertiser);
-      showSnackBar();
+  goNext() {
+    if (pageNum == 1) {
+      String validationMsg = advertiserRegisterController.canGoSecondPage();
+      if (validationMsg == '') {
+        setState(() {
+          pageNum += 1;
+          percent = pageNum / 2;
+        });
+      } else {
+        Fluttertoast.showToast(msg: validationMsg);
+      }
     } else {
-      Fluttertoast.showToast(msg: '모든 항목을 입력해주세요 🤗');
+      String validationMsg = advertiserRegisterController.canRegister();
+      if (validationMsg == '') {
+        register();
+      } else {
+        Fluttertoast.showToast(msg: validationMsg);
+      }
     }
+  }
+
+  register() {
+    advertiserRegisterController.setAdvertiser();
+    advertiserRegisterController.printAll();
+    // 가입 api 호출
+    final RegisterApi registerApi = RegisterApi();
+
+    registerApi.postRequest(
+        '/v1/advertisers', advertiserRegisterController.advertiser);
+    Get.offNamed('/login');
+    showSnackBar();
   }
 
   @override
@@ -185,13 +181,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                               title: pageNum == 2
                                   ? '완료'
                                   : '다음', // pageNum에 따라 버튼 텍스트 변경
-                              function: () async {
-                                if (pageNum == 1) {
-                                  setPageNum(pageNum + 1);
-                                } else {
-                                  setPageNum(pageNum + 1);
-                                }
-                              },
+                              function: goNext,
                             ),
                           ),
                           SizedBox(height: 20)
