@@ -22,7 +22,7 @@ spring:
 #    open-in-view: false
 springdoc:
   swagger-ui:
-    path: /api/swagger-ui
+    path: /swagger-ui
     use-root-path: true
 
 eureka:
@@ -32,4 +32,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: https://eureka.clouter.kr/eureka
