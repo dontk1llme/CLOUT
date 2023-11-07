@@ -17,6 +17,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Tag(name = "광고 api", description = "광고 관련 api")
@@ -47,7 +51,7 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<CreateCampaignResponse> createCampaign(
-        CreateCampaignRequest request
+        @RequestBody CreateCampaignRequest request
     );
 
 
@@ -65,7 +69,6 @@ public interface AdvertisementControllerDocs {
                 in = ParameterIn.PATH,
                 name = "advertisementId",
                 required = true,
-                schema = @Schema(type = "long"),
                 description = "광고 캠페인의 고유 식별자"
             )
         },
@@ -83,8 +86,8 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<UpdateCampaignResponse> updateCampaign(
-        Long advertisementId,
-        UpdateCampaignRequest request
+        @PathVariable Long advertisementId,
+        @RequestBody UpdateCampaignRequest request
     );
 
 
@@ -102,7 +105,6 @@ public interface AdvertisementControllerDocs {
                 in = ParameterIn.PATH,
                 name = "advertisementId",
                 required = true,
-                schema = @Schema(type = "long"),
                 description = "광고 캠페인의 고유 식별자"
             )
         },
@@ -114,7 +116,7 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<DeleteCampaignResponse> deleteCampaign(
-        Long advertisementId
+        @PathVariable Long advertisementId
     );
 
     @Operation(summary = "캠페인 캠페인 상세 조회 (광고주 정보 포함)",
@@ -124,7 +126,6 @@ public interface AdvertisementControllerDocs {
                 in = ParameterIn.PATH,
                 name = "advertisementId",
                 required = true,
-                schema = @Schema(type = "long"),
                 description = "광고 캠페인의 고유 식별자"
             )
         },
@@ -136,7 +137,7 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<GetCampaignAndAdvertiserResponse> getCampaignDetails(
-        Long advertisementId
+        @PathVariable Long advertisementId
     );
 
     @Operation(summary = "인기 있는 광고 리스트 (10개) 조회",
@@ -165,21 +166,18 @@ public interface AdvertisementControllerDocs {
                 in = ParameterIn.QUERY,
                 name = "advertiserId",
                 required = true,
-                schema = @Schema(type = "long"),
                 description = "광고주의 고유 식별자"
             ),
             @Parameter(
                 in = ParameterIn.QUERY,
                 name = "page",
                 required = true,
-                schema = @Schema(type = "int"),
                 description = "페이지 번호 (0부터 시작)"
             ),
             @Parameter(
                 in = ParameterIn.QUERY,
                 name = "size",
                 required = true,
-                schema = @Schema(type = "int"),
                 description = "한 페이지당 보여줄 글 갯수"
             )
         },
@@ -191,9 +189,9 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<GetCampainListByAdvertiserResponse> getCampaignsByAdvertisers(
-        Long advertiserId,
-        int page,
-        int size
+        @RequestParam Long advertiserId,
+        @RequestParam int page,
+        @RequestParam int size
     );
 
     @Operation(summary = "캠페인 모집 종료",
@@ -210,7 +208,6 @@ public interface AdvertisementControllerDocs {
                 in = ParameterIn.PATH,
                 name = "advertisementId",
                 required = true,
-                schema = @Schema(type = "long"),
                 description = "광고 캠페인의 고유 식별자"
             )
         },
@@ -222,7 +219,7 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<EndedCampaignResponse> endCampaign(
-        Long advertisementId
+        @PathVariable Long advertisementId
     );
 
 }

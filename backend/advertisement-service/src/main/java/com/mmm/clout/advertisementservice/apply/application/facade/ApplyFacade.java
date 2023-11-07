@@ -34,7 +34,7 @@ public class ApplyFacade {
         cancelApplyProcessor.execute(applyId);
     }
 
-    public List<ApplyListByClouterReader> getAllByApplyStatus(Long clouterId, ApplyStatus type) {
+    public List<ApplyListByClouterReader> getAllByApplyStatus(Long clouterId, String type) {
         return readAllApplyProcessor.execute(clouterId, type);
     }
 
