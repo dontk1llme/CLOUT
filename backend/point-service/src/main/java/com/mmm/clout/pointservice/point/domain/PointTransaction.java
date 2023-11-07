@@ -56,8 +56,8 @@ public class PointTransaction extends BaseEntity {
         return new PointTransaction(
             point,
             chargePoint,
-            PointStatus.CHARGE,
-            PointCategory.PAY
+            PointStatus.PLUS,
+            PointCategory.CHARGE
         );
     }
 
@@ -67,6 +67,6 @@ public class PointTransaction extends BaseEntity {
         PointCategory pointCategory
 
     ) {
-        return new PointTransaction(point, reducingPoint, PointStatus.USED, pointCategory);
+        return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory);
     }
 }
