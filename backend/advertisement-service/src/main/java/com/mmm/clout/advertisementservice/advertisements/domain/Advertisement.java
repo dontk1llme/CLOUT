@@ -49,16 +49,16 @@ public abstract class Advertisement extends BaseEntity {
     @CollectionTable(name = "advertisement_platform", joinColumns = @JoinColumn(name = "advertisement_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "platform")
-    private List<AdPlatform> adPlatformList = new ArrayList<>();
+    private List<AdPlatform> adPlatformList = new ArrayList<>(); // 광고 플랫폼 리스트
 
     @Column(name = "price")
-    private Long price;
+    private Long price; // 광고비
 
     @Column(name = "details", length = 1000)
-    private String details;
+    private String details; // 광고 상세설명
 
     @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
+    private LocalDateTime deletedAt; // 광고 삭제여부
 
     public Advertisement(
         Long registerId,

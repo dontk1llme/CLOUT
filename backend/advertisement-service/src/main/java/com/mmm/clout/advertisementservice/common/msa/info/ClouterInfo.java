@@ -15,8 +15,6 @@ public class ClouterInfo {
 
     private Long avgScore;
 
-    private Long totalPoint;
-
     private String role;
 
     private String nickName;
