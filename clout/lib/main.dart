@@ -13,6 +13,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'screens/landing/landing.dart';
 import 'package:clout/screens/login/login.dart';
 import 'package:clout/screens/join_select/join.dart';
+import 'package:clout/screens/join_select/join_page.dart';
 import 'package:clout/screens/main_page/main_page.dart';
 import 'package:clout/screens/notification/notification.dart';
 import 'package:clout/screens/review_register/review_complete.dart';
@@ -131,7 +132,7 @@ class _MyAppState extends State<MyApp> {
       getPages: [
         GetPage(name: '/', page: () => Landing()),
         GetPage(name: '/login', page: () => Login()),
-        GetPage(name: '/join', page: () => Join()),
+        GetPage(name: '/join', page: () => JoinPage()),
         GetPage(name: '/home', page: () => MainPage()),
         GetPage(name: '/campaignRegister', page: () => CampaignRegister()),
         GetPage(name: '/notification', page: () => NotificationPage()),
