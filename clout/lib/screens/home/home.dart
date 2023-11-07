@@ -1,15 +1,23 @@
 // Global
-import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:clout/utilities/bouncing_listview.dart';
-import 'package:clout/widgets/common/main_drawer.dart';
-import 'package:clout/widgets/image_carousel.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'package:clout/type.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:http/http.dart' as http;
+
+// utilities
+import 'package:clout/utilities/bouncing_listview.dart';
+
+// controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
 
 // Screens
 import 'package:clout/screens/home/widgets/menu_title.dart';
 
 // Widgets
+import 'package:clout/widgets/image_carousel.dart';
+import 'package:clout/widgets/common/main_drawer.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/screens/home/widgets/main_carousel_text1.dart';
 import 'package:clout/widgets/buttons/small_button.dart';
@@ -17,8 +25,21 @@ import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 import 'package:get/get.dart';
 
+Future<Campaign> fetchCampaign() async {
+  final response = await http
+      .get(Uri.parse('http://70.12.247.35:8889/v1/advertisements/top10'));
+
+  if (response.statusCode == 200) {
+    print('👻✨ response body: ${response.body}');
+    return Campaign.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('캠페인 불러오기 실패 💨');
+  }
+}
+
+// 클라우터 api는 나오는대로...
 class Clouter {
-  int clouterId = 1;
+  final int clouterId = 1;
   String nickname = '모카우유';
   int starRating = 20;
   int fee = 500000;
@@ -32,27 +53,25 @@ class Clouter {
   String firstImg = 'assets/images/clouterImage.jpg';
 }
 
-class Campaign {
-  int campaignId = 1;
-  String category = '음식';
-  String productName = '못골정미소 백미 5kg';
-  int pay = 1000;
-  String campaignSubject = '못골영농조합법인';
-  int applicantCount = 2;
-  int recruitCount = 5;
-  List<String> selectedPlatform = [
-    "YouTube",
-    // "Instagram",
-    "TikTok",
-  ];
-  int starRating = 20;
-  String firstImg = 'assets/images/itemImage.jpg';
-}
-
 final userController = Get.find<UserController>();
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  late Future<Campaign> futureCampaign;
+  // late Future<Clouter> futureClouter;
+
+  @override
+  void initState() {
+    super.initState();
+    futureCampaign = fetchCampaign();
+    // futureClouter = fetchClouter();
+  }
 
   List<String> imgList = [
     'assets/images/main_carousel_1.jpg',
@@ -60,9 +79,10 @@ class Home extends StatelessWidget {
     'assets/images/itemImage.jpg',
     'assets/images/food.png',
   ];
-  Clouter clouter = Clouter();
-  Campaign campaign = Campaign();
 
+  Clouter clouter = Clouter();
+
+  // Campaign campaign = Campaign();
   List<Widget> carouselList = [
     Stack(
       children: [
@@ -305,40 +325,62 @@ class Home extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    color: style.colors['main3'],
-                    height: 10,
-                  ),
-                  Column(
-                    children: [
-                      MenuTitle(text: '인기있는 캠페인', destination: 2),
-                      BouncingListview(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          child: Row(
-                            children: [
-                              for (num i = 0; i < 10; i++)
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                                  child: CampaignItemBox(
-                                    category: campaign.category,
-                                    productName: campaign.productName,
-                                    pay: campaign.pay,
-                                    campaignSubject: campaign.campaignSubject,
-                                    applicantCount: campaign.applicantCount,
-                                    recruitCount: campaign.recruitCount,
-                                    selectedPlatform: campaign.selectedPlatform,
-                                    starRating: campaign.starRating,
-                                    firstImg: campaign.firstImg,
-                                  ),
-                                )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  )
+                      color: style.colors['main3'],
+                      height: 10,
+                      child: FutureBuilder<Campaign>(
+                        future: futureCampaign,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return CampaignItemBox(
+                              category: snapshot.data!.adCategory,
+                              productName: snapshot.data!.title,
+                              pay: snapshot.data!.price,
+                              campaignSubject: snapshot.data!.companyName,
+                              applicantCount:
+                                  snapshot.data!.numberOfSelectedMembers,
+                              recruitCount: snapshot.data!.numberOfRecruiter,
+                              selectedPlatform: snapshot.data!.adPlatformList,
+                              starRating: snapshot.data!.advertiserAvgstar,
+                              firstImg:
+                                  'images/assets/itemImage.jpg', // 💥 사진 수정하기
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text('⛔ 캠페인 아이템 에러!! : ${snapshot.error}');
+                          }
+                          return const CircularProgressIndicator();
+                        },
+                      )),
+                  // Column(
+                  //   children: [
+                  //     MenuTitle(text: '인기있는 캠페인', destination: 2),
+                  //     BouncingListview(
+                  //       scrollDirection: Axis.horizontal,
+                  //       child: Padding(
+                  //         padding: EdgeInsets.only(left: 5, right: 5),
+                  //         child: Row(
+                  //           children: [
+                  //             for (num i = 0; i < 10; i++)
+                  //               Padding(
+                  //                 padding:
+                  //                     const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                  //                 child: CampaignItemBox(
+                  //                   category: campaign.category,
+                  //                   productName: campaign.productName,
+                  //                   pay: campaign.pay,
+                  //                   campaignSubject: campaign.campaignSubject,
+                  //                   applicantCount: campaign.applicantCount,
+                  //                   recruitCount: campaign.recruitCount,
+                  //                   selectedPlatform: campaign.selectedPlatform,
+                  //                   starRating: campaign.starRating,
+                  //                   firstImg: campaign.firstImg,
+                  //                 ),
+                  //               )
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     )
+                  //   ],
+                  // )
                 ],
               ),
             ),

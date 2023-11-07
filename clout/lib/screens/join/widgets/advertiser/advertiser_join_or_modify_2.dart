@@ -1,16 +1,42 @@
+import 'dart:convert';
+
+import 'package:clout/hooks/register_api.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/join/numberVerify.dart';
 import 'package:clout/screens/join/widgets/join_input.dart';
+import 'package:clout/type.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
 class AdvertiserJoinOrModify2 extends StatelessWidget {
-  const AdvertiserJoinOrModify2(
+  AdvertiserJoinOrModify2(
       {super.key, required this.modifying, required this.controllerTag});
   final modifying;
   final controllerTag;
+
+  final advertiserRegisterController =
+      Get.find<AdvertiserInfoController>(tag: 'advertiserRegister');
+  checkDuplicted() async {
+    // 가입 api 호출
+    final RegisterApi registerApi = RegisterApi();
+
+    String responseBody = await registerApi.getRequest(
+      '/v1/members/duplicate',
+      '?userId=${advertiserRegisterController.id}',
+    );
+    print('이게 되야되는데');
+    print(CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue);
+    var unique = CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue;
+    if (unique) {
+      //중복이 아닌 아이디
+      // 계속 다음 페이지로 갈 수 있음
+    } else {
+      // 중복된 아이디
+      // 아이디 다시 설정하세요.
+    }
+    print(responseBody);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +117,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                       right: 10,
                       top: 2,
                       child: ElevatedButton(
-                        onPressed: () => controller.setDoubleId(),
+                        onPressed: checkDuplicted,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: style.colors['main1'],
                           elevation: 5,
