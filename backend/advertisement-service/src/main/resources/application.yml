@@ -22,7 +22,7 @@ spring:
 #    open-in-view: false
 springdoc:
   swagger-ui:
-    path: /api/swagger-ui
+    path: /swagger-ui
     use-root-path: true
 
 eureka:
