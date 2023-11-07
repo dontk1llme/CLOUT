@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:clout/style.dart' as style;
 
-class CategoryList extends StatelessWidget {
+class CategoryList extends StatefulWidget {
   CategoryList({super.key});
 
-  // 이미지 파일 경로, 제목 리스트
+  @override
+  State<CategoryList> createState() => _CategoryListState();
+}
+
+class _CategoryListState extends State<CategoryList> {
   final List<Map<String, String>> categoryData = [
     {'path': 'assets/images/all.png', 'name': '전체보기'},
     {'path': 'assets/images/cosmetics.png', 'name': '패션/뷰티'},
@@ -19,63 +24,100 @@ class CategoryList extends StatelessWidget {
     {'path': 'assets/images/more.png', 'name': '기타'},
   ];
 
+  List<int> selectedCategories = [];
+
   @override
   build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double buttonSize = 50; // 이미지 버튼 크기를 화면 너비에 따라 조정
+
     return Container(
       width: double.infinity,
-      height: 225,
+      // height: 225,
       color: Color(0xffF6F4FF),
       padding: EdgeInsets.all(15),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            // 첫 번째 행의 이미지 버튼
-            children: _categoryButtons(0, 5),
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            // 두 번째 행 이미지 버튼
-            children: _categoryButtons(6, 11),
-          )
-        ],
-      ),
+      child: Wrap(
+          alignment: WrapAlignment.spaceAround,
+          runSpacing: 10,
+          children: _categoryButtons(context, 0, 11, buttonSize)),
     );
   }
 
-  List<Widget> _categoryButtons(int startIndex, int lastIndex) {
-    // 이미지 버튼 위젯 리스트 생성
-    return List.generate(
-      lastIndex - startIndex + 1,
-      (index) => Column(
+  List<Widget> _categoryButtons(
+      BuildContext context, int startIndex, int lastIndex, double buttonSize) {
+    final uniqueIndexes = List.generate(
+        lastIndex - startIndex + 1, (index) => startIndex + index);
+
+    return uniqueIndexes.map((index) {
+      return Column(
         children: [
-          _categoryButton(categoryData[startIndex + index]['path']!),
-          Text(categoryData[startIndex + index]['name']!,
+          _categoryButton(
+            context,
+            categoryData[index]['path']!,
+            buttonSize,
+            index,
+          ),
+          Text(categoryData[index]['name']!,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
               )),
         ],
+      );
+    }).toList();
+  }
+
+  Widget _categoryButton(
+      BuildContext context, String imagePath, double buttonSize, int index) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double imageSize = buttonSize;
+    final double paddingSize = imageSize / 6;
+
+    bool isSelected = selectedCategories.contains(index);
+
+    return InkWell(
+      onTap: () {
+        setState(() {
+          if (index == 0) {
+            selectedCategories.clear();
+            selectedCategories.add(0);
+          } else {
+            selectedCategories.remove(0);
+            if (selectedCategories.contains(index)) {
+              selectedCategories.remove(index);
+            } else {
+              selectedCategories.add(index);
+            }
+          }
+          _fetchSearchResults();
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: Container(
+          width: screenWidth / 7,
+          height: screenWidth / 7,
+          // padding: EdgeInsets.all(10),
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
+          decoration: BoxDecoration(
+            color: isSelected ? style.colors['main2'] : style.colors['white'],
+            borderRadius: BorderRadius.circular(13),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Image.asset(
+              imagePath,
+              // width: imageSize - 2 * paddingSize,
+              // height: imageSize - 2 * paddingSize,
+            ),
+          ),
+        ),
       ),
     );
   }
 
-  Widget _categoryButton(String imagePath) {
-    return InkWell(
-      onTap: () {
-        // 버튼 눌렀을 때 실행
-      },
-      child: Container(
-        width: 60, // 이미지버튼 너비
-        height: 60, // 이미지버튼 높이
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-        decoration: BoxDecoration(
-          color: Colors.white, // 버튼 배경색
-          borderRadius: BorderRadius.circular(13), // 버튼 모서리
-        ),
-        child: Image.asset(imagePath), // 이미지 불러오기
-      ),
-    );
+  //  💥 API 호출 및 결과 처리 메소드
+  void _fetchSearchResults() {
+    // 여기서
+    print("선택된 카테고리: $selectedCategories");
   }
 }
