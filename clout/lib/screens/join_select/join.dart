@@ -14,65 +14,120 @@ class Join extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 1,
-            child: Container(
-              color: style.colors['white'], 
-              child: Center(
-                child: Column( 
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 50, bottom: 35),
-                      child: Image.asset(
-                        'assets/images/clouter.png',
-                        width: 230,
-                      ),
+            flex: 5,
+            child: InkWell(
+              onTap: () => Get.to(ClouterJoin()),
+              child: Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/clouter.png',
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                  ),
+                  Positioned(
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(color: Colors.black.withOpacity(0.1)),
+                  ),
+                  Positioned(
+                    top: screenHeight / 2 - 200,
+                    left: screenWidth / 2 - 100,
+                    child: Row(
+                      children: [
+                        Text(
+                          '클라우터',
+                          style: style.textTheme.titleLarge?.copyWith(
+                              color: style.colors['main1'],
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          '로',
+                          style: style.textTheme.titleLarge?.copyWith(
+                              color: style.colors['white'],
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
-                    
-                    Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16),
-                      child: BigButton(
-                        title: '인플루언서로 시작하기',
-                        function: () {
-                          Get.to(()=>ClouterJoin()); // AdvertiserJoin 클래스의 인스턴스를 전달
-                        },
-                      ),
+                  ),
+                  Positioned(
+                    top: screenHeight / 2 - 150,
+                    left: screenWidth / 2 - 20,
+                    child: Text(
+                      '시작하기',
+                      style: style.textTheme.titleLarge
+                          ?.copyWith(color: Colors.white),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+          // Container(
+          //   height: 30,
+          //   // color: style.colors['main1'],
+          //   child:Text('당신은')
+          // ),
           Expanded(
-            flex: 1,
-            child: Container(
-              color: style.colors['main2'], 
-              child: Center(
-                child: Column( 
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 50, bottom: 35),
-                      child: Image.asset(
-                        'assets/images/advertiser.png',
-                        width: 230,
-                      ),
+            flex: 4,
+            child: InkWell(
+              onTap: () => Get.to(AdvertiserJoin()),
+              child: Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/advertiser.png',
+                    fit: BoxFit.cover,
+                    height: double.infinity,
+                  ),
+                  Positioned(
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(color: Colors.black.withOpacity(0.1)),
+                  ),
+                  Positioned(
+                    top: screenHeight / 2 - 200,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '광고주로 시작하기',
+                          style: style.textTheme.titleLarge?.copyWith(
+                              color: style.colors['main1-4'],
+                              fontWeight: FontWeight.w500),
+                        ),
+                        // Text(
+                        //   '로',
+                        //   style: style.textTheme.titleLarge?.copyWith(
+                        //       color: style.colors['white'],
+                        //       fontWeight: FontWeight.w500),
+                        // ),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: BigButton(
-                        title: '광고주로 시작하기',
-                        textColor: style.colors['main1'],
-                        buttonColor: style.colors['white'],
-                        function: () {
-                          Get.to(()=>AdvertiserJoin()); 
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  // Positioned(
+                  //   top: screenHeight / 2 - 150,
+                  //   left: 0,
+                  //   right: 0,
+                  //   child: Text(
+                  //     '시작하기',
+                  //     style: style.textTheme.titleLarge?.copyWith(
+                  //       color: Colors.white,
+                  //     ),
+                  //     textAlign: TextAlign.center,
+                  //   ),
+                  // ),
+                ],
               ),
             ),
           ),
