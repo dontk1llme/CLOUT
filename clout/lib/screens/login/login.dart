@@ -1,6 +1,11 @@
 // global
+import 'package:clout/hooks/login_api.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:clout/screens/join/find_password.dart';
+import 'package:clout/widgets/header/header.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 // widgets
@@ -16,28 +21,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  var email;
-
-  var password;
 
   var obscured = true;
 
   var suffixIcon = Icon(Icons.visibility_outlined);
 
-  setEmail(input) {
-    setState(() {
-      email = input;
-      print(email);
-      print(password);
-    });
-  }
-
-  setPassword(input) {
-    setState(() {
-      password = input;
-      print(password);
-    });
-  }
+  final userController = Get.find<UserController>();
 
   setObscured() {
     setState(() {
@@ -51,10 +40,34 @@ class _LoginState extends State<Login> {
     });
   }
 
-  doLogin(destination) {
-    // 유저가 맞는지 확인하는 api 여기에 두고 맞으면 main으로 이동하게
-    // Get.ofAllNamed('/home')이걸로 바꾸기 => 이전으로 눌렀을때 로그인 페이지로 안돌아가게
-    Get.toNamed('/home');
+  doLogin() async {
+    // 유저가 맞는지 확인하는 api 통신 여기에 두고 맞으면 main으로 이동하게
+
+    // 1. 보냄
+    userController.setUserInfo(); // 'userInfo' 설정
+    final LoginApi loginApi = LoginApi();
+    var loginData = await loginApi.postRequest('/v1/members/login', userController.userInfo);
+
+    // 2. 리턴값에서 유저/클라우터 가려받고 set
+    if (loginData['login_success']==true){
+      if(loginData['clout_or_adv']==1){
+        //1이면 클라우터
+        userController.setClouter();
+      }
+      else{
+        //2면 클라우터
+        userController.setAdvertiser();
+      }
+      Get.offAllNamed('/home');
+    }
+    else{
+      // 3. 만약 0 리턴되면 showtoast
+      // 혹은 login_api에서 설정해야 할 수도
+      Fluttertoast.showToast(msg: '아이디 혹은 비밀번호를 확인해주세요');
+    }
+    
+
+    
   }
 
   @override
@@ -79,7 +92,7 @@ class _LoginState extends State<Login> {
                             width: 100,
                           ),
                           TitleText(
-                            text: '와 함께',
+                            text: ' 와 함께',
                           )
                         ],
                       ),
@@ -95,12 +108,13 @@ class _LoginState extends State<Login> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Input(
-                        placeholder: '이메일 입력',
-                        setText: setEmail,
+                        placeholder: '아이디 입력',
+                        setText: userController.setUserId,
                       ),
+                      SizedBox(height: 15),
                       Input(
                         placeholder: '패스워드 입력',
-                        setText: setPassword,
+                        setText: userController.setPassword,
                         obscure: obscured,
                         suffixIcon: suffixIcon,
                         setObscured: setObscured,
@@ -114,7 +128,9 @@ class _LoginState extends State<Login> {
                               padding: EdgeInsets.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(FindPassword());
+                            },
                             child: Text('패스워드가 기억이 안나요',
                                 style: style.textTheme.bodyMedium?.copyWith(
                                     color: style.colors['gray'], height: 2))),
@@ -123,11 +139,13 @@ class _LoginState extends State<Login> {
                       // destination 수정해서 로그인 실행하는 로직 넣어야 함
                       Padding(
                         padding: const EdgeInsets.only(top: 50),
-                        child: BigButton(
-                          title: '로그인',
-                          destination: "userCheck",
-                          notJustRoute: true,
-                          function: doLogin,
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: BigButton(
+                            title: '로그인',
+                            function: doLogin,
+                          ),
                         ),
                       ),
                     ],
@@ -135,22 +153,25 @@ class _LoginState extends State<Login> {
           SizedBox(
             height: 50,
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('계정이 아직 없다면?',
-                      style: style.textTheme.bodyMedium
-                          ?.copyWith(color: style.colors['gray'])),
-                  TextButton(
-                      style: TextButton.styleFrom(
-                        minimumSize: Size.zero,
-                        padding: EdgeInsets.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      onPressed: () => {Get.toNamed('/join')},
-                      child: Text(' 회원가입하기',
-                          style: style.textTheme.bodyMedium
-                              ?.copyWith(color: style.colors['main1'])))
-                ]),
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('계정이 아직 없다면?',
+                    style: style.textTheme.bodyLarge
+                        ?.copyWith(color: style.colors['gray'])),
+                TextButton(
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    onPressed: () => {Get.toNamed('/join')},
+                    child: Text(' 회원가입하기',
+                        style: style.textTheme.bodyLarge?.copyWith(
+                            color: style.colors['main1'],
+                            fontWeight: FontWeight.w700)))
+              ],
+            ),
           ),
         ],
       ),
