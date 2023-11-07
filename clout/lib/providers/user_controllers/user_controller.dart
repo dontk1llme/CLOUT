@@ -1,8 +1,14 @@
 import 'package:get/get.dart';
+import 'package:clout/type.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:get/get.dart';
 
 class UserController extends GetxController {
   int user = 0;
   var userId;
+  var password;
+
+  var userInfo;
 
   void setAdvertiser() {
     user = 1;
@@ -21,6 +27,20 @@ class UserController extends GetxController {
 
   setUserId(input) {
     userId = input;
+    update();
+  }
+
+  setPassword(input) {
+    password = input;
+    update();
+  }
+
+  setUserInfo(){
+    userInfo = Login(
+      user,
+      userId,
+      password
+    );
     update();
   }
 }

@@ -134,6 +134,25 @@ class Clouter {
       };
 }
 
+class Login{
+  int user; //??
+  String userId;
+  String pwd;
+
+  Login(
+    this.user,
+    this.userId,
+    this.pwd
+  );
+
+  Map<String, dynamic> toJson() => {
+    'user' : user,
+    'userId' : userId,
+    'pwd' : pwd
+  };
+
+}
+
 class Campaign {
   int campaignId;
   String adCategory;

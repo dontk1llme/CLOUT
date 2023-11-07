@@ -1,6 +1,8 @@
 // global
+import 'package:clout/hooks/login_api.dart';
 import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/screens/join/find_password.dart';
+import 'package:clout/widgets/header/header.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,28 +21,28 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  var email;
+  // var email;
 
-  var password;
+  // var password;
 
   var obscured = true;
 
   var suffixIcon = Icon(Icons.visibility_outlined);
 
-  setEmail(input) {
-    setState(() {
-      email = input;
-      print(email);
-      print(password);
-    });
-  }
+  // setEmail(input) {
+  //   setState(() {
+  //     email = input;
+  //     print(email);
+  //     print(password);
+  //   });
+  // }
 
-  setPassword(input) {
-    setState(() {
-      password = input;
-      print(password);
-    });
-  }
+  // setPassword(input) {
+  //   setState(() {
+  //     password = input;
+  //     print(password);
+  //   });
+  // }
 
   setObscured() {
     setState(() {
@@ -57,15 +59,27 @@ class _LoginState extends State<Login> {
   doLogin() {
     // 유저가 맞는지 확인하는 api 통신 여기에 두고 맞으면 main으로 이동하게
 
+    // 1. 보냄
+    
     final userController = Get.find<UserController>();
+    final LoginApi loginApi = LoginApi();
+    loginApi.postRequest('/v1/members/login', userController.userInfo);
+    
+
+    // 2. 리턴값에서 유저/클라우터 가려받고 set
+
 
     // 유저가 클라우터일 경우
     // userController.setClouter();
     // 유저가 광고주일 경우
     userController.setAdvertiser();
 
+    // 3. 만약 0 리턴되면 showtoast
     Get.offAllNamed('/home');
-    // Fluttertoast.showToast(msg: '아이디 혹은 비밀번호를 확인해주세요');
+
+    if (userController.user == 0){
+      Fluttertoast.showToast(msg: '아이디 혹은 비밀번호를 확인해주세요');
+    }
   }
 
   @override
@@ -106,13 +120,13 @@ class _LoginState extends State<Login> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Input(
-                        placeholder: '이메일 입력',
-                        setText: setEmail,
+                        placeholder: '아이디 입력',
+                        setText: userController.setUserId,
                       ),
                       SizedBox(height: 15),
                       Input(
                         placeholder: '패스워드 입력',
-                        setText: setPassword,
+                        setText: userController.setPassword,
                         obscure: obscured,
                         suffixIcon: suffixIcon,
                         setObscured: setObscured,
