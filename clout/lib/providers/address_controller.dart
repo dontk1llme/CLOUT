@@ -6,7 +6,7 @@ class AddressController extends GetxController {
   var daumAddress = '주소 검색';
   var detailAddress;
   var finalAddress = '';
-  var zipCode = '';
+  var zipCode;
 
   setDataModel(input) {
     dataModel = input;

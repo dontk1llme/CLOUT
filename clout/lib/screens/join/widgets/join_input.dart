@@ -12,7 +12,9 @@ class JoinInput extends StatefulWidget {
       required this.enabled,
       this.index,
       this.obscured,
-      this.initialValue});
+      this.initialValue,
+      this.inputFormatters,
+      this.textInputAction});
   final keyboardType;
   final maxLength;
   final title;
@@ -22,6 +24,8 @@ class JoinInput extends StatefulWidget {
   final obscured;
   final enabled;
   final initialValue;
+  var inputFormatters;
+  var textInputAction;
 
   @override
   State<JoinInput> createState() => _JoinInputState();
@@ -35,6 +39,7 @@ class _JoinInputState extends State<JoinInput> {
       maxLength: widget.maxLength,
       initialValue: widget.initialValue,
       enabled: widget.enabled,
+      inputFormatters: widget.inputFormatters,
       onChanged: widget.index == null
           ? (value) => widget.setState(value)
           : (value) => widget.setState(widget.index, value),

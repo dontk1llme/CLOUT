@@ -34,6 +34,7 @@ class AdvertiserInfoController extends GetxController {
       Address(addressController.zipCode, addressController.daumAddress,
           addressController.detailAddress),
       CompanyInfo(businessName, businessNumber, headName, name, phoneNumber),
+      null,
     );
     update();
   }
@@ -53,12 +54,11 @@ class AdvertiserInfoController extends GetxController {
     update();
   }
 
-  setDoubleId() {
-    //없을 때 0
-    //중복이면 1
+  setDoubleId(input) {
     //가능하면 2
+    //중복이면 3
     //지금은 편의상 중복 아니라고 함
-    doubleId = 2;
+    doubleId = input;
     update();
   }
 
@@ -93,48 +93,57 @@ class AdvertiserInfoController extends GetxController {
   }
 
   canGoSecondPage() {
-    if (businessName != null &&
-        headName != null &&
-        businessNumber != null &&
-        addressController.finalAddress != '') {
-      return true;
-    } else {
-      return false;
+    if (businessName == null || businessName.length == 0) {
+      return '업체명을 입력해주세요 🏢';
     }
+    if (headName == null || headName.length == 0) {
+      return '대표 이름을 입력해주세요 😎';
+    }
+    if (businessNumber == null || businessNumber.length == 0) {
+      return '사업자등록번호를 입력해주세요 📃';
+    }
+    if (businessNumber.length != 10) {
+      return '사업자등록번호를 확인해주세요 📃';
+    }
+    if (addressController.zipCode == null ||
+        addressController.zipCode.length == 0) {
+      return '주소를 입력해주세요 🏢';
+    }
+    if (addressController.detailAddress == null ||
+        addressController.detailAddress.length == 0) {
+      return '상세주소를 입력해주세요 🏠';
+    }
+    return '';
   }
 
-  canGoThirdPage() {
-    if (name != null &&
-        id != null &&
-        password != null &&
-        checkPassword != null) {
-      if (password == checkPassword) {
-        return 1;
-      } else {
-        return 0;
-      }
-    } else {
-      return -1;
+  canRegister() {
+    if (name == null || name.length == 0) {
+      return '담당자 이름을 입력해주세요 👩';
     }
+    if (phoneNumber == null || phoneNumber.length == 0) {
+      return '담당자 휴대전화 번호를 입력해주세요 📱';
+    }
+    // 휴대전화 인증 여부
+
+    if (id == null || id.length == 0) {
+      return '아이디를 입력해주세요 📃';
+    }
+    if (id.length < 5 || id.length > 15) {
+      return '아이디는 5자 ~ 15자로 입력해주세요';
+    }
+    if (password == null || password.length == 0) {
+      return '비밀번호를 입력해주세요';
+    }
+    if (password.length < 8 || password.length > 20) {
+      return '비밀번호는 8자 ~ 20자로 입력헤주세요';
+    }
+    if (password != checkPassword) {
+      return '비밀번호 확인을 확인해주세요';
+    }
+    return '';
   }
 
   printAll() {
-    // print('담당자 이름');
-    // print(name);
-    // print('담당자 폰번호');
-    // print(phoneNumber);
-    // print('아이디');
-    // print(id);
-    // print('비밀번호');
-    // print(password);
-    // print('업체명');
-    // print(businessName);
-    // print('대표이름');
-    // print(headName);
-    // print('사업자등록번호');
-    // print(businessNumber);
-    // print('소재지');
-    // print(addressController.finalAddress);
     print('아이디');
     print(advertiser?.userId);
     print('비밀번호');
