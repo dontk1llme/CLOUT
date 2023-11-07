@@ -109,4 +109,8 @@ public class Apply extends BaseEntity {
         private final String description;
     }
 
+    public ApplyStatus convertToApplyStatus(String applyStatus) {
+        return ApplyStatus.valueOf(applyStatus.toUpperCase());
+    }
+
 }
