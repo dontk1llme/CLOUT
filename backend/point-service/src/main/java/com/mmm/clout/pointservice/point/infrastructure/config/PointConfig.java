@@ -1,6 +1,7 @@
 package com.mmm.clout.pointservice.point.infrastructure.config;
 
 import com.mmm.clout.pointservice.point.application.ChargePointProcessor;
+import com.mmm.clout.pointservice.point.application.GetMemberPointProcessor;
 import com.mmm.clout.pointservice.point.application.ReducePointProcessor;
 import com.mmm.clout.pointservice.point.application.WithdrawPointProcessor;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
@@ -36,5 +37,14 @@ public class PointConfig {
     @Bean
     public WithdrawPointProcessor withdrawPointProcessor() {
         return new WithdrawPointProcessor();
+    }
+
+    @Bean
+    public GetMemberPointProcessor getMemberPointProcessor(
+        PointRepository pointRepository
+    ) {
+        return new GetMemberPointProcessor(
+            pointRepository
+        );
     }
 }
