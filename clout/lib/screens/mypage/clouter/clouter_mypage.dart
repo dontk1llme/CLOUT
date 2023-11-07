@@ -64,7 +64,7 @@ class ClouterMyPage extends StatelessWidget {
                     ),
                     InkWell(
                       child: Icon(Icons.arrow_forward_ios),
-                      onTap: () => Get.toNamed('/clouterdetail'),
+                      onTap: () => Get.toNamed('/clouterprofile'),
                     ),
                   ],
                 ),

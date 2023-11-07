@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/chattinglist', page: () => ChattingList()),
         GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
         GetPage(name: '/cloutermypage', page: () => ClouterMyPage()),
-        GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
+        GetPage(name: '/clouterprofile', page: () => ClouterProfile()),
         GetPage(name: '/campaignDetail', page: () => CampaignDetail()),
         GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
         GetPage(name: '/advertiserdetail', page: () => AdvertiserProfile()),
