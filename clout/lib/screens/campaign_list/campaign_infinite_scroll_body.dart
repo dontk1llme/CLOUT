@@ -1,3 +1,4 @@
+
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
 import 'package:clout/type.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
@@ -24,8 +25,11 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
         ),
         controller: controller.scrollController.value,
         itemBuilder: (_, index) {
-          print(controller.data);
-          print(controller.data.length);
+          print('1️⃣');
+          print(
+              '💥 데이터 : ${controller.data} 👉 campaign_infinite_scroll_body.dart');
+          print(
+              '💥 데이터 개수 : ${controller.data.length} 👉 campaign_infinite_scroll_body.dart');
           if (index < controller.data.length / 2 &&
               controller.data.isNotEmpty) {
             final campaign1 = controller.data[2 * index];
@@ -38,9 +42,9 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: CampaignItemBox(
                     adCategory: campaign1.adCategory!,
-                    details: campaign1.details!, // 💥 나중에 title로 바꾸기
+                    title: campaign1.title!,
                     price: campaign1.price!,
-                    companyInfo: campaign1.companyInfo!.companyName,
+                    companyInfo: campaign1.companyInfo!.companyName!,
                     numberOfSelectedMembers: campaign1.numberOfSelectedMembers!,
                     numberOfRecruiter: campaign1.numberOfRecruiter!,
                     adPlatformList: campaign1.adPlatformList!,
@@ -52,14 +56,15 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
                 // Padding(
                 //   padding: const EdgeInsets.all(10),
                 //   child: CampaignItemBox(
-                //     category: campaign1.adCategory!,
-                //     productName: campaign1.details!, // 💥 나중에 title로 바꾸기
-                //     pay: campaign1.price!,
-                //     campaignSubject: campaign1.companyInfo!.companyName,
-                //     applicantCount: campaign1.numberOfSelectedMembers!,
-                //     recruitCount: campaign1.numberOfRecruiter!,
-                //     selectedPlatform: campaign1.adPlatformList!,
-                //     starRating: campaign1.advertiserInfo!.advertiserAvgStar!,
+                //     adCategory: campaign2.adCategory!,
+                //     title: campaign2.title!,
+                //     price: campaign2.price!,
+                //     companyInfo: campaign2.companyInfo!.companyName!,
+                //     numberOfSelectedMembers: campaign2.numberOfSelectedMembers!,
+                //     numberOfRecruiter: campaign2.numberOfRecruiter!,
+                //     adPlatformList: campaign2.adPlatformList!,
+                //     advertiserInfo:
+                //         campaign2.advertiserInfo!.advertiserAvgStar!,
                 //     firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
                 //   ),
                 // ),
