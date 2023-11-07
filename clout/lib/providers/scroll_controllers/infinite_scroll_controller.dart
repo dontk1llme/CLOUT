@@ -26,28 +26,11 @@ class Clouter {
   String firstImg = 'assets/images/clouterImage.jpg';
 }
 
-class Campaign1 {
-  int campaignId = 1;
-  String category = '음식';
-  String productName = '못골정미소 백미 5kg';
-  String pay = '1000';
-  String campaignSubject = '못골영농조합법인';
-  int applicantCount = 2;
-  int recruitCount = 5;
-  List<String> selectedPlatform = [
-    "YouTube",
-    // "Instagram",
-    "TikTok",
-  ];
-  int starRating = 20;
-  String firstImg = 'assets/images/itemImage.jpg';
-}
-
 String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
-Future<Campaign> fetchCampaign(String endpoint) async {
+Future<Campaign> fetchCampaign(String endPoint, String parameter) async {
   final response =
-      await http.get(Uri.parse('${baseUrl}/v1/advertisements$endpoint'));
+      await http.get(Uri.parse('${baseUrl}/v1/${endPoint}${parameter}'));
 
   if (response.statusCode == 200) {
     print('👻✨ response body: ${response.body}');
@@ -66,11 +49,17 @@ class InfiniteScrollController extends GetxController {
   int pageSize = 20;
   var isLoading = false;
   var hasMore = true;
-  var endPoint = '';
   var currentPage = 0;
+  var endPoint = '';
+  var parameter = '';
 
   setEndPoint(input) {
     endPoint = input;
+    update();
+  }
+
+  setParameter(input) {
+    parameter = input;
     update();
   }
 
@@ -99,53 +88,43 @@ class InfiniteScrollController extends GetxController {
 
     int offset = data.length;
 
-    // var campaignItemBox = FutureBuilder<Campaign>(
-    //   future: fetchCampaign(endPoint),
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasData) {
-    //       return CampaignItemBox(
-    //         category: snapshot.data!.adCategory,
-    //         productName: snapshot.data!.title,
-    //         pay: snapshot.data!.price,
-    //         campaignSubject: snapshot.data!.companyName,
-    //         applicantCount: snapshot.data!.numberOfSelectedMembers,
-    //         recruitCount: snapshot.data!.numberOfRecruiter,
-    //         selectedPlatform: snapshot.data!.adPlatformList,
-    //         starRating: snapshot.data!.advertiserAvgstar,
-    //         firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
-    //       );
-    //     } else if (snapshot.hasError) {
-    //       return Text('⛔ Campaign item error: ${snapshot.error}');
-    //     }
-    //     return Padding(
-    //       padding: const EdgeInsets.only(top: 20, bottom: 40),
-    //       child: SizedBox(
-    //         height: 50,
-    //         child: Center(
-    //             child: LoadingIndicator(
-    //           indicatorType: Indicator.ballRotateChase,
-    //           colors: [
-    //             style.colors['main1-4']!,
-    //             style.colors['main1-3']!,
-    //             style.colors['main1-2']!,
-    //             style.colors['main1-1']!,
-    //             style.colors['main1']!,
-    //           ],
-    //         )),
-    //       ),
-    //     );
-    //   },
-    // );
-
-    // // 데이터 몇개씩 보여줄건지? (10개씩 무한스크롤)
-    // var appendData = isClouterData
-    //     ? List<Clouter>.generate(10, (i) {
-    //         var clouter = Clouter();
-    //         clouter.clouterId = i + 1 + offset;
-    //         return clouter;
-    //       })
-    //     : [campaignItemBox];
-    // data.addAll(appendData);
+    var campaignItemBox = FutureBuilder<Campaign>(
+      future: fetchCampaign(endPoint, parameter),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return CampaignItemBox(
+            category: snapshot.data!.adCategory,
+            productName: snapshot.data!.title,
+            pay: snapshot.data!.price,
+            campaignSubject: snapshot.data!.companyName,
+            applicantCount: snapshot.data!.numberOfSelectedMembers,
+            recruitCount: snapshot.data!.numberOfRecruiter,
+            selectedPlatform: snapshot.data!.adPlatformList,
+            starRating: snapshot.data!.advertiserAvgstar,
+            firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
+          );
+        } else if (snapshot.hasError) {
+          return Text('⛔ Campaign item error: ${snapshot.error}');
+        }
+        return Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 40),
+          child: SizedBox(
+            height: 50,
+            child: Center(
+                child: LoadingIndicator(
+              indicatorType: Indicator.ballRotateChase,
+              colors: [
+                style.colors['main1-4']!,
+                style.colors['main1-3']!,
+                style.colors['main1-2']!,
+                style.colors['main1-1']!,
+                style.colors['main1']!,
+              ],
+            )),
+          ),
+        );
+      },
+    );
 
     var appendData = isClouterData
         ? List<Clouter>.generate(10, (i) {
@@ -153,11 +132,7 @@ class InfiniteScrollController extends GetxController {
             clouter.clouterId = i + 1 + offset;
             return clouter;
           })
-        : List<Campaign1>.generate(10, (i) {
-            var campaign = Campaign1();
-            campaign.campaignId = i + 1 + offset;
-            return campaign;
-          });
+        : [campaignItemBox];
     data.addAll(appendData);
 
     print(data.length);
