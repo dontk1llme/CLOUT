@@ -1,4 +1,4 @@
-import 'package:clout/screens/join_select/widgets/jobToggle.dart';
+import 'package:clout/screens/find_password/widgets/jobToggle.dart';
 import 'package:clout/screens/register_or_modify/widgets/number_verify.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';

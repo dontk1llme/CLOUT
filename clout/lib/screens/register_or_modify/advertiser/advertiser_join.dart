@@ -177,11 +177,14 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                           SizedBox(height: 20),
                           SizedBox(
                             height: 50,
-                            child: BigButton(
-                              title: pageNum == 2
-                                  ? '완료'
-                                  : '다음', // pageNum에 따라 버튼 텍스트 변경
-                              function: goNext,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.9,
+                              child: BigButton(
+                                title: pageNum == 2
+                                    ? '완료'
+                                    : '다음', // pageNum에 따라 버튼 텍스트 변경
+                                function: goNext,
+                              ),
                             ),
                           ),
                           SizedBox(height: 20)
