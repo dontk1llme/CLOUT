@@ -15,11 +15,11 @@ public class MemberFeignClientProviderAdapter implements MemberProvider {
 
     @Override
     public AdvertiserInfo getAdvertiserInfoByMemberId(Long memberId) {
-        return memberFeignClient.getAdvertiser(memberId);
+        return memberFeignClient.selectAdvertiser(memberId);
     }
 
     @Override
     public ClouterInfo getClouterInfoByMemberId(Long memberId) {
-        return memberFeignClient.getClouter(memberId);
+        return memberFeignClient.selectClouter(memberId);
     }
 }
