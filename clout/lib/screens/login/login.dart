@@ -21,28 +21,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  // var email;
-
-  // var password;
 
   var obscured = true;
 
   var suffixIcon = Icon(Icons.visibility_outlined);
 
-  // setEmail(input) {
-  //   setState(() {
-  //     email = input;
-  //     print(email);
-  //     print(password);
-  //   });
-  // }
-
-  // setPassword(input) {
-  //   setState(() {
-  //     password = input;
-  //     print(password);
-  //   });
-  // }
+  final userController = Get.find<UserController>();
 
   setObscured() {
     setState(() {
@@ -56,30 +40,34 @@ class _LoginState extends State<Login> {
     });
   }
 
-  doLogin() {
+  doLogin() async {
     // 유저가 맞는지 확인하는 api 통신 여기에 두고 맞으면 main으로 이동하게
 
     // 1. 보냄
-    
-    final userController = Get.find<UserController>();
+    userController.setUserInfo(); // 'userInfo' 설정
     final LoginApi loginApi = LoginApi();
-    loginApi.postRequest('/v1/members/login', userController.userInfo);
-    
+    var loginData = await loginApi.postRequest('/v1/members/login', userController.userInfo);
 
     // 2. 리턴값에서 유저/클라우터 가려받고 set
-
-
-    // 유저가 클라우터일 경우
-    // userController.setClouter();
-    // 유저가 광고주일 경우
-    userController.setAdvertiser();
-
-    // 3. 만약 0 리턴되면 showtoast
-
-    if (userController.user == 0){
+    if (loginData['login_success']==true){
+      if(loginData['clout_or_adv']==1){
+        //1이면 클라우터
+        userController.setClouter();
+      }
+      else{
+        //2면 클라우터
+        userController.setAdvertiser();
+      }
+      Get.offAllNamed('/home');
+    }
+    else{
+      // 3. 만약 0 리턴되면 showtoast
+      // 혹은 login_api에서 설정해야 할 수도
       Fluttertoast.showToast(msg: '아이디 혹은 비밀번호를 확인해주세요');
     }
-    Get.offAllNamed('/home');
+    
+
+    
   }
 
   @override

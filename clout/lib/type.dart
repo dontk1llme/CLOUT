@@ -138,20 +138,20 @@ class Clouter {
 }
 
 class Login{
-  int user; //??
+  // int user; //??
   String userId;
-  String pwd;
+  String password;
 
   Login(
-    this.user,
+    // this.user,
     this.userId,
-    this.pwd
+    this.password
   );
 
   Map<String, dynamic> toJson() => {
-    'user' : user,
+    // 'user' : user,
     'userId' : userId,
-    'pwd' : pwd
+    'password' : password
   };
 
 }
