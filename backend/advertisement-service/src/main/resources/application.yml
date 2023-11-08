@@ -18,8 +18,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
-#    open-in-view: false
+    open-in-view: false
 springdoc:
   swagger-ui:
     path: /swagger-ui
