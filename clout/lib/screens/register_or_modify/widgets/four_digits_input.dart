@@ -1,10 +1,10 @@
 import 'package:clout/providers/four_digits_input_controller.dart';
+import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:clout/style.dart' as style;
 import 'package:flutter_animated_icons/icons8.dart';
-import 'package:clout/style.dart' as style;
 import 'package:lottie/lottie.dart';
 
 class FourDigitsInput extends StatefulWidget {
@@ -85,6 +85,9 @@ class _FourDigitsInputState extends State<FourDigitsInput>
                 checkController.reset();
                 checkController.forward();
                 if (controller.inputPin == controller.correctPin) {
+                  final userInfoController = Get.find<ClouterInfoController>(
+                      tag: widget.controllerTag);
+                  await userInfoController.setPhoneNumberVerified(true);
                   await Future.delayed(Duration(seconds: 2), () => Get.back());
                 }
               },

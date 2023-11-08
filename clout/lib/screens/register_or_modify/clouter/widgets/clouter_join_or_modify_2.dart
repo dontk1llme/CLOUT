@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:clout/hooks/register_api.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
-import 'package:clout/type.dart';
 import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -23,20 +20,17 @@ class ClouterJoinOrModify2 extends StatelessWidget {
     final RegisterApi registerApi = RegisterApi();
 
     var responseBody = await registerApi.getRequest(
-      '/v1/members/duplicate',
+      '/member-service/v1/members/duplicate',
       '?userId=${clouterRegisterController.id}',
     );
     print(responseBody);
     if (responseBody[0] == 200) {
+      // 사용 가능한 아이디
+      clouterRegisterController.setDoubleId(1);
+    } else if(responseBody[0] == 409){
+      // 중복된 아이디
       clouterRegisterController.setDoubleId(2);
-    } else {
-      clouterRegisterController.setDoubleId(0);
     }
-    // print(CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue);
-    // if (responseBody != false) {
-    //   var unique =
-    //       CheckDuplicated.fromJson(jsonDecode(responseBody)).checkValue;
-    // }
   }
 
   @override
@@ -69,7 +63,7 @@ class ClouterJoinOrModify2 extends StatelessWidget {
               children: [
                 JoinInput(
                   keyboardType: TextInputType.text,
-                  maxLength: 20,
+                  maxLength: 15,
                   title: '아이디 입력',
                   label: '아이디',
                   setState: controller.setId,
@@ -97,7 +91,7 @@ class ClouterJoinOrModify2 extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: controller.doubleId == 1
+              child: controller.doubleId == 0
                   ? Text(
                       '아이디 중복 확인이 필요해요',
                       style: style.textTheme.bodySmall?.copyWith(
@@ -105,7 +99,7 @@ class ClouterJoinOrModify2 extends StatelessWidget {
                         height: 1.5,
                       ),
                     )
-                  : controller.doubleId == 2
+                  : controller.doubleId == 1
                       ? Text(
                           '사용 가능한 아이디입니다',
                           style: style.textTheme.bodySmall?.copyWith(
@@ -126,7 +120,7 @@ class ClouterJoinOrModify2 extends StatelessWidget {
               children: [
                 JoinInput(
                   keyboardType: TextInputType.text,
-                  maxLength: 30,
+                  maxLength: 20,
                   title: '비밀번호 입력',
                   label: '비밀번호',
                   setState: controller.setPassword,
@@ -150,7 +144,7 @@ class ClouterJoinOrModify2 extends StatelessWidget {
               children: [
                 JoinInput(
                   keyboardType: TextInputType.text,
-                  maxLength: 30,
+                  maxLength: 20,
                   title: '비밀번호 확인',
                   label: '비밀번호 확인',
                   setState: controller.setCheckPassword,
