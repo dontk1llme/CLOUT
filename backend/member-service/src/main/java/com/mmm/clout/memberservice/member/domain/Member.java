@@ -30,6 +30,7 @@ public abstract class Member {
 
     private Long avgScore;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public Member update(String pwd) {
