@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
+// api
+import 'package:clout/hooks/item_api.dart';
+import 'package:clout/type.dart';
+import 'dart:convert';
+
+// controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
+
 // widgets
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
@@ -15,8 +23,37 @@ import 'package:clout/screens/mypage/clouter/clouter_likedcampaign.dart';
 import 'package:clout/screens/mypage/clouter/clouter_mycampaign.dart';
 import 'package:clout/screens/point/clouter_point_list.dart';
 
-class ClouterMyPage extends StatelessWidget {
-  const ClouterMyPage({super.key});
+class ClouterMyPage extends StatefulWidget {
+  ClouterMyPage({super.key});
+
+  @override
+  State<ClouterMyPage> createState() => _ClouterMyPageState();
+}
+
+class _ClouterMyPageState extends State<ClouterMyPage> {
+  var clouterInfo;
+
+  final userController = Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _showDetail();
+  }
+
+  _showDetail() async {
+    final ItemApi itemApi = ItemApi();
+
+    var response =
+        await itemApi.getRequest('/v1/clouters/', userController.userId);
+    // '/member-service/v1/clouters/', userController.userId);
+
+    final decodedResponse = jsonDecode(response);
+
+    setState(() {
+      clouterInfo = ClouterInfo.fromJson(decodedResponse);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +92,7 @@ class ClouterMyPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             NameTag(title: '클라우터'),
-                            Text('모카우유님',
+                            Text(clouterInfo?.nickName ?? '',
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold))
                           ],
@@ -64,7 +101,8 @@ class ClouterMyPage extends StatelessWidget {
                     ),
                     InkWell(
                       child: Icon(Icons.arrow_forward_ios),
-                      onTap: () => Get.toNamed('/clouterprofile'),
+                      onTap: () => Get.toNamed('/clouterprofile',
+                          arguments: userController.userId),
                     ),
                   ],
                 ),

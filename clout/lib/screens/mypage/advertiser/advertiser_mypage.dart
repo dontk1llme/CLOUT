@@ -1,7 +1,9 @@
-import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
+
+// controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
 
 // widgets
 import 'package:clout/widgets/common/main_drawer.dart';
@@ -49,7 +51,7 @@ class AdvertiserMyPage extends StatelessWidget {
                   SmallOutlinedButton(
                     title: '프로필 보기',
                     onPressed: () => Get.toNamed('/advertiserprofile',
-                        arguments: '${userController.userId}'),
+                        arguments: userController.userId),
                   ),
                 ],
               ),

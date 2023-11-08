@@ -1,11 +1,9 @@
 import 'package:get/get.dart';
 import 'package:clout/type.dart';
-import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:get/get.dart';
 
 class UserController extends GetxController {
-  int user = 1;
-  var userId = '3';
+  int user = -1;
+  var userId = '4';
   var password;
 
   var userInfo;
