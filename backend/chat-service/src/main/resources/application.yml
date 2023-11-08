@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8899
 
 spring:
   mvc:
@@ -29,12 +29,12 @@ spring:
 
 eureka:
   instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    hostname: ${EUREKA_HOSTNAME:localhost} # 외부에서 접근 가능한 호스트 이름 또는 IP
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: https://eureka.clouter.kr/eureka
 
 jwt:
   secret: VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4=VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4=
