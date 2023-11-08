@@ -55,15 +55,17 @@ class _LoginState extends State<Login> {
 
     // 2. 리턴값에서 유저/클라우터 가려받고 set
     if (loginData['login_success']==true){
-      if(loginData['clout_or_adv']==1){
-        //1이면 클라우터
-        userController.setClouter();
-      }
-      else{
-        //2면 클라우터
+      if(loginData['clout_or_adv']=='ADVERTISER'){
+        //광고주 1
         userController.setAdvertiser();
       }
+      else{
+        //클라우터 -1
+        userController.setClouter();
+      }
+      print('보여줘');
       userController.setUserLogin(loginData);
+      print(userController.userLogin);
       Get.offAllNamed('/home');
     }
     else{
