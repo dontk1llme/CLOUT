@@ -63,7 +63,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late Future<Campaign> futureCampaign;
+  // late Future<Campa> futureCampaign;
   // late Future<Clouter> futureClouter;
 
   // @override
