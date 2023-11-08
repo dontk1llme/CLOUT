@@ -58,6 +58,7 @@ class _LoginState extends State<Login> {
         //2면 클라우터
         userController.setAdvertiser();
       }
+      userController.setUserLogin(loginData);
       Get.offAllNamed('/home');
     }
     else{
