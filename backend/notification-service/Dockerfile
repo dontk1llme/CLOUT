@@ -12,5 +12,15 @@ FROM openjdk:17-jdk
 WORKDIR /app
 # ARG JAR_FILE=/build/libs/*.jar
 COPY --from=builder /app/build/libs/*.jar /app/app.jar
-EXPOSE 5000
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+##FROM openjdk:17-oracle
+##ARG JAR_FILE_PATH=build/libs/*.jar
+##COPY ${JAR_FILE_PATH} app.jar
+##ENTRYPOINT ["java", "-jar", "app.jar"]
+#
+#FROM openjdk:17-oracle
+#WORKDIR /app
+#ARG JAR_FILE=/build/libs/*.jar
+##COPY --from=builder /app/build/libs/*.jar /app/app.jar
+#ENTRYPOINT ["java", "-jar", "app.jar"]
