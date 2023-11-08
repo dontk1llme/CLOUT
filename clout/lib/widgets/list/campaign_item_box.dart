@@ -13,6 +13,7 @@ import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 
 class CampaignItemBox extends StatefulWidget {
+  final int campaignId;
   final String adCategory;
   final String title;
   final int price;
@@ -21,10 +22,11 @@ class CampaignItemBox extends StatefulWidget {
   final int numberOfRecruiter;
   final List<dynamic> adPlatformList;
   final AdvertiserInfo advertiserInfo;
-  // final String firstImg;
+  // final String firstImg;W
 
   const CampaignItemBox({
     super.key,
+    required this.campaignId,
     required this.adCategory,
     required this.title,
     required this.price,
@@ -59,7 +61,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
 
     return InkWell(
         // 여기 arguments에 해당 캠페인의 id를 넣어야 함
-        onTap: () => Get.toNamed('/campaignDetail', arguments: 1),
+        onTap: () =>
+            Get.toNamed('/campaignDetail', arguments: widget.campaignId),
         child: Container(
           width: screenWidth / 2 - 25,
           // height: 100,
