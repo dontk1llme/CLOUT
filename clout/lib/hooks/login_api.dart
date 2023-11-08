@@ -29,7 +29,7 @@ class LoginApi {
     var loginSuccess = false;
     var authorization = headers['authorization'];
     var refresh_token =  headers['refresh_token'];
-    var clout_or_adv = 1; //바디에서 받아서 설정해야 함
+    var clout_or_adv = body; //바디에서 받아서 설정해야 함
     
 
     if (statusCode == 200) {

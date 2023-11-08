@@ -9,6 +9,7 @@ class UserController extends GetxController {
   var password;
 
   var userInfo;
+  var userLogin;
 
   void setAdvertiser() {
     user = 1;
@@ -41,6 +42,11 @@ class UserController extends GetxController {
         userId,
         password);
     print('유저인포 업데이트');
+    update();
+  }
+
+  setUserLogin(input){
+    userLogin = input;
     update();
   }
 }
