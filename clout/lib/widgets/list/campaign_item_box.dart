@@ -19,7 +19,7 @@ class CampaignItemBox extends StatefulWidget {
   final CompanyInfo companyInfo;
   final int numberOfSelectedMembers;
   final int numberOfRecruiter;
-  final List<String> adPlatformList;
+  final List<dynamic> adPlatformList;
   final AdvertiserInfo advertiserInfo;
   final String firstImg;
 
@@ -130,7 +130,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 children: [
                   Flexible(
                     flex: 2,
-                    child: Text(widget.companyInfo.companyName!,
+                    child: Text('',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

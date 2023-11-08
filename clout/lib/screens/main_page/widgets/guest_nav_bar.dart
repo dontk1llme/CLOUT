@@ -1,4 +1,4 @@
-import 'package:clout/screens/join/widgets/big_button.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;

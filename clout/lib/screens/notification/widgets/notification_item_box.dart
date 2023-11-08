@@ -1,12 +1,12 @@
-import 'package:clout/screens/campaign_list/campaign_list.dart';
-import 'package:clout/screens/mypage/contract.dart';
+import 'package:clout/screens/list/campaign/campaign_list.dart';
+import 'package:clout/screens/contract_list/widgets/contract_button.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // screens
 import 'package:clout/screens/review_register/review_register.dart';
-import 'package:clout/screens/clouter/clouter_select.dart';
+import 'package:clout/screens/clouter_select/clouter_select.dart';
 
 class NotificationItem extends StatefulWidget {
   final int result;

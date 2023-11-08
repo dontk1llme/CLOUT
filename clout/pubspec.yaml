@@ -79,6 +79,7 @@ dependencies:
   http: ^1.1.0
   pinput: ^3.0.1
   format: ^1.4.0
+  flutter_animated_icons: ^1.0.1
 
 flutter_icons:
   android: "clout"
@@ -131,6 +132,10 @@ flutter:
     - assets/images/clouter.png
     - assets/images/advertiser.png
     - assets/images/addPhoto.png
+    - assets/images/join1.png
+    - assets/images/join2.png
+    - assets/images/join3.png
+    - assets/images/join4.png
     - assets/config/.env
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
