@@ -143,7 +143,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/clouterprofile', page: () => ClouterProfile()),
         GetPage(name: '/campaignDetail', page: () => CampaignDetail()),
         GetPage(name: '/advertisermypage', page: () => AdvertiserMyPage()),
-        GetPage(name: '/advertiserdetail', page: () => AdvertiserProfile()),
+        GetPage(name: '/advertiserprofile', page: () => AdvertiserProfile()),
         GetPage(name: '/clouterdetail', page: () => ClouterDetail()),
         GetPage(name: '/withdrawfirst', page: () => WithdrawFirst()),
         GetPage(name: '/withdrawsecond', page: () => WithdrawSecond()),
