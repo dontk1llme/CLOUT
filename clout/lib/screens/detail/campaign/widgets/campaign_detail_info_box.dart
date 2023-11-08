@@ -1,12 +1,16 @@
 import 'package:clout/screens/detail/campaign/campaign_detail.dart';
+import 'package:clout/type.dart';
 import 'package:clout/widgets/common/nametag.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:intl/intl.dart';
 
 class CampaignDetailInfoBox extends StatelessWidget {
-  final Campaign campaign;
-  CampaignDetailInfoBox({super.key, required this.campaign});
+  final CampaignInfo campaignInfo;
+  final AdvertiserInfo advertiserInfo;
+
+  CampaignDetailInfoBox(
+      {super.key, required this.campaignInfo, required this.advertiserInfo});
 
   var f = NumberFormat('###,###,###,###');
 
@@ -19,10 +23,10 @@ class CampaignDetailInfoBox extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          NameTag(title: '카테고리'),
+          NameTag(title: campaignInfo.adCategory!),
           SizedBox(height: 10),
           Text(
-            campaign.productName,
+            campaignInfo.title!,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
           ),
           SizedBox(height: 5),
@@ -36,7 +40,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    campaign.campaignSubject,
+                    advertiserInfo.companyInfo!.companyName!,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(width: 5),
@@ -44,7 +48,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
                     children: [
                       Icon(Icons.star, color: Colors.amber, size: 18),
                       SizedBox(width: 2),
-                      Text(campaign.starRating.toString(),
+                      Text(advertiserInfo.advertiserAvgStar.toString(),
                           style: TextStyle(fontWeight: FontWeight.w800)),
                     ],
                   ),
@@ -60,7 +64,8 @@ class CampaignDetailInfoBox extends StatelessWidget {
               Text('희망 플랫폼', style: TextStyle(fontSize: 15)),
               Expanded(
                   child: Text(
-                campaign.preferredPlatform,
+                // campaignInfo.adPlatformList,
+                '',
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ))
@@ -74,7 +79,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
               Text('신청 기간', style: TextStyle(fontSize: 15)),
               Expanded(
                   child: Text(
-                campaign.endDate,
+                '${campaignInfo.applyStartDate} ~ ${campaignInfo.applyEndDate}',
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ))
@@ -88,7 +93,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
             Expanded(
                 child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
               Text(
-                f.format(campaign.pay),
+                f.format(campaignInfo.price),
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ),
               Text(
@@ -106,13 +111,13 @@ class CampaignDetailInfoBox extends StatelessWidget {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(campaign.applicantCount.toString(),
+                Text(campaignInfo.numberOfSelectedMembers.toString(),
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
                 Text('명 / ',
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
-                Text(campaign.recruitCount.toString(),
+                Text(campaignInfo.numberOfRecruiter.toString(),
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
                 Text('명',
