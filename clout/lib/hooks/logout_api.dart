@@ -12,11 +12,9 @@ class LogoutApi {
     /////////////////////////////////////////
     http.Response response = await http.post(
       url,
-      // 헤더에 parameter 넣어줘야함
       headers: {"Content-Type": "application/json",
-      "authorization": parameter
+      "authorization": parameter  // 헤더에 parameter 넣어줘야함
       },
-      // body: json.encode(parameter),
     ); 
 
     var statusCode = response.statusCode;
@@ -29,7 +27,7 @@ class LogoutApi {
       print('로그아웃 성공');
     }
     else {
-      print('로그인 흐앵');
+      print('로그아웃 흐앵');
       print(statusCode);
       return false;
     }
