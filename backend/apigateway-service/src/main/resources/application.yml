@@ -96,15 +96,6 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/advertisement-service/(?<segment>.*), /$\{segment}
-        # 광고 전자서명과 이미지 s3 저장
-        - id: advertisement-service
-          uri: lb://ADVERTISEMENT-SERVICE
-          predicates:
-            - Path=/advertisement-service/v1/advertisements/**/sign
-            - Method=POST
-          filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/advertisement-service/(?<segment>.*), /$\{segment}
         # 광고 서비스 api 디폴트 인증 적용
         - id: advertisement-service
           uri: lb://ADVERTISEMENT-SERVICE
