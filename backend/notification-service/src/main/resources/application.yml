@@ -20,11 +20,11 @@ spring:
       ddl-auto: update
   kafka:
     producer:
-      bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+      bootstrap-servers: k9a409.p.ssafy.io:9092,k9a409.p.ssafy.io:9093,k9a409.p.ssafy.io:9094
       key-serializer: org.apache.kafka.common.serialization.LongSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      bootstrap-servers: kafka1:9092,kafka2:9092,kafka3:9092
+      bootstrap-servers: k9a409.p.ssafy.io:9092,k9a409.p.ssafy.io:9093,k9a409.p.ssafy.io:9094
       key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       properties:
