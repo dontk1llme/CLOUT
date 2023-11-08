@@ -1,5 +1,5 @@
 server:
-  port: 5000
+  port: 8899
 
 spring:
   application:
@@ -9,6 +9,10 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: 1234
+#    url: jdbc:mariadb://3.38.213.43:3306/notificationdb
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    username: root
+#    password: zmffkdnxm409!
   jpa:
     generate-ddl: true
     show-sql: true
@@ -34,7 +38,14 @@ spring:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: clout-consumer-group
       auto-offset-reset: earliest
-
+eureka:
+  instance:
+    hostname: ${EUREKA_HOSTNAME:localhost} # 외부에서 접근 가능한 호스트 이름 또는 IP
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: https://eureka.clouter.kr/eureka
 message:
   topic:
     name: test-topic-name
