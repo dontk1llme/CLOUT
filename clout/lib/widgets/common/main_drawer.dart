@@ -1,4 +1,5 @@
 import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:clout/screens/login/logout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -38,12 +39,18 @@ class MyDrawerState extends State<MyDrawer> {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Row(
+                      child: InkWell(
+                        onTap: () {
+                          logout();
+                        },
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Icons.logout, color: style.colors['category']),
                             Text('  로그아웃')
-                          ]),
+                          ],
+                        ),
+                      ),
                     ),
                     Container(
                         color: style.colors['main2'], height: 25, width: 0.3),
