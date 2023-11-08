@@ -1,5 +1,9 @@
 import 'package:clout/providers/region_controller.dart';
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
+import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/buttons/small_button.dart';
+import 'package:clout/widgets/region_multiselect_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -34,78 +38,88 @@ class RegionMultiSelect extends StatefulWidget {
 }
 
 class _RegionMultiSelectState extends State<RegionMultiSelect> {
-  List<String?> valuesHere = [];
-
-  final items = RegionMultiSelect.regions
-      .map((e) => MultiSelectItem<String>(e, e))
-      .toList();
+  void showBottomSheet() {
+    final regionController =
+        Get.find<RegionController>(tag: widget.controllerTag);
+    Get.bottomSheet(
+      backgroundColor: Colors.white,
+      isDismissible: true,
+      isScrollControlled: false,
+      BouncingListview(
+        child: Wrap(
+          children: RegionMultiSelect.regions
+              .map((e) => ListTile(
+                    onTap: () => regionController.selectedRegions.contains(e)
+                        ? regionController.removeRegion(e)
+                        : regionController.addRegion(e),
+                    leading: regionController.selectedRegions.contains(e)
+                        ? Icon(
+                            Icons.check_box_outlined,
+                            color: Colors.blue,
+                          )
+                        : Icon(Icons.check_box_outline_blank_outlined),
+                    title: Text(e),
+                  ))
+              .toList(),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegionController>(
-        tag: widget.controllerTag,
-        builder: (controller) => Container(
+      tag: widget.controllerTag,
+      builder: (controller) => Column(
+        children: [
+          Container(
             decoration: BoxDecoration(
-                border: Border.all(width: 1, color: style.colors['gray']!),
-                borderRadius: BorderRadius.circular(5)),
-            child: MultiSelectBottomSheetField<String?>(
-              initialValue: controller.selectedRegions,
-              initialChildSize: 0.7,
-              maxChildSize: 0.9,
-              minChildSize: 0.5,
-              isDismissible: true,
-              buttonIcon: Icon(Icons.place_outlined),
-              title: Padding(
-                padding: EdgeInsets.fromLTRB(10, 20, 0, 5),
-                child: Row(
-                  children: [
-                    Icon(Icons.place_outlined),
-                    Text(
-                      ' 지역 선택',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          height: 1.3),
-                    )
-                  ],
-                ),
+              border: Border.all(width: 1, color: style.colors['gray']!),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
               ),
-              buttonText: Text(
-                "여러 지역 선택 가능(항목 터치시 삭제)",
-                style: TextStyle(fontSize: 14, height: 1.5),
+            ),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: style.colors['white'],
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    side: BorderSide.none),
+                elevation: 0,
               ),
-              // searchable: true,
-              items: items,
-              decoration: BoxDecoration(),
-              cancelText: Text(
-                "취소",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: style.colors['main1']),
+              onPressed: showBottomSheet,
+              child: ListTile(
+                leading: Icon(Icons.place_outlined, size: 40),
+                contentPadding: EdgeInsets.all(0),
+                title: Text('여러 지역 선택 가능'),
+                subtitle: Text('항목 터치시 삭제'),
               ),
-              confirmText: Text(
-                "확인",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: style.colors['main1']),
-              ),
-              onConfirm: (values) {
-                setState(() {
-                  valuesHere = values;
-                });
-                controller.setSelectedRegions(valuesHere);
-              },
-              chipDisplay: MultiSelectChipDisplay(
-                chipColor: style.colors['main1'],
-                textStyle:
-                    TextStyle(color: style.colors['white'], fontSize: 15),
-                height: 20.0,
-                icon: Icon(Icons.close, color: Colors.white),
-                onTap: (item) {
-                  setState(() {
-                    valuesHere.remove(item);
-                  });
-                  controller.setSelectedRegions(valuesHere);
-                },
-              ),
-            )));
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.amber,
+            ),
+            child: Wrap(
+              children: controller.selectedRegions
+                  .map(
+                    (e) => RegionMultiselectChip(
+                      title: e,
+                      controllerTag: widget.controllerTag,
+                    ),
+                  )
+                  .toList(),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
