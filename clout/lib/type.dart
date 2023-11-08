@@ -62,8 +62,13 @@ class Advertiser {
   CompanyInfo? companyInfo;
   int? advertiserAvgstar;
 
-  Advertiser(this.userId, this.pwd, this.address, this.companyInfo,
-      this.advertiserAvgstar);
+  Advertiser(
+    this.userId,
+    this.pwd,
+    this.address,
+    this.companyInfo,
+    this.advertiserAvgstar,
+  );
 
   Map<String, dynamic> toJson() => {
         'userId': userId,
@@ -72,6 +77,17 @@ class Advertiser {
         'companyInfo': companyInfo,
         'advertiserAvgstar': advertiserAvgstar,
       };
+
+  factory Advertiser.fromJson(Map<String, dynamic> json) {
+    return Advertiser(
+      json['userId'],
+      json['pwd'],
+      Address.fromJson(json['addressInfo']),
+      // Address.fromJson(json['address']),
+      CompanyInfo.fromJson(json['companyInfo']),
+      json['advertiserAvgstar'],
+    );
+  }
 }
 
 // 아이디 중복 체크

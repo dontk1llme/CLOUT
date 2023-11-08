@@ -16,7 +16,9 @@ class ItemApi {
     );
 
     print('4️⃣');
+    print(response);
     print('응답코드 입니다. ${response.statusCode}');
+    print('응답메시지: ${utf8.decode(response.bodyBytes)}');
     if (response.statusCode == 200) {
       print(
           '👻✨ response body: ${response.body} // 👉 infinite_scroll_controller.dart');
