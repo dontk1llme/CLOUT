@@ -12,7 +12,7 @@ public enum PointCategory {
 
     private final String description;
 
-    public PointCategory convertToEnum(String categoryStr) {
+    public static PointCategory convertToEnum(String categoryStr) {
         return PointCategory.valueOf(categoryStr.toUpperCase());
     }
 
