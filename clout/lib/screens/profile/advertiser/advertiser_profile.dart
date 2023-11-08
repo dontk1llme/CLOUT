@@ -1,5 +1,3 @@
-import 'package:clout/providers/user_controllers/advertiser_controller.dart';
-import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -8,6 +6,9 @@ import 'package:get/get.dart';
 import 'package:clout/hooks/item_api.dart';
 import 'dart:convert';
 import 'package:clout/type.dart';
+
+// controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
 
 // widgets
 import 'package:clout/screens/mypage/widgets/info_item_box.dart';
@@ -23,11 +24,9 @@ class AdvertiserProfile extends StatefulWidget {
 }
 
 class _AdvertiserProfileState extends State<AdvertiserProfile> {
-  AdvertiserInfo? advertiserInfo;
   var advertiser;
 
   final userController = Get.find<UserController>();
-  final advertiserController = Get.put(AdvertiserController());
 
   @override
   void initState() {
@@ -40,7 +39,7 @@ class _AdvertiserProfileState extends State<AdvertiserProfile> {
 
     // try {
     var response = await itemApi.getRequest(
-        // '/member-service/v1/advertisers/', '${userController.userId}');
+        // '/member-service/v1/advertisers/', userController.userId);
         '/v1/advertisers/',
         userController.userId);
     print(response);
