@@ -30,14 +30,14 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
     print('중복확인');
     print(responseBody);
     if (responseBody[0] == 200) {
-      advertiserRegisterController.setDoubleId(2);
+      advertiserRegisterController.setDoubleId(1);
     } else {
-      advertiserRegisterController.setDoubleId(0);
+      advertiserRegisterController.setDoubleId(2);
     }
   }
 
   verify() async {
-    var responseBody = await registerApi.getRequest('/v1/members/sendsms',
+    var responseBody = await registerApi.getRequest('/member-service/v1/members/sendsms',
         '?phoneNumber=${advertiserRegisterController.phoneNumber}');
     print('인증키 sms 발송');
     final pinController =

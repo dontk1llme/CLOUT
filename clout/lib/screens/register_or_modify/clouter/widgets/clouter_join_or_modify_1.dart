@@ -8,6 +8,7 @@ import 'package:clout/widgets/input/input_elements/widgets/date_input.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clout/screens/register_or_modify/widgets/number_verify.dart';
 
@@ -25,7 +26,7 @@ class ClouterJoinOrModify1 extends StatelessWidget {
   verify() async {
     final clouterRegisterController =
         Get.find<ClouterInfoController>(tag: controllerTag);
-    var responseBody = await registerApi.getRequest('/v1/members/sendsms',
+    var responseBody = await registerApi.getRequest('/member-service/v1/members/sendsms',
         '?phoneNumber=${clouterRegisterController.phoneNumber}');
     print('인증키 sms 발송');
     final pinController =
@@ -83,15 +84,26 @@ class ClouterJoinOrModify1 extends StatelessWidget {
                   right: 10,
                   top: 2,
                   child: ElevatedButton(
-                    onPressed: verify,
+                    onPressed: () {
+                      if (controller.phoneNumber != null &&
+                          controller.phoneNumber.length != 0) {
+                        verify();
+                      } else {
+                        Fluttertoast.showToast(msg: '휴대전화 번호를 입력해주세요');
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: style.colors['main1'],
+                      backgroundColor: controller.phoneNumberVerified
+                          ? style.colors['main1-3']
+                          : style.colors['main1'],
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    child: Text('인증'),
+                    child: controller.phoneNumberVerified
+                        ? Icon(Icons.check_circle_outline)
+                        : Text('인증'),
                   ),
                 ),
               ],
