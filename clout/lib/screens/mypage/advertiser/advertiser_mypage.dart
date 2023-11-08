@@ -1,3 +1,4 @@
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -17,7 +18,9 @@ import 'package:clout/screens/contract_list/contract_list.dart';
 import 'package:clout/screens/mypage/widgets/mypage_list.dart';
 
 class AdvertiserMyPage extends StatelessWidget {
-  const AdvertiserMyPage({super.key});
+  AdvertiserMyPage({super.key});
+
+  final userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,8 @@ class AdvertiserMyPage extends StatelessWidget {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   SmallOutlinedButton(
                     title: '프로필 보기',
-                    onPressed: () => Get.toNamed('/clouterdetail'),
+                    onPressed: () => Get.toNamed('/advertiserprofile',
+                        arguments: '${userController.userId}'),
                   ),
                 ],
               ),

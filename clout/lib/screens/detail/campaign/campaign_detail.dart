@@ -2,10 +2,7 @@ import 'package:clout/hooks/item_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:async';
 import 'package:clout/type.dart';
 
 // controllers

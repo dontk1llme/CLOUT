@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class UserController extends GetxController {
   int user = 1;
-  var userId = '2';
+  var userId = '3';
   var password;
 
   var userInfo;
@@ -45,7 +45,7 @@ class UserController extends GetxController {
     update();
   }
 
-  setUserLogin(input){
+  setUserLogin(input) {
     userLogin = input;
     update();
   }
