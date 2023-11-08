@@ -63,7 +63,6 @@ class _LoginState extends State<Login> {
         //클라우터 -1
         userController.setClouter();
       }
-      print('보여줘');
       userController.setUserLogin(loginData);
       print(userController.userLogin);
       Get.offAllNamed('/home');
