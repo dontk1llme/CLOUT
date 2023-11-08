@@ -5,7 +5,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: https://clouter.kr/eureka
+      defaultZone: https://eureka.clouter.kr/eureka
 
 spring:
   application:
