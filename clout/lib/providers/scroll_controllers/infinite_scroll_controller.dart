@@ -45,8 +45,8 @@ class InfiniteScrollController extends GetxController {
   getRequest(endPoint, parameter) async {
     var url = Uri.parse('${baseUrl}${endPoint}${parameter}');
     print('3️⃣');
-    print(url);
-    print(json.encode(parameter));
+    print('${url} 👉 infinite_scroll_controller.dart');
+    print('${json.encode(parameter)} 👉 infinite_scroll_controller.dart');
     final response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -118,9 +118,7 @@ class InfiniteScrollController extends GetxController {
 
     int offset = data.length;
 
-    print('2️⃣');
     var response = await getRequest(endPoint, parameter);
-    print('여기까지 오나요? 👉 infinite_scroll_controller.dart');
     print(response);
     var newList = CampaignList.fromJson(jsonDecode(response)).campaignList;
     var advertiser = CampaignList.fromJson(jsonDecode(response)).advertiserInfo;
