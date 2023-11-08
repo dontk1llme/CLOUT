@@ -13,17 +13,31 @@ import 'package:intl/intl.dart';
 
 class ClouterInfoController extends GetxController {
   var name;
-  var gender;
+  var age;
   var phoneNumber;
   var id;
   var password;
   var checkPassword;
   var nickName;
   var images;
-  List<bool> selections = List.generate(12, (index) => false);
-  var doubleId = 1;
+  List<bool> selections = [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+  var doubleId = 0;
   var obscured = true;
-  var phoneNumberVerified;
+  var phoneNumberVerified = false;
+  // var negoable = true;
 
   var clouter;
 
@@ -123,9 +137,11 @@ class ClouterInfoController extends GetxController {
         nickName,
         name,
         DateFormat('yyyy.MM.dd').format(dateController!.selectedDate),
+        age,
         phoneNumber,
         channelList,
-        // feeController!.minFee,
+        HopeCost(feeController!.minFee),
+        // negoable,
         categoryList,
         regionController!.selectedRegions,
         address);
@@ -134,11 +150,6 @@ class ClouterInfoController extends GetxController {
 
   setName(input) {
     name = input;
-    update();
-  }
-
-  setGender(input) {
-    gender = input;
     update();
   }
 
@@ -175,9 +186,9 @@ class ClouterInfoController extends GetxController {
   }
 
   setDoubleId(input) {
-    //defulat 1
-    //가능하면 2
-    //중복이면 3
+    //defulat 0
+    //가능하면 1
+    //중복이면 2
     //지금은 편의상 중복 아니라고 함
     doubleId = input;
     update();
@@ -194,31 +205,98 @@ class ClouterInfoController extends GetxController {
   }
 
   canGoSecondPage() {
-    if (name != null &&
-        DateFormat('yyyy.MM.dd').format(dateController!.selectedDate) !=
-            DateFormat('yyyy.MM.dd').format(DateTime.now()) &&
-        phoneNumber != null &&
-        addressController!.daumAddress != '주소 검색' &&
-        addressController!.detailAddress != null) {
-      return true;
-    } else {
-      return false;
+    if (name == null || name.length == 0) {
+      return '이름을 입력해주세요';
     }
+    if (DateFormat('yyyy.MM.dd').format(dateController!.selectedDate) ==
+        DateFormat('yyyy.MM.dd').format(DateTime.now())) {
+      return '생년월일을 입력해주세요 🎂';
+    }
+    if (phoneNumber == null || phoneNumber.length == 0) {
+      return '휴대전화 번호를 입력해주세요 📱';
+    }
+    if (addressController.zipCode == null ||
+        addressController.zipCode.length == 0) {
+      return '주소를 입력해주세요 🏢';
+    }
+    if (addressController.detailAddress == null ||
+        addressController.detailAddress.length == 0) {
+      return '상세주소를 입력해주세요 🏠';
+    }
+    return '';
   }
 
   canGoThirdPage() {
-    if (nickName != null &&
-        id != null &&
-        password != null &&
-        checkPassword != null) {
-      if (password == checkPassword) {
-        return 1;
-      } else {
-        return 0;
-      }
-    } else {
-      return -1;
+    if (nickName == null || nickName.length == 0) {
+      return '닉네임을 입력해주세요';
     }
+    if (id == null || id.length == 0) {
+      return '아이디를 입력해주세요 📃';
+    }
+    if (id.length < 5 || id.length > 15) {
+      return '아이디는 5자 ~ 15자로 입력해주세요';
+    }
+    if (doubleId == 0) {
+      return '아이디 중복을 확인해주세요';
+    }
+    if (doubleId == 2) {
+      return '중복된 아이디입니다 😥';
+    }
+    if (password == null || password.length == 0) {
+      return '비밀번호를 입력해주세요';
+    }
+    if (password.length < 8 || password.length > 20) {
+      return '비밀번호는 8자 ~ 20자로 입력해주세요';
+    }
+    if (checkPassword == null || checkPassword.length == 0) {
+      return '비밀번호 확인을 입력해주세요';
+    }
+    if (checkPassword != password) {
+      return '비밀번호 확인이 일치하지 않습니다';
+    }
+    return '';
+  }
+
+  canGoFourthPage() {
+    if ((platformSelectController.id[0].length == 0 &&
+            platformSelectController.link[0].length == 0 &&
+            platformSelectController.followerCount[0].length == 0) &&
+        (platformSelectController.id[1].length == 0 &&
+            platformSelectController.link[1].length == 0 &&
+            platformSelectController.followerCount[1].length == 0) &&
+        (platformSelectController.id[2].length == 0 &&
+            platformSelectController.link[2].length == 0 &&
+            platformSelectController.followerCount[2].length == 0)) {
+      return '최소 한개 이상의 SNS 정보를 입력해주세요';
+    }
+    if (platformSelectController.id[0].length != 0 ||
+        platformSelectController.link[0].length != 0 ||
+        platformSelectController.followerCount[0].length != 0) {
+      if (platformSelectController.id[0].length == 0 ||
+          platformSelectController.link[0].length == 0 ||
+          platformSelectController.followerCount[0].length == 0) {
+        return 'Instagram 계정의 정보를 완성해주세요';
+      }
+    }
+    if (platformSelectController.id[1].length != 0 ||
+        platformSelectController.link[1].length != 0 ||
+        platformSelectController.followerCount[1].length != 0) {
+      if (platformSelectController.id[1].length == 0 ||
+          platformSelectController.link[1].length == 0 ||
+          platformSelectController.followerCount[1].length == 0) {
+        return 'Tiktok 계정의 정보를 완성해주세요';
+      }
+    }
+    if (platformSelectController.id[2].length != 0 ||
+        platformSelectController.link[2].length != 0 ||
+        platformSelectController.followerCount[2].length != 0) {
+      if (platformSelectController.id[2].length == 0 ||
+          platformSelectController.link[2].length == 0 ||
+          platformSelectController.followerCount[2].length == 0) {
+        return 'Youtube 계정의 정보를 완성해주세요';
+      }
+    }
+    return '';
   }
 
   printAll() {
