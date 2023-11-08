@@ -44,6 +44,10 @@ public class PointTransaction extends BaseEntity {
     @Column(name = "point_category")
     private PointCategory pointCategory;
 
+    // 반정규화
+    @Column(name = "counterparty")
+    private String counterparty;
+
     public PointTransaction(Point point, Long amount, PointStatus pointStatus,
         PointCategory pointCategory) {
         this.point = point;
@@ -56,8 +60,8 @@ public class PointTransaction extends BaseEntity {
         return new PointTransaction(
             point,
             chargePoint,
-            PointStatus.CHARGE,
-            PointCategory.PAY
+            PointStatus.PLUS,
+            PointCategory.CHARGE
         );
     }
 
@@ -67,6 +71,6 @@ public class PointTransaction extends BaseEntity {
         PointCategory pointCategory
 
     ) {
-        return new PointTransaction(point, reducingPoint, PointStatus.USED, pointCategory);
+        return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory);
     }
 }

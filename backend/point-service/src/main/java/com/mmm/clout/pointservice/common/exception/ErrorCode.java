@@ -25,7 +25,8 @@ public enum ErrorCode {
      * 포인트
      */
     POINT_NOT_FOUND(HttpStatus.NOT_FOUND, "POINT_NOT_FOUND", "포인트가 존재하지 않습니다. 충전해주세요."),
-    LACK_OF_POINT(HttpStatus.BAD_REQUEST, "LACK_OF_POINT", "포인트 잔액이 부족합니다. 충전해주세요.");
+    LACK_OF_POINT(HttpStatus.BAD_REQUEST, "LACK_OF_POINT", "포인트 잔액이 부족합니다. 충전해주세요."),
+    EMPTY_POINT_TRANSACTION(HttpStatus.NOT_FOUND, "EMPTY_POINT_TRANSACTION", "포인트 거래내역이 없습니다.");
 
 
     private final HttpStatus status;

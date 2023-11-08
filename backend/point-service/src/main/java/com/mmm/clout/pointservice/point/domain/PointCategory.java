@@ -5,11 +5,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum PointCategory {
 
-    CREATE_AD("광고 캠페인 등록"), CONTRACT("계약"), PAY("결제");
+    CONTRACT("계약"),
+    CREATE_CAMPAIGN("캠페인 등록"),
+    CHARGE("포인트 충전"),
+    WITHDRAWAL("포인트 출금");
 
     private final String description;
 
-    public PointCategory convertToPointCategory(String categoryStr) {
+    public static PointCategory convertToEnum(String categoryStr) {
         return PointCategory.valueOf(categoryStr.toUpperCase());
     }
 
