@@ -14,10 +14,16 @@ class FindPassword extends StatefulWidget {
 }
 
 class FindPasswordState extends State<FindPassword> {
-  var number;
+  var userId;
+  var phoneNumber;
+  setUserId(input) {
+    setState(() {
+      userId = input;
+    });
+  }
   setNumber(input) {
     setState(() {
-      number = input;
+      phoneNumber = input;
     });
   }
 
@@ -45,7 +51,12 @@ class FindPasswordState extends State<FindPassword> {
               padding: const EdgeInsets.only(top: 20, right: 25, bottom: 20),
               child: Column(
                 children: [
-                  JobToggle(),
+                  // JobToggle(),
+                  SizedBox(height: 20),
+                   Input(
+                    placeholder: '아이디 입력',
+                    setText: setUserId
+                  ),
                   SizedBox(height: 20),
                   Input(
                     placeholder: '전화번호 입력',
