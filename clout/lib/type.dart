@@ -103,30 +103,32 @@ class ChannelList {
 
 class HopeCost {
   int minCost;
-  int maxCost;
 
-  HopeCost(this.minCost, this.maxCost);
+  HopeCost(this.minCost);
 
   Map<String, dynamic> toJson() => {
         'minCost': minCost,
-        'maxCost': maxCost,
       };
+
+  factory HopeCost.fromJson(Map<String, dynamic> json) {
+    return HopeCost(json['minCost']);
+  }
 }
 
 class Clouter {
-  String userId;
-  String pwd;
-  String nickName;
-  String name;
-  String birthday;
-  // String age; // 생일 정보를 받아서 age를 따로 받을 필요가 있나 문의
-  String phoneNumber;
-  List<ChannelList> channelList; // 이거 followerScale 숫자로 받을 수 있는지 문의
-  // HopeCost hopeCost; // 이거 최소 최대가 아니라 최솟값만 받도록 조정
+  String? userId;
+  String? pwd;
+  String? nickName;
+  String? name;
+  String? birthday;
+  String? age; // 생일 정보를 받아서 age를 따로 받을 필요가 있나 문의
+  String? phoneNumber;
+  List<ChannelList>? channelList; // 이거 followerScale 숫자로 받을 수 있는지 문의
+  HopeCost hopeCost; // 이거 최소 최대가 아니라 최솟값만 받도록 조정
   // bool negoable; // 이건 캠페인 아닌가?
-  List<String> categoryList;
-  List<String?> regionList;
-  Address address;
+  List<String>? categoryList;
+  List<String?>? regionList;
+  Address? address;
 
   Clouter(
     this.userId,
@@ -134,9 +136,10 @@ class Clouter {
     this.nickName,
     this.name,
     this.birthday,
+    this.age,
     this.phoneNumber,
     this.channelList,
-    // this.hopeCost,
+    this.hopeCost,
     // this.negoable,
     this.categoryList,
     this.regionList,
@@ -149,14 +152,31 @@ class Clouter {
         'nickName': nickName,
         'name': name,
         'birthday': birthday,
+        'age': age,
         'phoneNumber': phoneNumber,
         'channelList': channelList,
-        // 'hopeCost': hopeCost,
+        'hopeCost': hopeCost,
         // 'negoable': negoable,
         'categoryList': categoryList,
         'regionList': regionList,
         'address': address,
       };
+
+  factory Clouter.fromJson(Map<String, dynamic> json) {
+    return Clouter(
+        json['userId'],
+        json['name'],
+        json['pwd'],
+        json['nickaname'],
+        json['birthday'],
+        json['age'],
+        json['phoneNumber'],
+        json['channelList'],
+        HopeCost.fromJson(json['hopeCost']),
+        json['categoryList'],
+        json['regionList'],
+        Address.fromJson(json['address']));
+  }
 }
 
 class Login {
