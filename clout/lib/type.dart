@@ -178,6 +178,7 @@ class Login{
 
 }
 
+
 class Campaign {
   int? campaignId;
   List<String>? adPlatformList;
