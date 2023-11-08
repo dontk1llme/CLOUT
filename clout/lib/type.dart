@@ -115,6 +115,11 @@ class ChannelList {
         'link': link,
         'followerScale': followerScale,
       };
+
+  factory ChannelList.fromJson(Map<String, dynamic> json) {
+    return ChannelList(
+        json['name'], json['platform'], json['link'], json['followerScale']);
+  }
 }
 
 class HopeCost {
@@ -189,6 +194,62 @@ class Clouter {
         json['phoneNumber'],
         json['channelList'],
         HopeCost.fromJson(json['hopeCost']),
+        json['categoryList'],
+        json['regionList'],
+        Address.fromJson(json['address']));
+  }
+}
+
+class ClouterInfo {
+  int? clouterId;
+  String? userId;
+  int? avgScore;
+  String? role;
+  String? nickName;
+  String? name;
+  String? birthday;
+  int? age;
+  String? phoneNumber;
+  List<dynamic>? channelList;
+  HopeCost? hopeCost;
+  bool? negoable;
+  List<dynamic>? categoryList;
+  List<dynamic>? regionList;
+  Address? address;
+
+  ClouterInfo(
+    this.clouterId,
+    this.userId,
+    this.avgScore,
+    this.role,
+    this.nickName,
+    this.name,
+    this.birthday,
+    this.age,
+    this.phoneNumber,
+    this.channelList,
+    this.hopeCost,
+    this.negoable,
+    this.categoryList,
+    this.regionList,
+    this.address,
+  );
+
+  factory ClouterInfo.fromJson(Map<String, dynamic> json) {
+    return ClouterInfo(
+        json['clouterId'],
+        json['userId'],
+        json['avgScore'],
+        json['role'],
+        json['nickName'],
+        json['name'],
+        json['birthday'],
+        json['age'],
+        json['phoneNumber'],
+        // ChannelList.fromJson(json['channelList']),
+        json['channelList'],
+        HopeCost.fromJson(json['hopeCost']),
+        json['negoable'],
         json['categoryList'],
         json['regionList'],
         Address.fromJson(json['address']));
