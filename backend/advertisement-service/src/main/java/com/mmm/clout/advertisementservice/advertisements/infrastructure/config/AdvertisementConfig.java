@@ -6,10 +6,12 @@ import com.mmm.clout.advertisementservice.advertisements.application.EndCampaign
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByAdvertiser;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
+import com.mmm.clout.advertisementservice.advertisements.application.SearchCampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.UpdateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -77,5 +79,16 @@ public class AdvertisementConfig {
         ApplyRepository applyRepository
     ) {
         return new EndCampaignProcessor(campaignRepository, applyRepository);
+    }
+
+    @Bean
+    public SearchCampaignListProcessor searchCampaignListProcessor(
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
+        JPAQueryFactory jpaQueryFactory
+    ) {
+        return new SearchCampaignListProcessor(
+            campaignRepository,
+            jpaQueryFactory
+        );
     }
 }
