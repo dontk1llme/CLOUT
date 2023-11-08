@@ -8,7 +8,7 @@ class AdvertiserInfoController extends GetxController {
   var name;
   var phoneNumber;
   var id;
-  var doubleId = 1;
+  var doubleId = 0;
   var password;
   var checkPassword;
   var businessName;
@@ -61,8 +61,8 @@ class AdvertiserInfoController extends GetxController {
   }
 
   setDoubleId(input) {
-    //가능하면 2
-    //중복이면 3
+    //가능하면 1
+    //중복이면 2
     //지금은 편의상 중복 아니라고 함
     doubleId = input;
     update();
@@ -133,14 +133,14 @@ class AdvertiserInfoController extends GetxController {
     if (id == null || id.length == 0) {
       return '아이디를 입력해주세요 📃';
     }
-    if (doubleId == 1) {
-      return '아이디 중복을 확인해주세요';
-    }
-    if (doubleId == 0) {
-      return '중복된 아이디입니다 😥';
-    }
     if (id.length < 5 || id.length > 15) {
       return '아이디는 5자 ~ 15자로 입력해주세요';
+    }
+    if (doubleId == 0) {
+      return '아이디 중복을 확인해주세요';
+    }
+    if (doubleId == 2) {
+      return '중복된 아이디입니다 😥';
     }
     if (password == null || password.length == 0) {
       return '비밀번호를 입력해주세요';
@@ -148,8 +148,11 @@ class AdvertiserInfoController extends GetxController {
     if (password.length < 8 || password.length > 20) {
       return '비밀번호는 8자 ~ 20자로 입력헤주세요';
     }
+    if (checkPassword == null || checkPassword.length == 0) {
+      return '비밀번호 확인을 입력해주세요';
+    }
     if (password != checkPassword) {
-      return '비밀번호 확인을 확인해주세요';
+      return '비밀번호 확인이 일치하지 않습니다.';
     }
     return '';
   }
