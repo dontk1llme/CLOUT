@@ -1,7 +1,7 @@
 // global
 import 'package:clout/hooks/login_api.dart';
 import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:clout/screens/join/find_password.dart';
+import 'package:clout/screens/find_password/find_password.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -21,7 +21,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   var obscured = true;
 
   var suffixIcon = Icon(Icons.visibility_outlined);
@@ -42,6 +41,12 @@ class _LoginState extends State<Login> {
 
   doLogin() async {
     // 유저가 맞는지 확인하는 api 통신 여기에 두고 맞으면 main으로 이동하게
+    Get.offAllNamed('/home');
+    // // 1. 보냄
+    // userController.setUserInfo(); // 'userInfo' 설정
+    // final LoginApi loginApi = LoginApi();
+    // var loginData = await loginApi.postRequest(
+    //     '/v1/members/login', userController.userInfo);
 
     // 1. 보냄
     userController.setUserInfo(); // 'userInfo' 설정
