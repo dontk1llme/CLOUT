@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
+// api
+import 'dart:convert';
+import 'package:clout/hooks/item_api.dart';
+import 'package:clout/type.dart';
+
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
 
@@ -19,10 +24,39 @@ import 'package:clout/screens/mypage/advertiser/advertiser_likedclouters.dart';
 import 'package:clout/screens/contract_list/contract_list.dart';
 import 'package:clout/screens/mypage/widgets/mypage_list.dart';
 
-class AdvertiserMyPage extends StatelessWidget {
+class AdvertiserMyPage extends StatefulWidget {
   AdvertiserMyPage({super.key});
 
+  @override
+  State<AdvertiserMyPage> createState() => _AdvertiserMyPageState();
+}
+
+class _AdvertiserMyPageState extends State<AdvertiserMyPage> {
+  var advertiser;
+
   final userController = Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _showDetail();
+  }
+
+  _showDetail() async {
+    final ItemApi itemApi = ItemApi();
+
+    var response = await itemApi.getRequest(
+        // '/member-service/v1/advertisers/', userController.userId);
+        '/v1/advertisers/',
+        userController.userId);
+    print(response);
+
+    final decodedResponse = jsonDecode(response);
+
+    setState(() {
+      advertiser = Advertiser.fromJson(decodedResponse);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +79,7 @@ class AdvertiserMyPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('업체명(담당자명)',
+                  Text(advertiser?.companyInfo.companyName ?? '',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   SmallOutlinedButton(
