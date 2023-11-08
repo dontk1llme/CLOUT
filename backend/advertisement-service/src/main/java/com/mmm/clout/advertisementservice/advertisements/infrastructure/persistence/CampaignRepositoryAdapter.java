@@ -3,6 +3,8 @@ package com.mmm.clout.advertisementservice.advertisements.infrastructure.persist
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.jpa.JpaCampaignRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Repository;
 public class CampaignRepositoryAdapter implements CampaignRepository {
 
     private final JpaCampaignRepository jpaCampaignRepository;
+    private final JPAQueryFactory jpaQueryFactory;
 
     @Override
     public Campaign save(Campaign campaign) {
@@ -31,13 +34,21 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
     @Override
     public List<Campaign> getTop10List() {
         Pageable pageable = PageRequest.of(0, 10);
-        Page<Campaign> pages = jpaCampaignRepository.findActiveCampaignsOrderByApplicants(LocalDate.now(), pageable);
+        Page<Campaign> pages = jpaCampaignRepository.findActiveCampaignsOrderByApplicants(
+            LocalDate.now(), pageable);
         return pages.getContent();
     }
 
     @Override
     public List<Campaign> getCampainListByAdvertiserId(Long advertiserId, Pageable pageable) {
-        Page<Campaign> pages = jpaCampaignRepository.findByRegisterIdOrderByCreatedAtDesc(advertiserId, pageable);
+        Page<Campaign> pages = jpaCampaignRepository.findByRegisterIdOrderByCreatedAtDesc(
+            advertiserId, pageable);
         return pages.getContent();
     }
+
+    public List<Campaign> findAllByCondition(BooleanBuilder builder, Pageable pageable) {
+        return jpaCampaignRepository.findAll(builder, pageable).getContent();
+    }
+
+
 }
