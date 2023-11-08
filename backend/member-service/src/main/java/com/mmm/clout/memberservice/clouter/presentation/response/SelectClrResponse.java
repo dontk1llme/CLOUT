@@ -26,9 +26,6 @@ public class SelectClrResponse {
     @Schema(description = "클라우터 별점 평균")
     private Long avgScore;
 
-    @Schema(description = "클라우터 전체 포인트")
-    private Long totalPoint;
-
     @Schema(description = "클라우터 유저 role (USER, ADMIN)")
     private Role role;
 
@@ -70,8 +67,6 @@ public class SelectClrResponse {
         this.userId = clouterReader.getUserId();
 
         this.avgScore = clouterReader.getAvgScore();
-
-        this.totalPoint = clouterReader.getTotalPoint();
 
         this.role = clouterReader.getRole();
 

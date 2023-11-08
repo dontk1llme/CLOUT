@@ -36,7 +36,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+        #            - AuthorizationHeaderFilter
         # 클라우터 api
         - id: member-service
           uri: lb://MEMBER-SERVICE
@@ -45,7 +45,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/member-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+        #            - AuthorizationHeaderFilter
         # Image api
         - id: image-service
           uri: lb://IMAGE-SERVICE
@@ -79,6 +79,13 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/advertisement-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
+        - id: contract-service
+          uri: lb://CONTRACT-SERVICE
+          predicates:
+            - Path=/contract-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/contract-service/(?<segment>.*), /$\{segment}
 #        - id: MEMBER-service
 #          uri: lb://MEMBER-SERVICE
 #          predicates:

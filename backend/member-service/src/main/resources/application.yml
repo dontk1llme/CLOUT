@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8888
 
 spring:
   mvc:
@@ -8,10 +8,10 @@ spring:
   application:
     name: member-service
   datasource:
-    url: jdbc:mariadb://localhost:3306/test
+    url: jdbc:mariadb://3.38.213.43:3306/memberdb
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password: 1234
+    password: zmffkdnxm409!
   jpa:
     properties:
       hibernate:
@@ -21,20 +21,22 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   data:
     redis:
-      host: localhost
+      host: 3.38.213.43
       port: 6379
+      password: BboBpf1zv}5.lE)a&C[5=L_{^xQ!Y.u#itKO.]5g5rmXC!,BGe
 
 eureka:
   instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    hostname: ${EUREKA_HOSTNAME:localhost}
+#    instance-id: ${EUREKA_HOSTNAME:localhost}:${spring.application.instance_id:${random.value}}# 외부에서 접근 가능한 호스트 이름 또는 IP
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: https://eureka.clouter.kr/eureka
 
 jwt:
   secret: VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4=VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4=

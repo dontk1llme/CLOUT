@@ -21,7 +21,7 @@ public class ChannelReader {
     private String link;
 
     @Schema(description = "원하는 최대 금액")
-    private FollowerScale followerScale;
+    private Long followerScale;
 
     public ChannelReader(Channel channel) {
         this.name = channel.getName();

@@ -1,10 +1,13 @@
 package com.mmm.clout.advertisementservice.apply.presentation;
 
 import com.mmm.clout.advertisementservice.apply.application.facade.ApplyFacade;
-import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import com.mmm.clout.advertisementservice.apply.presentation.request.CreateApplyRequest;
+import com.mmm.clout.advertisementservice.apply.presentation.response.ApplicantResponse;
+import com.mmm.clout.advertisementservice.apply.presentation.response.ApplyMessageResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.CreateApplyResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.GetAllByStatusResponse;
+import com.mmm.clout.advertisementservice.common.docs.ApplyControllerDocs;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,14 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/applies")
 @RequiredArgsConstructor
-public class ApplyController {
+public class ApplyController implements ApplyControllerDocs {
 
     private final ApplyFacade applyFacade;
+
     @PostMapping
     public ResponseEntity<CreateApplyResponse> createApply(
         @RequestBody @Valid CreateApplyRequest createApplyRequest
     ) {
-        CreateApplyResponse result = CreateApplyResponse.from(applyFacade.create(createApplyRequest.toCommand()));
+        CreateApplyResponse result = CreateApplyResponse.from(
+            applyFacade.create(createApplyRequest.toCommand()));
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
@@ -39,13 +44,47 @@ public class ApplyController {
         return new ResponseEntity<>("신청 취소 완료", HttpStatus.OK);
     }
 
-    @GetMapping
+    // TODO 이미지, star 기능 만들어지면 추가 필요
+    @GetMapping("/clouters")
     public ResponseEntity<GetAllByStatusResponse> getApplyListByStatus(
         @RequestParam Long clouterId,
-        @RequestParam ApplyStatus type
+        @RequestParam String type
     ) {
-        GetAllByStatusResponse result = GetAllByStatusResponse.from(applyFacade.getAllByApplyStatus(clouterId, type));
+        GetAllByStatusResponse result = GetAllByStatusResponse.from(
+            applyFacade.getAllByApplyStatus(clouterId, type));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/advertisers")
+    public ResponseEntity<List<ApplicantResponse>> getApplicantList(
+        @RequestParam Long advertisementId
+    ) {
+        List<ApplicantResponse> result =
+            ApplicantResponse.from(applyFacade.getApplicantList(advertisementId));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/{applyId}/msg")
+    public ResponseEntity<ApplyMessageResponse> getApplyMsg(
+        @PathVariable Long applyId
+    ) {
+        String result = applyFacade.getMessage(applyId);
+
+        return new ResponseEntity<>(
+            new ApplyMessageResponse(applyId, result), HttpStatus.OK
+        );
+    }
+
+    /**
+     * 채택 -> 계약 생성
+     */
+    @PostMapping("/{applyId}/selection")
+    public ResponseEntity<Void> selectForContract(
+        @PathVariable Long applyId
+    ) {
+        applyFacade.selectForContract(applyId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

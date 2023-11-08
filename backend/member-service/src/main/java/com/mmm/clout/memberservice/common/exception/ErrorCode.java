@@ -23,7 +23,11 @@ public enum ErrorCode {
     ADVERTISER_ID_DUPLICATE(HttpStatus.CONFLICT, "ADVERTISER_ID_DUPLICATE", "현재 아이디는 다른 유저가 사용하고 있습니다."),
     CLOUTER_ID_DUPLICATE(HttpStatus.CONFLICT, "CLOUTER_ID_DUPLICATE", "현재 아이디는 다른 유저가 사용하고 있습니다."),
     NOT_F0UND_ADVERTISER(HttpStatus.NOT_FOUND, "NOT_F0UND_ADVERTISER", "존재하지 않는 유저 입니다."),
-    NOT_F0UND_CLOUTER(HttpStatus.NOT_FOUND, "NOT_F0UND_CLOUTER", "존재하지 않는 유저 입니다.");;
+    NOT_F0UND_CLOUTER(HttpStatus.NOT_FOUND, "NOT_F0UND_CLOUTER", "존재하지 않는 유저 입니다."),
+    NOT_FOUND_STAR(HttpStatus.NOT_FOUND, "NOT_FOUND_STAR", "존재하지 않는 별점입니다."),
+    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "NOT_FOUND_MEMBER", "존재하지 않는 유저 입니다."),
+    DUPLICATED_STAR_DETAIL_EXCEPTION(HttpStatus.CONFLICT,"DUPLICATED_STAR_DETAIL_EXCEPTION", "이미 별점을 준 상태 입니다."),
+    DUPLICATE_USER_ID(HttpStatus.CONFLICT, "DUPLICATE_USER_ID", "이미 사용하고 있는 유저 아이디 입니다.");
 
 
     private final HttpStatus status;

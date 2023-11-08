@@ -1,6 +1,7 @@
 package com.mmm.clout.advertisementservice.apply.domain;
 
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.apply.domain.exception.CancelApplyException;
 import com.mmm.clout.advertisementservice.apply.domain.exception.CannotCancelApplyException;
 import com.mmm.clout.advertisementservice.common.entity.BaseEntity;
 import com.mmm.clout.advertisementservice.common.exception.ErrorCode;
@@ -56,7 +57,8 @@ public class Apply extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ApplyStatus applyStatus;
 
-    public static Apply create(Campaign campaign, Applicant applicant, String applyMessage, Long hopeAdFee) {
+    public static Apply create(Campaign campaign, Applicant applicant, String applyMessage,
+        Long hopeAdFee) {
         campaign.validApplyStatus();
         campaign.apply();
         return new Apply(campaign, applicant, applyMessage, hopeAdFee);
@@ -74,10 +76,25 @@ public class Apply extends BaseEntity {
 
     public void cancelApply() {
         if (this.applyStatus == ApplyStatus.ACCEPTED) {
-            throw new CannotCancelApplyException("해당 캠페인은 이미 채택되어 취소할 수 없습니다.", ErrorCode.ALREADY_ACCEPTED_APPLY);
+            throw new CannotCancelApplyException("해당 캠페인은 이미 채택되어 취소할 수 없습니다.",
+                ErrorCode.ALREADY_ACCEPTED_APPLY);
         }
         this.getCampaign().cancel();
-        this.applyStatus  = ApplyStatus.CANCEL;
+        this.applyStatus = ApplyStatus.CANCEL;
+    }
+
+    public void end() {
+        if (this.applyStatus == ApplyStatus.WAITING) {
+            this.applyStatus = ApplyStatus.NOT_ACCEPTED;
+        }
+    }
+
+    public void askForContract() {
+        if (this.applyStatus == ApplyStatus.CANCEL) {
+            throw new CancelApplyException();
+        }
+        this.applyStatus = ApplyStatus.ACCEPTED;
+        this.campaign.selectClouter();
     }
 
     @Getter
@@ -90,6 +107,10 @@ public class Apply extends BaseEntity {
         CANCEL("신청 취소");
 
         private final String description;
+    }
+
+    public ApplyStatus convertToApplyStatus(String applyStatus) {
+        return ApplyStatus.valueOf(applyStatus.toUpperCase());
     }
 
 }
