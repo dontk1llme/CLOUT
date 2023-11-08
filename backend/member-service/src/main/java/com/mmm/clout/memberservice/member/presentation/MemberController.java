@@ -9,6 +9,7 @@ import com.mmm.clout.memberservice.member.presentation.docs.MemberControllerDocs
 import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
 import com.mmm.clout.memberservice.member.presentation.response.IdDuplicateResponse;
 import com.mmm.clout.memberservice.member.presentation.response.PwdUpdateResponse;
+import com.mmm.clout.memberservice.member.presentation.response.SendSmsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -95,6 +96,17 @@ public class MemberController implements MemberControllerDocs {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/sendsms/find")
+    public ResponseEntity<SendSmsResponse> sendSmsByUserId(
+        @RequestParam String userid,
+        @RequestParam String phoneNumber
+    ) {
+        Long memberId = memberService.getUserByUserId(userid).getId();
+        String key = smsService.smsSend(phoneNumber, makeAuthKey());
+        SendSmsResponse result = new SendSmsResponse(memberId, key);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PatchMapping("/pwd")
     public ResponseEntity<PwdUpdateResponse> pwdUpdate(
         @RequestBody PwdUpdateRequst request
@@ -104,6 +116,8 @@ public class MemberController implements MemberControllerDocs {
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
 
     private String makeAuthKey() {
         Random random = new Random();
