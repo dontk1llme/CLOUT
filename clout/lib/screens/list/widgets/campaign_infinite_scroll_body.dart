@@ -1,11 +1,7 @@
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
-import 'package:clout/type.dart';
-import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:flutter/material.dart';
-import 'package:clout/style.dart' as style;
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 class CampaignInfiniteScrollBody extends StatelessWidget {
   const CampaignInfiniteScrollBody({super.key, required this.controllerTag});
@@ -24,9 +20,6 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
         ),
         // controller: controller.scrollController.value,
         itemBuilder: (_, index) {
-          print('1️⃣');
-          print(
-              '💥 데이터 : ${controller.data} 👉 campaign_infinite_scroll_body.dart');
           print(
               '💥 데이터 개수 : ${controller.data.length} 👉 campaign_infinite_scroll_body.dart');
           // if (controller.data.isNotEmpty && controller.hasMore) {
