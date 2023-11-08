@@ -4,7 +4,6 @@ import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_2.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
@@ -12,20 +11,19 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'package:clout/style.dart' as style;
 
-
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_1.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_3.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_4.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class ClouterJoin extends ConsumerStatefulWidget {
+class ClouterJoin extends StatefulWidget {
   const ClouterJoin({super.key});
 
   @override
   ClouterJoinState createState() => ClouterJoinState();
 }
 
-class ClouterJoinState extends ConsumerState<ClouterJoin> {
+class ClouterJoinState extends State<ClouterJoin> {
   int pageNum = 1;
   double percent = 1 / 4;
 
@@ -36,34 +34,22 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
   final registerController =
       Get.put(ClouterInfoController(), tag: 'clouterRegister');
 
-  void setPageNum(int newPageNum) {
-    bool canGoNext = true;
-    switch (newPageNum) {
-      case 2:
-        if (registerController.canGoSecondPage()) {
-          canGoNext = true;
-        }
-        break;
-      case 3:
-        if (registerController.canGoThirdPage() == 0) {
-          Fluttertoast.showToast(msg: '비밀번호 확인이 일치하지 않습니다 😅');
-          return;
-        } else if (registerController.canGoThirdPage() == 1) {
-          canGoNext = true;
-        }
-        break;
-      case 4:
-        canGoNext = true;
-        break;
+  void goNext() {
+    var validationMsg;
+    if (pageNum == 1) {
+      validationMsg = registerController.canGoSecondPage();
+    } else if (pageNum == 2) {
+      validationMsg = registerController.canGoThirdPage();
+    } else if (pageNum == 3) {
+      validationMsg = registerController.canGoFourthPage();
     }
-    if (canGoNext) {
+    if (validationMsg == '') {
       setState(() {
-        pageNum = newPageNum;
-        if (pageNum != 5) percent = newPageNum / 4;
+        pageNum += 1;
+        percent = pageNum / 4;
       });
-      canGoNext = false;
     } else {
-      Fluttertoast.showToast(msg: '모든 항목을 입력해주세요 🤗');
+      Fluttertoast.showToast(msg: validationMsg);
     }
   }
 
@@ -110,14 +96,13 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
   }
 
   register() async {
-    await registerController.setClouter();
     registerController.printAll();
 
     RegisterApi registerApi = RegisterApi();
 
     // await을 안붙히면 Future<dynamic> 형식으로 넘어와서 데이터 처리하기 힘듦 => await을 붙히면 String으로 오더라고(항상 이런건지를 모르겠음)
-    String responseBody = await registerApi.postRequest(
-        '/v1/clouters', registerController.clouter);
+    var responseBody = await registerApi.postRequest(
+        '/member-service/v1/clouters', registerController.clouter);
     print(responseBody);
     showSnackBar();
     Get.offAllNamed('/login');
@@ -214,11 +199,7 @@ class ClouterJoinState extends ConsumerState<ClouterJoin> {
                                 : '다음', // pageNum에 따라 버튼 텍스트 변경
                             function: () {
                               if (pageNum < 4) {
-                                if (pageNum != 2) {
-                                  setPageNum(pageNum + 1);
-                                } else {
-                                  setPageNum(pageNum + 1);
-                                }
+                                goNext();
                               } else {
                                 register();
                               }

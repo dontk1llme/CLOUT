@@ -1,5 +1,6 @@
 // Global
 import 'package:clout/providers/follower_controller.dart';
+import 'package:clout/providers/platform_select_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -14,12 +15,17 @@ class FollowercountStateDialog extends StatelessWidget {
       {super.key,
       required this.title,
       required this.hintText,
-      required this.controllerTag});
+      required this.controllerTag,
+      this.index});
+
   final title;
   final hintText;
   final controllerTag;
+  final index;
 
   void openDialog() {
+    final platformSelectController =
+        Get.find<PlatformSelectController>(tag: controllerTag);
     Get.defaultDialog(
       title: title,
       titlePadding: EdgeInsets.fromLTRB(0, 20, 0, 10),
@@ -46,6 +52,7 @@ class FollowercountStateDialog extends StatelessWidget {
                 initialValue: controller.minimumFollowers,
                 onChanged: (newVal) {
                   controller.setMinimumFollowers(newVal);
+                  platformSelectController.setFollowerCount(index, newVal);
                 },
               ),
               Row(

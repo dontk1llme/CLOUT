@@ -69,6 +69,7 @@ class InputCustomdrop extends StatelessWidget {
                                   controllerTag: controllerTag,
                                   title: index != 2 ? '팔로워 수' : '구독자 수',
                                   hintText: '팔로워/구독자 수 입력',
+                                  index:index,
                                 ),
                               ],
                             ),
