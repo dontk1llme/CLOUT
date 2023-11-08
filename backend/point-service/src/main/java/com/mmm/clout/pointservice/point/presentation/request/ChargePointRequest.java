@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ChargeRequest {
+public class ChargePointRequest {
 
     @NotNull
     private Long memberId;
