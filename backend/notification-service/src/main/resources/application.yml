@@ -5,14 +5,14 @@ spring:
   application:
     name: notification-service
   datasource:
-    url: jdbc:mariadb://localhost:13306/test2
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: root
-    password: 1234
-#    url: jdbc:mariadb://3.38.213.43:3306/notificationdb
+#    url: jdbc:mariadb://localhost:13306/test2
 #    driver-class-name: org.mariadb.jdbc.Driver
 #    username: root
-#    password: zmffkdnxm409!
+#    password: 1234
+    url: jdbc:mariadb://3.38.213.43:3306/notificationdb
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: zmffkdnxm409!
   jpa:
     generate-ddl: true
     show-sql: true
