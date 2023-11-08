@@ -1,6 +1,12 @@
+import 'package:clout/hooks/item_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
+import 'package:clout/type.dart';
 
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
@@ -53,6 +59,11 @@ String caution = '법적 고지, 책임은 계약 당사자 간 있다, 등등..
 
 //////////////////////////////////////////////////////////////////////////////
 
+final ItemApi itemApi = ItemApi();
+
+Campaign campaign = Campaign();
+// var responseBody = await itemApi.getRequest('/v1/advertisements', '/${advertisementId}');
+
 class CampaignDetail extends StatefulWidget {
   CampaignDetail({super.key});
 
@@ -61,12 +72,6 @@ class CampaignDetail extends StatefulWidget {
 }
 
 class _CampaignDetailState extends State<CampaignDetail> {
-  // campaignId GetX에서 argument로 얻어서 api 통신으로 어떤 캠페인 정보 보여줄지 표시해야함
-  var campaignId = Get.arguments;
-
-  Campaign campaign = Campaign();
-
-  // GetX Controller에 클라우터인지 광고주인지 저장해놓고(리코일처럼)
   final userController = Get.find<UserController>();
 
   bool isItemLiked = false;

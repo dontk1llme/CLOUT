@@ -52,10 +52,10 @@ class _LoginState extends State<Login> {
     // if (loginData['login_success'] == true) {
     //   if (loginData['clout_or_adv'] == 1) {
     //     //1이면 클라우터
-    userController.setClouter();
+    // userController.setClouter();
     //   } else {
     //     //2면 클라우터
-    // userController.setAdvertiser();
+    userController.setAdvertiser();
     //   }
     //   Get.offAllNamed('/home');
     // } else {
