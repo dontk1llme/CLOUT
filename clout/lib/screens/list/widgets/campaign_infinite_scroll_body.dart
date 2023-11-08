@@ -20,105 +20,36 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
         shrinkWrap: true,
         physics: BouncingScrollPhysics(),
         gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
+          crossAxisCount: 2,
         ),
-        controller: controller.scrollController.value,
+        // controller: controller.scrollController.value,
         itemBuilder: (_, index) {
           print('1️⃣');
           print(
               '💥 데이터 : ${controller.data} 👉 campaign_infinite_scroll_body.dart');
           print(
               '💥 데이터 개수 : ${controller.data.length} 👉 campaign_infinite_scroll_body.dart');
-          if (index < controller.data.length / 2 &&
-              controller.data.isNotEmpty) {
-            if (controller.data.length % 2 == 0) {
-              final campaign1 = controller.data[2 * index];
-              final campaign2 = controller.data[2 * index + 1];
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CampaignItemBox(
-                      adCategory: campaign1.adCategory!,
-                      title: campaign1.title!,
-                      price: campaign1.price!,
-                      companyInfo: campaign1.companyInfo!,
-                      numberOfSelectedMembers:
-                          campaign1.numberOfSelectedMembers!,
-                      numberOfRecruiter: campaign1.numberOfRecruiter!,
-                      adPlatformList: campaign1.adPlatformList!,
-                      advertiserInfo: campaign1.advertiserInfo!,
-                      firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CampaignItemBox(
-                      adCategory: campaign2.adCategory!,
-                      title: campaign2.title!,
-                      price: campaign2.price!,
-                      companyInfo: campaign2.companyInfo!,
-                      numberOfSelectedMembers:
-                          campaign2.numberOfSelectedMembers!,
-                      numberOfRecruiter: campaign2.numberOfRecruiter!,
-                      adPlatformList: campaign2.adPlatformList!,
-                      advertiserInfo: campaign2.advertiserInfo!,
-                      firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
-                    ),
-                  ),
-                ],
-              );
-            } else {
-              final campaign1 = controller.data[2 * index];
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CampaignItemBox(
-                      adCategory: campaign1.adCategory!,
-                      title: campaign1.title!,
-                      price: campaign1.price!,
-                      companyInfo: campaign1.companyInfo!,
-                      numberOfSelectedMembers:
-                          campaign1.numberOfSelectedMembers!,
-                      numberOfRecruiter: campaign1.numberOfRecruiter!,
-                      adPlatformList: campaign1.adPlatformList!,
-                      advertiserInfo: campaign1.advertiserInfo!,
-                      firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
-                    ),
-                  ),
-                ],
-              );
-            }
-          }
-
-          if (controller.hasMore || controller.isLoading) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 40),
-              child: SizedBox(
-                height: 50,
-                child: Center(
-                    child: LoadingIndicator(
-                  indicatorType: Indicator.ballRotateChase,
-                  colors: [
-                    style.colors['main1-4']!,
-                    style.colors['main1-3']!,
-                    style.colors['main1-2']!,
-                    style.colors['main1-1']!,
-                    style.colors['main1']!,
-                  ],
-                )),
-              ),
-            );
-          }
-
-          return SizedBox(height: 30);
+          // if (controller.data.isNotEmpty && controller.hasMore) {
+          final campaign1 = controller.data[index];
+          // return Padding(
+          //   padding: const EdgeInsets.all(10),
+          //   child: CampaignItemBox(
+          //     adCategory: campaign1.adCategory ?? "",
+          //     title: campaign1.title,
+          //     price: campaign1.price,
+          //     companyInfo: campaign1.advertiser.companyInfo,
+          //     numberOfSelectedMembers: campaign1.numberOfSelectedMembers,
+          //     numberOfRecruiter: campaign1.numberOfRecruiter,
+          //     adPlatformList: campaign1.adPlatformList,
+          //     advertiserInfo: campaign1.advertiserInfo,
+          //     // firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
+          //   ),
+          // );
+          return campaign1;
+          // } else {}
+          // return Container(color: Colors.red, height: 20);
         },
-        itemCount: (controller.data.length / 2).floor() + 1,
+        itemCount: controller.data.length,
       ),
     );
   }

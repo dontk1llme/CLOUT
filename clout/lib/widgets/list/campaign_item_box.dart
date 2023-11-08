@@ -21,7 +21,7 @@ class CampaignItemBox extends StatefulWidget {
   final int numberOfRecruiter;
   final List<dynamic> adPlatformList;
   final AdvertiserInfo advertiserInfo;
-  final String firstImg;
+  // final String firstImg;
 
   const CampaignItemBox({
     super.key,
@@ -33,7 +33,7 @@ class CampaignItemBox extends StatefulWidget {
     required this.numberOfRecruiter,
     required this.adPlatformList,
     required this.advertiserInfo,
-    required this.firstImg,
+    // required this.firstImg,
   });
 
   @override
@@ -75,12 +75,12 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
               Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  Image.asset(
-                    widget.firstImg, // 💥 사진 수정하기
-                    width: screenWidth / 2 - 40,
-                    // height: screenHeight / 2 - 65,
-                    fit: BoxFit.cover,
-                  ),
+                  // Image.asset(
+                  //   widget.firstImg, // 💥 사진 수정하기
+                  //   width: screenWidth / 2 - 40,
+                  //   // height: screenHeight / 2 - 65,
+                  //   fit: BoxFit.cover,
+                  // ),
                   Positioned(
                     bottom: 5,
                     right: 5,
