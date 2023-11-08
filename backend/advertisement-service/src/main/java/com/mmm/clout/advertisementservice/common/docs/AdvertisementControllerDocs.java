@@ -4,6 +4,10 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.request.Cr
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.EndedCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampaignAndAdvertiserResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampainListByAdvertiserResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetTop10CampainListResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -13,6 +17,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Tag(name = "광고 api", description = "광고 관련 api")
@@ -32,8 +40,8 @@ public interface AdvertisementControllerDocs {
         responses =
         @ApiResponse(responseCode = "201", description = "광고 캠페인 등록 성공",
             content =
-            @Content(mediaType="application/json",
-                schema=@Schema(implementation= CreateCampaignResponse.class))
+            @Content(mediaType = "application/json",
+                schema = @Schema(implementation = CreateCampaignResponse.class))
         ),
         requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
             content = @Content(mediaType = "application/json",
@@ -43,7 +51,7 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<CreateCampaignResponse> createCampaign(
-        CreateCampaignRequest request
+        @RequestBody CreateCampaignRequest request
     );
 
 
@@ -56,13 +64,19 @@ public interface AdvertisementControllerDocs {
                 required = true,
                 schema = @Schema(type = "string"),
                 description = "인증 토큰"
+            ),
+            @Parameter(
+                in = ParameterIn.PATH,
+                name = "advertisementId",
+                required = true,
+                description = "광고 캠페인의 고유 식별자"
             )
         },
         responses =
         @ApiResponse(responseCode = "200", description = "광고 캠페인 수정 성공",
             content =
-            @Content(mediaType="application/json",
-                schema=@Schema(implementation= UpdateCampaignResponse.class))
+            @Content(mediaType = "application/json",
+                schema = @Schema(implementation = UpdateCampaignResponse.class))
         ),
         requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
             content = @Content(mediaType = "application/json",
@@ -72,8 +86,8 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<UpdateCampaignResponse> updateCampaign(
-        Long advertisementId,
-        UpdateCampaignRequest request
+        @PathVariable Long advertisementId,
+        @RequestBody UpdateCampaignRequest request
     );
 
 
@@ -86,16 +100,126 @@ public interface AdvertisementControllerDocs {
                 required = true,
                 schema = @Schema(type = "string"),
                 description = "인증 토큰"
+            ),
+            @Parameter(
+                in = ParameterIn.PATH,
+                name = "advertisementId",
+                required = true,
+                description = "광고 캠페인의 고유 식별자"
             )
         },
         responses =
         @ApiResponse(responseCode = "200", description = "광고 캠페인 삭제 처리 성공",
             content =
-            @Content(mediaType="application/json",
-                schema=@Schema(implementation= DeleteCampaignResponse.class))
+            @Content(mediaType = "application/json",
+                schema = @Schema(implementation = DeleteCampaignResponse.class))
         )
     )
     ResponseEntity<DeleteCampaignResponse> deleteCampaign(
-        Long advertisementId
+        @PathVariable Long advertisementId
     );
+
+    @Operation(summary = "캠페인 캠페인 상세 조회 (광고주 정보 포함)",
+        description = "광고 캠페인 id를 받아 상세 정보를 조회합니다. ",
+        parameters = {
+            @Parameter(
+                in = ParameterIn.PATH,
+                name = "advertisementId",
+                required = true,
+                description = "광고 캠페인의 고유 식별자"
+            )
+        },
+        responses =
+        @ApiResponse(responseCode = "200", description = "광고 캠페인 상세 정보 조회 성공",
+            content =
+            @Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetCampaignAndAdvertiserResponse.class))
+        )
+    )
+    ResponseEntity<GetCampaignAndAdvertiserResponse> getCampaignDetails(
+        @PathVariable Long advertisementId
+    );
+
+    @Operation(summary = "인기 있는 광고 리스트 (10개) 조회",
+        description = "모집기간 내의 캠페인 중 신청자 수 많은 순 / 우선순위가 같을경우, 최신순",
+        responses =
+        @ApiResponse(responseCode = "200", description = "인기 있는 광고 리스트 (10개) 조회 성공",
+            content =
+            @Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetTop10CampainListResponse.class))
+        )
+    )
+    ResponseEntity<GetTop10CampainListResponse> getTop10Campaigns();
+
+
+    @Operation(summary = "광고주 자신이 올린 광고 목록 조회 (최신순)",
+        description = "광고주가 본인이 등록한 광고 캠페인 목록을 조회합니다.",
+        parameters = {
+            @Parameter(
+                in = ParameterIn.HEADER,
+                name = "Authorization",
+                required = true,
+                schema = @Schema(type = "string"),
+                description = "인증 토큰"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "advertiserId",
+                required = true,
+                description = "광고주의 고유 식별자"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "page",
+                required = true,
+                description = "페이지 번호 (0부터 시작)"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "size",
+                required = true,
+                description = "한 페이지당 보여줄 글 갯수"
+            )
+        },
+        responses =
+        @ApiResponse(responseCode = "200", description = "광고주가 올린 광고 목록 조회 성공",
+            content =
+            @Content(mediaType = "application/json",
+                schema = @Schema(implementation = GetCampainListByAdvertiserResponse.class))
+        )
+    )
+    ResponseEntity<GetCampainListByAdvertiserResponse> getCampaignsByAdvertisers(
+        @RequestParam Long advertiserId,
+        @RequestParam int page,
+        @RequestParam int size
+    );
+
+    @Operation(summary = "캠페인 모집 종료",
+        description = "광고주가 캠페인 모집을 종료합니다.",
+        parameters = {
+            @Parameter(
+                in = ParameterIn.HEADER,
+                name = "Authorization",
+                required = true,
+                schema = @Schema(type = "string"),
+                description = "인증 토큰"
+            ),
+            @Parameter(
+                in = ParameterIn.PATH,
+                name = "advertisementId",
+                required = true,
+                description = "광고 캠페인의 고유 식별자"
+            )
+        },
+        responses =
+        @ApiResponse(responseCode = "200", description = "광고 캠페인 모집 종료 처리 성공",
+            content =
+            @Content(mediaType = "application/json",
+                schema = @Schema(implementation = EndedCampaignResponse.class))
+        )
+    )
+    ResponseEntity<EndedCampaignResponse> endCampaign(
+        @PathVariable Long advertisementId
+    );
+
 }

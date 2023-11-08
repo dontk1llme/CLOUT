@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/advertisers")
+@RequestMapping("/v1/advertisers")
 @RequiredArgsConstructor
 public class AdvertiserController implements AdvertiserControllerDocs {
 
@@ -43,7 +43,7 @@ public class AdvertiserController implements AdvertiserControllerDocs {
     }
 
     @GetMapping("/{advertiserId}")
-    public ResponseEntity<SelectAdrResponse> select(
+    public ResponseEntity<SelectAdrResponse> selectAdvertiser(
             @PathVariable("advertiserId") Long advertiserId
     ) {
         SelectAdrResponse result = SelectAdrResponse.from(advertiserFacade.select(advertiserId));

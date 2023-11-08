@@ -1,5 +1,7 @@
 package com.mmm.clout.memberservice.member.infrastructure.auth.service;
 
+import com.mmm.clout.memberservice.member.application.LoginReader;
+import com.mmm.clout.memberservice.member.domain.exception.DuplicateUserIdException;
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.AuthDto;
 import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.member.infrastructure.auth.exception.PasswordException;
@@ -34,7 +36,7 @@ public class AuthService {
 
     // 로그인: 인증 정보 저장 및 비어 토큰 발급
     @Transactional
-    public AuthDto.TokenDto login(AuthDto.LoginDto loginDto) {
+    public LoginReader login(AuthDto.LoginDto loginDto) {
 
         Member member = memberService.getUserByUserId(loginDto.getUserId());
 
@@ -47,7 +49,10 @@ public class AuthService {
                 .authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return generateToken(SERVER, authentication.getName(), getAuthorities(authentication));
+        return new LoginReader(
+            generateToken(SERVER, authentication.getName(), getAuthorities(authentication)),
+            member.getRole()
+            );
     }
 
     // AT가 만료일자만 초과한 유효한 토큰인지 검사
@@ -149,5 +154,12 @@ public class AuthService {
         if (refreshTokenInRedis != null) {
             redisService.deleteValues("RT(" + SERVER + "):" + principal);
         }
+    }
+
+    public boolean dupicateCheck(String userId) {
+
+        Member member = memberService.getUserByUserId(userId);
+        if(member != null) throw new DuplicateUserIdException();
+        return true;
     }
 }

@@ -31,7 +31,7 @@ public class ChannelRequest {
 
     @NotNull
     @Schema(description = "채널의 구독자 규모")
-    private FollowerScale followerScale;
+    private Long followerScale;
 
     public ChannelCommand toCommand() {
         return new ChannelCommand(
