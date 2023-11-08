@@ -124,7 +124,7 @@ class InfiniteScrollController extends GetxController {
     var advertiser = CampaignList.fromJson(jsonDecode(response)).advertiserInfo;
 
     if (newList.isNotEmpty) {
-      var campaignData = Campaign.fromJson(json.decode(response));
+      var campaignData = CampaignInfo.fromJson(json.decode(response));
       print('5️⃣');
       print(CampaignList.fromJson(jsonDecode(response)).campaignList);
       print(CampaignList.fromJson(jsonDecode(response))
@@ -137,6 +137,7 @@ class InfiniteScrollController extends GetxController {
         var campaignItemBox = Padding(
           padding: const EdgeInsets.all(10.0),
           child: CampaignItemBox(
+            campaignId: newList[i]['campaignId'],
             adCategory: newList[i]['adCategory'] ?? "",
             title: newList[i]['title'] ?? "제목없음",
             price: newList[i]['price'] ?? 0,
