@@ -1,9 +1,9 @@
 server:
-  port:
+  port: 8008
 
 spring:
   application:
-    name: advertisement-service
+    name: point-service
   datasource:
     url: jdbc:mariadb://3.38.213.43:3306/pointdb
     driver-class-name: org.mariadb.jdbc.Driver
