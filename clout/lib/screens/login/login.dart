@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
     userController.setUserInfo(); // 'userInfo' 설정
     final LoginApi loginApi = LoginApi();
     var loginData = await loginApi.postRequest(
-        '/v1/members/login', userController.userInfo);
+        '/member-service/v1/members/login', userController.userInfo);
 
     // 2. 리턴값에서 유저/클라우터 가려받고 set
     if (loginData['login_success'] == true) {
