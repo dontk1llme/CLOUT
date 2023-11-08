@@ -1,17 +1,54 @@
-import 'package:clout/screens/campaign_register/widgets/data_title.dart';
-import 'package:clout/screens/mypage/widgets/selected_category.dart';
-import 'package:clout/widgets/sns/platform_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
 
 // widgets
+import 'package:clout/screens/mypage/widgets/selected_category.dart';
+import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:clout/screens/mypage/widgets/info_item_box.dart';
 import 'package:clout/screens/mypage/widgets/update_button.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 
-class ClouterProfile extends StatelessWidget {
+// api
+import 'package:clout/hooks/item_api.dart';
+import 'dart:convert';
+import 'package:clout/type.dart';
+
+// controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
+
+class ClouterProfile extends StatefulWidget {
   const ClouterProfile({super.key});
+
+  @override
+  State<ClouterProfile> createState() => _ClouterProfileState();
+}
+
+class _ClouterProfileState extends State<ClouterProfile> {
+  var clouterInfo;
+
+  final userController = Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _showDetail();
+  }
+
+  _showDetail() async {
+    final ItemApi itemApi = ItemApi();
+
+    var response =
+        await itemApi.getRequest('/v1/clouters/', userController.userId);
+    // '/member-service/v1/clouters/', userController.userId);
+
+    final decodedResponse = jsonDecode(response);
+
+    setState(() {
+      clouterInfo = ClouterInfo.fromJson(decodedResponse);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +87,25 @@ class ClouterProfile extends StatelessWidget {
                           color: style.colors['lightgray']),
                       Column(
                         children: [
-                          InfoItemBox(titleName: '닉네임', contentInfo: '아기파랑새'),
-                          InfoItemBox(titleName: '이름', contentInfo: '박재민'),
-                          InfoItemBox(titleName: '나이', contentInfo: '27'),
                           InfoItemBox(
-                              titleName: '연락처', contentInfo: '010-1234-5678'),
+                              titleName: '닉네임',
+                              contentInfo: clouterInfo?.nickName ?? ''),
                           InfoItemBox(
-                              titleName: '이메일',
-                              contentInfo: 'catbirdseat@gmail.com'),
+                              titleName: '이름',
+                              contentInfo: clouterInfo?.name ?? ''),
                           InfoItemBox(
-                              titleName: '주소', contentInfo: '서울시 강남구 역삼동'),
+                              titleName: '연락처',
+                              contentInfo: clouterInfo?.phoneNumber ?? ''),
+                          InfoItemBox(
+                              titleName: '생년월일',
+                              contentInfo: clouterInfo?.birthday ?? ''),
+                          InfoItemBox(
+                              titleName: '나이',
+                              contentInfo: clouterInfo?.age.toString() ?? ''),
+                          InfoItemBox(
+                              titleName: '주소',
+                              contentInfo:
+                                  '(${clouterInfo?.address!.zipCode!}) ${clouterInfo?.address!.mainAddress!} ${clouterInfo?.address!.detailAddress!}'),
                         ],
                       ),
                       Column(
@@ -75,7 +121,7 @@ class ClouterProfile extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text('10만원 ~ 50만원',
+                              Text('${clouterInfo?.hopeCost!.minCost!}원 ~ ',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 22,
@@ -91,10 +137,20 @@ class ClouterProfile extends StatelessWidget {
                           DataTitle(text: '희망 카테고리'),
                           Row(
                             children: [
-                              SelectedCategory(title: '패션/의류'),
-                              SelectedCategory(title: '반려동물')
+                              for (var category
+                                  in clouterInfo?.categoryList ?? [])
+                                SelectedCategory(title: category),
                             ],
                           ),
+                          SizedBox(height: 20),
+                          DataTitle(text: '희망 지역'),
+                          Row(
+                            children: [
+                              for (var region in clouterInfo?.regionList ?? [])
+                                SelectedCategory(title: region),
+                            ],
+                          ),
+
                           SizedBox(height: 20),
                           DataTitle(text: '내 사진'),
                           // 등록한 사진 목록...
@@ -105,3 +161,5 @@ class ClouterProfile extends StatelessWidget {
             )));
   }
 }
+
+  // 💥 선택한 지역, 카테고리, 사진, 협상여부, 팔로워 수 추가하기
