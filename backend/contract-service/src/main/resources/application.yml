@@ -11,7 +11,7 @@ spring:
     url: jdbc:mariadb://3.35.132.84:3306/contract
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password: 1234
+    password: zmffkdnxm409!
   jpa:
     properties:
       hibernate:
