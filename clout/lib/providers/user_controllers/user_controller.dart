@@ -4,8 +4,8 @@ import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:get/get.dart';
 
 class UserController extends GetxController {
-  int user = 0;
-  var userId;
+  int user = 1;
+  var userId = '2';
   var password;
 
   var userInfo;
@@ -36,12 +36,11 @@ class UserController extends GetxController {
     update();
   }
 
-  setUserInfo(){
+  setUserInfo() {
     userInfo = Login(
-      // user,
-      userId,
-      password
-    );
+        // user,
+        userId,
+        password);
     print('유저인포 업데이트');
     update();
   }
