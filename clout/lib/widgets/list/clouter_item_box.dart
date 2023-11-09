@@ -13,23 +13,24 @@ import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 
 class ClouterItemBox extends StatefulWidget {
-  final String nickname;
-  final int starRating;
-  final int fee;
-  final String category;
-  final int contractCount;
-  final List<String> selectedPlatform;
-  final String firstImg;
+  final String userId;
+  final int avgScore;
+  final int minCost;
+  final List<String> categoryList;
+  final int contractCount; // 아직 빠져있음 💥 추가하기 (계약한 광고 수)
+  final List<String> channelList;
+  // final String firstImg; // 💥 사진 나중에 추가하기
 
-  ClouterItemBox(
-      {super.key,
-      required this.nickname,
-      required this.starRating,
-      required this.fee,
-      required this.category,
-      required this.contractCount,
-      required this.selectedPlatform,
-      required this.firstImg});
+  ClouterItemBox({
+    super.key,
+    required this.userId,
+    required this.avgScore,
+    required this.minCost,
+    required this.categoryList,
+    required this.contractCount,
+    required this.channelList,
+    // required this.firstImg
+  });
 
   @override
   State<ClouterItemBox> createState() => _ClouterItemBoxState();
@@ -72,7 +73,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
               children: [
                 // 제일 큰 이미지
                 Image.asset(
-                  widget.firstImg,
+                  'assets/images/clouterImage.jpg',
                   width: screenWidth / 2 - 40,
                   height: screenWidth / 2 - 65,
                   fit: BoxFit.cover,
@@ -86,18 +87,17 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     decoration: BoxDecoration(
                         color: style.colors['white'],
                         borderRadius: BorderRadius.circular(5)),
-                    child: Row(children: [
-                      Sns2(selectedPlatform: widget.selectedPlatform)
-                    ]),
+                    child: Row(
+                        children: [Sns2(selectedPlatform: widget.channelList)]),
                   ),
                 ),
                 if (userController.user == 1)
                   LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
-            NameTag(title: widget.category),
+            NameTag(title: widget.categoryList[0]),
             Text(
-              widget.nickname,
+              widget.userId,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -106,7 +106,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
               ),
             ),
             Text(
-              '${f.format(widget.fee)} 포인트',
+              '${f.format(widget.minCost)} 포인트',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -124,7 +124,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                   ),
                 ),
                 Text(
-                  '${widget.contractCount}건',
+                  '${widget.contractCount}건', // 💥 계약한 광고 수
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

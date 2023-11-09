@@ -28,22 +28,6 @@ import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
 
-// 클라우터 api는 나오는대로...
-class Clouter {
-  final int clouterId = 1;
-  String nickname = '모카우유';
-  int starRating = 20;
-  int fee = 500000;
-  String category = '반려동물';
-  int contractCount = 5;
-  List<String> selectedPlatform = [
-    "YOUTUBE",
-    "INSTAGRAM",
-    "TIKTOK",
-  ];
-  String firstImg = 'assets/images/clouterImage.jpg';
-}
-
 class Home extends StatefulWidget {
   Home({super.key});
 
@@ -53,6 +37,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final campaignData = <CampaignInfo>[].obs;
+  final clouterData = <ClouterInfo>[].obs;
 
   final userController = Get.find<UserController>();
   final HomeController homeController = Get.put(HomeController());
@@ -61,6 +46,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     homeController.fetchCampaigns();
+    homeController.fetchClouters();
   }
 
   List<String> imgList = [
@@ -70,9 +56,6 @@ class _HomeState extends State<Home> {
     'assets/images/food.png',
   ];
 
-  Clouter clouter = Clouter();
-
-  // Campaign campaign = Campaign();
   List<Widget> carouselList = [
     Stack(
       children: [
@@ -284,34 +267,36 @@ class _HomeState extends State<Home> {
                 children: [
                   Column(
                     children: [
-                      MenuTitle(
-                        text: '인기있는 클라우터',
-                        destination: 1,
-                      ),
-                      BouncingListview(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          child: Row(
-                            children: [
-                              for (num i = 0; i < 10; i++)
-                                Padding(
+                      MenuTitle(text: '인기있는 클라우터', destination: 1),
+                      Obx(
+                        () => BouncingListview(
+                          scrollDirection: Axis.horizontal,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 5, right: 5),
+                            child: Row(
+                              children:
+                                  homeController.clouterData.map((clouterInfo) {
+                                return Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(5, 10, 5, 20),
                                   child: ClouterItemBox(
-                                      nickname: clouter.nickname,
-                                      starRating: clouter.starRating,
-                                      fee: clouter.fee,
-                                      category: clouter.category,
-                                      contractCount: clouter.contractCount,
-                                      selectedPlatform:
-                                          clouter.selectedPlatform,
-                                      firstImg: clouter.firstImg),
-                                )
-                            ],
+                                    userId: clouterInfo.userId ?? '',
+                                    avgScore: clouterInfo.avgScore ?? 0,
+                                    minCost: clouterInfo.minCost ?? 0,
+                                    contractCount:
+                                        clouterInfo.contractCount ?? 0,
+                                    categoryList:
+                                        clouterInfo.categoryList ?? [''],
+                                    channelList: clouterInfo.channelList!
+                                        .map((e) => e as String)
+                                        .toList(),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   Column(
@@ -330,9 +315,8 @@ class _HomeState extends State<Home> {
                                       const EdgeInsets.fromLTRB(5, 10, 5, 20),
                                   child: CampaignItemBox(
                                     campaignId: campaignInfo.campaignId ?? 0,
-                                    adCategory: campaignInfo.adCategory ??
-                                        'Unknown Category',
-                                    title: campaignInfo.title ?? 'No Title',
+                                    adCategory: campaignInfo.adCategory ?? '',
+                                    title: campaignInfo.title ?? '',
                                     price: campaignInfo.price ?? 0,
                                     companyInfo: campaignInfo.companyInfo!,
                                     numberOfSelectedMembers:
