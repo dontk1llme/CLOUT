@@ -21,7 +21,7 @@ class GradientButton extends StatelessWidget {
                 end: Alignment.bottomLeft,
                 colors: [
                   Color(0xFF6B4EFF),
-                  Color(0xFFD4CCFF),
+                  Color.fromARGB(255, 177, 167, 235),
                 ],
               ),
             ),
