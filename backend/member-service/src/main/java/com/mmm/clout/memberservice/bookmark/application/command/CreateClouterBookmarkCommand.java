@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CreateAdBookmarkCommand {
+public class CreateClouterBookmarkCommand {
 
     private Long memberId;
 
@@ -18,7 +18,7 @@ public class CreateAdBookmarkCommand {
         return new Bookmark(
             member,
             this.targetId,
-            BookmarkType.ADVERTISEMENT
+            BookmarkType.CLOUTER
         );
     }
 }

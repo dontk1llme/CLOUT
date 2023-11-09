@@ -1,6 +1,7 @@
 package com.mmm.clout.memberservice.bookmark.infrastructure.configuration;
 
 import com.mmm.clout.memberservice.bookmark.application.CreateAdBookmarkProcessor;
+import com.mmm.clout.memberservice.bookmark.application.CreateClouterBookmarkProcessor;
 import com.mmm.clout.memberservice.bookmark.domain.repository.BookmarkRepository;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import org.springframework.context.annotation.Bean;
@@ -15,5 +16,13 @@ public class BookmarkConfig {
         MemberRepository memberRepository
     ) {
         return new CreateAdBookmarkProcessor(bookmarkRepository, memberRepository);
+    }
+
+    @Bean
+    public CreateClouterBookmarkProcessor createClouterBookmarkProcessor(
+        BookmarkRepository bookmarkRepository,
+        MemberRepository memberRepository
+    ) {
+        return new CreateClouterBookmarkProcessor(bookmarkRepository, memberRepository);
     }
 }
