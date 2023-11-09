@@ -97,7 +97,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
     final RegisterApi registerApi = RegisterApi();
 
     registerApi.postRequest(
-        '/v1/advertisers', advertiserRegisterController.advertiser);
+        '/member-service/v1/advertisers/signup', advertiserRegisterController.advertiser);
     Get.offNamed('/login');
     showSnackBar();
   }
@@ -178,7 +178,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                           SizedBox(
                             height: 50,
                             child: FractionallySizedBox(
-                              widthFactor: 0.9,
+                              widthFactor: 1,
                               child: BigButton(
                                 title: pageNum == 2
                                     ? '완료'
