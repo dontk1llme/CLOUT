@@ -5,14 +5,12 @@ import com.mmm.clout.memberservice.bookmark.presentation.docs.BookmarkController
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateAdBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateClouterBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.response.AdBookmarkResponse;
+import com.mmm.clout.memberservice.bookmark.presentation.response.BookmarkDeleteResponse;
 import com.mmm.clout.memberservice.bookmark.presentation.response.ClouterBookmarkResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,4 +38,15 @@ public class BookmarkController implements BookmarkControllerDocs {
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{bookmarkId}")
+    public ResponseEntity<BookmarkDeleteResponse> delete(
+        @PathVariable("bookmarkId") Long bookmarkId
+    ) {
+        BookmarkDeleteResponse response = BookmarkDeleteResponse.from(
+            bookmarkFacade.delete(bookmarkId)
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }
