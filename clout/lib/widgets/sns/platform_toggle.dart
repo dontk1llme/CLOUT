@@ -23,7 +23,7 @@ class PlatformToggle extends StatelessWidget {
           children: [
             Expanded(
               child: Sns3SelectBox(
-                img: 'assets/images/Instagram.png',
+                img: 'assets/images/INSTAGRAM.png',
                 index: 0,
                 title: 'Instagram',
                 multiAllowed: multiAllowed,
@@ -33,7 +33,7 @@ class PlatformToggle extends StatelessWidget {
             SizedBox(width: 10),
             Expanded(
               child: Sns3SelectBox(
-                img: 'assets/images/TikTok.png',
+                img: 'assets/images/TIKTOK.png',
                 index: 1,
                 title: 'Tiktok',
                 multiAllowed: multiAllowed,
@@ -43,7 +43,7 @@ class PlatformToggle extends StatelessWidget {
             SizedBox(width: 10),
             Expanded(
               child: Sns3SelectBox(
-                img: 'assets/images/YouTube.png',
+                img: 'assets/images/YOUTUBE.png',
                 index: 2,
                 title: 'Youtube',
                 multiAllowed: multiAllowed,

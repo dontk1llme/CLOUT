@@ -33,7 +33,7 @@ class Sns1 extends StatelessWidget {
         // SnsItemBox(
         //   username: 'milk_the_samoyed',
         //   followers: '13만 4천',
-        //   imageName: 'assets/images/Instagram.png',
+        //   imageName: 'assets/images/INSTAGRAM.png',
         //   snsUrl: 'https://www.instagram.com/milk_the_samoyed/',
         // ),
         // SizedBox(width: 5),
