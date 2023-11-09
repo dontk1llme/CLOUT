@@ -59,9 +59,6 @@ public class CreateClrRequest {
 
     private Long minCost;
 
-    @Schema(description = "네고 가능 여부")
-    private boolean negoable;
-
     @NotNull
     @Size(min = 1, message = "최소 1개의 카테고리는 선택 해야 합니다.")
     @Schema(description = "광고를 원하는 카테고리 목록")
