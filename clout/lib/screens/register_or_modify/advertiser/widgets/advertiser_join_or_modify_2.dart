@@ -24,7 +24,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
 
   checkDuplicted() async {
     var responseBody = await registerApi.getRequest(
-      '/v1/members/duplicate',
+      '/member-service/v1/members/duplicate',
       '?userId=${advertiserRegisterController.id}',
     );
     print('중복확인');
