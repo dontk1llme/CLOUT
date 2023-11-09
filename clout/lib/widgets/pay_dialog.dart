@@ -39,7 +39,7 @@ class PayDialog extends StatelessWidget {
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                             color: style.colors['main1']!, width: 2))),
-                initialValue: controller.pay,
+                initialValue: controller.pay == '0' ? '' : controller.pay,
                 onChanged: (newVal) {
                   controller.setPay(newVal);
                 },

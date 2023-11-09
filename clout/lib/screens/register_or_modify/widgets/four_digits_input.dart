@@ -85,9 +85,7 @@ class _FourDigitsInputState extends State<FourDigitsInput>
                 checkController.reset();
                 checkController.forward();
                 if (controller.inputPin == controller.correctPin) {
-                  final userInfoController = Get.find<ClouterInfoController>(
-                      tag: widget.controllerTag);
-                  await userInfoController.setPhoneNumberVerified(true);
+                  await controller.setPhoneVerified(true);
                   await Future.delayed(Duration(seconds: 2), () => Get.back());
                 }
               },
@@ -159,8 +157,9 @@ class _FourDigitsInputState extends State<FourDigitsInput>
                       controller.correctPin != null &&
                       controller.inputPin.length == 4 &&
                       controller.inputPin != controller.correctPin
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  ? Wrap(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      alignment: WrapAlignment.center,
                       children: [
                         SizedBox(
                           height: 50,
@@ -174,6 +173,7 @@ class _FourDigitsInputState extends State<FourDigitsInput>
                           '인증번호를 다시 확인해주세요.',
                           style: style.textTheme.headlineLarge
                               ?.copyWith(height: 1.2),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     )
