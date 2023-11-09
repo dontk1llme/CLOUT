@@ -47,10 +47,8 @@ public class SelectClrResponse {
     @Schema(description = "개인 채널 리스트")
     private List<ChannelResponse> channelList;
 
-    private HopeCostResponse hopeCost;
-
-    @Schema(description = "네고 가능 여부")
-    private boolean negoable;
+    @Schema(description = "원하는 최소 금액")
+    private Long minCost;
 
     @Schema(description = "광고를 원하는 카테고리 목록")
     private List<String> categoryList;
@@ -77,8 +75,7 @@ public class SelectClrResponse {
         this.phoneNumber = clouterReader.getPhoneNumber();
         this.channelList = clouterReader.getChannelList()
             .stream().map(ChannelResponse::new).collect(Collectors.toList());
-        this.hopeCost = new HopeCostResponse(clouterReader.getHopeCost());
-        this.negoable = clouterReader.isNegoable();
+        this.minCost = clouterReader.getMinCost();
         this.categoryList = clouterReader.getCategoryList();
         this.regionList = clouterReader.getRegionList();
         this.address = new AddressResponse(clouterReader.getAddress());
