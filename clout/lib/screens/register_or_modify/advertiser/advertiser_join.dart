@@ -178,7 +178,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
                           SizedBox(
                             height: 50,
                             child: FractionallySizedBox(
-                              widthFactor: 0.9,
+                              widthFactor: 1,
                               child: BigButton(
                                 title: pageNum == 2
                                     ? '완료'

@@ -23,10 +23,12 @@ class ClouterJoinOrModify1 extends StatelessWidget {
   final modifying;
   final RegisterApi registerApi = RegisterApi();
 
+
   verify() async {
     final clouterRegisterController =
         Get.find<ClouterInfoController>(tag: controllerTag);
     var responseBody = await registerApi.getRequest('/member-service/v1/members/sendsms',
+    // var responseBody = await registerApi.getRequest('/v1/members/sendsms',
         '?phoneNumber=${clouterRegisterController.phoneNumber}');
     print('인증키 sms 발송');
     final pinController =
@@ -40,6 +42,7 @@ class ClouterJoinOrModify1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  final pinController = Get.find<FourDigitsInputController>(tag: controllerTag);
     return GetBuilder<ClouterInfoController>(
       tag: controllerTag,
       builder: (controller) => FractionallySizedBox(
@@ -79,21 +82,24 @@ class ClouterJoinOrModify1 extends StatelessWidget {
                     PhoneNumberFormatter(),
                   ],
                   enabled: true,
+                  controllerTag: controllerTag,
                 ),
                 Positioned(
                   right: 10,
                   top: 2,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (controller.phoneNumber != null &&
-                          controller.phoneNumber.length != 0) {
-                        verify();
-                      } else {
-                        Fluttertoast.showToast(msg: '휴대전화 번호를 입력해주세요');
+                      if (!pinController.phoneVerified) {
+                        if (controller.phoneNumber != null &&
+                            controller.phoneNumber.length != 0) {
+                          verify();
+                        } else {
+                          Fluttertoast.showToast(msg: '휴대전화 번호를 입력해주세요');
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: controller.phoneNumberVerified
+                      backgroundColor: pinController.phoneVerified
                           ? style.colors['main1-3']
                           : style.colors['main1'],
                       elevation: 5,
@@ -101,7 +107,7 @@ class ClouterJoinOrModify1 extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    child: controller.phoneNumberVerified
+                    child: pinController.phoneVerified
                         ? Icon(Icons.check_circle_outline)
                         : Text('인증'),
                   ),

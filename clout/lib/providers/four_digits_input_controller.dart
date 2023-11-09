@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 class FourDigitsInputController extends GetxController {
   var correctPin;
   var inputPin;
+  var phoneVerified = false;
 
   setCorrectPin(input) {
     correctPin = input;
@@ -13,5 +14,12 @@ class FourDigitsInputController extends GetxController {
     inputPin = input;
     update();
   }
+
+  setPhoneVerified(input){
+    phoneVerified = input;
+    update();
+  }
+
+
 
 }

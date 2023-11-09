@@ -24,13 +24,13 @@ class FollowercountStateDialog extends StatelessWidget {
   final index;
 
   void openDialog() {
-    final platformSelectController =
-        Get.find<PlatformSelectController>(tag: controllerTag);
+    // final platformSelectController =
+    //     Get.find<PlatformSelectController>(tag: controllerTag);
     Get.defaultDialog(
       title: title,
       titlePadding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-      content: GetBuilder<FollowerContoller>(
+      content: GetBuilder<PlatformSelectController>(
         tag: controllerTag,
         builder: (controller) => SizedBox(
           height: 75,
@@ -49,16 +49,17 @@ class FollowercountStateDialog extends StatelessWidget {
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                             color: style.colors['main1']!, width: 2))),
-                initialValue: controller.minimumFollowers,
+                initialValue: controller.followerCount[index] == '0'
+                    ? ''
+                    : controller.followerCount[index],
                 onChanged: (newVal) {
-                  controller.setMinimumFollowers(newVal);
-                  platformSelectController.setFollowerCount(index, newVal);
+                  controller.setFollowerCount(index, newVal);
                 },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(controller.minimumFollowersString),
+                  Text(controller.followerCountString[index]),
                 ],
               )
             ],
@@ -81,6 +82,8 @@ class FollowercountStateDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final platformSelectController =
+        Get.find<PlatformSelectController>(tag: controllerTag);
     return GetBuilder<FollowerContoller>(
       tag: controllerTag,
       builder: (controller) => Row(
@@ -92,7 +95,7 @@ class FollowercountStateDialog extends StatelessWidget {
                 minimumSize: MaterialStatePropertyAll(Size(200, 50)),
                 alignment: Alignment.centerRight),
             child: Text(
-              controller.minimumFollowersString,
+              platformSelectController.followerCountString[index],
               style: style.textTheme.titleSmall?.copyWith(
                   color: style.colors['main1'],
                   fontWeight: FontWeight.bold,

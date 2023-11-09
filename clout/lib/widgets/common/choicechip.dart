@@ -1,26 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
-void main() => runApp(const ChipApp());
-
-class ChipApp extends StatelessWidget {
-  const ChipApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xff6750a4),
-        useMaterial3: true,
-      ),
-      home: const ActionChoiceExample(
-        labels: ['제목 1', '제목 2', '제목 3'],
-        chipCount: 4,
-      ),
-    );
-  }
-}
-
 class ActionChoiceExample extends StatefulWidget {
   final List<String> labels;
   final int chipCount;
@@ -46,6 +26,10 @@ class _ActionChoiceExampleState extends State<ActionChoiceExample> {
             widget.chipCount,
             (int index) {
               return ChoiceChip(
+                pressElevation:0,
+                showCheckmark: true,
+                checkmarkColor: style.colors['main1'],
+                surfaceTintColor: Colors.black,
                 label: Text(widget.labels[index]),
                 selected: _value == index,
                 onSelected: (bool selected) {
@@ -53,7 +37,7 @@ class _ActionChoiceExampleState extends State<ActionChoiceExample> {
                     _value = selected ? index : null;
                   });
                 },
-                disabledColor: Colors.transparent,
+                // disabledColor: Colors.red,
                 backgroundColor: _value == index
                     ? style.colors['main2']
                     : Colors.transparent,

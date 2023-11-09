@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 class Address {
   String? zipCode;
@@ -105,7 +106,7 @@ class ChannelList {
   String name;
   String platform;
   String link;
-  String followerScale;
+  int followerScale;
 
   ChannelList(this.name, this.platform, this.link, this.followerScale);
 
@@ -121,32 +122,16 @@ class ChannelList {
         json['name'], json['platform'], json['link'], json['followerScale']);
   }
 }
-
-class HopeCost {
-  int minCost;
-
-  HopeCost(this.minCost);
-
-  Map<String, dynamic> toJson() => {
-        'minCost': minCost,
-      };
-
-  factory HopeCost.fromJson(Map<String, dynamic> json) {
-    return HopeCost(json['minCost']);
-  }
-}
-
 class Clouter {
   String? userId;
   String? pwd;
   String? nickName;
   String? name;
   String? birthday;
-  String? age; // 생일 정보를 받아서 age를 따로 받을 필요가 있나 문의
+  int? age; 
   String? phoneNumber;
-  List<ChannelList>? channelList; // 이거 followerScale 숫자로 받을 수 있는지 문의
-  HopeCost hopeCost; // 이거 최소 최대가 아니라 최솟값만 받도록 조정
-  // bool negoable; // 이건 캠페인 아닌가?
+  List<ChannelList>? channelList; 
+  int? minCost; 
   List<String>? categoryList;
   List<String?>? regionList;
   Address? address;
@@ -160,8 +145,7 @@ class Clouter {
     this.age,
     this.phoneNumber,
     this.channelList,
-    this.hopeCost,
-    // this.negoable,
+    this.minCost,
     this.categoryList,
     this.regionList,
     this.address,
@@ -176,8 +160,7 @@ class Clouter {
         'age': age,
         'phoneNumber': phoneNumber,
         'channelList': channelList,
-        'hopeCost': hopeCost,
-        // 'negoable': negoable,
+        'minCost': minCost,
         'categoryList': categoryList,
         'regionList': regionList,
         'address': address,
@@ -193,7 +176,7 @@ class Clouter {
         json['age'],
         json['phoneNumber'],
         json['channelList'],
-        HopeCost.fromJson(json['hopeCost']),
+        json['minCost'],
         json['categoryList'],
         json['regionList'],
         Address.fromJson(json['address']));
@@ -211,8 +194,7 @@ class ClouterInfo {
   int? age;
   String? phoneNumber;
   List<dynamic>? channelList;
-  HopeCost? hopeCost;
-  bool? negoable;
+  int? minCost;
   List<dynamic>? categoryList;
   List<dynamic>? regionList;
   Address? address;
@@ -228,8 +210,7 @@ class ClouterInfo {
     this.age,
     this.phoneNumber,
     this.channelList,
-    this.hopeCost,
-    this.negoable,
+    this.minCost,
     this.categoryList,
     this.regionList,
     this.address,
@@ -248,8 +229,7 @@ class ClouterInfo {
         json['phoneNumber'],
         // ChannelList.fromJson(json['channelList']),
         json['channelList'],
-        HopeCost.fromJson(json['hopeCost']),
-        json['negoable'],
+        json['minCost'],
         json['categoryList'],
         json['regionList'],
         Address.fromJson(json['address']));

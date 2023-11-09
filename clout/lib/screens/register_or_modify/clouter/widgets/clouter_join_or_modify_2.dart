@@ -4,6 +4,7 @@ import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
 import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class ClouterJoinOrModify2 extends StatelessWidget {
@@ -17,19 +18,24 @@ class ClouterJoinOrModify2 extends StatelessWidget {
 
   //중복 체크 함수
   checkDuplicted() async {
-    final RegisterApi registerApi = RegisterApi();
+    if (clouterRegisterController.id == null ||
+        clouterRegisterController.id.length == 0) {
+      Fluttertoast.showToast(msg: '아이디를 입력해주세요');
+    } else {
+      final RegisterApi registerApi = RegisterApi();
 
-    var responseBody = await registerApi.getRequest(
-      '/member-service/v1/members/duplicate',
-      '?userId=${clouterRegisterController.id}',
-    );
-    print(responseBody);
-    if (responseBody[0] == 200) {
-      // 사용 가능한 아이디
-      clouterRegisterController.setDoubleId(1);
-    } else if(responseBody[0] == 409){
-      // 중복된 아이디
-      clouterRegisterController.setDoubleId(2);
+      var responseBody = await registerApi.getRequest(
+        '/member-service/v1/members/duplicate',
+        '?userId=${clouterRegisterController.id}',
+      );
+      print(responseBody);
+      if (responseBody[0] == 200) {
+        // 사용 가능한 아이디
+        clouterRegisterController.setDoubleId(1);
+      } else if (responseBody[0] == 409) {
+        // 중복된 아이디
+        clouterRegisterController.setDoubleId(2);
+      }
     }
   }
 

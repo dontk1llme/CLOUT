@@ -46,7 +46,6 @@ class _ClouterMyPageState extends State<ClouterMyPage> {
 
     var response = await itemApi.getRequest(
         '/member-service/v1/clouters/', userController.userId);
-    // await itemApi.getRequest('/v1/clouters/', userController.userId);
 
     final decodedResponse = jsonDecode(response);
 
