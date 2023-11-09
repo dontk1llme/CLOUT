@@ -1,12 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+// api
 import 'dart:convert';
 import 'dart:async';
-import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/type.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:clout/style.dart' as style;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+// controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
 
 // widgets
 import 'package:clout/widgets/list/campaign_item_box.dart';
