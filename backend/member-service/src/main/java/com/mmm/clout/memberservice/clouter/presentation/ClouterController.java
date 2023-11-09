@@ -21,7 +21,7 @@ public class ClouterController implements ClouterControllerDocs {
 
     private final ClouterFacade clouterFacade;
 
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity<CreateClrResponse> create(
             @RequestBody CreateClrRequest createClrRequest
             ) {
