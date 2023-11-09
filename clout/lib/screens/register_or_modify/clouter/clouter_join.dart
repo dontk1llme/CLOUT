@@ -96,13 +96,14 @@ class ClouterJoinState extends State<ClouterJoin> {
   }
 
   register() async {
-    registerController.printAll();
+    // registerController.printAll();
 
     RegisterApi registerApi = RegisterApi();
-
+    registerController.setClouter();
     // await을 안붙히면 Future<dynamic> 형식으로 넘어와서 데이터 처리하기 힘듦 => await을 붙히면 String으로 오더라고(항상 이런건지를 모르겠음)
     var responseBody = await registerApi.postRequest(
-        '/member-service/v1/clouters', registerController.clouter);
+        '/member-service/v1/clouters/signup', registerController.clouter);
+        // '/v1/clouters', registerController.clouter);
     print(responseBody);
     showSnackBar();
     Get.offAllNamed('/login');

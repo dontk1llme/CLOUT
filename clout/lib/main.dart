@@ -127,6 +127,9 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       theme: ThemeData(
         fontFamily: 'NotoSansKR',
+        splashColor: Colors.transparent,
+        // highlightColor: Colors.transparent,
+        // disabledColor: Colors.transparent,
       ),
       initialBinding: AppBinding(),
       getPages: [

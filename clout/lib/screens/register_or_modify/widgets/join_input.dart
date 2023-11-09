@@ -1,5 +1,7 @@
+import 'package:clout/providers/four_digits_input_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
 
 class JoinInput extends StatefulWidget {
   JoinInput(
@@ -14,7 +16,8 @@ class JoinInput extends StatefulWidget {
       this.obscured,
       this.initialValue,
       this.inputFormatters,
-      this.textInputAction});
+      this.textInputAction,
+      this.controllerTag});
   final keyboardType;
   final maxLength;
   final title;
@@ -26,6 +29,7 @@ class JoinInput extends StatefulWidget {
   final initialValue;
   var inputFormatters;
   var textInputAction;
+  var controllerTag;
 
   @override
   State<JoinInput> createState() => _JoinInputState();
@@ -41,7 +45,14 @@ class _JoinInputState extends State<JoinInput> {
       enabled: widget.enabled,
       inputFormatters: widget.inputFormatters,
       onChanged: widget.index == null
-          ? (value) => widget.setState(value)
+          ? (value) {
+              widget.setState(value);
+              if (widget.controllerTag != null) {
+                final pinController = Get.find<FourDigitsInputController>(
+                    tag: widget.controllerTag);
+                pinController.setPhoneVerified(false);
+              }
+            }
           : (value) => widget.setState(widget.index, value),
       obscureText: widget.obscured ?? false,
       decoration: InputDecoration(

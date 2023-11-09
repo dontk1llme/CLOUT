@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
 
   doLogin() async {
     // 유저가 맞는지 확인하는 api 통신 여기에 두고 맞으면 main으로 이동하게
-    Get.offAllNamed('/home');
+    // Get.offAllNamed('/home');
     // // 1. 보냄
     // userController.setUserInfo(); // 'userInfo' 설정
     // final LoginApi loginApi = LoginApi();
@@ -56,13 +56,17 @@ class _LoginState extends State<Login> {
 
     // 2. 리턴값에서 유저/클라우터 가려받고 set
     if (loginData['login_success'] == true) {
-      if (loginData['clout_or_adv'] == 'ADVERTISER') {
+      print('클라우트인지 광고주인지 : ${loginData["clout_or_adv"]}');
+      if (loginData['clout_or_adv'] == '"ADVERTISER"') {
         //광고주 1
         userController.setAdvertiser();
+        print('광고주 쪽으로 넘어옴');
       } else {
         //클라우터 -1
         userController.setClouter();
+        print('클라우터 쪽으로 넘어옴');
       }
+      print('유저 타입: ${userController.user}');
       userController.setUserLogin(loginData);
       print(userController.userLogin);
       Get.offAllNamed('/home');
