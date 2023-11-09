@@ -3,7 +3,7 @@ import 'package:clout/type.dart';
 
 class UserController extends GetxController {
   int user = 1;
-  var userId = '2';
+  var userId = '10';
   var password;
 
   var userInfo;
