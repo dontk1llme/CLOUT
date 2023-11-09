@@ -50,45 +50,37 @@ class HomeController extends GetxController {
     }
   }
 
-  // void fetchClouters() async {
-  //   final ItemApi itemApi = ItemApi();
-  //   await Future.delayed(Duration(seconds: 2));
-  //   var response = await itemApi.getRequest(
-  //       '/advertisement-service/v1/advertisements/', 'top10');
-  //   var json = jsonDecode(response);
+  void fetchClouters() async {
+    final ItemApi itemApi = ItemApi();
+    await Future.delayed(Duration(seconds: 2));
+    var response =
+        await itemApi.getRequest('/member-service/v1/clouters/', 'top10');
+    var json = jsonDecode(response);
 
-  //   List<dynamic> campaignsJson = json['top10CampaignList'];
-  //   if (campaignsJson != null) {
-  //     campaignData.value = campaignsJson.map((item) {
-  //       var campaign = Campaign.fromJson(item['campaign']);
-  //       var advertiserInfo = AdvertiserInfo.fromJson(item['advertiserInfo']);
-  //       return CampaignInfo(
-  //         campaign.campaignId,
-  //         campaign.adPlatformList,
-  //         campaign.price,
-  //         campaign.details,
-  //         campaign.deletedAt,
-  //         campaign.title,
-  //         campaign.adCategory,
-  //         campaign.isPriceChangeable,
-  //         campaign.isDeliveryRequired,
-  //         campaign.numberOfRecruiter,
-  //         campaign.numberOfApplicants,
-  //         campaign.numberOfSelectedMembers,
-  //         campaign.offeringDetails,
-  //         campaign.sellingLink,
-  //         campaign.applyStartDate,
-  //         campaign.applyEndDate,
-  //         campaign.minClouterAge,
-  //         campaign.maxClouterAge,
-  //         campaign.minFollower,
-  //         advertiserInfo.companyInfo,
-  //         advertiserInfo.address,
-  //         advertiserInfo,
-  //       );
-  //     }).toList();
-  //   } else {
-  //     campaignData.value = [];
-  //   }
-  // }
+    List<dynamic> cloutersJson = json['clouters'];
+    if (cloutersJson != null) {
+      clouterData.value = cloutersJson.map((item) {
+        var clouterInfo = ClouterInfo.fromJson(item['clouterInfo']);
+        return ClouterInfo(
+          clouterInfo.clouterId,
+          clouterInfo.userId,
+          clouterInfo.avgScore,
+          clouterInfo.contractCount, // 💥 계약한 광고 건수 수정
+          clouterInfo.role,
+          clouterInfo.nickName,
+          clouterInfo.name,
+          clouterInfo.birthday,
+          clouterInfo.age,
+          clouterInfo.phoneNumber,
+          clouterInfo.channelList,
+          clouterInfo.minCost,
+          clouterInfo.categoryList,
+          clouterInfo.regionList,
+          clouterInfo.address,
+        );
+      }).toList();
+    } else {
+      clouterData.value = [];
+    }
+  }
 }
