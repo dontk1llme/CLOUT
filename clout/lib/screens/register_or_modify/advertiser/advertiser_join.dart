@@ -97,7 +97,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
     final RegisterApi registerApi = RegisterApi();
 
     registerApi.postRequest(
-        '/v1/advertisers', advertiserRegisterController.advertiser);
+        '/member-service/v1/advertisers/signup', advertiserRegisterController.advertiser);
     Get.offNamed('/login');
     showSnackBar();
   }
