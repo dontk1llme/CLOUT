@@ -21,7 +21,7 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   data:
     redis:
       host: 3.38.213.43
@@ -47,11 +47,3 @@ springdoc:
   swagger-ui:
     path: /swagger-ui
     use-root-path: true
-
-#springfox:
-#  documentation:
-#    swagger:
-#      v2:
-#        path: /api
-#    swagger-ui:
-#      base-url: /api
