@@ -181,10 +181,12 @@ class Clouter {
   }
 }
 
+// 💥 계약한 광고 건수 추가하기
 class ClouterInfo {
   int? clouterId;
   String? userId;
   int? avgScore;
+  int? contractCount;
   String? role;
   String? nickName;
   String? name;
@@ -193,14 +195,15 @@ class ClouterInfo {
   String? phoneNumber;
   List<dynamic>? channelList;
   int? minCost;
-  List<dynamic>? categoryList;
-  List<dynamic>? regionList;
+  List<String>? categoryList;
+  List<String>? regionList;
   Address? address;
 
   ClouterInfo(
     this.clouterId,
     this.userId,
     this.avgScore,
+    this.contractCount,
     this.role,
     this.nickName,
     this.name,
@@ -219,6 +222,7 @@ class ClouterInfo {
         json['clouterId'],
         json['userId'],
         json['avgScore'],
+        json['contractCount'],
         json['role'],
         json['nickName'],
         json['name'],
