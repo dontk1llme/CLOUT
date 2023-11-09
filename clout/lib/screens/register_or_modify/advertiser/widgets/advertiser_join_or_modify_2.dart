@@ -8,6 +8,7 @@ import 'package:clout/screens/register_or_modify/widgets/number_verify.dart';
 import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
@@ -37,6 +38,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
   }
 
   verify() async {
+    // var responseBody = await registerApi.getRequest('/member-service/v1/members/sendsms',
     var responseBody = await registerApi.getRequest('/member-service/v1/members/sendsms',
         '?phoneNumber=${advertiserRegisterController.phoneNumber}');
     print('인증키 sms 발송');
@@ -51,6 +53,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pinController = Get.find<FourDigitsInputController>(tag: controllerTag);
     return GetBuilder<AdvertiserInfoController>(
       tag: controllerTag,
       builder: (controller) => Column(
@@ -92,22 +95,36 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                   FilteringTextInputFormatter.digitsOnly,
                   PhoneNumberFormatter(),
                 ],
+                controllerTag: controllerTag,
               ),
               Positioned(
-                right: 10,
-                top: 2,
-                child: ElevatedButton(
-                  onPressed: verify,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: style.colors['main1'],
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                  right: 10,
+                  top: 2,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (!pinController.phoneVerified) {
+                        if (controller.phoneNumber != null &&
+                            controller.phoneNumber.length != 0) {
+                          verify();
+                        } else {
+                          Fluttertoast.showToast(msg: '휴대전화 번호를 입력해주세요');
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: pinController.phoneVerified
+                          ? style.colors['main1-3']
+                          : style.colors['main1'],
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
+                    child: pinController.phoneVerified
+                        ? Icon(Icons.check_circle_outline)
+                        : Text('인증'),
                   ),
-                  child: Text('인증'),
                 ),
-              ),
             ],
           ),
           SizedBox(height: 30),

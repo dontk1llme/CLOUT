@@ -20,6 +20,7 @@ class ClouterInfoController extends GetxController {
   var checkPassword;
   var nickName;
   var images;
+  var negoable;
   List<bool> selections = [
     true,
     false,
@@ -36,7 +37,6 @@ class ClouterInfoController extends GetxController {
   ];
   var doubleId = 0;
   var obscured = true;
-  var phoneNumberVerified = false;
   // var negoable = true;
 
   var clouter;
@@ -86,19 +86,40 @@ class ClouterInfoController extends GetxController {
     );
   }
 
-  var categories = [
+  static List<String> categories = [
     'ALL',
     'FASHION_BEAUTY',
-    'HEALTH_LIVING',
+    'HEALTH_LIFESTYLE',
     'TRAVEL_LEISURE',
     'PARENTING',
     'ELECTRONICS',
     'FOOD',
     'VISIT_EXPERIENCE',
-    'PET',
-    'GAME',
-    'FINANCE_BUSINESS',
-    'ETC'
+    'PETS',
+    'GAMES',
+    'ECONOMY_BUSINESS',
+    'OTHERS'
+  ];
+
+  static List<String> regions = [
+    'ALL',
+    'SEOUL',
+    'BUSAN',
+    'DAEGU',
+    'INCHEON',
+    'GWANGJU',
+    'DAEJEON',
+    'ULSAN',
+    'SEJONG',
+    'GYEONGGI',
+    'GANGWON',
+    'CHUNGBUK',
+    'CHUNGNAM',
+    'JEONBUK',
+    'JEONNAM',
+    'GYEONGBUK',
+    'GYEONGNAM',
+    'JEJU',
   ];
 
   setClouter() {
@@ -113,7 +134,7 @@ class ClouterInfoController extends GetxController {
                     ? 'TIKTOK'
                     : 'YOUTUBE',
             platformSelectController!.link[i],
-            platformSelectController!.followerCount[i]);
+            int.parse(platformSelectController!.followerCount[i]));
         channelList.add(channel);
       }
     }
@@ -123,6 +144,12 @@ class ClouterInfoController extends GetxController {
       if (selections[i]) {
         categoryList.add(categories[i]);
       }
+    }
+
+    List<String> regionList = [];
+    for (int i = 0; i < regionController.selectedRegions.length; i++) {
+      regionList
+          .add(regionController.getEnum(regionController.selectedRegions[i]));
     }
 
     Address address = Address(
@@ -136,14 +163,13 @@ class ClouterInfoController extends GetxController {
         password,
         nickName,
         name,
-        DateFormat('yyyy.MM.dd').format(dateController!.selectedDate),
-        age,
+        DateFormat('yyyy-MM-dd').format(dateController!.selectedDate),
+        dateController.age,
         phoneNumber,
         channelList,
-        HopeCost(feeController!.minFee),
-        // negoable,
+        int.parse(feeController!.pay),
         categoryList,
-        regionController!.selectedRegions,
+        regionList,
         address);
     update();
   }
@@ -199,11 +225,6 @@ class ClouterInfoController extends GetxController {
     update();
   }
 
-  setPhoneNumberVerified(input) {
-    phoneNumberVerified = input;
-    update();
-  }
-
   canGoSecondPage() {
     if (name == null || name.length == 0) {
       return '이름을 입력해주세요';
@@ -214,6 +235,9 @@ class ClouterInfoController extends GetxController {
     }
     if (phoneNumber == null || phoneNumber.length == 0) {
       return '휴대전화 번호를 입력해주세요 📱';
+    }
+    if (!fourDigitsInputController.phoneVerified) {
+      return '휴대전화 번호 인증을 진행해주세요';
     }
     if (addressController.zipCode == null ||
         addressController.zipCode.length == 0) {
@@ -271,66 +295,31 @@ class ClouterInfoController extends GetxController {
     }
     if (platformSelectController.id[0].length != 0 ||
         platformSelectController.link[0].length != 0 ||
-        platformSelectController.followerCount[0].length != 0) {
+        platformSelectController.followerCount[0] != '0') {
       if (platformSelectController.id[0].length == 0 ||
           platformSelectController.link[0].length == 0 ||
-          platformSelectController.followerCount[0].length == 0) {
+          platformSelectController.followerCount[0] == '0') {
         return 'Instagram 계정의 정보를 완성해주세요';
       }
     }
     if (platformSelectController.id[1].length != 0 ||
         platformSelectController.link[1].length != 0 ||
-        platformSelectController.followerCount[1].length != 0) {
+        platformSelectController.followerCount[1] != '0') {
       if (platformSelectController.id[1].length == 0 ||
           platformSelectController.link[1].length == 0 ||
-          platformSelectController.followerCount[1].length == 0) {
+          platformSelectController.followerCount[1] == '0') {
         return 'Tiktok 계정의 정보를 완성해주세요';
       }
     }
     if (platformSelectController.id[2].length != 0 ||
         platformSelectController.link[2].length != 0 ||
-        platformSelectController.followerCount[2].length != 0) {
+        platformSelectController.followerCount[2] != '0') {
       if (platformSelectController.id[2].length == 0 ||
           platformSelectController.link[2].length == 0 ||
-          platformSelectController.followerCount[2].length == 0) {
+          platformSelectController.followerCount[2] == '0') {
         return 'Youtube 계정의 정보를 완성해주세요';
       }
     }
     return '';
-  }
-
-  printAll() {
-    print('이름');
-    print(name);
-    print('생년월일');
-    print(dateController!.selectedDate);
-    print('휴대폰 번호');
-    print(phoneNumber);
-    print('주소');
-    print(DateFormat('yyyy.MM.dd').format(dateController!.selectedDate));
-    print('아이디');
-    print(id);
-    print('비번');
-    print(password);
-    print('비번확인');
-    print(checkPassword);
-    print('닉네임');
-    print(nickName);
-    print('사진들');
-    // print(images);
-    print('광고 가능 플랫폼');
-    print(platformSelectController!.platforms);
-    print('각 아이디');
-    print(platformSelectController!.id);
-    print('각 링크');
-    print(platformSelectController!.link);
-    print('각 팔로워 수');
-    print(platformSelectController!.followerCount);
-    print('최소 희망 광고비');
-    print(feeController!.pay);
-    print('희망 카테고리');
-    print(selections);
-    print('희망 지역');
-    print(regionController!.selectedRegions);
   }
 }
