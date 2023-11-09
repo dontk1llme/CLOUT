@@ -6,6 +6,8 @@ import com.mmm.clout.memberservice.bookmark.infrastructure.persistence.jpa.JpaBo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class BookmarkAdaptor implements BookmarkRepository {
@@ -15,5 +17,14 @@ public class BookmarkAdaptor implements BookmarkRepository {
     @Override
     public Bookmark save(Bookmark bookmark) {
         return jpaBookmarkRepository.save(bookmark);
+    }
+
+    @Override
+    public Optional<Bookmark> findById(Long bookmarkId) {
+        return jpaBookmarkRepository.findById(bookmarkId);
+    }
+    @Override
+    public void delete(Bookmark bookmark) {
+        jpaBookmarkRepository.delete(bookmark);
     }
 }
