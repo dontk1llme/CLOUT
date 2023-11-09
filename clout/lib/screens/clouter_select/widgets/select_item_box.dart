@@ -17,9 +17,9 @@ class Clouter {
   int starRating = 20;
   int fee = 500000;
   List<String> selectedPlatform = [
-    "YouTube",
-    "Instagram",
-    "TikTok",
+    "YOUTUBE",
+    "INSTAGRAM",
+    "TIKTOK",
   ];
   String firstImg = 'assets/images/clouterImage.jpg';
 }
