@@ -87,10 +87,9 @@ public class SearchCampaignListProcessor {
             .offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
 
         for (Campaign campaign : campaigns) {
-            Hibernate.initialize(campaign.getRegionList());
-            Hibernate.initialize(campaign.getAdPlatformList());
-            // 다른 지연 로딩 컬렉션도 초기화 필요 시 여기에 추가
+            campaign.readTransaction();
         }
+
         return campaigns.stream().map(
             CampaignDto::from
         ).collect(Collectors.toList());
