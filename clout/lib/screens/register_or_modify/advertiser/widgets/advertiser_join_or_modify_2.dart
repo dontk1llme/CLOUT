@@ -149,7 +149,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
           controllerTag != 'advertiserModify'
               ? Align(
                   alignment: Alignment.centerRight,
-                  child: controller.doubleId == 1
+                  child: controller.doubleId == 0
                       ? Text(
                           '아이디 중복 확인이 필요해요',
                           style: style.textTheme.bodySmall?.copyWith(
@@ -157,7 +157,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                             height: 1.5,
                           ),
                         )
-                      : controller.doubleId == 2
+                      : controller.doubleId == 1
                           ? Text(
                               '사용 가능한 아이디입니다',
                               style: style.textTheme.bodySmall?.copyWith(
