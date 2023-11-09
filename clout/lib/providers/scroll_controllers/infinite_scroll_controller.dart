@@ -20,9 +20,9 @@ class Clouter {
   String category = '반려동물';
   int contractCount = 5;
   List<String> selectedPlatform = [
-    "YouTube",
-    "Instagram",
-    "TikTok",
+    "YOUTUBE",
+    "INSTAGRAM",
+    "TIKTOK",
   ];
   String firstImg = 'assets/images/clouterImage.jpg';
 }

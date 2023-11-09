@@ -39,9 +39,9 @@ class _AdvertiserProfileState extends State<AdvertiserProfile> {
 
     // try {
     var response = await itemApi.getRequest(
-        // '/member-service/v1/advertisers/', userController.userId);
-        '/v1/advertisers/',
-        userController.userId);
+        '/member-service/v1/advertisers/', userController.userId);
+    // '/v1/advertisers/',
+    // userController.userId);
     print(response);
 
     final decodedResponse = jsonDecode(response);

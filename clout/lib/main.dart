@@ -93,7 +93,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    print('initstate 들어옴');
     getMyDeviceToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
