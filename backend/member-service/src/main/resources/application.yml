@@ -22,11 +22,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-  data:
-    redis:
-      host: 3.38.213.43
-      port: 6379
-      password: BboBpf1zv}5.lE)a&C[5=L_{^xQ!Y.u#itKO.]5g5rmXC!,BGe
+  redis:
+    host: redis
+    port: 6379
+    password: BboBpf1zv}5.lE)a&C[5=L_{^xQ!Y.u#itKO.]5g5rmXC!,BGe
 
 eureka:
   instance:
