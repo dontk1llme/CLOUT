@@ -51,7 +51,8 @@ public class AuthService {
 
         return new LoginReader(
             generateToken(SERVER, authentication.getName(), getAuthorities(authentication)),
-            member.getRole()
+            member.getRole(),
+            member.getId()
             );
     }
 

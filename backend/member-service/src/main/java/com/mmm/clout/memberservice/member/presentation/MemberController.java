@@ -8,6 +8,7 @@ import com.mmm.clout.memberservice.member.infrastructure.auth.service.MemberServ
 import com.mmm.clout.memberservice.member.presentation.docs.MemberControllerDocs;
 import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
 import com.mmm.clout.memberservice.member.presentation.response.IdDuplicateResponse;
+import com.mmm.clout.memberservice.member.presentation.response.LoginReseponse;
 import com.mmm.clout.memberservice.member.presentation.response.PwdUpdateResponse;
 import com.mmm.clout.memberservice.member.presentation.response.SendSmsResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,20 +29,18 @@ public class MemberController implements MemberControllerDocs {
     private final AuthService authService;
     private final SmsService smsService;
     private final MemberService memberService;
-    private final BCryptPasswordEncoder encoder;
-
 
     private final long COOKIE_EXPIRATION = 7776000; // 90일
 
     // 로그인 -> 토큰 발급
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid AuthDto.LoginDto loginDto) {
+    public ResponseEntity<LoginReseponse> login(@RequestBody @Valid AuthDto.LoginDto loginDto) {
         LoginReader reader = authService.login(loginDto);
         AuthDto.TokenDto tokenDto = reader.getTokenDto();
         return ResponseEntity.ok()
             .header("REFRESH_TOKEN", tokenDto.getRefreshToken())
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getAccessToken())
-            .body(reader.getMemberRole());
+            .body(reader.toResponse());
     }
 
     @GetMapping("/duplicate")
