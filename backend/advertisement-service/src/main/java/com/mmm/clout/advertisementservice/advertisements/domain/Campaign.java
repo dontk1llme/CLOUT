@@ -69,7 +69,7 @@ public class Campaign extends Advertisement {
     private List<Region> regionList = new ArrayList<>();
 
     @Transactional(readOnly = true)
-    public Campaign readTransaction() {
+    public Campaign initializeCampaign() {
         Hibernate.initialize(this.getRegionList());
         Hibernate.initialize(this.getAdPlatformList());
         return this;
