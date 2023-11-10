@@ -17,8 +17,8 @@ class ClouterItemBox extends StatefulWidget {
   final int avgScore;
   final int minCost;
   final List<String> categoryList;
-  final int contractCount; // 아직 빠져있음 💥 추가하기 (계약한 광고 수)
-  final List<String> channelList;
+  // final int contractCount; // 아직 빠져있음 💥 추가하기 (계약한 광고 수)
+  final List<Widget> channelList;
   // final String firstImg; // 💥 사진 나중에 추가하기
 
   ClouterItemBox({
@@ -27,7 +27,7 @@ class ClouterItemBox extends StatefulWidget {
     required this.avgScore,
     required this.minCost,
     required this.categoryList,
-    required this.contractCount,
+    // required this.contractCount,
     required this.channelList,
     // required this.firstImg
   });
@@ -87,8 +87,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     decoration: BoxDecoration(
                         color: style.colors['white'],
                         borderRadius: BorderRadius.circular(5)),
-                    child: Row(
-                        children: [Sns2(selectedPlatform: widget.channelList)]),
+                    child: Row(children: widget.channelList),
                   ),
                 ),
                 if (userController.memberType == 1)
@@ -123,15 +122,15 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     fontSize: screenWidth > 400 ? 15 : 13,
                   ),
                 ),
-                Text(
-                  '${widget.contractCount}건', // 💥 계약한 광고 수
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: screenWidth > 400 ? 15 : 13,
-                  ),
-                ),
+                // Text(
+                //   '${widget.contractCount}건', // 💥 계약한 광고 수
+                //   maxLines: 1,
+                //   overflow: TextOverflow.ellipsis,
+                //   style: TextStyle(
+                //     fontWeight: FontWeight.w600,
+                //     fontSize: screenWidth > 400 ? 15 : 13,
+                //   ),
+                // ),
               ],
             ),
           ],

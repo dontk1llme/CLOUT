@@ -39,7 +39,7 @@ class ClouterInfiniteScrollBody extends StatelessWidget {
                     avgScore: controller.data[index].avgScore,
                     minCost: controller.data[index].minCost,
                     categoryList: controller.data[index].categoryList,
-                    contractCount: controller.data[index].contractCount,
+                    // contractCount: controller.data[index].contractCount,
                     channelList: controller.data[index].channelList,
                     // firstImg: controller.data[index].firstImg, // 💥 사진 추가하기
                   ),
@@ -51,7 +51,7 @@ class ClouterInfiniteScrollBody extends StatelessWidget {
                     avgScore: controller.data[index].avgScore,
                     minCost: controller.data[index].minCost,
                     categoryList: controller.data[index].categoryList,
-                    contractCount: controller.data[index].contractCount,
+                    // contractCount: controller.data[index].contractCount,
                     channelList: controller.data[index].channelList,
                     // firstImg: controller.data[index].firstImg, // 💥 사진 추가하기
                   ),
