@@ -2,6 +2,7 @@ package com.mmm.clout.pointservice.point.application;
 
 import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,7 @@ public class GetMemberPointProcessor {
 
     @Transactional
     public Point execute(Long memberId) {
-        return pointRepository.findByMemberId(memberId)
-            .orElse(pointRepository.save(Point.create(memberId, 0L)));
+        Optional<Point> byMemberId = pointRepository.findByMemberId(memberId);
+        return byMemberId.orElseGet(() -> pointRepository.save(Point.create(memberId, 0L)));
     }
 }
