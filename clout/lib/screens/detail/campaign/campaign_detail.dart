@@ -2,6 +2,8 @@ import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
+
+// api
 import 'dart:convert';
 import 'package:clout/type.dart';
 
@@ -90,7 +92,6 @@ class _CampaignDetailState extends State<CampaignDetail> {
 
       print(CampaignList.fromJson(jsonDecode(response)));
       print(CampaignList.fromJson(jsonDecode(response)).advertiserInfo);
-
     } catch (e) {
       // 에러 처리
       print('Error: $e');

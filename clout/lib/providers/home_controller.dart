@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:clout/hooks/apis/normal_api.dart';
-import 'package:clout/hooks/item_api.dart';
 import 'package:clout/type.dart';
 import 'package:get/get.dart';
 
