@@ -1,4 +1,4 @@
-import 'package:clout/hooks/register_api.dart';
+import 'package:clout/hooks/apis/register_api.dart';
 import 'package:clout/providers/user_controllers/advertiser_controller.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/register_or_modify/advertiser/widgets/advertiser_join_or_modify_1.dart';

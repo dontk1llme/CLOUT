@@ -1,9 +1,10 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
+import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // api
-import 'package:clout/hooks/item_api.dart';
 import 'dart:convert';
 import 'package:clout/type.dart';
 
@@ -35,24 +36,23 @@ class _AdvertiserProfileState extends State<AdvertiserProfile> {
   }
 
   _showDetail() async {
-    final ItemApi itemApi = ItemApi();
+    final AuthorizedApi authorizedApi = AuthorizedApi();
 
-    // try {
-    var response = await itemApi.getRequest(
-        '/member-service/v1/advertisers/', userController.memberId);
-    // '/v1/advertisers/',
-    // userController.userId);
-    print(response);
+    try {
+      var response = await authorizedApi.getRequest(
+          '/member-service/v1/advertisers/', userController.memberId);
+      // response = {'statusCode' : 값, 'body' : 값}
 
-    final decodedResponse = jsonDecode(response);
+      final statusCode = response['statusCode'];
+      final decodedResponse = jsonDecode(response['body']);
+      print(statusCode);
 
-    setState(() {
-      advertiser = Advertiser.fromJson(decodedResponse);
-    });
-
-    // } catch (e) {
-    // print('advertiser profile error : $e');
-    // }
+      setState(() {
+        advertiser = Advertiser.fromJson(decodedResponse);
+      });
+    } catch (e) {
+      print('advertiser profile error : $e');
+    }
   }
 
   @override
