@@ -1,4 +1,5 @@
 // Global
+import 'package:clout/screens/apply_campaign/apply_campaign.dart';
 import 'package:clout/screens/detail/clouter/clouter_detail.dart';
 import 'package:clout/screens/point/add/add_complete.dart';
 import 'package:flutter/material.dart';
@@ -159,6 +160,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/addfirst', page: () => AddFirst()),
         GetPage(name: '/addsecond', page: () => AddSecond()),
         GetPage(name: '/addcomplete', page: () => AddComplete()),
+        GetPage(name: '/applycampaign', page: () => ApplyCampaign()),
       ],
     );
   }
