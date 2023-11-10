@@ -345,7 +345,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            userController.user == 0 ? SizedBox(height: 150) : Container(),
+            userController.memberType == 0 ? SizedBox(height: 150) : Container(),
           ],
         ),
       ),
