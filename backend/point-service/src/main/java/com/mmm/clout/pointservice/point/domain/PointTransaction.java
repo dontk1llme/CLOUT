@@ -49,11 +49,12 @@ public class PointTransaction extends BaseEntity {
     private String counterparty;
 
     public PointTransaction(Point point, Long amount, PointStatus pointStatus,
-        PointCategory pointCategory) {
+        PointCategory pointCategory, String counterparty) {
         this.point = point;
         this.amount = amount;
         this.pointStatus = pointStatus;
         this.pointCategory = pointCategory;
+        this.counterparty = counterparty;
     }
 
     public static PointTransaction charge(Point point, Long chargePoint) {
@@ -61,7 +62,8 @@ public class PointTransaction extends BaseEntity {
             point,
             chargePoint,
             PointStatus.PLUS,
-            PointCategory.CHARGE
+            PointCategory.CHARGE,
+            PointCategory.CHARGE.getDescription()
         );
     }
 
@@ -69,8 +71,7 @@ public class PointTransaction extends BaseEntity {
         Point point,
         Long reducingPoint,
         PointCategory pointCategory
-
     ) {
-        return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory);
+        return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory, pointCategory.getDescription());
     }
 }

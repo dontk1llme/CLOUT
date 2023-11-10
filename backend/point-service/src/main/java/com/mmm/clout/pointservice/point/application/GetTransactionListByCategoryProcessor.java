@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class GetTransactionListByCategoryProcessor {
 
     private final PointRepository pointRepository;
-    private final PointTransactionRepository pointTransactionRepository;
     private final JPAQueryFactory queryFactory;
 
     @Transactional
@@ -42,7 +41,7 @@ public class GetTransactionListByCategoryProcessor {
     }
 
     private BooleanExpression categoryEq(String category) {
-        if (!hasText(category)) return null;
+        if (!hasText(category)) throw new InvalidCategoryException();
         switch (category) {
             case "ALL":
                 return null; // 모든 카테고리
