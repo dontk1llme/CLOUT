@@ -39,8 +39,8 @@ class _ClouterProfileState extends State<ClouterProfile> {
   _showDetail() async {
     final ItemApi itemApi = ItemApi();
 
-    var response = await itemApi.getRequest(
-        '/member-service/v1/clouters/', userController.userId);
+    var response =
+        await itemApi.getRequest('/member-service/v1/clouters/', userController.userId);
 
     final decodedResponse = jsonDecode(response);
 
