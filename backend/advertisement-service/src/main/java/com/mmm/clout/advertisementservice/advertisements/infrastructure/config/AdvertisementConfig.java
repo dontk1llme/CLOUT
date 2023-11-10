@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.CreateCampa
 import com.mmm.clout.advertisementservice.advertisements.application.DeleteCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.EndCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByAdvertiser;
+import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByIdProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.SearchCampaignListProcessor;
@@ -90,5 +91,12 @@ public class AdvertisementConfig {
             campaignRepository,
             jpaQueryFactory
         );
+    }
+
+    @Bean
+    public GetCampaignListByIdProcessor getCampaignListByIdProcessor(
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
+    ) {
+        return new GetCampaignListByIdProcessor(campaignRepository);
     }
 }
