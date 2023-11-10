@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface JpaClouterRepository extends JpaRepository<Clouter, Long> {
     List<Clouter> findTop10ByOrderByAvgScoreDesc();
+
+    List<Clouter> findByIdIn(List<Long> idList);
+
 }
