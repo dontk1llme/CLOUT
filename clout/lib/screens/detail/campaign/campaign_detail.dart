@@ -173,7 +173,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          userController.user == 0
+                          userController.memberType == 0
                               ? SizedBox(height: 20)
                               : Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -230,7 +230,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
                       ),
                     ),
                   ),
-                  userController.user == -1
+                  userController.memberType == -1
                       ? Positioned(
                           bottom: 10,
                           left: 10,
@@ -244,7 +244,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
                             ),
                           ),
                         )
-                      : userController.user == 1
+                      : userController.memberType == 1
                           ? Positioned(
                               bottom: 10,
                               left: 10,

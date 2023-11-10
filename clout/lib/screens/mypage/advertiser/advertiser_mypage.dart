@@ -46,7 +46,7 @@ class _AdvertiserMyPageState extends State<AdvertiserMyPage> {
     final ItemApi itemApi = ItemApi();
 
     var response = await itemApi.getRequest(
-        '/member-service/v1/advertisers/', userController.userId);
+        '/member-service/v1/advertisers/', userController.memberId);
     // '/v1/advertisers/',
     // userController.userId);
     print(response);

@@ -53,12 +53,12 @@ class _LoginState extends State<Login> {
     final LoginApi loginApi = LoginApi();
     var loginData = await loginApi.postRequest(
         '/member-service/v1/members/login', userController.userInfo);
-        // '/v1/members/login', userController.userInfo);
+    // '/v1/members/login', userController.userInfo);
 
     // 2. 리턴값에서 유저/클라우터 가려받고 set
     if (loginData['login_success'] == true) {
-      print('클라우트인지 광고주인지 : ${loginData["clout_or_adv"]}');
-      if (loginData['clout_or_adv'] == '"ADVERTISER"') {
+      print('클라우트인지 광고주인지 : ${loginData}');
+      if (loginData['memberRole'] == 'ADVERTISER') {
         //광고주 1
         userController.setAdvertiser();
         print('광고주 쪽으로 넘어옴');
@@ -67,14 +67,10 @@ class _LoginState extends State<Login> {
         userController.setClouter();
         print('클라우터 쪽으로 넘어옴');
       }
-      print('유저 타입: ${userController.user}');
       userController.setUserLogin(loginData);
+      userController.setMemberId(loginData['memberId']);
       print(userController.userLogin);
       Get.offAllNamed('/home');
-    } else {
-      // 3. 만약 0 리턴되면 showtoast
-      // 혹은 login_api에서 설정해야 할 수도
-      Fluttertoast.showToast(msg: '아이디 혹은 비밀번호를 확인해주세요');
     }
   }
 
