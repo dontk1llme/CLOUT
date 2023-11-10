@@ -10,12 +10,10 @@ import com.mmm.clout.pointservice.point.presentation.response.ChargePointRespons
 import com.mmm.clout.pointservice.point.presentation.response.CustomPageResponse;
 import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.PointTransactionResponse;
-import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +62,7 @@ public class PointController implements PointControllerDocs {
     public ResponseEntity<Void> withdraw(
         @Valid @RequestBody WithdrawPointRequest request
     ) {
-        pointFacade.withdraw(request.toCommand());
+        pointFacade.withdrawal(request.toCommand());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

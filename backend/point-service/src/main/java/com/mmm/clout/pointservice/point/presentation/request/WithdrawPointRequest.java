@@ -19,7 +19,7 @@ public class WithdrawPointRequest {
     private Long accountNumber; // 계좌번호
 
     @NotNull
-    private Long withdrawingPoint; // 출금할 포인트 (신청한 포인트)
+    private Long withdrawingPoint; // 출금할 포인트 (환전 신청한 포인트)
 
     @NotNull
     private Long commission; // 수수료
