@@ -32,6 +32,7 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
             title: '업체명 입력',
             label: '업체명',
             setState: controller.setBusinessName,
+            initialValue: controller.businessName,
             enabled: true,
           ),
           SizedBox(height: 10),
@@ -41,6 +42,7 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
             title: '대표 이름 입력',
             label: '대표 이름',
             setState: controller.setHeadName,
+            initialValue: controller.headName,
             enabled: true,
           ),
           SizedBox(height: 10),
@@ -50,6 +52,7 @@ class AdvertiserJoinOrModify1 extends StatelessWidget {
             title: '사업자등록번호 입력',
             label: '사업자등록번호',
             setState: controller.setBusinessNumber,
+            initialValue: controller.businessNumber,
             enabled: true,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
