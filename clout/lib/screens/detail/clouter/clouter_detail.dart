@@ -1,3 +1,5 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
+import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -5,7 +7,6 @@ import 'package:get/get.dart';
 // api
 import 'dart:convert';
 import 'package:clout/type.dart';
-import 'package:clout/hooks/item_api.dart';
 
 // utility
 import 'package:clout/utilities/bouncing_listview.dart';
@@ -72,13 +73,12 @@ class _ClouterDetailState extends State<ClouterDetail> {
   }
 
   _showDetail() async {
-    final ItemApi itemApi = ItemApi();
-    var accessToken = userController.accessToken;
-    var response = await itemApi.getRequest(
-        '/member-service/v1/clouters/', clouterId,
-        accessToken: accessToken);
+    final AuthorizedApi api = AuthorizedApi();
+    var response =
+        await api.getRequest('/member-service/v1/clouters/', clouterId);
+    // var statusCode = response['statusCode'];
     if (response != null) {
-      final decodedResponse = jsonDecode(response);
+      final decodedResponse = jsonDecode(response['body']);
       setState(() {
         clouterInfo = ClouterInfo.fromJson(decodedResponse);
       });
@@ -217,7 +217,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                             children: clouterInfo!.channelList!
                                 .map((e) => SnsItemBox(
                                     username: e.name,
-                                    followers: e.follwerScale,
+                                    followers: e.followerScale,
                                     snsType: e.platform,
                                     snsUrl: e.link))
                                 .toList(),

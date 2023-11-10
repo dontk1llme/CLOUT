@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import 'package:clout/hooks/apis/normal_api.dart';
->>>>>>> dd785559b5ccee235204e74f0b70d452bdf3cd53
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -9,7 +6,6 @@ import 'package:clout/style.dart' as style;
 // api
 import 'dart:convert';
 import 'package:clout/type.dart';
-import 'package:clout/hooks/item_api.dart';
 
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
@@ -81,14 +77,6 @@ class _CampaignDetailState extends State<CampaignDetail> {
     final NormalApi api = NormalApi();
 
     try {
-<<<<<<< HEAD
-      var response = await itemApi.getRequest(
-          '/advertisement-service/v1/advertisements/', campaignId);
-      print(response);
-      // campaignInfo = CampaignList.fromJson(jsonDecode(response)).campaignInfo;
-      // advertiserInfo = CampaignList.fromJson(jsonDecode(response)).advertiserInfo;
-      final decodedResponse = jsonDecode(response);
-=======
       var response = await api.getRequest(
           '/advertisement-service/v1/advertisements/', '$campaignId');
       // reponse = {'statusCode' : 값, 'body' : 값}
@@ -97,7 +85,6 @@ class _CampaignDetailState extends State<CampaignDetail> {
           response['statusCode']; // statusCode에 따라 다르게 결과 나오게 하는거 이걸로 처리
 
       final decodedResponse = jsonDecode(response['body']);
->>>>>>> dd785559b5ccee235204e74f0b70d452bdf3cd53
       // 데이터를 모델 클래스에 매핑
       campaignInfo = CampaignInfo.fromJson(decodedResponse['campaignInfo']);
       advertiserInfo =
@@ -105,10 +92,6 @@ class _CampaignDetailState extends State<CampaignDetail> {
 
       print(CampaignList.fromJson(jsonDecode(response)));
       print(CampaignList.fromJson(jsonDecode(response)).advertiserInfo);
-<<<<<<< HEAD
-=======
-
->>>>>>> dd785559b5ccee235204e74f0b70d452bdf3cd53
     } catch (e) {
       // 에러 처리
       print('Error: $e');
