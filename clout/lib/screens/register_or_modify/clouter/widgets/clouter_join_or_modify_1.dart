@@ -12,7 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clout/screens/register_or_modify/widgets/number_verify.dart';
 
-class ClouterJoinOrModify1 extends StatelessWidget {
+class ClouterJoinOrModify1 extends StatefulWidget {
   ClouterJoinOrModify1({
     super.key,
     required this.modifying,
@@ -21,30 +21,43 @@ class ClouterJoinOrModify1 extends StatelessWidget {
 
   final controllerTag;
   final modifying;
+  static final formkey = GlobalKey();
+
+  @override
+  State<ClouterJoinOrModify1> createState() => _ClouterJoinOrModify1State();
+}
+
+class _ClouterJoinOrModify1State extends State<ClouterJoinOrModify1> {
   final RegisterApi registerApi = RegisterApi();
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   verify() async {
     final clouterRegisterController =
-        Get.find<ClouterInfoController>(tag: controllerTag);
-    var responseBody = await registerApi.getRequest('/member-service/v1/members/sendsms',
-    // var responseBody = await registerApi.getRequest('/v1/members/sendsms',
+        Get.find<ClouterInfoController>(tag: widget.controllerTag);
+    var responseBody = await registerApi.getRequest(
+        '/member-service/v1/members/sendsms',
+        // var responseBody = await registerApi.getRequest('/v1/members/sendsms',
         '?phoneNumber=${clouterRegisterController.phoneNumber}');
     print('인증키 sms 발송');
     final pinController =
-        Get.find<FourDigitsInputController>(tag: controllerTag);
+        Get.find<FourDigitsInputController>(tag: widget.controllerTag);
     pinController.setCorrectPin(responseBody[1]);
     print(pinController.correctPin);
     Get.to(() => NumberVerify(
         phoneNumber: clouterRegisterController.phoneNumber,
-        controllerTag: controllerTag));
+        controllerTag: widget.controllerTag));
   }
 
   @override
   Widget build(BuildContext context) {
-  final pinController = Get.find<FourDigitsInputController>(tag: controllerTag);
+    final pinController =
+        Get.find<FourDigitsInputController>(tag: widget.controllerTag);
     return GetBuilder<ClouterInfoController>(
-      tag: controllerTag,
+      tag: widget.controllerTag,
       builder: (controller) => FractionallySizedBox(
         widthFactor: 0.9,
         child: Column(
@@ -63,10 +76,10 @@ class ClouterJoinOrModify1 extends StatelessWidget {
               label: '이름',
               setState: controller.setName,
               initialValue: controller.name,
-              enabled: !modifying,
+              enabled: !widget.modifying,
             ),
             SizedBox(height: 10),
-            DateInput(controllerTag: controllerTag),
+            DateInput(controllerTag: widget.controllerTag),
             SizedBox(height: 10),
             Stack(
               children: [
@@ -82,7 +95,7 @@ class ClouterJoinOrModify1 extends StatelessWidget {
                     PhoneNumberFormatter(),
                   ],
                   enabled: true,
-                  controllerTag: controllerTag,
+                  controllerTag: widget.controllerTag,
                 ),
                 Positioned(
                   right: 10,
@@ -115,7 +128,7 @@ class ClouterJoinOrModify1 extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
-            AddressInput(controllerTag: controllerTag),
+            AddressInput(controllerTag: widget.controllerTag),
           ],
         ),
       ),
