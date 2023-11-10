@@ -2,7 +2,9 @@ package com.mmm.clout.pointservice.common.docs;
 
 import com.mmm.clout.pointservice.point.presentation.request.ChargePointRequest;
 import com.mmm.clout.pointservice.point.presentation.response.ChargePointResponse;
+import com.mmm.clout.pointservice.point.presentation.response.CustomPageResponse;
 import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
+import com.mmm.clout.pointservice.point.presentation.response.PointTransactionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -72,6 +74,56 @@ public interface PointControllerDocs {
     )
     ResponseEntity<GetMemberTotalPointResponse> getMemberPoint(
         @RequestParam Long memberId
+    );
+
+
+    @Operation(summary = "유저 포인트 내역 조회",
+        description = "전체, 거래, 충전, 출금 내역 조회 가능 (페이지네이션)",
+        parameters = {
+            @Parameter(
+                in = ParameterIn.HEADER,
+                name = "Authorization",
+                required = true,
+                schema = @Schema(type = "string"),
+                description = "인증 토큰"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "memberId",
+                required = true,
+                description = "포인트 카테고리 (ALL, DEAL, CHARGE, WITHDRAWAL)"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "category",
+                required = true,
+                description = "페이지네이션 페이지"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "page",
+                required = true,
+                description = "페이지네이션 페이지당 보여줄 데이터 사이즈"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "size",
+                required = true,
+                description = "멤버 고유 식별자(id)"
+            )
+        },
+        responses =
+        @ApiResponse(responseCode = "200", description = "멤버 카테고리별 포인트 내역 조회 성공",
+            content =
+            @Content(mediaType = "application/json",
+                schema = @Schema(implementation = CustomPageResponse.class))
+        )
+    )
+    ResponseEntity<CustomPageResponse<PointTransactionResponse>> getTransactionListByType(
+        @RequestParam Long memberId,
+        @RequestParam String category,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
     );
 
 
