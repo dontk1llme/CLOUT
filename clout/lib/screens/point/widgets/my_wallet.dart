@@ -1,13 +1,18 @@
+import 'package:clout/hooks/points_api.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
 
 // widgets
 import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
 import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
+
+//provider
+import 'package:clout/providers/user_controllers/user_controller.dart';
 
 class MyWallet extends StatefulWidget {
   final String userType; // clouter 인지 advertiser 인지
@@ -24,9 +29,22 @@ class _MyWalletState extends State<MyWallet> {
   Future<String> fetchUserPoints() async {
     // 💥 여기에서 API 호출 사용자 포인트 가져오기
 
-    // 일단 테스트용 421800 반환
-    // await Future.delayed(Duration(seconds: 1)); // 가짜로 지연 추가
-    final formattedPoints = f.format(421800);
+    //사용자 ID
+    final userController = Get.find<UserController>();
+    var memberId = userController.memberId;
+    var authorization = userController.userLogin['authorization'];
+    print('사용자 ID: $memberId');
+    print('사용자 토큰: $authorization');
+    //api 요청
+    final PointsAPI pointsAPI = PointsAPI();
+    var response =
+        await pointsAPI.getRequest('/point-service/v1/points', memberId, authorization);
+    var json = jsonDecode(response);
+    
+    print('API 응답: $response');
+    print('파싱된 JSON: $json');
+
+    final formattedPoints = json['totalPoint'].toString();
     return formattedPoints;
   }
 
