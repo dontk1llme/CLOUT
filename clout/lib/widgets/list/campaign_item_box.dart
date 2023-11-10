@@ -20,7 +20,7 @@ class CampaignItemBox extends StatefulWidget {
   final CompanyInfo companyInfo;
   final int numberOfSelectedMembers;
   final int numberOfRecruiter;
-  final List<dynamic> adPlatformList;
+  final List<Widget> adPlatformList;
   final AdvertiserInfo advertiserInfo;
   // final String firstImg;W
 
@@ -78,12 +78,12 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
               Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  // Image.asset(
-                  //   widget.firstImg, // 💥 사진 수정하기
-                  //   width: screenWidth / 2 - 40,
-                  //   // height: screenHeight / 2 - 65,
-                  //   fit: BoxFit.cover,
-                  // ),
+                  Image.asset(
+                    'assets/images/itemImage.jpg', // 💥 사진 수정하기
+                    width: screenWidth / 2 - 40,
+                    // height: screenHeight / 2 - 65,
+                    fit: BoxFit.cover,
+                  ),
                   Positioned(
                     bottom: 5,
                     right: 5,
@@ -92,9 +92,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                       decoration: BoxDecoration(
                           color: style.colors['white'],
                           borderRadius: BorderRadius.circular(5)),
-                      child: Row(children: [
-                        Sns2(selectedPlatform: widget.adPlatformList)
-                      ]),
+                      child: Row(children: widget.adPlatformList),
                     ),
                   ),
                   if (userController.memberType != 0)
