@@ -13,7 +13,7 @@ import 'package:clout/widgets/sns/sns4.dart';
 
 class Clouter {
   int clouterId = 1;
-  String nickname = '모카우유';
+  String nickName = '모카우유';
   int starRating = 20;
   int fee = 500000;
   List<String> selectedPlatform = [
@@ -81,7 +81,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(clouter.nickname,
+                      Text(clouter.nickName,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 22,
@@ -173,7 +173,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                         children: [
                           Row(
                             children: [
-                              Text(clouter.nickname,
+                              Text(clouter.nickName,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22,
@@ -293,7 +293,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            DataTitle(text: '${clouter.nickname} '),
+                            DataTitle(text: '${clouter.nickName} '),
                             Row(
                               children: [
                                 Icon(Icons.star, color: Colors.amber, size: 20),
