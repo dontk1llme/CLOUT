@@ -1,4 +1,5 @@
 // Global
+import 'package:clout/widgets/sns/sns2.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -280,17 +281,18 @@ class _HomeState extends State<Home> {
                                   padding:
                                       const EdgeInsets.fromLTRB(5, 10, 5, 20),
                                   child: ClouterItemBox(
-                                    userId: clouterInfo.userId ?? '',
-                                    avgScore: clouterInfo.avgScore ?? 0,
-                                    minCost: clouterInfo.minCost ?? 0,
-                                    contractCount:
-                                        clouterInfo.contractCount ?? 0,
-                                    categoryList:
-                                        clouterInfo.categoryList ?? [''],
-                                    channelList: clouterInfo.channelList!
-                                        .map((e) => e as String)
-                                        .toList(),
-                                  ),
+                                      userId: clouterInfo.userId ?? '',
+                                      avgScore: clouterInfo.avgScore ?? 0,
+                                      minCost: clouterInfo.minCost ?? 0,
+                                      // contractCount:
+                                      //     clouterInfo.contractCount ?? 0,
+                                      categoryList:
+                                          clouterInfo.categoryList ?? [''],
+                                      channelList: clouterInfo.channelList!
+                                          .map((e) => Sns2(
+                                                platform: e.platform,
+                                              ))
+                                          .toList()),
                                 );
                               }).toList(),
                             ),
@@ -324,8 +326,11 @@ class _HomeState extends State<Home> {
                                             0,
                                     numberOfRecruiter:
                                         campaignInfo.numberOfRecruiter ?? 0,
-                                    adPlatformList:
-                                        campaignInfo.adPlatformList ?? [''],
+                                    adPlatformList: campaignInfo.adPlatformList!
+                                        .map((e) => Sns2(
+                                              platform: e,
+                                            ))
+                                        .toList(),
                                     advertiserInfo:
                                         campaignInfo.advertiserInfo!,
                                   ),
