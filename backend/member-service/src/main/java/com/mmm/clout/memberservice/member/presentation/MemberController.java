@@ -57,7 +57,7 @@ public class MemberController implements MemberControllerDocs {
                                      ) {
         AuthDto.TokenDto reissuedTokenDto = authService.reissue(requestAccessToken, requestRefreshToken);
         log.info("refresh = {}", requestRefreshToken);
-        log.info("acssess = {}", requestAccessToken);
+        log.info("Access = {}", requestAccessToken);
         if (reissuedTokenDto != null) { // 토큰 재발급 성공
             return ResponseEntity
                 .status(HttpStatus.OK)
