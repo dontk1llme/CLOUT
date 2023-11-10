@@ -1,10 +1,11 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
+import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // api
 import 'dart:convert';
-import 'package:clout/hooks/item_api.dart';
 import 'package:clout/type.dart';
 
 // controllers
@@ -43,15 +44,15 @@ class _AdvertiserMyPageState extends State<AdvertiserMyPage> {
   }
 
   _showDetail() async {
-    final ItemApi itemApi = ItemApi();
+    final AuthorizedApi authorizedApi = AuthorizedApi();
 
-    var response = await itemApi.getRequest(
+    var response = await authorizedApi.getRequest(
         '/member-service/v1/advertisers/', userController.memberId);
-    // '/v1/advertisers/',
-    // userController.userId);
+    // {'statusCode':값, 'body': 값}
+    var statusCode = response['statusCode'];
     print(response);
-
-    final decodedResponse = jsonDecode(response);
+    print(statusCode);
+    final decodedResponse = jsonDecode(response['body']);
 
     setState(() {
       advertiser = Advertiser.fromJson(decodedResponse);
@@ -85,7 +86,7 @@ class _AdvertiserMyPageState extends State<AdvertiserMyPage> {
                   SmallOutlinedButton(
                     title: '프로필 보기',
                     onPressed: () => Get.toNamed('/advertiserprofile',
-                        arguments: userController.userId),
+                        arguments: userController.memberId),
                   ),
                 ],
               ),

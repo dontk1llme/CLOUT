@@ -1,14 +1,10 @@
 // Global
+import 'package:clout/hooks/apis/authorized_api.dart';
+import 'package:clout/type.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
-
-// api
-import 'dart:convert';
-import 'dart:async';
-import 'package:clout/hooks/item_api.dart';
-import 'package:clout/type.dart';
 
 // utilities
 import 'package:clout/utilities/bouncing_listview.dart';
@@ -204,39 +200,44 @@ class _HomeState extends State<Home> {
           ),
         ),
         Container(
-            alignment: FractionalOffset(0.5, 0.5),
-            child: FractionallySizedBox(
-                widthFactor: 1,
-                heightFactor: 0.8,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          alignment: FractionalOffset(0.5, 0.5),
+          child: FractionallySizedBox(
+            widthFactor: 1,
+            heightFactor: 0.8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        MainCarouselText1(
-                          text: '자신의 콘텐츠와 브랜드와의',
-                        ),
-                        MainCarouselText1(
-                          text: '적합성을 평가하여',
-                        ),
-                        MainCarouselText1(
-                          text: '최적의 계약을 체결해보세요!',
-                        )
-                      ],
+                    MainCarouselText1(
+                      text: '자신의 콘텐츠와 브랜드와의',
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: SizedBox(
-                          width: 180,
-                          child: SmallButton(
-                            title: '캠페인 보러가기',
-                          )),
+                    MainCarouselText1(
+                      text: '적합성을 평가하여',
+                    ),
+                    MainCarouselText1(
+                      text: '최적의 계약을 체결해보세요!',
                     )
                   ],
-                )))
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    width: 180,
+                    child: SmallButton(
+                      title: '캠페인 보러가기',
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        )
       ],
     )
   ];
+
+  AuthorizedApi api = AuthorizedApi();
 
   @override
   Widget build(BuildContext context) {
@@ -262,6 +263,8 @@ class _HomeState extends State<Home> {
                 enlarge: false,
               ),
             ),
+            ElevatedButton(
+                onPressed: api.reissueToken, child: Text('리이슈 테슽 버튼')),
             Container(
               color: style.colors['white'],
               child: Column(
@@ -346,7 +349,9 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            userController.memberType == 0 ? SizedBox(height: 150) : Container(),
+            userController.memberType == 0
+                ? SizedBox(height: 150)
+                : Container(),
           ],
         ),
       ),

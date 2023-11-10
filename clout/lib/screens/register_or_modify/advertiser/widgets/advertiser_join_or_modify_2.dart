@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:clout/hooks/phone_number_formatter.dart';
-import 'package:clout/hooks/register_api.dart';
+import 'package:clout/hooks/apis/register_api.dart';
 import 'package:clout/providers/four_digits_input_controller.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/register_or_modify/widgets/number_verify.dart';

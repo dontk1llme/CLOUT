@@ -20,7 +20,7 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
   Widget build(BuildContext context) {
     infiniteController.setEndPoint('/v1/applies/clouters');
     infiniteController.setParameter(
-        '?clouter=${userController.userId}&&type='); // 💥 typeEnum..? 추가하기
+        '?clouter=${userController.memberId}&&type='); // 💥 typeEnum..? 추가하기
     infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
       tag: 'clouterMyCampaign',

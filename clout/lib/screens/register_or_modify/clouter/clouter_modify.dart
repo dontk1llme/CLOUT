@@ -1,5 +1,7 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/providers/user_controllers/clouter_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_1.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_2.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_3.dart';
@@ -16,12 +18,25 @@ import 'package:clout/widgets/header/header.dart';
 class ClouterModify extends StatelessWidget {
   ClouterModify({super.key});
   final clouterController = Get.put(ClouterController());
+  final userController = Get.find<UserController>();
+  final controller = Get.put(ClouterInfoController(), tag: 'clouterModify');
+
+  loadClouterInfo() async {
+    AuthorizedApi authorizedApi = AuthorizedApi();
+    var response = await authorizedApi.getRequest(
+        '/member-service/v1/clouters/', userController.memberId);
+    // response = {'statusCode' : 값, 'body' : 값}
+
+    print(response['statusCode']);
+    print(response['body']);
+    print(response['body']);
+  }
 
   @override
   Widget build(BuildContext context) {
     clouterController.setControllerTag('clouterModify');
-    final controller = Get.put(ClouterInfoController(), tag: 'clouterModify');
     controller.runOtherControllers();
+    loadClouterInfo();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70),

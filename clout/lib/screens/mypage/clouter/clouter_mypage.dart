@@ -1,9 +1,9 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // api
-import 'package:clout/hooks/item_api.dart';
 import 'package:clout/type.dart';
 import 'dart:convert';
 
@@ -42,12 +42,12 @@ class _ClouterMyPageState extends State<ClouterMyPage> {
   }
 
   _showDetail() async {
-    final ItemApi itemApi = ItemApi();
+    final AuthorizedApi authorizedApi = AuthorizedApi();
 
-    var response = await itemApi.getRequest(
-        '/member-service/v1/clouters/', userController.userId);
+    var response = await authorizedApi.getRequest(
+        '/member-service/v1/clouters/', userController.memberId);
 
-    final decodedResponse = jsonDecode(response);
+    final decodedResponse = jsonDecode(response['body']);
 
     setState(() {
       clouterInfo = ClouterInfo.fromJson(decodedResponse);
@@ -101,7 +101,7 @@ class _ClouterMyPageState extends State<ClouterMyPage> {
                     InkWell(
                       child: Icon(Icons.arrow_forward_ios),
                       onTap: () => Get.toNamed('/clouterprofile',
-                          arguments: userController.userId),
+                          arguments: userController.memberId),
                     ),
                   ],
                 ),
