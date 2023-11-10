@@ -281,6 +281,7 @@ class _HomeState extends State<Home> {
                                   padding:
                                       const EdgeInsets.fromLTRB(5, 10, 5, 20),
                                   child: ClouterItemBox(
+                                      clouterId: clouterInfo.clouterId ?? 0,
                                       userId: clouterInfo.userId ?? '',
                                       avgScore: clouterInfo.avgScore ?? 0,
                                       minCost: clouterInfo.minCost ?? 0,

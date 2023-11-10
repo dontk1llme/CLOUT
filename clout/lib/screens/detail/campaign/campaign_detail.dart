@@ -1,9 +1,11 @@
-import 'package:clout/hooks/item_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
+
+// api
 import 'dart:convert';
 import 'package:clout/type.dart';
+import 'package:clout/hooks/item_api.dart';
 
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
@@ -76,7 +78,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
 
     try {
       var response = await itemApi.getRequest(
-          '/advertisement-service/v1/advertisements/', '${campaignId}');
+          '/advertisement-service/v1/advertisements/', campaignId);
       print(response);
       // campaignInfo = CampaignList.fromJson(jsonDecode(response)).campaignInfo;
       // advertiserInfo = CampaignList.fromJson(jsonDecode(response)).advertiserInfo;
@@ -88,13 +90,10 @@ class _CampaignDetailState extends State<CampaignDetail> {
 
       print(CampaignList.fromJson(jsonDecode(response)));
       print(CampaignList.fromJson(jsonDecode(response)).advertiserInfo);
-
-      setState(() {});
     } catch (e) {
       // 에러 처리
       print('Error: $e');
       isLoading = false;
-      setState(() {});
     }
   }
 
