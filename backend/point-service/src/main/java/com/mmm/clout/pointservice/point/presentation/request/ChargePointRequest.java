@@ -4,9 +4,7 @@ import com.mmm.clout.pointservice.point.application.command.ChargeCommand;
 import com.mmm.clout.pointservice.point.domain.PaymentType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -3,7 +3,6 @@ package com.mmm.clout.pointservice.point.application;
 import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointCategory;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
-import com.mmm.clout.pointservice.point.domain.exception.PointNotFoundException;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
 import com.mmm.clout.pointservice.point.domain.repository.PointTransactionRepository;
 import lombok.RequiredArgsConstructor;
