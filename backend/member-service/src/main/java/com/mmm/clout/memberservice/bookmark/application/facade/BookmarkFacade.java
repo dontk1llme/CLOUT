@@ -4,7 +4,7 @@ import com.mmm.clout.memberservice.bookmark.application.*;
 import com.mmm.clout.memberservice.bookmark.application.command.CreateAdBookmarkCommand;
 import com.mmm.clout.memberservice.bookmark.application.command.CreateClouterBookmarkCommand;
 import com.mmm.clout.memberservice.bookmark.domain.Bookmark;
-import com.mmm.clout.memberservice.bookmark.presentation.response.CampaignReader;
+import com.mmm.clout.memberservice.bookmark.application.reader.CampaignReader;
 import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

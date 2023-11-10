@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.bookmark.presentation.response;
 
+import com.mmm.clout.memberservice.bookmark.application.reader.CampaignReader;
 import lombok.Getter;
 
 import java.util.List;

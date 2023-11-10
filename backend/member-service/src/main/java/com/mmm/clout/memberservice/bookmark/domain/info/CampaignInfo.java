@@ -1,4 +1,4 @@
-package com.mmm.clout.memberservice.bookmark.presentation.response;
+package com.mmm.clout.memberservice.bookmark.domain.info;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,9 +7,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@AllArgsConstructor
 @Getter
-public class CampaignReader {
+@AllArgsConstructor
+public class CampaignInfo {
 
     private Long campaignId;
 

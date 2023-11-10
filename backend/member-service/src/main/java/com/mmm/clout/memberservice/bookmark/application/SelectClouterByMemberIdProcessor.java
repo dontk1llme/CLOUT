@@ -1,12 +1,9 @@
 package com.mmm.clout.memberservice.bookmark.application;
 
-import com.fasterxml.classmate.MemberResolver;
 import com.mmm.clout.memberservice.bookmark.domain.repository.BookmarkRepository;
-import com.mmm.clout.memberservice.bookmark.presentation.response.CampaignReader;
 import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
 import com.mmm.clout.memberservice.clouter.domain.Clouter;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
-import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
