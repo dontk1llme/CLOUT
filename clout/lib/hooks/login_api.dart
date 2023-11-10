@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:clout/type.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -14,7 +16,7 @@ class LoginApi {
       url,
       headers: {"Content-Type": "application/json"},
       body: json.encode(parameter),
-    ); 
+    );
 
     var statusCode = response.statusCode;
     var headers = response.headers;
@@ -23,35 +25,35 @@ class LoginApi {
 
     var body = utf8.decode(response.bodyBytes); //여기로 클라우터인지 광고주인지 넘어와야됨. 승구형해줘
     print('로그인 response 바디');
-    print(body); 
+    print(jsonDecode(body));
+    print(body);
 
-    
     var loginSuccess = false;
     var authorization = headers['authorization'];
-    var refresh_token =  headers['refresh_token'];
-    var clout_or_adv = body; //바디에서 받아서 설정해야 함
-    
+    var refreshToken = headers['refresh_token'];
+    var memberRole =
+        LoginResponse.fromJson(jsonDecode(body)).memberRole; //바디에서 받아서 설정해야 함
+    var memberId =
+        LoginResponse.fromJson(jsonDecode(body)).memberId; //바디에서 받아서 설정해야 함
+
+    print('멤버타입: $memberRole');
+    print('멤버아이디: $memberId');
 
     if (statusCode == 200) {
       loginSuccess = true;
       print('로그인 성공');
-       var responseData = {
+      var responseData = {
         'login_success': loginSuccess,
         'authorization': authorization,
-        'refresh_token': refresh_token,
-        'clout_or_adv': clout_or_adv,
+        'refresh_token': refreshToken,
+        'memberRole': memberRole,
+        'memberId': memberId,
       };
       print(responseData);
       return responseData; //{'clouterId'/'advertiserId' : integer}
-    }
-    else if(statusCode==202){
-      //비번 틀렷거나 뭐 그런... 백에서 넘겨주는 에러코드
-    } 
-    else {
+    } else if (statusCode != 404 && statusCode != 401) {
       print('로그인 흐앵');
-      print(statusCode);
-      return false;
+      Fluttertoast.showToast(msg: '아이디 혹은 비밀번호를 확인해주세요');
     }
   }
-
 }

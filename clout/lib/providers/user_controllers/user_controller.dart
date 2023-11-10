@@ -2,25 +2,31 @@ import 'package:get/get.dart';
 import 'package:clout/type.dart';
 
 class UserController extends GetxController {
-  int user = 1;
-  var userId = '10';
+  int memberType = 0;
+  int memberId = -1; // db에서 관리하는 유저의 primaryKey
+  var userId; // 유저가 로그인할때 사용하는 id
   var password;
 
   var userInfo;
   var userLogin;
 
   void setAdvertiser() {
-    user = 1;
+    memberType = 1;
     update();
   }
 
   void setClouter() {
-    user = -1;
+    memberType = -1;
     update();
   }
 
   void setGuest() {
-    user = 0;
+    memberType = 0;
+    update();
+  }
+
+  setMemberId(input){
+    memberId = input;
     update();
   }
 

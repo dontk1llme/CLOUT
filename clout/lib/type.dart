@@ -1,6 +1,24 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+class LoginResponse {
+  String? memberRole;
+  int? memberId;
+
+  LoginResponse(this.memberRole, this.memberId);
+  Map<String, dynamic> toJson() => {
+        'memberRole': memberRole,
+        'memberId': memberId,
+      };
+
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    return LoginResponse(
+      json['memberRole'],
+      json['memberId'],
+    );
+  }
+}
+
 class Address {
   String? zipCode;
   String? mainAddress;
@@ -122,16 +140,17 @@ class ChannelList {
         json['name'], json['platform'], json['link'], json['followerScale']);
   }
 }
+
 class Clouter {
   String? userId;
   String? pwd;
   String? nickName;
   String? name;
   String? birthday;
-  int? age; 
+  int? age;
   String? phoneNumber;
-  List<ChannelList>? channelList; 
-  int? minCost; 
+  List<ChannelList>? channelList;
+  int? minCost;
   List<String>? categoryList;
   List<String?>? regionList;
   Address? address;
