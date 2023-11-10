@@ -16,7 +16,7 @@ class ClouterJoinOrModify2 extends StatelessWidget {
   //중복 체크 함수
   checkDuplicted() async {
     final clouterRegisterController =
-      Get.find<ClouterInfoController>(tag: controllerTag);
+        Get.find<ClouterInfoController>(tag: controllerTag);
 
     if (clouterRegisterController.id == null ||
         clouterRegisterController.id.length == 0) {
@@ -95,80 +95,88 @@ class ClouterJoinOrModify2 extends StatelessWidget {
                     : Container(),
               ],
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: controller.doubleId == 0
-                  ? Text(
-                      '아이디 중복 확인이 필요해요',
-                      style: style.textTheme.bodySmall?.copyWith(
-                        color: style.colors['gray'],
-                        height: 1.5,
-                      ),
-                    )
-                  : controller.doubleId == 1
-                      ? Text(
-                          '사용 가능한 아이디입니다',
-                          style: style.textTheme.bodySmall?.copyWith(
-                            color: style.colors['main1'],
-                            height: 1.5,
-                          ),
-                        )
-                      : Text(
-                          '이미 사용 중인 아이디입니다',
-                          style: style.textTheme.bodySmall?.copyWith(
-                            color: Colors.red[300],
-                            height: 1.5,
-                          ),
-                        ),
-            ),
+            controllerTag != 'clouterModify'
+                ? Align(
+                    alignment: Alignment.centerRight,
+                    child: controller.doubleId == 0
+                        ? Text(
+                            '아이디 중복 확인이 필요해요',
+                            style: style.textTheme.bodySmall?.copyWith(
+                              color: style.colors['gray'],
+                              height: 1.5,
+                            ),
+                          )
+                        : controller.doubleId == 1
+                            ? Text(
+                                '사용 가능한 아이디입니다',
+                                style: style.textTheme.bodySmall?.copyWith(
+                                  color: style.colors['main1'],
+                                  height: 1.5,
+                                ),
+                              )
+                            : Text(
+                                '이미 사용 중인 아이디입니다',
+                                style: style.textTheme.bodySmall?.copyWith(
+                                  color: Colors.red[300],
+                                  height: 1.5,
+                                ),
+                              ),
+                  )
+                : SizedBox(height: 5),
             SizedBox(height: 5),
-            Stack(
-              children: [
-                JoinInput(
-                  keyboardType: TextInputType.text,
-                  maxLength: 20,
-                  title: '비밀번호 입력',
-                  label: '비밀번호',
-                  setState: controller.setPassword,
-                  obscured: controller.obscured,
-                  enabled: true,
-                ),
-                Positioned(
-                  top: 3,
-                  right: 5,
-                  child: IconButton(
-                    onPressed: controller.setObscured,
-                    icon: controller.obscured
-                        ? Icon(Icons.visibility_outlined)
-                        : Icon(Icons.visibility_off_outlined),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 10),
-            Stack(
-              children: [
-                JoinInput(
-                  keyboardType: TextInputType.text,
-                  maxLength: 20,
-                  title: '비밀번호 확인',
-                  label: '비밀번호 확인',
-                  setState: controller.setCheckPassword,
-                  obscured: controller.obscured,
-                  enabled: true,
-                ),
-                Positioned(
-                  top: 3,
-                  right: 5,
-                  child: IconButton(
-                    onPressed: controller.setObscured,
-                    icon: controller.obscured
-                        ? Icon(Icons.visibility_outlined)
-                        : Icon(Icons.visibility_off_outlined),
-                  ),
-                )
-              ],
-            ),
+            modifying != true
+                ? Column(
+                    children: [
+                      Stack(
+                        children: [
+                          JoinInput(
+                            keyboardType: TextInputType.text,
+                            maxLength: 20,
+                            title: '비밀번호 입력',
+                            label: '비밀번호',
+                            setState: controller.setPassword,
+                            obscured: controller.obscured,
+                            enabled: true,
+                          ),
+                          Positioned(
+                            top: 3,
+                            right: 5,
+                            child: IconButton(
+                              onPressed: controller.setObscured,
+                              icon: controller.obscured
+                                  ? Icon(Icons.visibility_outlined)
+                                  : Icon(Icons.visibility_off_outlined),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Stack(
+                        children: [
+                          JoinInput(
+                            keyboardType: TextInputType.text,
+                            maxLength: 20,
+                            title: '비밀번호 확인',
+                            label: '비밀번호 확인',
+                            setState: controller.setCheckPassword,
+                            obscured: controller.obscured,
+                            enabled: true,
+                          ),
+                          Positioned(
+                            top: 3,
+                            right: 5,
+                            child: IconButton(
+                              onPressed: controller.setObscured,
+                              icon: controller.obscured
+                                  ? Icon(Icons.visibility_outlined)
+                                  : Icon(Icons.visibility_off_outlined),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+                : Container(),
             SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -228,10 +228,10 @@ class Clouter {
   String? birthday;
   int? age;
   String? phoneNumber;
-  List<ChannelList>? channelList;
+  List<dynamic>? channelList;
   int? minCost;
-  List<String>? categoryList;
-  List<String?>? regionList;
+  List<dynamic>? categoryList;
+  List<dynamic>? regionList;
   Address? address;
 
   Clouter(
@@ -267,9 +267,9 @@ class Clouter {
   factory Clouter.fromJson(Map<String, dynamic> json) {
     return Clouter(
         json['userId'],
-        json['name'],
         json['pwd'],
-        json['nickaname'],
+        json['nickName'],
+        json['name'],
         json['birthday'],
         json['age'],
         json['phoneNumber'],

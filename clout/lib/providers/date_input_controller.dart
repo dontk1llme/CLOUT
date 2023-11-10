@@ -12,6 +12,11 @@ class DateInputController extends GetxController {
     update();
   }
 
+  setSelectedDateDirectly(input){
+    selectedDate = input;
+    update();
+  }
+
   setAge(input) {
     age = input;
     print(input);
