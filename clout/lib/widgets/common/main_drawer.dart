@@ -87,13 +87,13 @@ class MyDrawerState extends State<MyDrawer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               NameTag(
-                                  title: userController.user == -1
+                                  title: userController.memberType == -1
                                       ? '클라우터'
                                       : '광고주'),
                               SizedBox(height: 3),
                               InkWell(
                                 onTap: () => Get.toNamed(
-                                    userController.user == -1
+                                    userController.memberType == -1
                                         ? '/cloutermypage'
                                         : 'advertisermypage'),
                                 child: Row(
@@ -120,7 +120,7 @@ class MyDrawerState extends State<MyDrawer> {
                     },
                     trailing: Icon(Icons.chevron_right),
                   ),
-                  if (userController.user == -1)
+                  if (userController.memberType == -1)
                     ListTile(
                       title:
                           Text('신청한 캠페인', style: style.textTheme.headlineSmall),
@@ -130,7 +130,7 @@ class MyDrawerState extends State<MyDrawer> {
                       },
                       trailing: Icon(Icons.chevron_right),
                     )
-                  else if (userController.user == 1)
+                  else if (userController.memberType == 1)
                     ListTile(
                       title:
                           Text('내 캠페인', style: style.textTheme.headlineSmall),
@@ -140,7 +140,7 @@ class MyDrawerState extends State<MyDrawer> {
                       },
                       trailing: Icon(Icons.chevron_right),
                     ),
-                  if (userController.user == -1)
+                  if (userController.memberType == -1)
                     ListTile(
                       title: Text('관심있는 캠페인',
                           style: style.textTheme.headlineSmall),
@@ -150,7 +150,7 @@ class MyDrawerState extends State<MyDrawer> {
                       },
                       trailing: Icon(Icons.chevron_right),
                     )
-                  else if (userController.user == 1)
+                  else if (userController.memberType == 1)
                     ListTile(
                       title: Text('관심있는 클라우터',
                           style: style.textTheme.headlineSmall),
@@ -169,7 +169,7 @@ class MyDrawerState extends State<MyDrawer> {
                           Text('포인트 관리', style: style.textTheme.headlineSmall),
                     ),
                     children: [
-                      if (userController.user == -1)
+                      if (userController.memberType == -1)
                         ListTile(
                           tileColor: style.colors['main3'],
                           title:
@@ -179,7 +179,7 @@ class MyDrawerState extends State<MyDrawer> {
                             Scaffold.of(context).closeDrawer();
                           },
                         )
-                      else if (userController.user == 1)
+                      else if (userController.memberType == 1)
                         ListTile(
                           tileColor: style.colors['main3'],
                           title:
@@ -189,7 +189,7 @@ class MyDrawerState extends State<MyDrawer> {
                             Scaffold.of(context).closeDrawer();
                           },
                         ),
-                      if (userController.user == -1)
+                      if (userController.memberType == -1)
                         ListTile(
                           tileColor: style.colors['main3'],
                           title:
@@ -199,7 +199,7 @@ class MyDrawerState extends State<MyDrawer> {
                             Scaffold.of(context).closeDrawer();
                           },
                         )
-                      else if (userController.user == 1)
+                      else if (userController.memberType == 1)
                         ListTile(
                           tileColor: style.colors['main3'],
                           title:

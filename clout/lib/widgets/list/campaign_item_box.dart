@@ -97,7 +97,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                       ]),
                     ),
                   ),
-                  if (userController.user != 0)
+                  if (userController.memberType != 0)
                     LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
                 ],
               ),
