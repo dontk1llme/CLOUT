@@ -51,6 +51,25 @@ class ClouterInfoController extends GetxController {
   var dateController;
   var imagePickerController;
 
+  loadBeforeModify(input){
+    name= input['name'];
+    dateController.setSelectedDate = DateTime.parse(input['birthday']);
+    phoneNumber = input['phoneNumber'];
+    addressController.setDaumAddress = input['address']['mainAddress'];
+    addressController.setDetailAddresss = input['address']['detailAddress'];
+    nickName= input['nickName'];
+    id = input['userId'];
+
+    var channelList = input['channelList'];
+    for(int i = 0; i<channelList.length; i++){
+      if(channelList[i].platform == 'INSTAGRAM'){
+        platformSelectController.platforms[0]= true;
+        // platform
+      }
+    }
+    
+  }
+
   runOtherControllers() {
     fourDigitsInputController = Get.put(
       FourDigitsInputController(),
