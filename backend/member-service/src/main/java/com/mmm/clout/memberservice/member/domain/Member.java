@@ -30,6 +30,8 @@ public abstract class Member {
 
     private Long avgScore;
 
+    private Integer totalContractCount;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
