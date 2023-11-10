@@ -13,6 +13,6 @@ public class GetMemberPointProcessor {
     @Transactional
     public Point execute(Long memberId) {
         return pointRepository.findByMemberId(memberId)
-            .orElseGet(() -> pointRepository.save(Point.create(memberId, 0L)));
+            .orElse(pointRepository.save(Point.create(memberId, 0L)));
     }
 }

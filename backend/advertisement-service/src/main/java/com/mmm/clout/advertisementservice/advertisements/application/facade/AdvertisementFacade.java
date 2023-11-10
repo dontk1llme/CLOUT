@@ -9,6 +9,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.GetTop10Cam
 import com.mmm.clout.advertisementservice.advertisements.application.SearchCampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.UpdateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
+import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.command.UpdateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignDto;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
@@ -60,9 +61,7 @@ public class AdvertisementFacade {
         return endCampaignProcessor.execute(advertisementId);
     }
 
-
-    public List<CampaignDto> search(Pageable pageable, List<String> category, List<String> platform, Integer minAge, Integer maxAge, Integer minFollower, Integer minPrice,
-        Integer maxPrice, List<String> region, String keyword, String sort) {
-        return searchCampaignListProcessor.execute(pageable, category, platform, minAge, maxAge, minFollower, minPrice, maxPrice, region, keyword, sort);
+    public List<CampaignDto> search(SearchCondition condition) {
+        return searchCampaignListProcessor.execute(condition);
     }
 }

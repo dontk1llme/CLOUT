@@ -2,6 +2,8 @@ package com.mmm.clout.pointservice.point.presentation.request;
 
 import com.mmm.clout.pointservice.point.application.command.ChargeCommand;
 import com.mmm.clout.pointservice.point.domain.PaymentType;
+import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,14 +14,17 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ChargePointRequest {
 
+    @Schema(description = "사용자 고유 식별자(id)")
     @NotNull
     private Long memberId;
 
+    @Schema(description = "충전할 포인트(1000원 이상만 가능)")
     @NotNull
-    @Size(min = 1000)
+    @Min(1000)
     private Long chargePoint;
 
-    @NotBlank
+    @Schema(description = "충전 수단 (현재 KAKAO)")
+    @NotNull
     private PaymentType paymentType;
 
     public ChargeCommand toCommand() {

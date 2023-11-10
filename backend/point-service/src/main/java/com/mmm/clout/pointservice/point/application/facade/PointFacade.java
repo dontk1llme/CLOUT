@@ -25,8 +25,8 @@ public class PointFacade {
     private final GetMemberPointProcessor getMemberPointProcessor;
     private final GetTransactionListByCategoryProcessor getTransactionListByCategoryProcessor;
 
-    public void charge(ChargeCommand command) {
-        chargePointProcessor.execute(command.getMemberId(), command.getChargePoint(),  command.getPaymentType());
+    public Point charge(ChargeCommand command) {
+        return chargePointProcessor.execute(command.getMemberId(), command.getChargePoint(),  command.getPaymentType());
     }
 
     public void reduce(ReduceCommand command) {
