@@ -6,6 +6,8 @@ class UserController extends GetxController {
   int memberId = -1; // db에서 관리하는 유저의 primaryKey
   var userId; // 유저가 로그인할때 사용하는 id
   var password;
+  var accessToken;
+  var refreshToken;
 
   var userInfo;
   var userLogin;
@@ -51,6 +53,16 @@ class UserController extends GetxController {
 
   setUserLogin(input) {
     userLogin = input;
+    update();
+  }
+
+  setAccessToken(input){
+    accessToken = input;
+    update();
+  }
+
+  setRefreshToken(input){
+    refreshToken = input;
     update();
   }
 }

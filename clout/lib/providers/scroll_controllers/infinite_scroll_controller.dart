@@ -90,7 +90,7 @@ class InfiniteScrollController extends GetxController {
     final userController = Get.find<UserController>();
     currentPage = input;
     parameter =
-        '?advertiserId=${userController.userId}&page=${currentPage}&size=${10}';
+        '?advertiserId=${userController.memberId}&page=${currentPage}&size=${10}';
     update();
   }
 

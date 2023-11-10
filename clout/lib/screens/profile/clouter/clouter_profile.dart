@@ -1,3 +1,4 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -11,7 +12,6 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 
 // api
-import 'package:clout/hooks/item_api.dart';
 import 'dart:convert';
 import 'package:clout/type.dart';
 
@@ -37,12 +37,12 @@ class _ClouterProfileState extends State<ClouterProfile> {
   }
 
   _showDetail() async {
-    final ItemApi itemApi = ItemApi();
+    final AuthorizedApi authorizedApi = AuthorizedApi();
 
-    var response =
-        await itemApi.getRequest('/member-service/v1/clouters/', userController.userId);
+    var response = await authorizedApi.getRequest(
+        '/member-service/v1/clouters/', userController.memberId);
 
-    final decodedResponse = jsonDecode(response);
+    final decodedResponse = jsonDecode(response['body']);
 
     setState(() {
       clouterInfo = ClouterInfo.fromJson(decodedResponse);
@@ -120,7 +120,7 @@ class _ClouterProfileState extends State<ClouterProfile> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text('${clouterInfo?.hopeCost!.minCost!}원 ~ ',
+                              Text('${clouterInfo?.minCost!}원 ~ ',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 22,
