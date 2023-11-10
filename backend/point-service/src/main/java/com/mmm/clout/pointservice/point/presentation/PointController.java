@@ -7,12 +7,15 @@ import com.mmm.clout.pointservice.point.presentation.request.ChargePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.ReducePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.WithdrawPointRequest;
 import com.mmm.clout.pointservice.point.presentation.response.ChargePointResponse;
+import com.mmm.clout.pointservice.point.presentation.response.CustomPageResponse;
 import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.PointTransactionResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,19 +84,24 @@ public class PointController implements PointControllerDocs {
      * 거래내역 조회
      */
     @GetMapping("/transactions")
-    public ResponseEntity<List<PointTransactionResponse>> getTransactionListByType(
+    public ResponseEntity<CustomPageResponse<PointTransactionResponse>> getTransactionListByType(
         @RequestParam Long memberId,
         @RequestParam String category,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size
     ) {
 
-        List<PointTransaction> transactions = pointFacade.getTransactionListByCategory(memberId, category, PageRequest.of(page, size));
+        Page<PointTransaction> transactions = pointFacade.getTransactionListByCategory(memberId, category, PageRequest.of(page, size));
 
-        List<PointTransactionResponse> result = transactions.stream().map(
-            pointTransaction ->
-                PointTransactionResponse.from(pointTransaction, category)
-        ).collect(Collectors.toList());
+        CustomPageResponse<PointTransactionResponse> result = new CustomPageResponse<>(
+            transactions.stream()
+                .map(transaction -> PointTransactionResponse.from(transaction, category))
+                .collect(Collectors.toList()),
+            transactions.getNumber(),
+            transactions.getSize(),
+            transactions.getTotalPages(),
+            transactions.getTotalElements()
+        );
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

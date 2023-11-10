@@ -12,6 +12,7 @@ import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class PointFacade {
         return getMemberPointProcessor.execute(memberId);
     }
 
-    public List<PointTransaction> getTransactionListByCategory(
+    public Page<PointTransaction> getTransactionListByCategory(
         Long memberId,
         String category,
         PageRequest pageable
