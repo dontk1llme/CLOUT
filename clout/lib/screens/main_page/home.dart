@@ -1,16 +1,20 @@
 // Global
-import 'dart:convert';
-import 'dart:async';
-import 'package:clout/type.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
-import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
+
+// api
+import 'dart:convert';
+import 'dart:async';
+import 'package:clout/hooks/item_api.dart';
+import 'package:clout/type.dart';
 
 // utilities
 import 'package:clout/utilities/bouncing_listview.dart';
 
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:clout/providers/home_controller.dart';
 
 // Screens
 import 'package:clout/screens/main_page/widgets/menu_title.dart';
@@ -23,37 +27,6 @@ import 'package:clout/screens/main_page/widgets/main_carousel_text1.dart';
 import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
-import 'package:get/get.dart';
-
-// Future<Campaign> fetchCampaign() async {
-//   final response = await http
-//       .get(Uri.parse('http://70.12.247.35:8889/v1/advertisements/top10'));
-
-//   if (response.statusCode == 200) {
-//     print('👻✨ response body: ${response.body}');
-//     return Campaign.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw Exception('캠페인 불러오기 실패 💨');
-//   }
-// }
-
-// 클라우터 api는 나오는대로...
-class Clouter {
-  final int clouterId = 1;
-  String nickname = '모카우유';
-  int starRating = 20;
-  int fee = 500000;
-  String category = '반려동물';
-  int contractCount = 5;
-  List<String> selectedPlatform = [
-    "YOUTUBE",
-    "INSTAGRAM",
-    "TIKTOK",
-  ];
-  String firstImg = 'assets/images/clouterImage.jpg';
-}
-
-final userController = Get.find<UserController>();
 
 class Home extends StatefulWidget {
   Home({super.key});
@@ -63,15 +36,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // late Future<Campa> futureCampaign;
-  // late Future<Clouter> futureClouter;
+  final campaignData = <CampaignInfo>[].obs;
+  final clouterData = <ClouterInfo>[].obs;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   futureCampaign = fetchCampaign();
-  //   // futureClouter = fetchClouter();
-  // }
+  final userController = Get.find<UserController>();
+  final HomeController homeController = Get.put(HomeController());
+
+  @override
+  void initState() {
+    super.initState();
+    homeController.fetchCampaigns();
+    homeController.fetchClouters();
+  }
 
   List<String> imgList = [
     'assets/images/main_carousel_1.jpg',
@@ -80,9 +56,6 @@ class _HomeState extends State<Home> {
     'assets/images/food.png',
   ];
 
-  Clouter clouter = Clouter();
-
-  // Campaign campaign = Campaign();
   List<Widget> carouselList = [
     Stack(
       children: [
@@ -294,93 +267,76 @@ class _HomeState extends State<Home> {
                 children: [
                   Column(
                     children: [
-                      MenuTitle(
-                        text: '인기있는 클라우터',
-                        destination: 1,
-                      ),
-                      BouncingListview(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          child: Row(
-                            children: [
-                              for (num i = 0; i < 10; i++)
-                                Padding(
+                      MenuTitle(text: '인기있는 클라우터', destination: 1),
+                      Obx(
+                        () => BouncingListview(
+                          scrollDirection: Axis.horizontal,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 5, right: 5),
+                            child: Row(
+                              children:
+                                  homeController.clouterData.map((clouterInfo) {
+                                return Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(5, 10, 5, 20),
                                   child: ClouterItemBox(
-                                      nickname: clouter.nickname,
-                                      starRating: clouter.starRating,
-                                      fee: clouter.fee,
-                                      category: clouter.category,
-                                      contractCount: clouter.contractCount,
-                                      selectedPlatform:
-                                          clouter.selectedPlatform,
-                                      firstImg: clouter.firstImg),
-                                )
-                            ],
+                                    userId: clouterInfo.userId ?? '',
+                                    avgScore: clouterInfo.avgScore ?? 0,
+                                    minCost: clouterInfo.minCost ?? 0,
+                                    contractCount:
+                                        clouterInfo.contractCount ?? 0,
+                                    categoryList:
+                                        clouterInfo.categoryList ?? [''],
+                                    channelList: clouterInfo.channelList!
+                                        .map((e) => e as String)
+                                        .toList(),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
-                  // Container(
-                  //     color: style.colors['main3'],
-                  //     height: 10,
-                  //     child: FutureBuilder<Campaign>(
-                  //       future: futureCampaign,
-                  //       builder: (context, snapshot) {
-                  //         if (snapshot.hasData) {
-                  //           return CampaignItemBox(
-                  //             category: snapshot.data!.adCategory,
-                  //             productName: snapshot.data!.title,
-                  //             pay: snapshot.data!.price,
-                  //             campaignSubject: snapshot.data!.companyName,
-                  //             applicantCount:
-                  //                 snapshot.data!.numberOfSelectedMembers,
-                  //             recruitCount: snapshot.data!.numberOfRecruiter,
-                  //             selectedPlatform: snapshot.data!.adPlatformList,
-                  //             starRating: snapshot.data!.advertiserAvgstar,
-                  //             firstImg:
-                  //                 'images/assets/itemImage.jpg', // 💥 사진 수정하기
-                  //           );
-                  //         } else if (snapshot.hasError) {
-                  //           return Text('⛔ 캠페인 아이템 에러!! : ${snapshot.error}');
-                  //         }
-                  //         return const CircularProgressIndicator();
-                  //       },
-                  //     )),
-                  // Column(
-                  //   children: [
-                  //     MenuTitle(text: '인기있는 캠페인', destination: 2),
-                  //     BouncingListview(
-                  //       scrollDirection: Axis.horizontal,
-                  //       child: Padding(
-                  //         padding: EdgeInsets.only(left: 5, right: 5),
-                  //         child: Row(
-                  //           children: [
-                  //             for (num i = 0; i < 10; i++)
-                  //               Padding(
-                  //                 padding:
-                  //                     const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                  //                 child: CampaignItemBox(
-                  //                   category: campaign.category,
-                  //                   productName: campaign.productName,
-                  //                   pay: campaign.pay,
-                  //                   campaignSubject: campaign.campaignSubject,
-                  //                   applicantCount: campaign.applicantCount,
-                  //                   recruitCount: campaign.recruitCount,
-                  //                   selectedPlatform: campaign.selectedPlatform,
-                  //                   starRating: campaign.starRating,
-                  //                   firstImg: campaign.firstImg,
-                  //                 ),
-                  //               )
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     )
-                  //   ],
-                  // )
+                  Column(
+                    children: [
+                      MenuTitle(text: '인기있는 캠페인', destination: 2),
+                      Obx(
+                        () => BouncingListview(
+                          scrollDirection: Axis.horizontal,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 5, right: 5),
+                            child: Row(
+                              children: homeController.campaignData
+                                  .map((campaignInfo) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                                  child: CampaignItemBox(
+                                    campaignId: campaignInfo.campaignId ?? 0,
+                                    adCategory: campaignInfo.adCategory ?? '',
+                                    title: campaignInfo.title ?? '',
+                                    price: campaignInfo.price ?? 0,
+                                    companyInfo: campaignInfo.companyInfo!,
+                                    numberOfSelectedMembers:
+                                        campaignInfo.numberOfSelectedMembers ??
+                                            0,
+                                    numberOfRecruiter:
+                                        campaignInfo.numberOfRecruiter ?? 0,
+                                    adPlatformList:
+                                        campaignInfo.adPlatformList ?? [''],
+                                    advertiserInfo:
+                                        campaignInfo.advertiserInfo!,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
