@@ -74,7 +74,7 @@ public class PointController implements PointControllerDocs {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/transactions?memberId={memberId}&category={내역category}")
+    @GetMapping("/transactions")
     public ResponseEntity<Void> getTransactionListByType(
         @RequestParam Long memberId,
         @RequestParam String category
