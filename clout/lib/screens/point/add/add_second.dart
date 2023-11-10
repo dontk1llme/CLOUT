@@ -1,4 +1,4 @@
-import 'package:clout/hooks/points_charge_api.dart';
+import 'package:clout/hooks/apis/points_charge_api.dart';
 import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
