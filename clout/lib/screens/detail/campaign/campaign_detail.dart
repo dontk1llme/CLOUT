@@ -1,7 +1,10 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
+
+// api
 import 'dart:convert';
 import 'package:clout/type.dart';
 
@@ -76,7 +79,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
 
     try {
       var response = await api.getRequest(
-          '/advertisement-service/v1/advertisements/', '$campaignId');
+          '/advertisement-service/v1/advertisements/', campaignId);
       // reponse = {'statusCode' : 값, 'body' : 값}
       print(response['body']);
       int statusCode =
@@ -84,17 +87,20 @@ class _CampaignDetailState extends State<CampaignDetail> {
 
       final decodedResponse = jsonDecode(response['body']);
       // 데이터를 모델 클래스에 매핑
-      campaignInfo = CampaignInfo.fromJson(decodedResponse['campaignInfo']);
-      advertiserInfo =
-          AdvertiserInfo.fromJson(decodedResponse['advertiserInfo']);
-
+      setState(() {
+        campaignInfo = CampaignInfo.fromJson(decodedResponse['campaignInfo']);
+        advertiserInfo =
+            AdvertiserInfo.fromJson(decodedResponse['advertiserInfo']);
+        isLoading = false;
+      });
       print(CampaignList.fromJson(jsonDecode(response)));
       print(CampaignList.fromJson(jsonDecode(response)).advertiserInfo);
-
     } catch (e) {
       // 에러 처리
       print('Error: $e');
-      isLoading = false;
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -192,9 +198,10 @@ class _CampaignDetailState extends State<CampaignDetail> {
                               enlarge: true),
                           SizedBox(height: 20),
                           // 캠페인 정보 상자
-                          CampaignDetailInfoBox(
-                              campaignInfo: campaignInfo!,
-                              advertiserInfo: advertiserInfo!),
+                          if (campaignInfo != null && advertiserInfo != null)
+                            CampaignDetailInfoBox(
+                                campaignInfo: campaignInfo!,
+                                advertiserInfo: advertiserInfo!),
                           SizedBox(height: 20),
                           // 배송 여부 상자
                           CampaignDetailDeliveryInfo(),
@@ -241,7 +248,8 @@ class _CampaignDetailState extends State<CampaignDetail> {
                             child: BigButton(
                               title:
                                   '신청하기', // 이미 지원한 캠페인일 경우 title 다르게 설정하고 버튼 비활성화 해야함
-                              function: () => Get.to(ApplyCampaign()),
+                              function: () => Get.toNamed('/applycampaign',
+                                  arguments: campaignInfo?.campaignId),
                             ),
                           ),
                         )
