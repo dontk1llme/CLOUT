@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.CreateCampa
 import com.mmm.clout.advertisementservice.advertisements.application.DeleteCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.EndCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByAdvertiser;
+import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByIdProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.SearchCampaignListProcessor;
@@ -31,6 +32,7 @@ public class AdvertisementFacade {
     private final GetCampaignListByAdvertiser getCampaignListByAdvertiserProcessor;
     private final EndCampaignProcessor endCampaignProcessor;
     private final SearchCampaignListProcessor searchCampaignListProcessor;
+    private final GetCampaignListByIdProcessor getCampaignListByIdProcessor;
 
     public Campaign create(CreateCampaignCommand command) {
         return createCampaignProcessor.execute(command);
@@ -64,5 +66,9 @@ public class AdvertisementFacade {
     public List<CampaignDto> search(Pageable pageable, List<String> category, List<String> platform, Integer minAge, Integer maxAge, Integer minFollower, Integer minPrice,
         Integer maxPrice, List<String> region, String keyword, String sort) {
         return searchCampaignListProcessor.execute(pageable, category, platform, minAge, maxAge, minFollower, minPrice, maxPrice, region, keyword, sort);
+    }
+
+    public List<Campaign> getCampaignListByIdList(List<Long> adIdList) {
+        return getCampaignListByIdProcessor.execute(adIdList);
     }
 }

@@ -3,6 +3,7 @@ package com.mmm.clout.advertisementservice.advertisements.infrastructure.persist
 import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,8 @@ public interface JpaCampaignRepository extends JpaRepository<Campaign, Long>,
         Pageable pageable);
 
     Page<Campaign> findByRegisterIdOrderByCreatedAtDesc(Long advertiserId, Pageable pageable);
+
+
+    List<Campaign> findByIdIn(List<Long> adIdList);
+
 }

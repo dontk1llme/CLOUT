@@ -7,7 +7,6 @@ import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,7 @@ public class GetCampaignListByAdvertiser {
         List<Campaign> campainList =
             campaignRepository.getCampainListByAdvertiserId(advertiserId, pageable);
         for (Campaign campaign : campainList) {
-            campaign.readTransaction();
+            campaign.initializeCampaign();
         }
         return new CampaignListReader(campainList, advertiserInfo);
     }
