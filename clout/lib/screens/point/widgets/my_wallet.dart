@@ -1,4 +1,4 @@
-import 'package:clout/hooks/points_api.dart';
+import 'package:clout/hooks/apis/points_api.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
