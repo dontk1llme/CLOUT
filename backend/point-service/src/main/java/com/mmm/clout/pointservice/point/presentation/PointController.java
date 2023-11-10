@@ -1,14 +1,15 @@
 package com.mmm.clout.pointservice.point.presentation;
 
-import com.mmm.clout.pointservice.point.application.GetMemberPointProcessor;
+import com.mmm.clout.pointservice.common.docs.PointControllerDocs;
 import com.mmm.clout.pointservice.point.application.facade.PointFacade;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import com.mmm.clout.pointservice.point.presentation.request.ChargePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.ReducePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.WithdrawPointRequest;
+import com.mmm.clout.pointservice.point.presentation.response.ChargePointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
 import java.util.List;
-import lombok.Getter;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/points")
 @RequiredArgsConstructor
-public class PointController {
+public class PointController implements PointControllerDocs {
 
     private final PointFacade pointFacade;
 
@@ -30,11 +31,13 @@ public class PointController {
      * 충전
      */
     @PostMapping("/charge")
-    public ResponseEntity<Void> charge(
-        @RequestBody ChargePointRequest request
+    public ResponseEntity<ChargePointResponse> charge(
+        @Valid @RequestBody ChargePointRequest request
     ) {
-        pointFacade.charge(request.toCommand());
-        return new ResponseEntity<>(HttpStatus.OK);
+        ChargePointResponse result = ChargePointResponse.from(
+            pointFacade.charge(request.toCommand()),
+            request.getChargePoint());
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
@@ -42,7 +45,7 @@ public class PointController {
      */
     @PostMapping("/reduce")
     public ResponseEntity<Void> reduce(
-        @RequestBody ReducePointRequest request
+        @Valid @RequestBody ReducePointRequest request
     ) {
         pointFacade.reduce(request.toCommand());
         return new ResponseEntity<>(HttpStatus.OK);
@@ -53,7 +56,7 @@ public class PointController {
      */
     @PostMapping("/withdrawal")
     public ResponseEntity<Void> withdraw(
-        @RequestBody WithdrawPointRequest request
+        @Valid @RequestBody WithdrawPointRequest request
     ) {
         pointFacade.withdraw(request.toCommand());
         return new ResponseEntity<>(HttpStatus.OK);
@@ -66,7 +69,8 @@ public class PointController {
     public ResponseEntity<GetMemberTotalPointResponse> getMemberPoint(
         @RequestParam Long memberId
     ) {
-        GetMemberTotalPointResponse result = GetMemberTotalPointResponse.from(pointFacade.getMemberPoint(memberId));
+        GetMemberTotalPointResponse result = GetMemberTotalPointResponse.from(
+            pointFacade.getMemberPoint(memberId));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -75,7 +79,8 @@ public class PointController {
         @RequestParam Long memberId,
         @RequestParam String category
     ) {
-        List<PointTransaction> result = pointFacade.getTransactionListByCategory(memberId, category);
+        List<PointTransaction> result = pointFacade.getTransactionListByCategory(memberId,
+            category);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

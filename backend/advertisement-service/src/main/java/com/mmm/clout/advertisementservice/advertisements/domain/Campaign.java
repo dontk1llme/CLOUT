@@ -16,7 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.transaction.annotation.Transactional;
 
 @Getter
 @AllArgsConstructor
@@ -65,6 +70,13 @@ public class Campaign extends Advertisement {
     @Enumerated(EnumType.STRING)
     @Column(name = "region")
     private List<Region> regionList = new ArrayList<>();
+
+    @Transactional(readOnly = true)
+    public Campaign readTransaction() {
+        Hibernate.initialize(this.getRegionList());
+        Hibernate.initialize(this.getAdPlatformList());
+        return this;
+    }
 
     protected Campaign() {
         super();
