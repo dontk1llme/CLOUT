@@ -23,7 +23,7 @@ class AdvertiserLikedclouters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     infiniteController.setEndPoint('bookmarks');
-    infiniteController.setParameter('?memberId=${userController.userId}');
+    infiniteController.setParameter('?memberId=${userController.memberId}');
     infiniteController.toggleData(true);
     return GetBuilder<InfiniteScrollController>(
       tag: 'advertiserLikedClouters',
