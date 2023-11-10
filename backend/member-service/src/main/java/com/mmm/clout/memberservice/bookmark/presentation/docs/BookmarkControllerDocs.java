@@ -4,6 +4,7 @@ import com.mmm.clout.memberservice.bookmark.presentation.request.CreateAdBookmar
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateClouterBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.response.AdBookmarkResponse;
 import com.mmm.clout.memberservice.bookmark.presentation.response.BookmarkDeleteResponse;
+import com.mmm.clout.memberservice.bookmark.presentation.response.ClouterBookmarkListResponse;
 import com.mmm.clout.memberservice.bookmark.presentation.response.ClouterBookmarkResponse;
 import com.mmm.clout.memberservice.star.presentation.request.createStarDetailRequest;
 import com.mmm.clout.memberservice.star.presentation.response.CreateStarResponse;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "북마크 CRUD", description = "북마크를 관리하는 api")
 public interface BookmarkControllerDocs {
@@ -54,5 +56,17 @@ public interface BookmarkControllerDocs {
     )
     public ResponseEntity<BookmarkDeleteResponse> delete(
         @PathVariable("bookmarkId") Long bookmarkId
+    );
+
+    @Operation(summary = "광고주가 북마크한 클라우터들 조회 api",
+        responses =
+        @ApiResponse(responseCode = "200", description = "클라우터 상세 데이터 리턴",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation=ClouterBookmarkListResponse.class))
+        )
+    )
+    public ResponseEntity<ClouterBookmarkListResponse> selectClouterBookmarkByMemberId(
+        @RequestParam("memberId") Long memberId
     );
 }

@@ -4,8 +4,8 @@ import com.mmm.clout.memberservice.bookmark.domain.Bookmark;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class ClouterBookmarkResponse {
 
     private Long bookmarkId;
