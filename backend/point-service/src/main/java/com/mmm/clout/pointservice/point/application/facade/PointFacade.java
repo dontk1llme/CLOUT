@@ -10,7 +10,6 @@ import com.mmm.clout.pointservice.point.application.command.ReduceCommand;
 import com.mmm.clout.pointservice.point.application.command.WithdrawCommand;
 import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +33,7 @@ public class PointFacade {
         reducePointProcessor.execute(command.getMemberId(), command.getReducingPoint(), command.getPointCategory());
     }
 
-    public void withdraw(WithdrawCommand command) {
+    public void withdrawal(WithdrawCommand command) {
         withdrawPointProcessor.execute(command);
     }
 
