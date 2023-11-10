@@ -2,10 +2,7 @@ package com.mmm.clout.memberservice.bookmark.presentation.docs;
 
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateAdBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateClouterBookmarkRequest;
-import com.mmm.clout.memberservice.bookmark.presentation.response.AdBookmarkResponse;
-import com.mmm.clout.memberservice.bookmark.presentation.response.BookmarkDeleteResponse;
-import com.mmm.clout.memberservice.bookmark.presentation.response.ClouterBookmarkListResponse;
-import com.mmm.clout.memberservice.bookmark.presentation.response.ClouterBookmarkResponse;
+import com.mmm.clout.memberservice.bookmark.presentation.response.*;
 import com.mmm.clout.memberservice.star.presentation.request.createStarDetailRequest;
 import com.mmm.clout.memberservice.star.presentation.response.CreateStarResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,6 +64,18 @@ public interface BookmarkControllerDocs {
         )
     )
     public ResponseEntity<ClouterBookmarkListResponse> selectClouterBookmarkByMemberId(
+        @RequestParam("memberId") Long memberId
+    );
+
+    @Operation(summary = "클라우터가 북마크한 광고들 조회 api",
+        responses =
+        @ApiResponse(responseCode = "200", description = "광고 상세 데이터 리턴",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation=AdBookmarkListResponse.class))
+        )
+    )
+    public ResponseEntity<AdBookmarkListResponse> selectAdBookmarkByMemberId(
         @RequestParam("memberId") Long memberId
     );
 }

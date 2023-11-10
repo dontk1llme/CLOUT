@@ -1,7 +1,9 @@
 package com.mmm.clout.memberservice.bookmark.application;
 
+import com.mmm.clout.memberservice.bookmark.application.reader.CampaignReader;
+import com.mmm.clout.memberservice.bookmark.domain.info.CampaignInfo;
+import com.mmm.clout.memberservice.bookmark.domain.provider.AdvertisementProvider;
 import com.mmm.clout.memberservice.bookmark.domain.repository.BookmarkRepository;
-import com.mmm.clout.memberservice.bookmark.presentation.response.CampaignReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,12 +14,13 @@ import java.util.stream.Collectors;
 public class SelectAdByMemberIdProcessor {
 
     private final BookmarkRepository bookmarkRepository;
+    private final AdvertisementProvider advertisementProvider;
 
     @Transactional
     public List<CampaignReader> execute(Long memberId) {
-        List<Long> idList = bookmarkRepository.findByMemberId(memberId).stream().map(v -> v.getId()).collect(Collectors.toList());
-        /// feign client 필요
-        return null;
+        List<Long> idList = bookmarkRepository.findByMemberId(memberId).stream().map(v -> v.getTargetId()).collect(Collectors.toList());
+        List<CampaignInfo> campaignInfos = advertisementProvider.getCampaignListById(idList).getBody();
+        List<CampaignReader> result = campaignInfos.stream().map(v -> new CampaignReader(v)).collect(Collectors.toList());
+        return result;
     }
-
 }
