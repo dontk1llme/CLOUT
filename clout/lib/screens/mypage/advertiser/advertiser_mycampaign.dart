@@ -1,13 +1,13 @@
-import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:clout/screens/list/widgets/campaign_infinite_scroll_body.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
 // widgets
 import 'package:clout/widgets/header/header.dart';
+import 'package:clout/screens/list/widgets/campaign_infinite_scroll_body.dart';
 
 // controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
