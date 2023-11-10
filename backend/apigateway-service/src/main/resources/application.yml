@@ -134,7 +134,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/notification-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
+#            - AuthorizationHeaderFilter
 
         # IMAGE-SERVICE route
         # 이미지 서비스 api 디폴트 인증 적용 X
