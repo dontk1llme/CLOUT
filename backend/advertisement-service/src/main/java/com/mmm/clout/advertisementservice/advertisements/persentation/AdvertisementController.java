@@ -1,5 +1,6 @@
 package com.mmm.clout.advertisementservice.advertisements.persentation;
 
+import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignDto;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
@@ -36,6 +37,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     private final AdvertisementFacade advertisementFacade;
 
     // TODO Point 도메인과 연결 & 이미지 저장 필요
+    // TODO N+1 문제 해결
     // 등록하기 전 포인트 10,000포인트 있어야 함. 없으면 충전 페이지로 이동.
 
     /**
@@ -155,8 +157,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
 
         Pageable pageable = PageRequest.of(page, size);
         List<CampaignDto> result = advertisementFacade.search(
-            pageable, category, platform, minAge, maxAge, minFollower, minPrice, maxPrice, region,
-            keyword, sortKey
+            SearchCondition.from(pageable, category, platform, minAge, maxAge, minFollower, minPrice, maxPrice, region, keyword, sortKey)
         );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
