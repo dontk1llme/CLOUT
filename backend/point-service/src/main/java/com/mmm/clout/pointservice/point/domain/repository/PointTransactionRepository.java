@@ -11,4 +11,5 @@ public interface PointTransactionRepository {
 
     List<PointTransaction> findByPointAndPointCategory(Point point, PointCategory category);
 
+//    List<PointTransaction> searchByCategory()
 }
