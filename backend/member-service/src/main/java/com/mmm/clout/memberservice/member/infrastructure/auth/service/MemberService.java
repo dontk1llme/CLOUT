@@ -6,6 +6,7 @@ import com.mmm.clout.memberservice.member.infrastructure.auth.dto.MemberDTO;
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.RequestMemberDto;
 import com.mmm.clout.memberservice.member.infrastructure.auth.exception.NoMatchPasswordException;
 import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
+import com.mmm.clout.memberservice.member.presentation.response.AddCountContractResponse;
 import com.mmm.clout.memberservice.star.domain.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,6 +61,13 @@ public class MemberService {
         String password = makePassword();
         member.passwordUpdate(encoder.encode(password));
         // 새로 만든 비밀번호 발송 로직 필요
+    }
+
+    @Transactional
+    public AddCountContractResponse addCountContract(Long memberId) {
+        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundMemberException());
+        AddCountContractResponse response = new AddCountContractResponse(memberId, findMember.addCountOfContract());
+        return response;
     }
 
     private String makePassword() {
