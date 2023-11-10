@@ -1,3 +1,5 @@
+import 'package:clout/hooks/apis/points_charge_api.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -29,13 +31,39 @@ class _AddSecondState extends State<AddSecond> {
   TextEditingController pointController = TextEditingController();
   double amount = 0;
   int userPoints = 1; // 사용자 보유 포인트
+  late dynamic args = Get.arguments;
 
   var f = NumberFormat('###,###,###,###');
 
-  Future<int> fetchUserPoints() async {
-    // 여기에서 실제 API 호출
+  // Future<int> fetchUserPoints() async {
+  //   //사용자 ID
+  //   final userController = Get.find<UserController>();
+  //   var memberId = userController.memberId;
+  //   var authorization = userController.userLogin['authorization'];
 
-    return 130000; // 임시로 130,000을 반환
+  //   return 130000; // 임시로 130,000을 반환
+  // }
+
+  void addUserPoints() async {
+    //사용자 ID
+    final userController = Get.find<UserController>();
+    var memberId = userController.memberId;
+    var authorization = userController.userLogin['authorization'];
+
+    //post할 내용
+
+    var addParameter = {
+        "memberId": memberId,
+        "chargePoint": int.parse(pointController.text),
+        "paymentType": "KAKAO",
+    };
+
+    //api에 전송
+    final PointsChargeAPI pointsChargeAPI = PointsChargeAPI();
+    pointsChargeAPI.postRequest(
+      '/point-service/v1/points/charge', 
+      authorization, 
+      addParameter);
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -45,11 +73,11 @@ class _AddSecondState extends State<AddSecond> {
     super.initState();
 
     // API 호출하여 사용자의 보유 포인트를 가져오는 함수
-    fetchUserPoints().then((points) {
-      setState(() {
-        userPoints = points;
-      });
-    });
+    // fetchUserPoints().then((points) {
+    //   setState(() {
+    //     userPoints = points;
+    //   });
+    // });
   }
 
   String getCurrentDate() {
@@ -162,7 +190,11 @@ class _AddSecondState extends State<AddSecond> {
                     height: 50,
                     child: BigButton(
                       title: '충전하기',
-                      function: movePage,
+                      function: (){
+                        addUserPoints();
+                        movePage();
+                      },
+                      //여기 function에 추가하고 싶다고
                     ),
                   ),
                 ],
@@ -176,7 +208,7 @@ class _AddSecondState extends State<AddSecond> {
 
   @override
   Widget build(BuildContext context) {
-    final args = Get.arguments;
+    
 
     return Scaffold(
       appBar: PreferredSize(
@@ -229,9 +261,14 @@ class _AddSecondState extends State<AddSecond> {
               title: '충전',
               function: () {
                 if (pointController.text.isEmpty) {
-                  Fluttertoast.showToast(msg: '금액을 입력해주세요.');
-                } else {
+                  Fluttertoast.showToast(msg: '금액을 입력해주세요.');}
+                else {
+                  if(int.parse(pointController.text)<1000){
+                    Fluttertoast.showToast(msg: '1000원 이상만 충전 가능합니다.');
+                  }
+                  else{
                   _showModal();
+                  }
                 }
               }),
         ),
