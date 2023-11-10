@@ -1,4 +1,4 @@
-import 'package:clout/hooks/register_api.dart';
+import 'package:clout/hooks/apis/register_api.dart';
 import 'package:clout/providers/user_controllers/clouter_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_2.dart';
