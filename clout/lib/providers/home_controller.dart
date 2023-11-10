@@ -60,12 +60,12 @@ class HomeController extends GetxController {
     List<dynamic> cloutersJson = json['clouters'];
     if (cloutersJson != null) {
       clouterData.value = cloutersJson.map((item) {
-        var clouterInfo = ClouterInfo.fromJson(item['clouterInfo']);
+        var clouterInfo = ClouterInfo.fromJson(item);
         return ClouterInfo(
           clouterInfo.clouterId,
           clouterInfo.userId,
           clouterInfo.avgScore,
-          clouterInfo.contractCount, // 💥 계약한 광고 건수 수정
+          // clouterInfo.contractCount, // 💥 계약한 광고 건수 수정
           clouterInfo.role,
           clouterInfo.nickName,
           clouterInfo.name,

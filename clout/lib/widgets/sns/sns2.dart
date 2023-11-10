@@ -1,20 +1,17 @@
+import 'package:clout/type.dart';
 import 'package:flutter/material.dart';
 
 class Sns2 extends StatelessWidget {
-  const Sns2({super.key, required this.selectedPlatform});
+  const Sns2({super.key, required this.platform});
 
-  final List<dynamic> selectedPlatform;
+  final String platform;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: selectedPlatform.map((platform) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 2),
-          child: Image.asset('assets/images/${platform}.png',
-              width: 20, height: 20),
-        );
-      }).toList(),
+    return Padding(
+      padding: const EdgeInsets.only(right: 2),
+      child:
+          Image.asset('assets/images/${platform}.png', width: 20, height: 20),
     );
   }
 }
