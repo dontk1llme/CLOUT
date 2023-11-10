@@ -1,4 +1,4 @@
-import 'package:clout/hooks/register_api.dart';
+import 'package:clout/hooks/apis/register_api.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
 import 'package:clout/widgets/image_pickder/image_widget.dart';
@@ -13,11 +13,11 @@ class ClouterJoinOrModify2 extends StatelessWidget {
   final modifying;
   final controllerTag;
 
-  final clouterRegisterController =
-      Get.find<ClouterInfoController>(tag: 'clouterRegister');
-
   //중복 체크 함수
   checkDuplicted() async {
+    final clouterRegisterController =
+      Get.find<ClouterInfoController>(tag: controllerTag);
+
     if (clouterRegisterController.id == null ||
         clouterRegisterController.id.length == 0) {
       Fluttertoast.showToast(msg: '아이디를 입력해주세요');

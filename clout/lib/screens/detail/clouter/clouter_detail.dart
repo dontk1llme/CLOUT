@@ -1,6 +1,12 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
+import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
+
+// api
+import 'dart:convert';
+import 'package:clout/type.dart';
 
 // utility
 import 'package:clout/utilities/bouncing_listview.dart';
@@ -18,33 +24,6 @@ import 'package:clout/screens/chatting/chatting_list.dart';
 
 // controller
 import 'package:clout/providers/user_controllers/user_controller.dart';
-
-class Clouter {
-  int clouterId = 1;
-  String nickname = '모카우유'; // 클라우터 닉네임
-  int starRating = 20; // 평점
-  int fee = 500000; // 희망 광고비
-  List<String> selectedCategories = [
-    "반려동물",
-    "기타",
-  ]; // 희망 카테고리
-  int contractCount = 5; // 계약한 광고 수
-}
-
-// SNS 정보
-class SNSChannel {
-  final String snsType; // Youtube · Instagram · TikTok
-  final String channelName; // 채널명 · 계정명
-  final int followers; // 구독자수 · 팔로워수
-  final String link; // sns 링크
-
-  SNSChannel({
-    required this.snsType,
-    required this.channelName,
-    required this.followers,
-    required this.link,
-  });
-}
 
 // 클라우터 사진들
 List<String> imgList = [
@@ -70,47 +49,14 @@ class ClouterDetail extends StatefulWidget {
 }
 
 class _ClouterDetailState extends State<ClouterDetail> {
+  ClouterInfo? clouterInfo;
   var clouterId = Get.arguments;
-
-  Clouter clouter = Clouter();
-
-  // 여러 개의 SNS 정보를 저장하는 리스트
-  List<SNSChannel> snsChannels = [
-    SNSChannel(
-        snsType: 'YouTube',
-        channelName: 'MochaMilk',
-        followers: 1650000,
-        link: 'https://www.youtube.com/c/mochamilk'),
-    SNSChannel(
-        snsType: 'Instagram',
-        channelName: 'MochaMilk_Insta',
-        followers: 750000,
-        link: 'https://www.instagram.com/milk_the_samoyed/'),
-    // 다른 SNS 정보 추가
-  ];
-
-  String formattedFee = '';
+  final userController = Get.find<UserController>();
 
   @override
   void initState() {
     super.initState();
-
-    // 희망 광고비 형식화
-    if (clouter.fee >= 10000) {
-      if (clouter.fee % 10000 == 0) {
-        if (clouter.fee % 100000000 == 0) {
-          formattedFee = (clouter.fee ~/ 100000000).toString() + '억';
-        } else {
-          formattedFee = (clouter.fee ~/ 10000).toString() + '만';
-        }
-      } else {
-        if (clouter.fee % 100000000 == 0) {
-          formattedFee = (clouter.fee / 100000000).toStringAsFixed(1) + '억';
-        } else {
-          formattedFee = (clouter.fee / 10000).toStringAsFixed(2) + '만';
-        }
-      }
-    }
+    _showDetail();
   }
 
   doChat(destination) {
@@ -126,7 +72,20 @@ class _ClouterDetailState extends State<ClouterDetail> {
     });
   }
 
-  final userController = Get.find<UserController>();
+  _showDetail() async {
+    final AuthorizedApi api = AuthorizedApi();
+    var response =
+        await api.getRequest('/member-service/v1/clouters/', clouterId);
+    // var statusCode = response['statusCode'];
+    if (response != null) {
+      final decodedResponse = jsonDecode(response['body']);
+      setState(() {
+        clouterInfo = ClouterInfo.fromJson(decodedResponse);
+      });
+    } else {
+      print('clouter detail 에러 ❌.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +95,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
         preferredSize: Size.fromHeight(70),
         child: Header(
           header: 3,
-          headerTitle: clouter.nickname, // 채널명 또는 계정명
+          headerTitle: clouterInfo?.nickName, // 채널명 또는 계정명
         ),
       ),
       body: SizedBox(
@@ -157,7 +116,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                           children: [
                             Icon(Icons.star, color: Colors.amber),
                             SizedBox(width: 3),
-                            Text(clouter.starRating.toString(),
+                            Text(clouterInfo?.avgScore?.toString() ?? '0',
                                 style: TextStyle(fontWeight: FontWeight.w800)),
                           ],
                         ),
@@ -209,7 +168,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                               children: [
                                 Row(
                                   children: [
-                                    Text(formattedFee,
+                                    Text(clouterInfo?.minCost.toString() ?? '',
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w700,
@@ -217,18 +176,19 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                     Text(' points'),
                                   ],
                                 ),
-                                Text(clouter.selectedCategories.join(', '),
+                                Text(
+                                    clouterInfo?.categoryList?.join(', ') ?? '',
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w700,
                                         color: style.colors['logo'])),
                                 Row(
                                   children: [
-                                    Text(clouter.contractCount.toString(),
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700,
-                                            color: style.colors['logo'])),
+                                    // Text(clouterInfo.contractCount.toString(),
+                                    //     style: TextStyle(
+                                    //         fontSize: 15,
+                                    //         fontWeight: FontWeight.w700,
+                                    //         color: style.colors['logo'])),
                                     Text(' 건', style: TextStyle(fontSize: 15)),
                                   ],
                                 )
@@ -252,16 +212,17 @@ class _ClouterDetailState extends State<ClouterDetail> {
                       ),
                     ),
                     // 여러개 SNS 정보 반복해서 생성
-                    Column(
-                      children: snsChannels.map((snsChannel) {
-                        return SnsItemBox(
-                          snsType: snsChannel.snsType,
-                          username: snsChannel.channelName,
-                          followers: snsChannel.followers,
-                          snsUrl: snsChannel.link,
-                        );
-                      }).toList(),
-                    ),
+                    clouterInfo?.channelList != null
+                        ? Column(
+                            children: clouterInfo!.channelList!
+                                .map((e) => SnsItemBox(
+                                    username: e.name,
+                                    followers: e.followerScale,
+                                    snsType: e.platform,
+                                    snsUrl: e.link))
+                                .toList(),
+                          )
+                        : Container(),
                     SizedBox(height: 70),
                   ],
                 ),

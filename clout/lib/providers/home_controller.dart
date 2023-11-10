@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:clout/hooks/item_api.dart';
+import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:clout/type.dart';
 import 'package:get/get.dart';
 
@@ -9,11 +9,13 @@ class HomeController extends GetxController {
   var clouterData = RxList<ClouterInfo>();
 
   void fetchCampaigns() async {
-    final ItemApi itemApi = ItemApi();
+    final NormalApi api = NormalApi();
     await Future.delayed(Duration(seconds: 2));
-    var response = await itemApi.getRequest(
+    var response = await api.getRequest(
         '/advertisement-service/v1/advertisements/', 'top10');
-    var json = jsonDecode(response);
+    // reponse = {'statusCode' : 값, 'body' : 값};
+
+    var json = jsonDecode(response['body']);
 
     List<dynamic> campaignsJson = json['top10CampaignList'];
     if (campaignsJson != null) {
@@ -51,11 +53,11 @@ class HomeController extends GetxController {
   }
 
   void fetchClouters() async {
-    final ItemApi itemApi = ItemApi();
+    final NormalApi api = NormalApi();
     await Future.delayed(Duration(seconds: 2));
     var response =
-        await itemApi.getRequest('/member-service/v1/clouters/', 'top10');
-    var json = jsonDecode(response);
+        await api.getRequest('/member-service/v1/clouters/', 'top10');
+    var json = jsonDecode(response['body']);
 
     List<dynamic> cloutersJson = json['clouters'];
     if (cloutersJson != null) {
