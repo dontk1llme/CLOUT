@@ -12,7 +12,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // Screens
 import 'screens/landing/landing.dart';
 import 'package:clout/screens/login/login.dart';
-import 'package:clout/screens/join_select/join.dart';
 import 'package:clout/screens/join_select/join_page.dart';
 import 'package:clout/screens/main_page/main_page.dart';
 import 'package:clout/screens/notification/notification.dart';
