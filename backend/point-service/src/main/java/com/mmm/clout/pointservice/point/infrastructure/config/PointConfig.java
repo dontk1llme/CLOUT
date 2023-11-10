@@ -7,6 +7,7 @@ import com.mmm.clout.pointservice.point.application.ReducePointProcessor;
 import com.mmm.clout.pointservice.point.application.WithdrawPointProcessor;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
 import com.mmm.clout.pointservice.point.domain.repository.PointTransactionRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -52,11 +53,13 @@ public class PointConfig {
     @Bean
     public GetTransactionListByCategoryProcessor getTransactionListByCategoryProcessor(
         PointRepository pointRepository,
-        PointTransactionRepository pointTransactionRepository
+        PointTransactionRepository pointTransactionRepository,
+        JPAQueryFactory queryFactory
     ) {
         return new GetTransactionListByCategoryProcessor(
             pointRepository,
-            pointTransactionRepository
+            pointTransactionRepository,
+            queryFactory
         );
     }
 }
