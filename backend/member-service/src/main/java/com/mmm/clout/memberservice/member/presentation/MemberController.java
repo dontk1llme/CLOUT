@@ -37,7 +37,7 @@ public class MemberController implements MemberControllerDocs {
         LoginReader reader = authService.login(loginDto);
         AuthDto.TokenDto tokenDto = reader.getTokenDto();
         return ResponseEntity.ok()
-            .header("REFRESH_TOKEN", tokenDto.getRefreshToken())
+            .header("REFRESH-TOKEN", tokenDto.getRefreshToken())
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getAccessToken())
             .body(reader.toResponse());
     }
@@ -52,7 +52,7 @@ public class MemberController implements MemberControllerDocs {
     // 토큰 재발급
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(
-            @RequestHeader("REFRESH_TOKEN") String requestRefreshToken,
+            @RequestHeader("REFRESH-TOKEN") String requestRefreshToken,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String requestAccessToken
                                      ) {
         AuthDto.TokenDto reissuedTokenDto = authService.reissue(requestAccessToken, requestRefreshToken);
@@ -61,7 +61,7 @@ public class MemberController implements MemberControllerDocs {
         if (reissuedTokenDto != null) { // 토큰 재발급 성공
             return ResponseEntity
                 .status(HttpStatus.OK)
-                .header("REFRESH_TOKEN", reissuedTokenDto.getRefreshToken())
+                .header("REFRESH-TOKEN", reissuedTokenDto.getRefreshToken())
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + reissuedTokenDto.getAccessToken())
                 .build();
 
@@ -71,7 +71,7 @@ public class MemberController implements MemberControllerDocs {
 
             return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .header("REFRESH_TOKEN", "")
+                .header("REFRESH-TOKEN", "")
                 .build();
         }
     }
@@ -83,7 +83,7 @@ public class MemberController implements MemberControllerDocs {
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .header("REFRESH_TOKEN", "")
+            .header("REFRESH-TOKEN", "")
             .build();
     }
 
