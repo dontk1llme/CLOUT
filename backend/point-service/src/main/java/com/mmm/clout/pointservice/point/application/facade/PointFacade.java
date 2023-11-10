@@ -9,10 +9,11 @@ import com.mmm.clout.pointservice.point.application.command.ChargeCommand;
 import com.mmm.clout.pointservice.point.application.command.ReduceCommand;
 import com.mmm.clout.pointservice.point.application.command.WithdrawCommand;
 import com.mmm.clout.pointservice.point.domain.Point;
-import com.mmm.clout.pointservice.point.domain.PointCategory;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -41,7 +42,11 @@ public class PointFacade {
         return getMemberPointProcessor.execute(memberId);
     }
 
-    public List<PointTransaction> getTransactionListByCategory(Long memberId, String category) {
-        return getTransactionListByCategoryProcessor.execute(memberId, category);
+    public Page<PointTransaction> getTransactionListByCategory(
+        Long memberId,
+        String category,
+        PageRequest pageable
+    ) {
+        return getTransactionListByCategoryProcessor.execute(memberId, category, pageable);
     }
 }
