@@ -41,6 +41,36 @@ class ClouterInfoController extends GetxController {
 
   var clouter;
 
+  static List<String> categories = [
+    'ALL',
+    'FASHION_BEAUTY',
+    'HEALTH_LIFESTYLE',
+    'TRAVEL_LEISURE',
+    'PARENTING',
+    'ELECTRONICS',
+    'FOOD',
+    'VISIT_EXPERIENCE',
+    'PETS',
+    'GAMES',
+    'ECONOMY_BUSINESS',
+    'OTHERS'
+  ];
+
+  static Map<String, int> categoryToIndex = {
+    'ALL': 0,
+    'FASHION_BEAUTY': 1,
+    'HEALTH_LIFESTYLE': 2,
+    'TRAVEL_LEISURE': 3,
+    'PARENTING': 4,
+    'ELECTRONICS': 5,
+    'FOOD': 6,
+    'VISIT_EXPERIENCE': 7,
+    'PETS': 8,
+    'GAMES': 9,
+    'ECONOMY_BUSINESS': 10,
+    'OTHERS': 11,
+  };
+
   final clouterController = Get.find<ClouterController>();
   var fourDigitsInputController;
   var addressController;
@@ -51,23 +81,51 @@ class ClouterInfoController extends GetxController {
   var dateController;
   var imagePickerController;
 
-  loadBeforeModify(input){
-    name= input['name'];
-    dateController.setSelectedDate = DateTime.parse(input['birthday']);
-    phoneNumber = input['phoneNumber'];
-    addressController.setDaumAddress = input['address']['mainAddress'];
-    addressController.setDetailAddresss = input['address']['detailAddress'];
-    nickName= input['nickName'];
-    id = input['userId'];
+  loadBeforeModify(Clouter input) {
+    // print(input.nickName);
+    print('아래값이 이름이 와야돼...');
+    print(input.name);
+    print(input.nickName);
+    setName(input.name);
+    dateController.setSelectedDateDirectly(DateTime.parse(input.birthday!));
+    setPhoneNumber(input.phoneNumber);
+    addressController.setDaumAddress(input.address!.mainAddress);
+    addressController.setDetailAddress(input.address!.detailAddress);
+    setNickName(input.nickName);
+    setId(input.userId);
+    fourDigitsInputController.setPhoneVerified(true);
 
-    var channelList = input['channelList'];
-    for(int i = 0; i<channelList.length; i++){
-      if(channelList[i].platform == 'INSTAGRAM'){
-        platformSelectController.platforms[0]= true;
-        // platform
+    var channelList = input.channelList!;
+    for (int i = 0; i < channelList.length; i++) {
+      var platformIndex;
+
+      if (channelList[i]['platform'] == 'INSTAGRAM') {
+        platformIndex = 0;
+      } else if (channelList[i]['platform'] == 'TIKTOK') {
+        platformIndex = 1;
+      } else {
+        platformIndex = 2;
       }
+
+      // platformSelectController.setSelected(platformIndex, true);
+      platformSelectController.setId(platformIndex, channelList[i]['name']);
+      platformSelectController.setLink(platformIndex, channelList[i]['link']);
+      platformSelectController.setFollowerCount(
+          platformIndex, channelList[i]['followerScale'].toString());
     }
-    
+
+    feeController.setPay(input.minCost.toString());
+    selections[0] = false;
+    for (int i = 0; i < input.categoryList!.length; i++) {
+      selections[categoryToIndex[input.categoryList![i]]!] = true;
+    }
+
+    List<String> newRegionList = [];
+    for (int i = 0; i < input.regionList!.length; i++) {
+      newRegionList.add(regionController.getString(input.regionList![i]));
+    }
+    regionController.setSelectedRegions(newRegionList);
+    update();
   }
 
   runOtherControllers() {
@@ -104,42 +162,6 @@ class ClouterInfoController extends GetxController {
       tag: clouterController.controllerTag,
     );
   }
-
-  static List<String> categories = [
-    'ALL',
-    'FASHION_BEAUTY',
-    'HEALTH_LIFESTYLE',
-    'TRAVEL_LEISURE',
-    'PARENTING',
-    'ELECTRONICS',
-    'FOOD',
-    'VISIT_EXPERIENCE',
-    'PETS',
-    'GAMES',
-    'ECONOMY_BUSINESS',
-    'OTHERS'
-  ];
-
-  static List<String> regions = [
-    'ALL',
-    'SEOUL',
-    'BUSAN',
-    'DAEGU',
-    'INCHEON',
-    'GWANGJU',
-    'DAEJEON',
-    'ULSAN',
-    'SEJONG',
-    'GYEONGGI',
-    'GANGWON',
-    'CHUNGBUK',
-    'CHUNGNAM',
-    'JEONBUK',
-    'JEONNAM',
-    'GYEONGBUK',
-    'GYEONGNAM',
-    'JEJU',
-  ];
 
   setClouter() {
     List<ChannelList> channelList = [];

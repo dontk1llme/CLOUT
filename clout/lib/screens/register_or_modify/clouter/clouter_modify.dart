@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/providers/user_controllers/clouter_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
@@ -6,6 +8,7 @@ import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_2.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_3.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_4.dart';
+import 'package:clout/type.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,10 +18,18 @@ import 'package:get/get.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 
-class ClouterModify extends StatelessWidget {
+class ClouterModify extends StatefulWidget {
   ClouterModify({super.key});
+
+  @override
+  State<ClouterModify> createState() => _ClouterModifyState();
+}
+
+class _ClouterModifyState extends State<ClouterModify> {
   final clouterController = Get.put(ClouterController());
+
   final userController = Get.find<UserController>();
+
   final controller = Get.put(ClouterInfoController(), tag: 'clouterModify');
 
   loadClouterInfo() async {
@@ -26,17 +37,24 @@ class ClouterModify extends StatelessWidget {
     var response = await authorizedApi.getRequest(
         '/member-service/v1/clouters/', userController.memberId);
     // response = {'statusCode' : 값, 'body' : 값}
-
     print(response['statusCode']);
     print(response['body']);
-    print(response['body']);
+    var clouterData = response['body'];
+    var data = Clouter.fromJson(jsonDecode(clouterData));
+
+    controller.loadBeforeModify(data);
+  }
+
+  @override
+  void initState() {
+    clouterController.setControllerTag('clouterModify');
+    controller.runOtherControllers();
+    loadClouterInfo();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    clouterController.setControllerTag('clouterModify');
-    controller.runOtherControllers();
-    loadClouterInfo();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70),
@@ -65,13 +83,16 @@ class ClouterModify extends StatelessWidget {
               controllerTag: 'clouterModify',
             ),
             SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: BigButton(
-                title: '완료', // pageNum에 따라 버튼 텍스트 변경
-                function: () {
-                  Get.offNamed('/cloutermypage');
-                },
+            FractionallySizedBox(
+              widthFactor: 1,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: BigButton(
+                  title: '완료', // pageNum에 따라 버튼 텍스트 변경
+                  function: () {
+                    Get.offNamed('/cloutermypage');
+                  },
+                ),
               ),
             ),
             SizedBox(height: 30),

@@ -38,10 +38,18 @@ class JoinInput extends StatefulWidget {
 class _JoinInputState extends State<JoinInput> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController textEditingContoller =
+        TextEditingController(text: widget.initialValue);
+
+    // 커서 맨 뒤로 보내는 메소드
+    textEditingContoller.selection =
+        TextSelection.collapsed(offset: textEditingContoller.text.length);
+
     return TextFormField(
+      controller: textEditingContoller,
       keyboardType: widget.keyboardType,
       maxLength: widget.maxLength,
-      initialValue: widget.initialValue,
+      // initialValue: widget.initialValue,
       enabled: widget.enabled,
       inputFormatters: widget.inputFormatters,
       onChanged: widget.index == null
@@ -59,8 +67,14 @@ class _JoinInputState extends State<JoinInput> {
         counterText: '',
         contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+        // hintText: widget.initialValue ?? widget.title,
         hintText: widget.title,
         labelText: widget.label,
+        // labelText:
+        //     widget.initialValue == null || widget.initialValue.length == 0
+        //         ? widget.label
+        //         : widget.initialValue,
+        // label: Text(widget.label),
         floatingLabelStyle: TextStyle(color: style.colors['main1']),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
