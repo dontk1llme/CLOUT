@@ -90,9 +90,9 @@ public class AuthService {
         String authorities = getAuthorities(authentication);
 
         // 토큰 재발급 및 Redis 업데이트
-        redisService.deleteValues("RT(" + SERVER + "):" + principal); // 기존 RT 삭제
+//        redisService.deleteValues("RT(" + SERVER + "):" + principal); // 기존 RT 삭제
         AuthDto.TokenDto tokenDto = jwtTokenProvider.createToken(principal, authorities);
-        saveRefreshToken(SERVER, principal, tokenDto.getRefreshToken());
+//        saveRefreshToken(SERVER, principal, tokenDto.getRefreshToken());
         log.info("리이슈 로직 완료");
         return tokenDto;
     }
