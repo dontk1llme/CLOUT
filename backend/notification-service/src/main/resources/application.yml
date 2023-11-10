@@ -36,7 +36,10 @@ spring:
             value:
               delegate:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
-      group-id: clout-consumer-group
+#          json:
+#            trusted:
+#              packages: com.mmm.clout.notificationservice.notification.test.dto.TestValue, com.mmm.clout.notificationservice.notification.test.dto.BaseTopicValue
+      group-id: clout-consumer-local
       auto-offset-reset: earliest
 eureka:
   instance:

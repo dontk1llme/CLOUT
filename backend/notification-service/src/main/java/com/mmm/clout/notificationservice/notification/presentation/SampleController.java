@@ -26,10 +26,5 @@ public class SampleController {
         return "success";
     }
 
-    @PostMapping(value = "/test")
-    public String sendMessage() {
-//        this.producer.sendMessage();
-//        this.producer.sendMessage();
-        return "success";
-    }
+
 }
