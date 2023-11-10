@@ -2,6 +2,7 @@ package com.mmm.clout.memberservice.member.presentation.docs;
 
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.AuthDto;
 import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
+import com.mmm.clout.memberservice.member.presentation.response.AddCountContractResponse;
 import com.mmm.clout.memberservice.member.presentation.response.IdDuplicateResponse;
 import com.mmm.clout.memberservice.member.presentation.response.PwdUpdateResponse;
 import com.mmm.clout.memberservice.member.presentation.response.SendSmsResponse;
@@ -12,10 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -87,9 +85,20 @@ public interface MemberControllerDocs {
                 schema=@Schema(implementation=SendSmsResponse.class))
         )
     )
-    @GetMapping("/sendsms/find")
     public ResponseEntity<SendSmsResponse> sendSmsByUserId(
         @RequestParam String userid,
         @RequestParam String phoneNumber
+    );
+
+    @Operation(summary = "계약 건수 플러스 api",
+        responses =
+        @ApiResponse(responseCode = "200", description = "계약이 성사 되었을때 계약 카운트 플러스",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation=AddCountContractResponse.class))
+        )
+    )
+    public ResponseEntity<AddCountContractResponse> addCount(
+        @PathVariable("memberId") Long memberId
     );
 }

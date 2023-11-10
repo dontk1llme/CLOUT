@@ -7,10 +7,9 @@ import com.mmm.clout.memberservice.member.infrastructure.auth.service.AuthServic
 import com.mmm.clout.memberservice.member.infrastructure.auth.service.MemberService;
 import com.mmm.clout.memberservice.member.presentation.docs.MemberControllerDocs;
 import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
-import com.mmm.clout.memberservice.member.presentation.response.IdDuplicateResponse;
-import com.mmm.clout.memberservice.member.presentation.response.PwdUpdateResponse;
-import com.mmm.clout.memberservice.member.presentation.response.SendSmsResponse;
+import com.mmm.clout.memberservice.member.presentation.response.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,25 +22,24 @@ import java.util.Random;
 @RestController
 @RequestMapping("/v1/members")
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController implements MemberControllerDocs {
 
     private final AuthService authService;
     private final SmsService smsService;
     private final MemberService memberService;
-    private final BCryptPasswordEncoder encoder;
-
 
     private final long COOKIE_EXPIRATION = 7776000; // 90일
 
     // 로그인 -> 토큰 발급
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid AuthDto.LoginDto loginDto) {
+    public ResponseEntity<LoginReseponse> login(@RequestBody @Valid AuthDto.LoginDto loginDto) {
         LoginReader reader = authService.login(loginDto);
         AuthDto.TokenDto tokenDto = reader.getTokenDto();
         return ResponseEntity.ok()
-            .header("REFRESH_TOKEN", tokenDto.getRefreshToken())
+            .header("REFRESH-TOKEN", tokenDto.getRefreshToken())
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getAccessToken())
-            .body(reader.getMemberRole());
+            .body(reader.toResponse());
     }
 
     @GetMapping("/duplicate")
@@ -54,15 +52,16 @@ public class MemberController implements MemberControllerDocs {
     // 토큰 재발급
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(
-            @RequestHeader("REFRESH_TOKEN") String requestRefreshToken,
+            @RequestHeader("REFRESH-TOKEN") String requestRefreshToken,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String requestAccessToken
                                      ) {
         AuthDto.TokenDto reissuedTokenDto = authService.reissue(requestAccessToken, requestRefreshToken);
-
+        log.info("refresh = {}", requestRefreshToken);
+        log.info("Access = {}", requestAccessToken);
         if (reissuedTokenDto != null) { // 토큰 재발급 성공
             return ResponseEntity
                 .status(HttpStatus.OK)
-                .header("REFRESH_TOKEN", reissuedTokenDto.getRefreshToken())
+                .header("REFRESH-TOKEN", reissuedTokenDto.getRefreshToken())
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + reissuedTokenDto.getAccessToken())
                 .build();
 
@@ -72,7 +71,7 @@ public class MemberController implements MemberControllerDocs {
 
             return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .header("REFRESH_TOKEN", "")
+                .header("REFRESH-TOKEN", "")
                 .build();
         }
     }
@@ -84,7 +83,7 @@ public class MemberController implements MemberControllerDocs {
 
         return ResponseEntity
             .status(HttpStatus.OK)
-            .header("REFRESH_TOKEN", "")
+            .header("REFRESH-TOKEN", "")
             .build();
     }
 
@@ -117,7 +116,13 @@ public class MemberController implements MemberControllerDocs {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
+    @GetMapping("/addCountOfContract/{memberId}")
+    public ResponseEntity<AddCountContractResponse> addCount(
+        @PathVariable("memberId") Long memberId
+    ) {
+        AddCountContractResponse response = memberService.addCountContract(memberId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     private String makeAuthKey() {
         Random random = new Random();

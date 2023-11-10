@@ -35,6 +35,8 @@ public abstract class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private Integer countOfContract;
+
     public Member update(String pwd) {
         this.pwd = pwd;
         return this;
@@ -49,7 +51,12 @@ public abstract class Member {
         this.pwd = pwd;
         this.role = role;
         this.avgScore = 0L;
-        this.totalContractCount = 0;
+        this.countOfContract = 0;
+    }
+
+    public Integer addCountOfContract() {
+        this.countOfContract++;
+        return this.countOfContract;
     }
 
     public Long updateAvgScore(Long avgScore) {
