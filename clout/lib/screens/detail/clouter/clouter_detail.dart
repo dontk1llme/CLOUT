@@ -161,7 +161,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                 style: TextStyle(fontWeight: FontWeight.w800)),
                           ],
                         ),
-                        if (userController.user == 1)
+                        if (userController.memberType == 1)
                           Row(
                             children: [
                               Text('Like'),
@@ -267,7 +267,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                 ),
               ),
             ),
-            userController.user != 1
+            userController.memberType != 1
                 ? Container()
                 : Positioned(
                     bottom: 20,

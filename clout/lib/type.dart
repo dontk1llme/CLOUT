@@ -1,3 +1,24 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
+class LoginResponse {
+  String? memberRole;
+  int? memberId;
+
+  LoginResponse(this.memberRole, this.memberId);
+  Map<String, dynamic> toJson() => {
+        'memberRole': memberRole,
+        'memberId': memberId,
+      };
+
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    return LoginResponse(
+      json['memberRole'],
+      json['memberId'],
+    );
+  }
+}
+
 class Address {
   String? zipCode;
   String? mainAddress;

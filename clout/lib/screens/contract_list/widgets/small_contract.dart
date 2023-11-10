@@ -60,7 +60,7 @@ class _SmallContractState extends State<SmallContract> {
           ],
         ),
         widget.progress == false
-            ? userController.user == -1
+            ? userController.memberType == -1
                 ? ContractButton(title: '계약서 작성')
                 : ContractButton(title: '계약서 대기')
             : ContractButton(title: '계약서 보기'),
