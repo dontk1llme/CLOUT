@@ -5,15 +5,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
 class ItemApi {
-  getRequest(endPoint, parameter) async {
-    var url = Uri.parse('${baseUrl}${endPoint}${parameter}');
-    print('3️⃣');
-    print(url);
-    print(json.encode(parameter));
-    final response = await http.get(
-      url,
-      headers: {"Content-Type": "application/json"},
-    );
+  Future<String?> getRequest(String endPoint, String parameter,
+      {String? accessToken}) async {
+    var url = Uri.parse('$baseUrl$endPoint$parameter');
+    var headers = {
+      "Content-Type": "application/json",
+      if (accessToken != null) "Authorization": "Bearer $accessToken",
+    };
+
+    var response = await http.get(url, headers: headers);
 
     print('4️⃣');
     print('응답코드 입니다. ${response.statusCode}');

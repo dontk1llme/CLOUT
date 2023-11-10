@@ -13,6 +13,7 @@ import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 
 class ClouterItemBox extends StatefulWidget {
+  final int clouterId;
   final String userId;
   final int avgScore;
   final int minCost;
@@ -23,6 +24,7 @@ class ClouterItemBox extends StatefulWidget {
 
   ClouterItemBox({
     super.key,
+    required this.clouterId,
     required this.userId,
     required this.avgScore,
     required this.minCost,
@@ -53,10 +55,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => ClouterDetail());
-      },
+    return InkWell(
+      onTap: () => Get.toNamed('/clouterdetail', arguments: widget.clouterId),
       child: Container(
         width: screenWidth / 2 - 25,
         padding: EdgeInsets.all(10),
