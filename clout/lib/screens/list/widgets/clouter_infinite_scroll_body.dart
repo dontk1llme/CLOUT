@@ -35,6 +35,7 @@ class ClouterInfiniteScrollBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: ClouterItemBox(
+                    clouterId: controller.data[index].clouterId,
                     userId: controller.data[index].userId,
                     avgScore: controller.data[index].avgScore,
                     minCost: controller.data[index].minCost,
@@ -47,6 +48,7 @@ class ClouterInfiniteScrollBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: ClouterItemBox(
+                    clouterId: controller.data[index].clouterId,
                     userId: controller.data[index].userId,
                     avgScore: controller.data[index].avgScore,
                     minCost: controller.data[index].minCost,

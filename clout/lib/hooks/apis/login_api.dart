@@ -1,12 +1,17 @@
 import 'dart:convert';
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/type.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
 class LoginApi {
+
+  final userController = Get.find<UserController>();
+
   postRequest(apiUrl, parameter) async {
     var url = Uri.parse('${baseUrl}${apiUrl}');
     print(url);
@@ -31,6 +36,9 @@ class LoginApi {
     var loginSuccess = false;
     var authorization = headers['authorization'];
     var refreshToken = headers['refresh_token'];
+
+    
+
     var memberRole =
         LoginResponse.fromJson(jsonDecode(body)).memberRole; //바디에서 받아서 설정해야 함
     var memberId =
@@ -49,6 +57,8 @@ class LoginApi {
         'memberRole': memberRole,
         'memberId': memberId,
       };
+      userController.setAccessToken(authorization);
+      userController.setRefreshToken(refreshToken);
       print(responseData);
       return responseData; //{'clouterId'/'advertiserId' : integer}
     } else if (statusCode != 404 && statusCode != 401) {
