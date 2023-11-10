@@ -7,16 +7,11 @@ import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.QCampaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.Region;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
-import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -87,7 +82,7 @@ public class SearchCampaignListProcessor {
             .offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
 
         for (Campaign campaign : campaigns) {
-            campaign.readTransaction();
+            campaign.initializeCampaign();
         }
 
         return campaigns.stream().map(

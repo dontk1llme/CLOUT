@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.facade.Adve
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignDto;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.EndedCampaignResponse;
@@ -13,6 +14,7 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.response.G
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -160,5 +162,17 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
+    @GetMapping("/ads")
+    public ResponseEntity<List<CampaignResponse>> getCampaignListById(
+        @RequestParam(name = "adId") List<Long> adIdList
+    ) {
+        List<CampaignResponse> result =
+            advertisementFacade.getCampaignListByIdList(adIdList).stream()
+                .map(CampaignResponse::from).collect(Collectors.toList());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 
 }

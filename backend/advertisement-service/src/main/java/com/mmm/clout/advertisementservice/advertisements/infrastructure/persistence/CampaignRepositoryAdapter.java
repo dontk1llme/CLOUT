@@ -50,5 +50,10 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
         return jpaCampaignRepository.findAll(builder, pageable).getContent();
     }
 
+    @Override
+    public List<Campaign> findByIdIn(List<Long> adIdList) {
+        return jpaCampaignRepository.findByIdIn(adIdList);
+    }
+
 
 }
