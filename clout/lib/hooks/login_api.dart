@@ -23,7 +23,7 @@ class LoginApi {
     print('로그인 response 헤더');
     print(headers);
 
-    var body = utf8.decode(response.bodyBytes); //여기로 클라우터인지 광고주인지 넘어와야됨. 승구형해줘
+    var body = utf8.decode(response.bodyBytes); 
     print('로그인 response 바디');
     print(jsonDecode(body));
     print(body);

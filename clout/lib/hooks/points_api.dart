@@ -4,8 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
-class PointsAPI {
-  getRequest(apiUrl, memberId, authorization) async {
+class PointsApi {
+  static getRequest(apiUrl, memberId, authorization) async {
     var url = Uri.parse('${baseUrl}${apiUrl}?memberId=${memberId}');
     print(url);
     final response = await http.get(
@@ -16,8 +16,8 @@ class PointsAPI {
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('포인트');
-      print(utf8.decode(response.bodyBytes));
+      // print('포인트');
+      // print(utf8.decode(response.bodyBytes));
       return utf8.decode(response.bodyBytes);
     } else {
       print('포인트 들어왔는데 에러');
