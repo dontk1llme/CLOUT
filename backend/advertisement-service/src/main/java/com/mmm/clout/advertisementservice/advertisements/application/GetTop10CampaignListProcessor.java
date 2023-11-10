@@ -20,7 +20,7 @@ public class GetTop10CampaignListProcessor {
         List<Campaign> top10List = campaignRepository.getTop10List();
         return top10List.stream().map(
             campaign -> new CampaignReader(
-                campaign.readTransaction(),
+                campaign.initializeCampaign(),
                 memberProvider.getAdvertiserInfoByMemberId(campaign.getAdvertiserId())
             )
         ).collect(Collectors.toList());
