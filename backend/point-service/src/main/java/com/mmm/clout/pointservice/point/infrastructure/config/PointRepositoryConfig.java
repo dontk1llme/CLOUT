@@ -29,7 +29,8 @@ public class PointRepositoryConfig {
         JpaPointTransactionRepository jpaPointTransactionRepository
     ) {
         return new PointTransactionRepositoryAdapter(
-            jpaPointTransactionRepository
+            jpaPointTransactionRepository,
+            jpaQueryFactory()
         );
     }
 
