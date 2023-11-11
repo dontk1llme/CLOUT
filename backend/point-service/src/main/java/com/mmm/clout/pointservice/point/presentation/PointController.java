@@ -6,16 +6,17 @@ import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import com.mmm.clout.pointservice.point.presentation.request.ChargePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.ReducePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.WithdrawPointRequest;
+import com.mmm.clout.pointservice.point.presentation.request.AddPointRequest;
+import com.mmm.clout.pointservice.point.presentation.response.AddPointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.ChargePointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.CustomPageResponse;
 import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.PointTransactionResponse;
-import java.util.List;
+import com.mmm.clout.pointservice.point.presentation.response.ReducePointResponse;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,20 +42,31 @@ public class PointController implements PointControllerDocs {
         @Valid @RequestBody ChargePointRequest request
     ) {
         ChargePointResponse result = ChargePointResponse.from(
-            pointFacade.charge(request.toCommand()),
-            request.getChargePoint());
+            pointFacade.charge(request.toCommand())
+        );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
-     * 차감 (포인트 사용)
+     * 포인트 차감/사용 (-)
      */
     @PostMapping("/reduce")
-    public ResponseEntity<Void> reduce(
+    public ResponseEntity<ReducePointResponse> reduce(
         @Valid @RequestBody ReducePointRequest request
     ) {
-        pointFacade.reduce(request.toCommand());
-        return new ResponseEntity<>(HttpStatus.OK);
+        ReducePointResponse result = ReducePointResponse.from(pointFacade.reduce(request.toCommand()));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * 포인트 지급 (+)
+     */
+    @PostMapping("/add")
+    public ResponseEntity<AddPointResponse> add(
+        @Valid @RequestBody AddPointRequest request
+    ) {
+        AddPointResponse result = AddPointResponse.from(pointFacade.add(request.toCommand()));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
@@ -64,7 +76,7 @@ public class PointController implements PointControllerDocs {
     public ResponseEntity<Void> withdraw(
         @Valid @RequestBody WithdrawPointRequest request
     ) {
-        pointFacade.withdraw(request.toCommand());
+        pointFacade.withdrawal(request.toCommand());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

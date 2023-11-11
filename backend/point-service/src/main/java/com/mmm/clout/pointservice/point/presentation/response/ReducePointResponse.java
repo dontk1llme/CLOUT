@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ChargePointResponse {
+public class ReducePointResponse {
 
     @Schema(description = "포인트 고유 식별자(id)")
     private Long pointId;
@@ -16,15 +16,15 @@ public class ChargePointResponse {
     @Schema(description = "멤버 고유 식별자(id)")
     private Long memberId;
 
-    @Schema(description = "충전한 포인트")
-    private Long chargingPoint;
+    @Schema(description = "사용/차감한 포인트")
+    private Long reducedPoint;
 
     @Schema(description = "현재 멤버 총 포인트")
     private Long totalPoint;
 
 
-    public static ChargePointResponse from(PointTransaction pts) {
-        return new ChargePointResponse(
+    public static ReducePointResponse from(PointTransaction pts) {
+        return new ReducePointResponse(
             pts.getPoint().getId(),
             pts.getPoint().getMemberId(),
             pts.getAmount(),

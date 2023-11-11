@@ -7,9 +7,8 @@ import java.util.List;
 
 public interface PointTransactionRepository {
 
-    void save(PointTransaction chargedPtx);
+    PointTransaction save(PointTransaction chargedPtx);
 
     List<PointTransaction> findByPointAndPointCategory(Point point, PointCategory category);
 
-//    List<PointTransaction> searchByCategory()
 }
