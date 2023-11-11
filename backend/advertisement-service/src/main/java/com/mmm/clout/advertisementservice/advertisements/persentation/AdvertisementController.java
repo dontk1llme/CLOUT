@@ -1,7 +1,8 @@
 package com.mmm.clout.advertisementservice.advertisements.persentation;
 
+import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignDto;
+import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignResponse;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -140,27 +142,37 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<CampaignDto>> searchAndReadCampaignList(
+    public ResponseEntity<List<Campaign>> searchAndReadCampaignList(
         @RequestParam(defaultValue = "0") Integer page,
         @RequestParam(defaultValue = "10") Integer size,
-        @RequestParam(defaultValue = "a") List<String> category,
-        @RequestParam(defaultValue = "a") List<String> platform,
+        @RequestParam(defaultValue = "ALL") List<String> category,
+        @RequestParam(defaultValue = "INSTAGRAM") List<String> platform,
         @RequestParam(defaultValue = "0") Integer minAge,
         @RequestParam(defaultValue = "100") Integer maxAge,
         @RequestParam(defaultValue = "0") Integer minFollower,
         @RequestParam(defaultValue = "0") Integer minPrice,
         @RequestParam(defaultValue = "1000000000") Integer maxPrice,
-        @RequestParam(defaultValue = "a") List<String> region,
+        @RequestParam(defaultValue = "ALL") List<String> region,
         @RequestParam String keyword,
         @RequestParam(defaultValue = "P") String sortKey
     ) {
 
-        Pageable pageable = PageRequest.of(page, size);
-        List<CampaignDto> result = advertisementFacade.search(
-            pageable, category, platform, minAge, maxAge, minFollower, minPrice, maxPrice, region,
-            keyword, sortKey
+        Page<Campaign> result = advertisementFacade.search(
+            PageRequest.of(page, size),
+            SearchCondition.from(
+                category,
+                platform,
+                minAge,
+                maxAge,
+                minFollower,
+                minPrice,
+                maxPrice,
+                region,
+                keyword,
+                sortKey
+            )
         );
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 
