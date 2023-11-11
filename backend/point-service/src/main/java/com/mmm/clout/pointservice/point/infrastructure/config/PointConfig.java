@@ -1,10 +1,12 @@
 package com.mmm.clout.pointservice.point.infrastructure.config;
 
+import com.mmm.clout.pointservice.point.application.AddPointProcessor;
 import com.mmm.clout.pointservice.point.application.ChargePointProcessor;
 import com.mmm.clout.pointservice.point.application.GetMemberPointProcessor;
 import com.mmm.clout.pointservice.point.application.GetTransactionListByCategoryProcessor;
 import com.mmm.clout.pointservice.point.application.ReducePointProcessor;
 import com.mmm.clout.pointservice.point.application.WithdrawPointProcessor;
+import com.mmm.clout.pointservice.point.domain.PointCategory;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
 import com.mmm.clout.pointservice.point.domain.repository.PointTransactionRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -58,6 +60,17 @@ public class PointConfig {
         return new GetTransactionListByCategoryProcessor(
             pointRepository,
             queryFactory
+        );
+    }
+
+    @Bean
+    public AddPointProcessor addPointProcessor(
+        PointRepository pointRepository,
+        PointTransactionRepository pointTransactionRepository
+    ) {
+        return new AddPointProcessor(
+            pointRepository,
+            pointTransactionRepository
         );
     }
 }

@@ -1,7 +1,6 @@
 package com.mmm.clout.pointservice.point.application;
 
 import com.mmm.clout.pointservice.point.application.command.ChargeCommand;
-import com.mmm.clout.pointservice.point.domain.PaymentType;
 import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
@@ -22,7 +21,7 @@ public class ChargePointProcessor {
         Point point = pointRepository.findByMemberId(command.getMemberId()).map(
             existingPoint -> {
                 // 기존 엔티티가 존재하는 경우, 포인트를 업데이트
-                existingPoint.addPoints(command.getChargePoint());
+                existingPoint.add(command.getChargePoint());
                 return existingPoint;
             }).orElse(
             Point.create(command.getMemberId(), command.getChargePoint())

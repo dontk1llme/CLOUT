@@ -1,6 +1,6 @@
 package com.mmm.clout.pointservice.point.presentation.request;
 
-import com.mmm.clout.pointservice.point.application.command.ReduceCommand;
+import com.mmm.clout.pointservice.point.application.command.AddPointCommand;
 import com.mmm.clout.pointservice.point.domain.PointCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotBlank;
@@ -10,15 +10,15 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ReducePointRequest {
+public class AddPointRequest {
 
     @Schema(description = "멤버 고유 식별자 (id)")
     @NotNull
     private Long memberId;
 
-    @Schema(description = "차감/사용할 포인트")
+    @Schema(description = "지급할 포인트")
     @NotNull
-    private Long reducingPoint;
+    private Long addingPoint;
 
     @Schema(description = "포인트 종류 (계약, 계약 취소, 캠페인 등록)")
     @NotBlank
@@ -26,11 +26,10 @@ public class ReducePointRequest {
 
     @Schema(description = "추가 메시지: 계약, 계약 취소일 경우 거래 상대방 표시")
     private String counterParty;
-
-    public ReduceCommand toCommand() {
-        return new ReduceCommand(
+    public AddPointCommand toCommand() {
+        return new AddPointCommand(
             memberId,
-            reducingPoint,
+            addingPoint,
             PointCategory.valueOf(pointCategory),
             counterParty
         );

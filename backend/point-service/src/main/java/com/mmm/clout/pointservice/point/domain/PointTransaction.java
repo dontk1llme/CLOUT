@@ -68,7 +68,7 @@ public class PointTransaction extends BaseEntity {
         );
     }
 
-    public static PointTransaction usePoint(
+    public static PointTransaction reduce(
         Point point,
         Long reducingPoint,
         PointCategory pointCategory,
@@ -81,5 +81,15 @@ public class PointTransaction extends BaseEntity {
             return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory, counterParty);
         }
         return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory, pointCategory.getDescription());
+    }
+
+    public static PointTransaction add(Point point, Long addingPoint, PointCategory pointCategory, String counterParty) {
+        // 계약일 경우, 거래 상대방 표시
+        if (pointCategory == PointCategory.CONTRACT
+            || pointCategory == PointCategory.CANCEL_CONTRACT
+        ) {
+            return new PointTransaction(point, addingPoint, PointStatus.PLUS, pointCategory, counterParty);
+        }
+        return new PointTransaction(point, addingPoint, PointStatus.PLUS, pointCategory, pointCategory.getDescription());
     }
 }
