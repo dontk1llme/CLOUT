@@ -6,6 +6,8 @@ import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import com.mmm.clout.pointservice.point.presentation.request.ChargePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.ReducePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.WithdrawPointRequest;
+import com.mmm.clout.pointservice.point.presentation.request.AddPointRequest;
+import com.mmm.clout.pointservice.point.presentation.response.AddPointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.ChargePointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.CustomPageResponse;
 import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
@@ -46,13 +48,24 @@ public class PointController implements PointControllerDocs {
     }
 
     /**
-     * 차감 (포인트 사용)
+     * 포인트 차감/사용 (-)
      */
     @PostMapping("/reduce")
     public ResponseEntity<ReducePointResponse> reduce(
         @Valid @RequestBody ReducePointRequest request
     ) {
         ReducePointResponse result = ReducePointResponse.from(pointFacade.reduce(request.toCommand()));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * 포인트 지급 (+)
+     */
+    @PostMapping("/add")
+    public ResponseEntity<AddPointResponse> add(
+        @Valid @RequestBody AddPointRequest request
+    ) {
+        AddPointResponse result = AddPointResponse.from(pointFacade.add(request.toCommand()));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -1,10 +1,12 @@
 package com.mmm.clout.pointservice.point.application.facade;
 
+import com.mmm.clout.pointservice.point.application.AddPointProcessor;
 import com.mmm.clout.pointservice.point.application.ChargePointProcessor;
 import com.mmm.clout.pointservice.point.application.GetMemberPointProcessor;
 import com.mmm.clout.pointservice.point.application.GetTransactionListByCategoryProcessor;
 import com.mmm.clout.pointservice.point.application.ReducePointProcessor;
 import com.mmm.clout.pointservice.point.application.WithdrawPointProcessor;
+import com.mmm.clout.pointservice.point.application.command.AddPointCommand;
 import com.mmm.clout.pointservice.point.application.command.ChargeCommand;
 import com.mmm.clout.pointservice.point.application.command.ReduceCommand;
 import com.mmm.clout.pointservice.point.application.command.WithdrawCommand;
@@ -24,6 +26,7 @@ public class PointFacade {
     private final WithdrawPointProcessor withdrawPointProcessor;
     private final GetMemberPointProcessor getMemberPointProcessor;
     private final GetTransactionListByCategoryProcessor getTransactionListByCategoryProcessor;
+    private final AddPointProcessor addPointProcessor;
 
     public PointTransaction charge(ChargeCommand command) {
         return chargePointProcessor.execute(command);
@@ -47,5 +50,9 @@ public class PointFacade {
         PageRequest pageable
     ) {
         return getTransactionListByCategoryProcessor.execute(memberId, category, pageable);
+    }
+
+    public PointTransaction add(AddPointCommand command) {
+        return addPointProcessor.execute(command);
     }
 }
