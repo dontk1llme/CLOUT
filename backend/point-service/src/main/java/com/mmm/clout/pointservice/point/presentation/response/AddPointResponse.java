@@ -12,7 +12,7 @@ public class AddPointResponse {
 
     private Long memberId;
 
-    private Long reducedPoint;
+    private Long addedPoint;
 
     private Long totalPoint;
 

@@ -20,7 +20,7 @@ public class ReducePointProcessor {
         Point point = pointRepository.findByMemberId(command.getMemberId())
             .orElseGet(() -> pointRepository.save(Point.create(command.getMemberId(), 0L)));
         point.reduce(command.getReducingPoint());
-        PointTransaction usedPointTsx = PointTransaction.reduce(point, command.getMemberId(), command.getPointCategory(), command.getCounterParty());
+        PointTransaction usedPointTsx = PointTransaction.reduce(point, command.getReducingPoint(), command.getPointCategory(), command.getCounterParty());
         return pointTransactionRepository.save(usedPointTsx);
     }
 }
