@@ -10,6 +10,7 @@ import com.mmm.clout.pointservice.point.presentation.response.ChargePointRespons
 import com.mmm.clout.pointservice.point.presentation.response.CustomPageResponse;
 import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.PointTransactionResponse;
+import com.mmm.clout.pointservice.point.presentation.response.ReducePointResponse;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,8 @@ public class PointController implements PointControllerDocs {
         @Valid @RequestBody ChargePointRequest request
     ) {
         ChargePointResponse result = ChargePointResponse.from(
-            pointFacade.charge(request.toCommand()),
-            request.getChargePoint());
+            pointFacade.charge(request.toCommand())
+        );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -48,11 +49,11 @@ public class PointController implements PointControllerDocs {
      * 차감 (포인트 사용)
      */
     @PostMapping("/reduce")
-    public ResponseEntity<Void> reduce(
+    public ResponseEntity<ReducePointResponse> reduce(
         @Valid @RequestBody ReducePointRequest request
     ) {
-        pointFacade.reduce(request.toCommand());
-        return new ResponseEntity<>(HttpStatus.OK);
+        ReducePointResponse result = ReducePointResponse.from(pointFacade.reduce(request.toCommand()));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**

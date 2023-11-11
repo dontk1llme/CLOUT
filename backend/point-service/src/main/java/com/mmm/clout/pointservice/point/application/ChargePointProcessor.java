@@ -1,5 +1,6 @@
 package com.mmm.clout.pointservice.point.application;
 
+import com.mmm.clout.pointservice.point.application.command.ChargeCommand;
 import com.mmm.clout.pointservice.point.domain.PaymentType;
 import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
@@ -17,20 +18,19 @@ public class ChargePointProcessor {
     // TODO 멤버에 들어가있는 총 토탈포인트 변경 & 결제
 
     @Transactional
-    public Point execute(Long memberId, Long chargePoint, PaymentType paymentType) {
-        Point point = pointRepository.findByMemberId(memberId).map(
+    public PointTransaction execute(ChargeCommand command) {
+        Point point = pointRepository.findByMemberId(command.getMemberId()).map(
             existingPoint -> {
                 // 기존 엔티티가 존재하는 경우, 포인트를 업데이트
-                existingPoint.addPoints(chargePoint);
+                existingPoint.addPoints(command.getChargePoint());
                 return existingPoint;
             }).orElse(
-            Point.create(memberId, chargePoint)
+            Point.create(command.getMemberId(), command.getChargePoint())
         );
 
         // 변경된 엔티티를 저장 or 업데이트
         Point savedPoint = pointRepository.save(point);
-        PointTransaction chargedPtx = PointTransaction.charge(savedPoint, chargePoint);
-        pointTransactionRepository.save(chargedPtx);
-        return savedPoint;
+        PointTransaction chargedPtx = PointTransaction.charge(savedPoint, command.getChargePoint());
+        return pointTransactionRepository.save(chargedPtx);
     }
 }
