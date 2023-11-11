@@ -47,11 +47,11 @@ public class Point extends BaseEntity {
         return new Point(memberId, point);
     }
 
-    public void addPoints(Long chargePoint) {
-        this.totalPoint += chargePoint;
+    public void add(Long point) {
+        this.totalPoint += point;
     }
 
-    public void reducePoint(Long reducingPoint) {
+    public void reduce(Long reducingPoint) {
         if (this.totalPoint - reducingPoint < 0) {
             throw new LackOfPointException();
         }
