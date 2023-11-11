@@ -25,12 +25,12 @@ public class PointFacade {
     private final GetMemberPointProcessor getMemberPointProcessor;
     private final GetTransactionListByCategoryProcessor getTransactionListByCategoryProcessor;
 
-    public Point charge(ChargeCommand command) {
-        return chargePointProcessor.execute(command.getMemberId(), command.getChargePoint(),  command.getPaymentType());
+    public PointTransaction charge(ChargeCommand command) {
+        return chargePointProcessor.execute(command);
     }
 
-    public void reduce(ReduceCommand command) {
-        reducePointProcessor.execute(command.getMemberId(), command.getReducingPoint(), command.getPointCategory());
+    public PointTransaction reduce(ReduceCommand command) {
+        return reducePointProcessor.execute(command);
     }
 
     public void withdrawal(WithdrawCommand command) {

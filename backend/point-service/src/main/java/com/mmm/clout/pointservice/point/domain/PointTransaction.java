@@ -25,7 +25,8 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 public class PointTransaction extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "point_transaction_id")
     private Long id;
 
@@ -70,8 +71,15 @@ public class PointTransaction extends BaseEntity {
     public static PointTransaction usePoint(
         Point point,
         Long reducingPoint,
-        PointCategory pointCategory
+        PointCategory pointCategory,
+        String counterParty
     ) {
+        // 계약일 경우, 거래 상대방 표시
+        if (pointCategory == PointCategory.CONTRACT
+            || pointCategory == PointCategory.CANCEL_CONTRACT
+        ) {
+            return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory, counterParty);
+        }
         return new PointTransaction(point, reducingPoint, PointStatus.MINUS, pointCategory, pointCategory.getDescription());
     }
 }
