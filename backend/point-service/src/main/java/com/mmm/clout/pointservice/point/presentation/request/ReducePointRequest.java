@@ -20,7 +20,7 @@ public class ReducePointRequest {
     @NotNull
     private Long reducingPoint;
 
-    @Schema(description = "포인트 종류 (계약, 계약 취소, 캠페인 등록)")
+    @Schema(description = "포인트 종류 (CONTRACT, CANCEL_CONTRACT, CREATE_CAMPAIGN)")
     @NotBlank
     private String pointCategory;
 

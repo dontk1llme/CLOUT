@@ -20,7 +20,7 @@ public class AddPointRequest {
     @NotNull
     private Long addingPoint;
 
-    @Schema(description = "포인트 종류 (계약, 계약 취소, 캠페인 등록)")
+    @Schema(description = "포인트 종류 (CONTRACT, CANCEL_CONTRACT)")
     @NotBlank
     private String pointCategory;
 
