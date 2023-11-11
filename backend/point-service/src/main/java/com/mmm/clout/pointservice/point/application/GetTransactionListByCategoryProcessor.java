@@ -25,55 +25,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class GetTransactionListByCategoryProcessor {
 
     private final PointRepository pointRepository;
-    private final JPAQueryFactory queryFactory;
+    private final PointTransactionRepository pointTransactionRepository;
 
     @Transactional
     public Page<PointTransaction> execute(Long memberId, String category, PageRequest pageable) {
+
         Point point = pointRepository.findByMemberId(memberId)
             .orElseGet(() -> pointRepository.save(Point.create(memberId, 0L)));
 
-        List<PointTransaction> content = queryFactory.query()
-            .select(pointTransaction)
-            .from(pointTransaction)
-            .where(
-                pointEq(point).and(categoryEq(category))
-            )
-            .offset(pageable.getOffset())
-            .limit(pageable.getPageSize())
-            .fetch();
-
-        JPAQuery<PointTransaction> countQuery = getCountQuery(category, point);
-
-        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
+        return pointTransactionRepository.searchByCategory(point, category, pageable);
     }
 
-    private JPAQuery<PointTransaction> getCountQuery(String category, Point point) {
-        JPAQuery<PointTransaction> countQuery = queryFactory.query()
-            .select(pointTransaction)
-            .from(pointTransaction)
-            .where(
-                pointEq(point).and(categoryEq(category))
-            );
-        return countQuery;
-    }
 
-    private BooleanExpression pointEq(Point point) {
-        return pointTransaction.point.eq(point);
-    }
-
-    private BooleanExpression categoryEq(String category) {
-        if (!hasText(category)) throw new InvalidCategoryException();
-        switch (category) {
-            case "ALL":
-                return null; // 모든 카테고리
-            case "DEAL":  // 거래 카테고리 - 계약, 캠페인 등록
-                return pointTransaction.pointCategory.eq(PointCategory.CONTRACT)
-                    .or(pointTransaction.pointCategory.eq(PointCategory.CREATE_CAMPAIGN));
-            case "CHARGE":  // 충전 카테고리
-                return pointTransaction.pointCategory.eq(PointCategory.CHARGE);
-            case "WITHDRAWAL":  // 출금 카테고리
-                return pointTransaction.pointCategory.eq(PointCategory.WITHDRAWAL);
-            default: throw new InvalidCategoryException();
-        }
-    }
 }

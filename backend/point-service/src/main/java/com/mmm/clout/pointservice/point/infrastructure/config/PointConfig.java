@@ -55,11 +55,11 @@ public class PointConfig {
     @Bean
     public GetTransactionListByCategoryProcessor getTransactionListByCategoryProcessor(
         PointRepository pointRepository,
-        JPAQueryFactory queryFactory
+        PointTransactionRepository pointTransactionRepository
     ) {
         return new GetTransactionListByCategoryProcessor(
             pointRepository,
-            queryFactory
+            pointTransactionRepository
         );
     }
 
