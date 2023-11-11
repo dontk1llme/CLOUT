@@ -1,10 +1,12 @@
 package com.mmm.clout.advertisementservice.advertisements.domain.repository;
 
+import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.QCampaign;
 import com.querydsl.core.BooleanBuilder;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CampaignRepository {
@@ -20,4 +22,7 @@ public interface CampaignRepository {
     List<Campaign> findAllByCondition(BooleanBuilder builder, Pageable pageable);
 
     List<Campaign> findByIdIn(List<Long> adIdList);
+
+    Page<Campaign> search(SearchCondition condition, Pageable pageable);
+
 }

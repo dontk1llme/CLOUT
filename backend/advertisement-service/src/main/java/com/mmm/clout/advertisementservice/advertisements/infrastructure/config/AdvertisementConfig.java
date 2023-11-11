@@ -84,12 +84,10 @@ public class AdvertisementConfig {
 
     @Bean
     public SearchCampaignListProcessor searchCampaignListProcessor(
-        @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
-        JPAQueryFactory jpaQueryFactory
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
     ) {
         return new SearchCampaignListProcessor(
-            campaignRepository,
-            jpaQueryFactory
+            campaignRepository
         );
     }
 
