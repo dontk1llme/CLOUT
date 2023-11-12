@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AddPointRequest {
+public class AddAdvertiserPointRequest {
 
     private Long memberId;
 
@@ -18,8 +18,8 @@ public class AddPointRequest {
 
     private String counterParty;
 
-    public AddPointRequest(Contract contract) {
-        this.memberId = contract.getClouterInfo().getClouterId();
+    public AddAdvertiserPointRequest(Contract contract) {
+        this.memberId = contract.getAdvertiserInfo().getAdvertiserId();
         this.addingPoint = contract.getPrice();
         this.pointCategory = "CONTRACT";
         this.counterParty = contract.getClouterInfo().getClouterName();
