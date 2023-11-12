@@ -1,9 +1,6 @@
 package com.mmm.clout.contractservice.contract.infrastructure.persistence.feign;
 
-import com.mmm.clout.contractservice.contract.domain.provider.dto.AddPointInfo;
-import com.mmm.clout.contractservice.contract.domain.provider.dto.AddPointRequest;
-import com.mmm.clout.contractservice.contract.domain.provider.dto.ReducePointInfo;
-import com.mmm.clout.contractservice.contract.domain.provider.dto.ReducePointRequest;
+import com.mmm.clout.contractservice.contract.domain.provider.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +18,11 @@ public interface PointServiceFeignClient {
 
     @PostMapping("/v1/points/add")
     public ResponseEntity<AddPointInfo> add(
-            @Valid @RequestBody AddPointRequest request
+            @Valid @RequestBody AddClouterPointRequest request
+    );
+
+    @PostMapping("/v1/points/add")
+    public ResponseEntity<AddPointInfo> add(
+            @Valid @RequestBody AddAdvertiserPointRequest request
     );
 }

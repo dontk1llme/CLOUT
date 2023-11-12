@@ -4,7 +4,7 @@ import com.mmm.clout.contractservice.contract.domain.Contract;
 import com.mmm.clout.contractservice.contract.domain.exception.NotFoundContractException;
 import com.mmm.clout.contractservice.contract.domain.provider.MemberProvider;
 import com.mmm.clout.contractservice.contract.domain.provider.PointProvider;
-import com.mmm.clout.contractservice.contract.domain.provider.dto.AddPointRequest;
+import com.mmm.clout.contractservice.contract.domain.provider.dto.AddClouterPointRequest;
 import com.mmm.clout.contractservice.contract.domain.repository.ContractRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ public class UpdateStateContractProcessor {
     }
 
     private void addClouterPoint(Contract contract) {
-        AddPointRequest request = new AddPointRequest(contract);
+        AddClouterPointRequest request = new AddClouterPointRequest(contract);
         pointProvider.add(request);
     }
 }
