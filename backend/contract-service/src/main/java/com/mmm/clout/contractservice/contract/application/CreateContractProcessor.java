@@ -2,6 +2,7 @@ package com.mmm.clout.contractservice.contract.application;
 
 import com.mmm.clout.contractservice.contract.application.command.CreateContractCommand;
 import com.mmm.clout.contractservice.contract.domain.Contract;
+import com.mmm.clout.contractservice.contract.domain.exception.DuplicateContractException;
 import com.mmm.clout.contractservice.contract.domain.info.SelectAdrInfo;
 import com.mmm.clout.contractservice.contract.domain.info.SelectClrInfo;
 import com.mmm.clout.contractservice.contract.domain.provider.MemberProvider;
@@ -25,6 +26,13 @@ public class CreateContractProcessor {
 
         SelectClrInfo clouter = memberProvider.selectClouter(command.getClouterId()).getBody();
         SelectAdrInfo advertiser = memberProvider.selectAdvertiser(command.getAdvertiserId()).getBody();
+
+        Contract findContract = contractRepository.findByAdvertiserInfo_AdvertiserIdAndClouterInfo_ClouterId(
+                advertiser.getAdvertiserId(),
+                clouter.getClouterId()
+        ).orElse(null);
+
+        if (findContract != null) throw new DuplicateContractException();
 
         Contract contract = command.toEntity(clouter, advertiser);
 
