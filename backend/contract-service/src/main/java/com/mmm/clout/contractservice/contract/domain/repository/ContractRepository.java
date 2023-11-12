@@ -16,4 +16,9 @@ public interface ContractRepository {
     List<Contract> findAllByClouterInfoClouterId(Long clouterId);
 
     List<Contract> findAllByAdvertiserInfoAdvertiserId(Long advertiserId);
+
+    public Optional<Contract> findByAdvertiserInfo_AdvertiserIdAndClouterInfo_ClouterId(
+            Long advertiserId,
+            Long clouterId
+    );
 }

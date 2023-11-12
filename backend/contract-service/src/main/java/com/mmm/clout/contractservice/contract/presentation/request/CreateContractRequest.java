@@ -32,13 +32,14 @@ public class CreateContractRequest {
     @NotBlank
     private String contents;
 
+    @Schema(description = "광고주 아이디")
+    @NotNull
+    private Long advertiserId;
+
     @Schema(description = "클라우터 아이디")
-    @NotBlank
+    @NotNull
     private Long clouterId;
 
-    @Schema(description = "광고주 아이디")
-    @NotBlank
-    private Long advertiserId;
 
     public CreateContractCommand toCommand() {
            return new CreateContractCommand(

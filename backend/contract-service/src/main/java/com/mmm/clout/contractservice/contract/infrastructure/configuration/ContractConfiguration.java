@@ -34,8 +34,11 @@ public class ContractConfiguration {
     }
 
     @Bean
-    public DeleteContractProcessor deleteContractProcessor(ContractRepository contractRepository) {
-        return new DeleteContractProcessor(contractRepository);
+    public DeleteContractProcessor deleteContractProcessor(
+            ContractRepository contractRepository,
+            PointProvider pointProvider
+    ) {
+        return new DeleteContractProcessor(contractRepository, pointProvider);
     }
 
     @Bean
