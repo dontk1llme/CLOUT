@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public interface ContractControllerDocs {
 
 
-    @Operation(summary = "계약 생성",
+    @Operation(summary = "계약 생성, 광고주가 클라우터를 선택함",
             responses =
             @ApiResponse(responseCode = "201", description = "생성된 계약 id 리턴",
                     content =
@@ -44,7 +44,7 @@ public interface ContractControllerDocs {
             @RequestBody UpdateRRNContractRequest request
     );
 
-    @Operation(summary = "계약 상태 확정",
+    @Operation(summary = "계약 상태 확정, 클라우터가 싸인하고 확정 지음",
             responses =
             @ApiResponse(responseCode = "200", description = "확정된 계약 id 리턴",
                     content =
@@ -56,7 +56,7 @@ public interface ContractControllerDocs {
             @PathVariable("contractId") Long id
     );
 
-    @Operation(summary = "계약 취소/삭제",
+    @Operation(summary = "계약 취소/삭제, 광고주가 계약 클라우터 선택 취소",
             responses =
             @ApiResponse(responseCode = "200", description = "삭제된 계약 id 리턴",
                     content =
