@@ -2,6 +2,7 @@ package com.mmm.clout.contractservice.contract.infrastructure.configuration;
 
 import com.mmm.clout.contractservice.contract.application.*;
 import com.mmm.clout.contractservice.contract.domain.provider.MemberProvider;
+import com.mmm.clout.contractservice.contract.domain.provider.PointProvider;
 import com.mmm.clout.contractservice.contract.domain.repository.ContractRepository;
 import com.mmm.clout.contractservice.contract.infrastructure.persistence.feign.MemberServiceFeignClient;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +22,12 @@ public class ContractConfiguration {
     }
 
     @Bean
-    public UpdateStateContractProcessor updateStateContractProcessor(ContractRepository contractRepository) {
-        return new UpdateStateContractProcessor(contractRepository);
+    public UpdateStateContractProcessor updateStateContractProcessor(
+            ContractRepository contractRepository,
+            MemberProvider memberProvider,
+            PointProvider pointProvider
+    ) {
+        return new UpdateStateContractProcessor(contractRepository, memberProvider, pointProvider);
     }
 
     @Bean
