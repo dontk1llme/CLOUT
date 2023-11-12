@@ -27,13 +27,6 @@ public class CreateContractProcessor {
         SelectClrInfo clouter = memberProvider.selectClouter(command.getClouterId()).getBody();
         SelectAdrInfo advertiser = memberProvider.selectAdvertiser(command.getAdvertiserId()).getBody();
 
-        Contract findContract = contractRepository.findByAdvertiserInfo_AdvertiserIdAndClouterInfo_ClouterId(
-                advertiser.getAdvertiserId(),
-                clouter.getClouterId()
-        ).orElse(null);
-
-        if (findContract != null) throw new DuplicateContractException();
-
         Contract contract = command.toEntity(clouter, advertiser);
 
         reduceAdvertiser(advertiser, clouter, contract.getPrice());
