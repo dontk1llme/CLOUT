@@ -1,9 +1,6 @@
 package com.mmm.clout.memberservice.clouter.application.facade;
 
-import com.mmm.clout.memberservice.clouter.application.CreateClouterProcessor;
-import com.mmm.clout.memberservice.clouter.application.SelectClouterProcessor;
-import com.mmm.clout.memberservice.clouter.application.SelectTop10ClouterProcessor;
-import com.mmm.clout.memberservice.clouter.application.UpdateClouterProcessor;
+import com.mmm.clout.memberservice.clouter.application.*;
 import com.mmm.clout.memberservice.clouter.application.command.CreateClrCommand;
 import com.mmm.clout.memberservice.clouter.application.command.UpdateClrCommand;
 import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
@@ -22,6 +19,7 @@ public class ClouterFacade {
     private final CreateClouterProcessor createClouterProcessor;
     private final UpdateClouterProcessor updateClouterProcessor;
     private final SelectClouterProcessor selectClouterProcessor;
+    private final SelectClouterForContractProcessor selectClouterForContractProcessor;
     private final SelectTop10ClouterProcessor selectTop10ClouterProcessor;
 
     public Clouter create(CreateClrCommand command) {
@@ -31,6 +29,8 @@ public class ClouterFacade {
     public Clouter update(UpdateClrCommand command) { return updateClouterProcessor.execute(command); }
 
     public ClouterReader select(Long clouterId) { return selectClouterProcessor.execute(clouterId); }
+
+    public ClouterReader selectForContract(Long clouterId) { return selectClouterForContractProcessor.execute(clouterId); }
 
     public List<ClouterReader> selectTop10() {
         return selectTop10ClouterProcessor.execute();

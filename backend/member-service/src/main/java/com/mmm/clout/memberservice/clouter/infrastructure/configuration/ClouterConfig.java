@@ -1,9 +1,6 @@
 package com.mmm.clout.memberservice.clouter.infrastructure.configuration;
 
-import com.mmm.clout.memberservice.clouter.application.CreateClouterProcessor;
-import com.mmm.clout.memberservice.clouter.application.SelectClouterProcessor;
-import com.mmm.clout.memberservice.clouter.application.SelectTop10ClouterProcessor;
-import com.mmm.clout.memberservice.clouter.application.UpdateClouterProcessor;
+import com.mmm.clout.memberservice.clouter.application.*;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.memberservice.star.domain.repository.StarRepository;
@@ -13,6 +10,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class ClouterConfig {
+
+    @Bean
+    public SelectClouterForContractProcessor selectClouterForContractProcessor(
+        ClouterRepository clouterRepository
+    ) {
+        return new SelectClouterForContractProcessor(clouterRepository);
+    }
 
     @Bean
     public SelectTop10ClouterProcessor selectTop10ClouterProcessor(
