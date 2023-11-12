@@ -38,4 +38,17 @@ public class ContractRepositoryAdapter implements ContractRepository {
     public List<Contract> findAllByAdvertiserInfoAdvertiserId(Long advertiserId) {
         return JpaContractRepository.findAllByAdvertiserInfo_AdvertiserId(advertiserId);
     }
+
+    @Override
+    public Optional<Contract> findByAdvertiserInfo_AdvertiserIdAndClouterInfo_ClouterId(
+            Long advertiserId,
+            Long clouterId
+            ) {
+        return JpaContractRepository.findByAdvertiserInfo_AdvertiserIdAndClouterInfo_ClouterId(
+                advertiserId,
+                clouterId
+                );
+    }
+
+
 }
