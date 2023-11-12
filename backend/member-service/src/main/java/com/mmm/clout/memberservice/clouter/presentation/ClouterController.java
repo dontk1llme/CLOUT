@@ -52,6 +52,16 @@ public class ClouterController implements ClouterControllerDocs {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/{clouterId}/contract")
+    public ResponseEntity<SelectClrResponse> selectClouterForContract(
+            @PathVariable("clouterId") Long clouterId
+    ) {
+        SelectClrResponse result = SelectClrResponse.from(
+                clouterFacade.selectForContract(clouterId)
+        );
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @GetMapping("/top10")
     public ResponseEntity<SelectTop10Response> getClouterTop10() {
         SelectTop10Response response = SelectTop10Response.from(

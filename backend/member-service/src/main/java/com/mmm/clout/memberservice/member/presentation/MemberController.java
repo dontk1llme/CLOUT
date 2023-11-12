@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Random;
 
 @RestController
@@ -116,11 +117,12 @@ public class MemberController implements MemberControllerDocs {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/addCountOfContract/{memberId}")
+    @GetMapping("/addCountOfContract")
     public ResponseEntity<AddCountContractResponse> addCount(
-        @PathVariable("memberId") Long memberId
+        @RequestParam("idList") List<Long> idList,
+        @RequestParam("addType") boolean addType
     ) {
-        AddCountContractResponse response = memberService.addCountContract(memberId);
+        AddCountContractResponse response = memberService.addCountContract(idList, addType);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
