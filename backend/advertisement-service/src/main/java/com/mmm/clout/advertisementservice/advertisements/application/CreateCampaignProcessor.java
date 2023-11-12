@@ -3,6 +3,8 @@ package com.mmm.clout.advertisementservice.advertisements.application;
 import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.common.msa.info.ReducePointRequest;
+import com.mmm.clout.advertisementservice.common.msa.provider.PointProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CreateCampaignProcessor {
 
     private final CampaignRepository campaignRepository;
+    private final PointProvider pointProvider;
 
     @Transactional
     public Campaign execute(CreateCampaignCommand command) {
@@ -30,6 +33,15 @@ public class CreateCampaignProcessor {
             command.getMinFollower(),
             command.getRegionList()
         );
+
+        reducePoint(command);
+
         return campaignRepository.save(campaign);
+    }
+
+    private void reducePoint(CreateCampaignCommand command) {
+
+        ReducePointRequest request = new ReducePointRequest(command);
+        pointProvider.reduce(request);
     }
 }
