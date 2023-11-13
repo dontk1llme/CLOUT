@@ -39,9 +39,7 @@ public class ClouterReader {
 
     private List<ChannelReader> channelList = new ArrayList<>();
 
-    private HopeCostReader hopeCost;
-
-    private boolean negoable;
+    private Long minCost;
 
     private List<String> categoryList = new ArrayList<>();
 
@@ -62,8 +60,7 @@ public class ClouterReader {
         this.phoneNumber = clouter.getPhoneNumber();
         this.channelList = clouter.getChannelList()
             .stream().map(ChannelReader::new).collect(Collectors.toList());
-        this.hopeCost = new HopeCostReader(clouter.getHopeCost());
-        this.negoable = clouter.isNegoable();
+        this.minCost = clouter.getMinCost();
         this.categoryList = clouter.allGetCategoryList().stream().map(v->v.toString()).collect(Collectors.toList());
         this.regionList = clouter.allGetRegionList().stream().map(v->v.toString()).collect(Collectors.toList());;
         this.address = new AddressReader(clouter.getAddress());

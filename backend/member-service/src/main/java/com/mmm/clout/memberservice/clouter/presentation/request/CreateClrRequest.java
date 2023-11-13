@@ -57,7 +57,7 @@ public class CreateClrRequest {
     @Schema(description = "개인 채널 리스트")
     private List<ChannelRequest> channelList;
 
-    private HopeCostRequest hopeCost;
+    private Long minCost;
 
     @Schema(description = "네고 가능 여부")
     private boolean negoable;
@@ -84,8 +84,7 @@ public class CreateClrRequest {
                 this.age,
                 this.phoneNumber,
                 this.channelList.stream().map(ChannelRequest::toCommand).collect(Collectors.toList()),
-                this.hopeCost.toCommand(),
-                this.negoable,
+                this.minCost,
                 this.categoryList,
                 this.regionList,
                 this.address.toCommand()

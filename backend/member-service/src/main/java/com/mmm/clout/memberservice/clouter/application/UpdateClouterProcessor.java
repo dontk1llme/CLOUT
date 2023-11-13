@@ -26,8 +26,7 @@ public class UpdateClouterProcessor {
             command.getAge(),
             command.getPhoneNumber(),
             command.getChannelList().stream().map(v -> v.toValueType()).collect(Collectors.toList()),
-            command.getHopeCost().toValueType(),
-            command.isNegoable(),
+            command.getMinCost(),
             command.getCategoryList(),
             command.getRegionList(),
             command.getAddress().toValueType()
