@@ -24,6 +24,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
+    private static int PLUS = 1;
+    private static int MINUS = -1;
 
     public MemberDTO getUserById(Long id) {
         Member member = this.memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 유저 입니다."));
@@ -64,9 +66,22 @@ public class MemberService {
     }
 
     @Transactional
-    public AddCountContractResponse addCountContract(Long memberId) {
-        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new NotFoundMemberException());
-        AddCountContractResponse response = new AddCountContractResponse(memberId, findMember.addCountOfContract());
+    public AddCountContractResponse addCountContract(List<Long> idList, Boolean addType) {
+        List<Member> findMembers = idList.stream()
+                .map(memberId -> memberRepository.findById(memberId).orElseThrow(() -> new NotFoundMemberException()))
+                .collect(Collectors.toList());
+
+        AddCountContractResponse response = new AddCountContractResponse();
+
+        findMembers.stream()
+                .forEach(member -> {
+                    response.getMemberIdList().add(member.getId());
+                    if (addType == true) {
+                        response.getCountOfContracts().add(member.addCountOfContract(PLUS));
+                    } else {
+                        response.getCountOfContracts().add(member.addCountOfContract(MINUS));
+                    }
+                });
         return response;
     }
 

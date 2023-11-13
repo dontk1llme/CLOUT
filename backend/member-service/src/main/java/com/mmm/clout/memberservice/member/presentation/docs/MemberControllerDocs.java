@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Tag(name = "기본 유저 CRUD", description = "유저 로그인, 로그아웃, 리이슈 등등 인증 서비스 제공 api")
 public interface MemberControllerDocs {
@@ -98,7 +99,9 @@ public interface MemberControllerDocs {
                 schema=@Schema(implementation=AddCountContractResponse.class))
         )
     )
+    @GetMapping("/addCountOfContract")
     public ResponseEntity<AddCountContractResponse> addCount(
-        @PathVariable("memberId") Long memberId
+            @RequestParam("idList") List<Long> idList,
+            @RequestParam("addType") boolean addType
     );
 }
