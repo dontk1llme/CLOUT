@@ -123,32 +123,31 @@ class InfiniteScrollController extends GetxController {
 
     var response = await getRequest(endPoint, parameter);
     print(response);
-    var newList = CampaignList.fromJson(jsonDecode(response)).campaignList;
-    var advertiser = CampaignList.fromJson(jsonDecode(response)).advertiserInfo;
+    var jsonData = jsonDecode(response);
+    var contentList = jsonData['content'] as List;
 
-    if (newList.isNotEmpty) {
-      var campaignData = CampaignInfo.fromJson(json.decode(response));
-      print('5️⃣');
-      print(CampaignList.fromJson(jsonDecode(response)).campaignList);
-      print(CampaignList.fromJson(jsonDecode(response))
-          .advertiserInfo
-          .companyInfo
-          .toString());
+    var appendData = [];
 
-      var appendData = [];
-      for (int i = 0; i < newList.length; i++) {
+    if (contentList.isNotEmpty) {
+      for (var item in contentList) {
+        var campaignData = CampaignInfo.fromJson(item['campaign']);
+        var advertiserData = AdvertiserInfo.fromJson(item['advertiserInfo']);
+
         var campaignItemBox = Padding(
           padding: const EdgeInsets.all(10.0),
           child: CampaignItemBox(
-            campaignId: newList[i]['campaignId'],
-            adCategory: newList[i]['adCategory'] ?? "",
-            title: newList[i]['title'] ?? "제목없음",
-            price: newList[i]['price'] ?? 0,
-            companyInfo: advertiser.companyInfo!,
-            numberOfSelectedMembers: newList[i]['numberOfSelectedMembers'] ?? 0,
-            numberOfRecruiter: newList[i]['numberOfRecruiter'] ?? 0,
-            adPlatformList: newList[i]['adPlatformList'] ?? [],
-            advertiserInfo: advertiser,
+            campaignId: campaignData.campaignId ?? 0,
+            adCategory: campaignData.adCategory ?? "",
+            title: campaignData.title ?? "제목없음",
+            price: campaignData.price ?? 0,
+            companyInfo: advertiserData.companyInfo!,
+            numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
+            numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
+            adPlatformList: campaignData.adPlatformList
+                    ?.map((platform) => Text(platform))
+                    .toList() ??
+                [Text('')],
+            advertiserInfo: advertiserData,
             // firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
           ),
         );
@@ -164,8 +163,7 @@ class InfiniteScrollController extends GetxController {
       data.addAll(appendData);
 
       isLoading = false;
-      // hasMore = data.length < 30;
-      hasMore = newList.isNotEmpty;
+      hasMore = contentList.isNotEmpty;
       update();
     } else {
       hasMore = false;
