@@ -1,6 +1,6 @@
-package com.mmm.clout.advertisementservice.common.msa.info;
+package com.mmm.clout.advertisementservice.advertisements.application.command;
 
-import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
+import com.mmm.clout.advertisementservice.advertisements.infrastructure.constant.CampaignConstant;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
-public class ReducePointRequest {
+public class ReducePointCommand {
 
     @Schema(description = "멤버 고유 식별자 (id)")
     @NotNull
@@ -27,11 +27,11 @@ public class ReducePointRequest {
     @Schema(description = "추가 메시지: 계약, 계약 취소일 경우 거래 상대방 표시")
     private String counterParty;
 
-    public ReducePointRequest(CreateCampaignCommand command) {
+    public ReducePointCommand(CreateCampaignCommand command) {
 
         this.memberId = command.getRegisterId();
-        this.reducingPoint = 0L;
-        this.pointCategory = "CREATE_CAMPAIGN";
-        this.counterParty = "NONE";
+        this.reducingPoint = CampaignConstant.campaignFee;
+        this.pointCategory = CampaignConstant.createCampaignPointCategory;
+        this.counterParty = CampaignConstant.createCampaignCounterParty;
     }
 }
