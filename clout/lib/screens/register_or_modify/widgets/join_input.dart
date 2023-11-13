@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:clout/providers/four_digits_input_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -36,32 +38,53 @@ class JoinInput extends StatefulWidget {
 }
 
 class _JoinInputState extends State<JoinInput> {
+  final TextEditingController textEditingController = TextEditingController();
+
+  late final focusNode = FocusNode();
+
+  Timer _timer = Timer(Duration(milliseconds: 2000), () {});
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController textEditingContoller =
-        TextEditingController(text: widget.initialValue);
-
-    // 커서 맨 뒤로 보내는 메소드
-    textEditingContoller.selection =
-        TextSelection.collapsed(offset: textEditingContoller.text.length);
-
-    return TextFormField(
-      controller: textEditingContoller,
+    if (widget.initialValue != null) {
+      setState(() {
+        textEditingController.text = widget.initialValue;
+      });
+    }
+    return TextField(
+      controller: textEditingController,
       keyboardType: widget.keyboardType,
       maxLength: widget.maxLength,
-      // initialValue: widget.initialValue,
       enabled: widget.enabled,
       inputFormatters: widget.inputFormatters,
       onChanged: widget.index == null
           ? (value) {
-              widget.setState(value);
+              if (_timer.isActive) _timer.cancel();
+              _timer = Timer(
+                const Duration(milliseconds: 2000),
+                () {
+                  widget.setState(value);
+                },
+              );
               if (widget.controllerTag != null) {
                 final pinController = Get.find<FourDigitsInputController>(
                     tag: widget.controllerTag);
                 pinController.setPhoneVerified(false);
               }
             }
-          : (value) => widget.setState(widget.index, value),
+          : (value) {
+              if (_timer.isActive) _timer.cancel();
+              _timer = Timer(
+                const Duration(milliseconds: 2000),
+                () {
+                  widget.setState(widget.index, value);
+                },
+              );
+            },
+      onTapOutside: widget.index == null
+          ? (event) => widget.setState(textEditingController.text)
+          : (event) =>
+              widget.setState(widget.index, textEditingController.text),
       obscureText: widget.obscured ?? false,
       decoration: InputDecoration(
         counterText: '',

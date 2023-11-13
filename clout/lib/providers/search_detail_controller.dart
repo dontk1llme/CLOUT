@@ -15,7 +15,7 @@ class SearchDetailController extends GetxController {
     tag: 'searchDetail',
   );
   final followerController = Get.put(
-    FollowerContoller(),
+    FollowerController(),
     tag: 'searchDetail',
   );
   final payController = Get.put(

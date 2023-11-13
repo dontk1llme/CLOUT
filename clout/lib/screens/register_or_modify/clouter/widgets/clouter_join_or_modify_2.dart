@@ -1,6 +1,8 @@
 import 'package:clout/hooks/apis/register_api.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -49,10 +51,26 @@ class ClouterJoinOrModify2 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 30),
-            Text(
-              '2. 계정 설정',
-              style: style.textTheme.headlineMedium,
-              textAlign: TextAlign.left,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '2. 계정 설정',
+                  style: style.textTheme.headlineMedium,
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(
+                  height: 25,
+                  child: BigButton(
+                    function: () {},
+                    title: '비밀번호 변경',
+                    textStyle: style.textTheme.bodySmall,
+                    fontWeight: FontWeight.normal,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20),
             JoinInput(
@@ -144,8 +162,14 @@ class ClouterJoinOrModify2 extends StatelessWidget {
                             child: IconButton(
                               onPressed: controller.setObscured,
                               icon: controller.obscured
-                                  ? Icon(Icons.visibility_outlined)
-                                  : Icon(Icons.visibility_off_outlined),
+                                  ? Icon(
+                                      Icons.visibility_outlined,
+                                      color: Colors.grey,
+                                    )
+                                  : Icon(
+                                      Icons.visibility_off_outlined,
+                                      color: Colors.grey,
+                                    ),
                             ),
                           )
                         ],
@@ -168,8 +192,14 @@ class ClouterJoinOrModify2 extends StatelessWidget {
                             child: IconButton(
                               onPressed: controller.setObscured,
                               icon: controller.obscured
-                                  ? Icon(Icons.visibility_outlined)
-                                  : Icon(Icons.visibility_off_outlined),
+                                  ? Icon(
+                                      Icons.visibility_outlined,
+                                      color: Colors.grey,
+                                    )
+                                  : Icon(
+                                      Icons.visibility_off_outlined,
+                                      color: Colors.grey,
+                                    ),
                             ),
                           )
                         ],

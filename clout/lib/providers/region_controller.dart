@@ -1,3 +1,4 @@
+import 'package:clout/type.dart';
 import 'package:get/get.dart';
 
 class RegionController extends GetxController {
@@ -43,6 +44,53 @@ class RegionController extends GetxController {
     '경남': 'GYEONGNAM',
     '제주': 'JEJU',
   };
+
+  final List<RegionBool> regionsSelectedBool = [
+    RegionBool("전체", true),
+    RegionBool("서울", false),
+    RegionBool("부산", false),
+    RegionBool("대구", false),
+    RegionBool("인천", false),
+    RegionBool("광주", false),
+    RegionBool("대전", false),
+    RegionBool("울산", false),
+    RegionBool("세종", false),
+    RegionBool("경기", false),
+    RegionBool("강원", false),
+    RegionBool("충북", false),
+    RegionBool("충남", false),
+    RegionBool("전북", false),
+    RegionBool("전남", false),
+    RegionBool("경북", false),
+    RegionBool("경남", false),
+    RegionBool("제주", false),
+  ];
+
+  setSelectDeselect(index) {
+    if (index == 0) {
+      for (int i = 1; i < regionsSelectedBool.length; i++) {
+        regionsSelectedBool[i].selected = false;
+      }
+      regionsSelectedBool[index].selected =
+          !regionsSelectedBool[index].selected;
+      if (regionsSelectedBool[index].selected) {
+        selectedRegions = ['전체'];
+      } else {
+        selectedRegions = [];
+      }
+    } else {
+      removeRegion('전체');
+      regionsSelectedBool[0].selected = false;
+      regionsSelectedBool[index].selected =
+          !regionsSelectedBool[index].selected;
+      if (regionsSelectedBool[index].selected) {
+        selectedRegions.add(regionsSelectedBool[index].region);
+      } else {
+        selectedRegions.remove(regionsSelectedBool[index].region);
+      }
+    }
+    update();
+  }
 
   getEnum(input) {
     return stringEnum[input];

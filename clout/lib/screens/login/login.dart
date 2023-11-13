@@ -2,14 +2,13 @@
 import 'package:clout/hooks/apis/login_api.dart';
 import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/screens/find_password/find_password.dart';
-import 'package:clout/widgets/header/header.dart';
+import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
+import 'package:clout/type.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 // widgets
-import 'package:clout/widgets/input/input.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'widgets/title_text.dart';
 
@@ -49,10 +48,10 @@ class _LoginState extends State<Login> {
     //     '/v1/members/login', userController.userInfo);
 
     // 1. 보냄
-    userController.setUserInfo(); // 'userInfo' 설정
+    // userController.setUserInfo(); // 'userInfo' 설정
     final LoginApi loginApi = LoginApi();
     var loginData = await loginApi.postRequest(
-        '/member-service/v1/members/login', userController.userInfo);
+        '/member-service/v1/members/login', LoginInfo(userId, password));
     // '/v1/members/login', userController.userInfo);
 
     // 2. 리턴값에서 유저/클라우터 가려받고 set
@@ -67,11 +66,26 @@ class _LoginState extends State<Login> {
         userController.setClouter();
         print('클라우터 쪽으로 넘어옴');
       }
-      userController.setUserLogin(loginData);
+      // userController.setUserLogin(loginData);
       userController.setMemberId(loginData['memberId']);
       print(userController.userLogin);
       Get.offAllNamed('/home');
     }
+  }
+
+  var userId;
+  var password;
+
+  void setId(input) {
+    setState(() {
+      userId = input;
+    });
+  }
+
+  void setPassword(input) {
+    setState(() {
+      password = input;
+    });
   }
 
   @override
@@ -111,17 +125,43 @@ class _LoginState extends State<Login> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Input(
-                        placeholder: '아이디 입력',
-                        setText: userController.setUserId,
+                      JoinInput(
+                        keyboardType: TextInputType.text,
+                        maxLength: 15,
+                        title: '아이디 입력',
+                        label: '아이디',
+                        setState: setId,
+                        enabled: true,
                       ),
                       SizedBox(height: 15),
-                      Input(
-                        placeholder: '패스워드 입력',
-                        setText: userController.setPassword,
-                        obscure: obscured,
-                        suffixIcon: suffixIcon,
-                        setObscured: setObscured,
+                      Stack(
+                        children: [
+                          JoinInput(
+                            keyboardType: TextInputType.text,
+                            maxLength: 20,
+                            title: '비밀번호 입력',
+                            label: '비밀번호',
+                            setState: setPassword,
+                            obscured: obscured,
+                            enabled: true,
+                          ),
+                          Positioned(
+                            top: 3,
+                            right: 5,
+                            child: IconButton(
+                              onPressed: setObscured,
+                              icon: obscured
+                                  ? Icon(
+                                      Icons.visibility_outlined,
+                                      color: Colors.grey,
+                                    )
+                                  : Icon(
+                                      Icons.visibility_off_outlined,
+                                      color: Colors.grey,
+                                    ),
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(
                         // width: double.infinity,

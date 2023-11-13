@@ -82,17 +82,23 @@ class ClouterInfoController extends GetxController {
   var imagePickerController;
 
   loadBeforeModify(Clouter input) {
-    // print(input.nickName);
-    print('아래값이 이름이 와야돼...');
     print(input.name);
-    print(input.nickName);
+    print(input.channelList);
+    print(input.address);
+    print(input.age);
+    print(input.birthday);
+    print(input.minCost);
+    print(input.phoneNumber);
+
+    setId(input.userId);
+    setNickName(input.nickName);
     setName(input.name);
+    setAge(input.age);
     dateController.setSelectedDateDirectly(DateTime.parse(input.birthday!));
     setPhoneNumber(input.phoneNumber);
+    addressController.setZipCode(input.address!.zipCode);
     addressController.setDaumAddress(input.address!.mainAddress);
     addressController.setDetailAddress(input.address!.detailAddress);
-    setNickName(input.nickName);
-    setId(input.userId);
     fourDigitsInputController.setPhoneVerified(true);
 
     var channelList = input.channelList!;
@@ -107,7 +113,7 @@ class ClouterInfoController extends GetxController {
         platformIndex = 2;
       }
 
-      // platformSelectController.setSelected(platformIndex, true);
+      platformSelectController.setSelected(platformIndex, true);
       platformSelectController.setId(platformIndex, channelList[i]['name']);
       platformSelectController.setLink(platformIndex, channelList[i]['link']);
       platformSelectController.setFollowerCount(
@@ -142,7 +148,7 @@ class ClouterInfoController extends GetxController {
       tag: clouterController.controllerTag,
     );
     followerController = Get.put(
-      FollowerContoller(),
+      FollowerController(),
       tag: clouterController.controllerTag,
     );
     feeController = Get.put(
@@ -161,6 +167,7 @@ class ClouterInfoController extends GetxController {
       ImagePickerController(),
       tag: clouterController.controllerTag,
     );
+    update();
   }
 
   setClouter() {
@@ -217,6 +224,7 @@ class ClouterInfoController extends GetxController {
 
   setName(input) {
     name = input;
+    print(name);
     update();
   }
 
@@ -227,18 +235,28 @@ class ClouterInfoController extends GetxController {
 
   setId(input) {
     id = input;
+    update();
   }
 
   setPassword(input) {
     password = input;
+    update();
   }
 
   setCheckPassword(input) {
     checkPassword = input;
+    update();
   }
 
   setNickName(input) {
     nickName = input;
+    print(nickName);
+    update();
+  }
+
+  setAge(input) {
+    age = input;
+    update();
   }
 
   setSelection(index) {
@@ -323,15 +341,19 @@ class ClouterInfoController extends GetxController {
   }
 
   canGoFourthPage() {
+    print(platformSelectController.platforms);
+    print(platformSelectController.id);
+    print(platformSelectController.link);
+    print(platformSelectController.followerCount);
     if ((platformSelectController.id[0].length == 0 &&
             platformSelectController.link[0].length == 0 &&
-            platformSelectController.followerCount[0].length == 0) &&
+            platformSelectController.followerCount[0] == '0') &&
         (platformSelectController.id[1].length == 0 &&
             platformSelectController.link[1].length == 0 &&
-            platformSelectController.followerCount[1].length == 0) &&
+            platformSelectController.followerCount[1] == '0') &&
         (platformSelectController.id[2].length == 0 &&
             platformSelectController.link[2].length == 0 &&
-            platformSelectController.followerCount[2].length == 0)) {
+            platformSelectController.followerCount[2] == '0')) {
       return '최소 한개 이상의 SNS 정보를 입력해주세요';
     }
     if (platformSelectController.id[0].length != 0 ||

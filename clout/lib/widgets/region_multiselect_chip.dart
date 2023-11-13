@@ -1,6 +1,7 @@
 import 'package:clout/providers/region_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class RegionMultiselectChip extends StatelessWidget {
@@ -16,7 +17,14 @@ class RegionMultiselectChip extends StatelessWidget {
       builder: (controller) => Container(
         padding: EdgeInsets.all(2.5),
         child: ElevatedButton(
-          onPressed: () => controller.removeRegion(title),
+          onPressed: () {
+            controller.removeRegion(title);
+            for (int i = 0; i < controller.regionsSelectedBool.length; i++) {
+              if (controller.regionsSelectedBool[i].region == title) {
+                controller.regionsSelectedBool[i].selected = false;
+              }
+            }
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: style.colors['main1'],
             padding: EdgeInsets.only(left: 15, right: 20),

@@ -27,7 +27,7 @@ class CampaignRegisterController extends GetxController {
     tag: 'campaignRegister',
   );
   final followerController = Get.put(
-    FollowerContoller(),
+    FollowerController(),
     tag: 'campaignRegister',
   );
   final regionController = Get.put(
