@@ -10,13 +10,14 @@ import com.mmm.clout.advertisementservice.advertisements.application.GetTop10Cam
 import com.mmm.clout.advertisementservice.advertisements.application.SearchCampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.UpdateCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
+import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.command.UpdateCampaignCommand;
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignDto;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -63,9 +64,8 @@ public class AdvertisementFacade {
     }
 
 
-    public List<CampaignDto> search(Pageable pageable, List<String> category, List<String> platform, Integer minAge, Integer maxAge, Integer minFollower, Integer minPrice,
-        Integer maxPrice, List<String> region, String keyword, String sort) {
-        return searchCampaignListProcessor.execute(pageable, category, platform, minAge, maxAge, minFollower, minPrice, maxPrice, region, keyword, sort);
+    public Page<CampaignReader> search(Pageable pageable, SearchCondition condition) {
+        return searchCampaignListProcessor.execute(pageable, condition);
     }
 
     public List<Campaign> getCampaignListByIdList(List<Long> adIdList) {
