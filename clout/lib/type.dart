@@ -220,6 +220,42 @@ class ChannelList {
 //   }
 // }
 
+class PointItem {
+  final int transactionId;
+  final int pointId;
+  final int memberId;
+  final int amount;
+  final String pointStatus;
+  final String category;
+  final String counterparty;
+  final String time;
+
+  PointItem({
+    required this.transactionId,
+    required this.pointId,
+    required this.memberId,
+    required this.amount,
+    required this.pointStatus,
+    required this.category,
+    required this.counterparty,
+    required this.time,
+  });
+
+  // JSON을 Dart 객체로 변환하는 팩토리 메서드
+  factory PointItem.fromJson(Map<String, dynamic> json) {
+    return PointItem(
+      transactionId: json['transactionId'],
+      pointId: json['pointId'],
+      memberId: json['memberId'],
+      amount: json['amount'],
+      pointStatus: json['pointStatus'],
+      category: json['category'],
+      counterparty: json['counterparty'],
+      time: json['time'],
+    );
+  }
+}
+
 class Clouter {
   String? userId;
   String? pwd;
