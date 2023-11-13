@@ -1,10 +1,13 @@
 package com.mmm.clout.memberservice.clouter.application;
 
+import com.mmm.clout.memberservice.advertiser.domain.Advertiser;
 import com.mmm.clout.memberservice.clouter.application.command.CreateClrCommand;
 import com.mmm.clout.memberservice.clouter.domain.Clouter;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
 import com.mmm.clout.memberservice.clouter.domain.exception.ClrIdDuplicateException;
 import com.mmm.clout.memberservice.member.domain.Member;
+import com.mmm.clout.memberservice.member.domain.info.CreatePointRequest;
+import com.mmm.clout.memberservice.member.domain.provider.PointProvider;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.memberservice.star.domain.Star;
 import com.mmm.clout.memberservice.star.domain.repository.StarRepository;
@@ -19,6 +22,7 @@ public class CreateClouterProcessor {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
     private final StarRepository starRepository;
+    private final PointProvider pointProvider;
 
     @Transactional
     public Clouter execute(CreateClrCommand command) {
@@ -27,7 +31,13 @@ public class CreateClouterProcessor {
         clouter.changePwd(encoder.encode(clouter.getPwd()));
         Clouter savedClouter = clouterRepository.save(clouter);
         initStar(savedClouter);
+        initPoint(savedClouter);
         return savedClouter;
+    }
+
+    private void initPoint(Clouter savedClouter) {
+        CreatePointRequest request = new CreatePointRequest(savedClouter.getId());
+        pointProvider.create(request);
     }
 
 
