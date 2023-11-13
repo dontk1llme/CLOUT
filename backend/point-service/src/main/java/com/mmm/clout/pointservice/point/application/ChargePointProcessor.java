@@ -3,6 +3,7 @@ package com.mmm.clout.pointservice.point.application;
 import com.mmm.clout.pointservice.point.application.command.ChargeCommand;
 import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
+import com.mmm.clout.pointservice.point.domain.exception.PointNotFoundException;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
 import com.mmm.clout.pointservice.point.domain.repository.PointTransactionRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,7 @@ public class ChargePointProcessor {
                 // 기존 엔티티가 존재하는 경우, 포인트를 업데이트
                 existingPoint.add(command.getChargePoint());
                 return existingPoint;
-            }).orElse(
-            Point.create(command.getMemberId(), command.getChargePoint())
-        );
+            }).orElseThrow(PointNotFoundException::new);
 
         // 변경된 엔티티를 저장 or 업데이트
         Point savedPoint = pointRepository.save(point);

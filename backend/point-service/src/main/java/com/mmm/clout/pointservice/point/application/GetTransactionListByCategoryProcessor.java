@@ -7,6 +7,7 @@ import com.mmm.clout.pointservice.point.domain.PointCategory;
 import com.mmm.clout.pointservice.point.domain.exception.InvalidCategoryException;
 import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
+import com.mmm.clout.pointservice.point.domain.exception.PointNotFoundException;
 import com.mmm.clout.pointservice.point.domain.repository.PointRepository;
 import com.mmm.clout.pointservice.point.domain.repository.PointTransactionRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -31,7 +32,7 @@ public class GetTransactionListByCategoryProcessor {
     public Page<PointTransaction> execute(Long memberId, String category, PageRequest pageable) {
 
         Point point = pointRepository.findByMemberId(memberId)
-            .orElseGet(() -> pointRepository.save(Point.create(memberId, 0L)));
+            .orElseThrow(PointNotFoundException::new);
 
         return pointTransactionRepository.searchByCategory(point, category, pageable);
     }
