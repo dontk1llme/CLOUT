@@ -1,6 +1,6 @@
 package com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.provider.feignclient;
 
-import com.mmm.clout.advertisementservice.common.msa.info.ReducePointRequest;
+import com.mmm.clout.advertisementservice.advertisements.application.command.ReducePointCommand;
 import com.mmm.clout.advertisementservice.common.msa.info.ReducePointInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -14,5 +14,5 @@ public interface PointFeignClient {
 
     @PostMapping("v1/points/reduce")
     public ResponseEntity<ReducePointInfo> reduce(
-            @Valid @RequestBody ReducePointRequest request);
+            @Valid @RequestBody ReducePointCommand request);
 }

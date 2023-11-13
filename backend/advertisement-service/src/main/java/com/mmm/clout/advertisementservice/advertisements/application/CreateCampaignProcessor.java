@@ -3,7 +3,7 @@ package com.mmm.clout.advertisementservice.advertisements.application;
 import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
-import com.mmm.clout.advertisementservice.common.msa.info.ReducePointRequest;
+import com.mmm.clout.advertisementservice.advertisements.application.command.ReducePointCommand;
 import com.mmm.clout.advertisementservice.common.msa.provider.PointProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +40,7 @@ public class CreateCampaignProcessor {
     }
 
     private void reducePoint(CreateCampaignCommand command) {
-
-        ReducePointRequest request = new ReducePointRequest(command);
+        ReducePointCommand request = new ReducePointCommand(command);
         pointProvider.reduce(request);
     }
 }

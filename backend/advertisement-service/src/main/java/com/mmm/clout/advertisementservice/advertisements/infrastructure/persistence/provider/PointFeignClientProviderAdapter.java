@@ -1,6 +1,6 @@
 package com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.provider;
 
-import com.mmm.clout.advertisementservice.common.msa.info.ReducePointRequest;
+import com.mmm.clout.advertisementservice.advertisements.application.command.ReducePointCommand;
 import com.mmm.clout.advertisementservice.common.msa.info.ReducePointInfo;
 import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.provider.feignclient.PointFeignClient;
 import com.mmm.clout.advertisementservice.common.msa.provider.PointProvider;
@@ -15,7 +15,7 @@ public class PointFeignClientProviderAdapter implements PointProvider {
     private final PointFeignClient pointFeignClient;
 
     @Override
-    public ResponseEntity<ReducePointInfo> reduce(ReducePointRequest request) {
+    public ResponseEntity<ReducePointInfo> reduce(ReducePointCommand request) {
         return pointFeignClient.reduce(request);
     }
 }
