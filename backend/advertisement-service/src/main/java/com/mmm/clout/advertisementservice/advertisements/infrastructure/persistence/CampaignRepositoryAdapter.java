@@ -9,10 +9,11 @@ import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.Region;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
+import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.jpa.JpaCampaignRepository;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.DatePath;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
@@ -80,6 +81,7 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
 
     @Override
     public List<Campaign> search(SearchCondition condition, Pageable pageable) {
+
         return queryFactory.query()
             .select(campaign)
             .from(campaign)
@@ -91,15 +93,30 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
                 followerGoe(condition.getMinFollower()),
                 categoryEq(condition.getCategory()),
                 regionEq(condition.getRegion()),
-                platformEq(condition.getPlatform())
+                platformEq(condition.getPlatform()),
+                endedEq(false)
             )
+            .orderBy(getOrderSpecifier(condition.getSortKey()))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
     }
 
+    private OrderSpecifier<?> getOrderSpecifier(CampaignSort sortKey) {
+        switch (sortKey) {
+            case POPULARITY:
+                return new OrderSpecifier<>(sortKey.getOrder(), campaign.numberOfApplicants);
+            case NEWEST:
+                return new OrderSpecifier<>(sortKey.getOrder(), campaign.createdAt);
+            case DEADLINE:
+                return new OrderSpecifier<>(sortKey.getOrder(), campaign.applyEndDate);
+            default:
+                throw new IllegalArgumentException("Unknown sort key: " + sortKey);
+        }
+    }
+
     @Override
-    public JPAQuery<Campaign> getCountQuery(SearchCondition condition) {
+    public JPAQuery<Campaign> getSearchCountQuery(SearchCondition condition) {
         JPAQuery<Campaign> countQuery = queryFactory.query()
             .select(campaign)
             .from(campaign)
@@ -111,7 +128,8 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
                 followerGoe(condition.getMinFollower()),
                 categoryEq(condition.getCategory()),
                 regionEq(condition.getRegion()),
-                platformEq(condition.getPlatform())
+                platformEq(condition.getPlatform()),
+                endedEq(false)
             );
         return countQuery;
     }

@@ -2,12 +2,9 @@ package com.mmm.clout.advertisementservice.advertisements.domain.repository;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
-import com.mmm.clout.advertisementservice.advertisements.domain.QCampaign;
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CampaignRepository {
@@ -24,6 +21,6 @@ public interface CampaignRepository {
 
     List<Campaign> search(SearchCondition condition, Pageable pageable);
 
-    JPAQuery<Campaign> getCountQuery(SearchCondition condition);
+    JPAQuery<Campaign> getSearchCountQuery(SearchCondition condition);
 
 }

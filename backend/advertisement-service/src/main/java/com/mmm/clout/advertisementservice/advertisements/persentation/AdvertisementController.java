@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.command.Sea
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignResponse;
@@ -101,8 +102,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     }
 
     /**
-     * 인기 있는 광고 리스트 (10개) 조회 (신청자 수 많은 순 / 모집기간 내 / 우선순위가 같을경우, 최신순) 복잡한 조건이라 jpa 쿼리로 작성하기에 가독성이 좋지
-     * 않으므로 jpql 사용
+     * 인기 있는 광고 리스트 (10개) 조회 (신청자 수 많은 순 / 모집기간 내 / 우선순위가 같을경우, 최신순)
      */
     @GetMapping("/top10")
     public ResponseEntity<GetTop10CampainListResponse> getTop10Campaigns() {
@@ -144,6 +144,9 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * 광고 검색 / 검색 조건별 전체 조회
+     */
     @GetMapping("/search")
     public ResponseEntity<Page<CampaignReader>> searchAndReadCampaignList(
         @RequestParam(defaultValue = "0") Integer page,
@@ -157,7 +160,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         @RequestParam(defaultValue = "1000000000") Integer maxPrice,
         @RequestParam(defaultValue = "ALL") List<String> region,
         @RequestParam(required = false) String keyword,
-        @RequestParam(defaultValue = "P") String sortKey
+        @RequestParam(defaultValue = "POPULARITY") CampaignSort sortKey
     ) {
 
         Page<CampaignReader> result = advertisementFacade.search(
@@ -179,6 +182,9 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     }
 
 
+    /**
+     * <백엔드 통신용 api>
+     */
     @GetMapping("/ads")
     public ResponseEntity<List<CampaignResponse>> getCampaignListById(
         @RequestParam(name = "adId") List<Long> adIdList
