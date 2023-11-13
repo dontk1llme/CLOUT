@@ -4,7 +4,10 @@ import com.mmm.clout.advertisementservice.advertisements.application.command.Sea
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
+import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
+import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.advertisements.domain.Region;
 import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
@@ -166,14 +169,14 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     public ResponseEntity<CustomPageResponse<CampaignReaderResponse>> searchAndReadCampaignList(
         @RequestParam(defaultValue = "0") Integer page,
         @RequestParam(defaultValue = "10") Integer size,
-        @RequestParam(defaultValue = "ALL") List<String> category,
-        @RequestParam(defaultValue = "INSTAGRAM") List<String> platform,
+        @RequestParam(defaultValue = "ALL") List<AdCategory> category,
+        @RequestParam(defaultValue = "INSTAGRAM") List<AdPlatform> platform,
         @RequestParam(defaultValue = "0") Integer minAge,
         @RequestParam(defaultValue = "100") Integer maxAge,
         @RequestParam(defaultValue = "0") Integer minFollower,
         @RequestParam(defaultValue = "0") Integer minPrice,
         @RequestParam(defaultValue = "1000000000") Integer maxPrice,
-        @RequestParam(defaultValue = "ALL") List<String> region,
+        @RequestParam(defaultValue = "ALL") List<Region> region,
         @RequestParam(required = false) String keyword,
         @RequestParam(defaultValue = "POPULARITY") CampaignSort sortKey
     ) {

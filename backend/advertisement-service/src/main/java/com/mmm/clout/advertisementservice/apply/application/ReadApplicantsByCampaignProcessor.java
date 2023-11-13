@@ -6,9 +6,13 @@ import com.mmm.clout.advertisementservice.apply.domain.Apply;
 import com.mmm.clout.advertisementservice.common.msa.info.ClouterInfo;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
+import com.querydsl.jpa.impl.JPAQuery;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
@@ -17,14 +21,15 @@ public class ReadApplicantsByCampaignProcessor {
     private final ApplyRepository applyRepository;
     private final MemberProvider clouterProvider;
     @Transactional
-    public List<ApplicantListByCampaignReader> execute(Long advertisementId) {
-        List<Apply> applyList = applyRepository.findApplicantList(advertisementId);
-        List<ApplicantListByCampaignReader> readerList = new ArrayList<>();
+    public Page<ApplicantListByCampaignReader> execute(Pageable pageable, Long advertisementId) {
+        List<Apply> applyList = applyRepository.findApplicantList(advertisementId, pageable);
+        JPAQuery<Apply> countQuery = applyRepository.countByAdvertisement(advertisementId);
+        List<ApplicantListByCampaignReader> content = new ArrayList<>();
         for (Apply apply: applyList) {
             Long applicantId = apply.getApplicant().getApplicantId();
             ClouterInfo info = clouterProvider.getClouterInfoByMemberId(applicantId);
             Campaign campaign = apply.getCampaign();
-            readerList.add(
+            content.add(
                 new ApplicantListByCampaignReader(
                     campaign.getId(),
                     campaign.getNumberOfRecruiter(),
@@ -40,6 +45,6 @@ public class ReadApplicantsByCampaignProcessor {
             );
         }
 
-        return readerList;
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 }

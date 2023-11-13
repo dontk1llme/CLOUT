@@ -1,15 +1,23 @@
 package com.mmm.clout.advertisementservice.apply.presentation;
 
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CustomPageResponse;
 import com.mmm.clout.advertisementservice.apply.application.facade.ApplyFacade;
+import com.mmm.clout.advertisementservice.apply.application.reader.ApplicantListByCampaignReader;
+import com.mmm.clout.advertisementservice.apply.application.reader.ApplyListByClouterReader;
+import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import com.mmm.clout.advertisementservice.apply.presentation.request.CreateApplyRequest;
 import com.mmm.clout.advertisementservice.apply.presentation.response.ApplicantResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.ApplyMessageResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.CreateApplyResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.GetAllByStatusResponse;
-import com.mmm.clout.advertisementservice.common.docs.ApplyControllerDocs;
+import com.mmm.clout.advertisementservice.apply.presentation.response.GetApplyByStatusResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +31,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/applies")
 @RequiredArgsConstructor
-public class ApplyController implements ApplyControllerDocs {
+public class ApplyController {
 
     private final ApplyFacade applyFacade;
+
+    /**
+     * 캠페인 신청
+     */
 
     @PostMapping
     public ResponseEntity<CreateApplyResponse> createApply(
@@ -36,6 +48,9 @@ public class ApplyController implements ApplyControllerDocs {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    /**
+     * 신청 취소
+     */
     @PostMapping("/{applyId}/cancel")
     public ResponseEntity<String> cancelApply(
         @PathVariable Long applyId
@@ -45,23 +60,53 @@ public class ApplyController implements ApplyControllerDocs {
     }
 
     // TODO 이미지, star 기능 만들어지면 추가 필요
+
+    /**
+     * 클라우터가 신청한 캠페인 목록 (종류 존재)
+     */
     @GetMapping("/clouters")
-    public ResponseEntity<GetAllByStatusResponse> getApplyListByStatus(
+    public ResponseEntity<CustomPageResponse<GetApplyByStatusResponse>> getApplyListByStatus(
         @RequestParam Long clouterId,
-        @RequestParam String type
+        @RequestParam ApplyStatus type,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
     ) {
-        GetAllByStatusResponse result = GetAllByStatusResponse.from(
-            applyFacade.getAllByApplyStatus(clouterId, type));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        Page<ApplyListByClouterReader> result =
+            applyFacade.getAllByApplyStatus(PageRequest.of(page, size), clouterId, type);
+
+        List<GetApplyByStatusResponse> content = result.stream().map(
+            GetApplyByStatusResponse::from
+        ).collect(Collectors.toList());
+
+        return new ResponseEntity<>(
+            new CustomPageResponse<>(
+                content,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalPages(),
+                result.getTotalElements()
+            ), HttpStatus.OK);
     }
 
     @GetMapping("/advertisers")
-    public ResponseEntity<List<ApplicantResponse>> getApplicantList(
-        @RequestParam Long advertisementId
+    public ResponseEntity<CustomPageResponse<ApplicantResponse>> getApplicantList(
+        @RequestParam Long advertisementId,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
     ) {
-        List<ApplicantResponse> result =
-            ApplicantResponse.from(applyFacade.getApplicantList(advertisementId));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        Page<ApplicantListByCampaignReader> result = applyFacade.getApplicantList(
+            PageRequest.of(page, size), advertisementId);
+        List<ApplicantResponse> content =
+            ApplicantResponse.from(result.getContent());
+
+        return new ResponseEntity<>(
+            new CustomPageResponse<>(
+                content,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalPages(),
+                result.getTotalElements()
+            ), HttpStatus.OK);
     }
 
     @GetMapping("/{applyId}/msg")
