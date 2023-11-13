@@ -1,3 +1,5 @@
+import 'package:clout/utilities/category_translator.dart';
+import 'package:clout/widgets/sns/sns2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -128,25 +130,37 @@ class InfiniteScrollController extends GetxController {
 
     var appendData = [];
 
+    List<String> allPlatforms = ["INSTAGRAM", "TIKTOK", "YOUTUBE"];
+
     if (contentList.isNotEmpty) {
       for (var item in contentList) {
         var campaignData = CampaignInfo.fromJson(item['campaign']);
         var advertiserData = AdvertiserInfo.fromJson(item['advertiserInfo']);
 
+        var adPlatformWidgets;
+        if (campaignData.adPlatformList?.contains("ALL") ?? false) {
+          // "ALL"이 포함되어 있으면 모든 플랫폼을 나타내는 Widget 리스트 생성
+          adPlatformWidgets =
+              allPlatforms.map((platform) => Sns2(platform: platform)).toList();
+        } else {
+          // 그렇지 않으면, adPlatformList에 있는 플랫폼에 대한 Widget 리스트를 생성
+          adPlatformWidgets = campaignData.adPlatformList
+              ?.map((platform) => Sns2(platform: platform))
+              .toList();
+        }
+
         var campaignItemBox = Padding(
           padding: const EdgeInsets.all(10.0),
           child: CampaignItemBox(
             campaignId: campaignData.campaignId ?? 0,
-            adCategory: campaignData.adCategory ?? "",
+            adCategory: AdCategoryTranslator.translateAdCategory(
+                campaignData.adCategory!),
             title: campaignData.title ?? "제목없음",
             price: campaignData.price ?? 0,
             companyInfo: advertiserData.companyInfo!,
             numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
             numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
-            adPlatformList: campaignData.adPlatformList
-                    ?.map((platform) => Text(platform))
-                    .toList() ??
-                [Text('')],
+            adPlatformList: adPlatformWidgets,
             advertiserInfo: advertiserData,
             // firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
           ),

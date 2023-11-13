@@ -1,4 +1,5 @@
 import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:clout/utilities/category_translator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -94,7 +95,9 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                   LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
-            NameTag(title: widget.categoryList[0]),
+            NameTag(
+                title: AdCategoryTranslator.translateAdCategory(
+                    widget.categoryList[0])),
             Text(
               widget.userId,
               maxLines: 1,
