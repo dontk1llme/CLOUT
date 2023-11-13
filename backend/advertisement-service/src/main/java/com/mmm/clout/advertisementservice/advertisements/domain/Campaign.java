@@ -17,10 +17,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.transaction.annotation.Transactional;
 
 @Getter
@@ -72,7 +69,7 @@ public class Campaign extends Advertisement {
     private List<Region> regionList = new ArrayList<>();
 
     @Transactional(readOnly = true)
-    public Campaign readTransaction() {
+    public Campaign initialize() {
         Hibernate.initialize(this.getRegionList());
         Hibernate.initialize(this.getAdPlatformList());
         return this;
