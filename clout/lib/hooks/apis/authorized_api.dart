@@ -90,4 +90,36 @@ class AuthorizedApi {
 
     // userController.setAccessToken(resonse)
   }
+
+  deleteRequest(apiUrl, parameter) async {
+    var url = Uri.parse('$baseUrl$apiUrl');
+    print(url);
+    print(json.encode(parameter));
+    http.Response response = await http.delete(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': userController.accessToken
+      },
+      body: json.encode(parameter),
+    );
+
+    print('delete 통신 실행 완료');
+
+    var statusCode = response.statusCode;
+    var body = utf8.decode(response.bodyBytes);
+    var returnVal = {
+      'statusCode': statusCode,
+      'body': body,
+    };
+
+    print('상태코드');
+    print(statusCode);
+
+    if (statusCode == 401) {
+      print('만료된 토큰');
+    } else {
+      return returnVal;
+    }
+  }
 }
