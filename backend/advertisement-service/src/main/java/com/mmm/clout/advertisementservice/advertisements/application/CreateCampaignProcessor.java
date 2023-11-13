@@ -34,8 +34,8 @@ public class CreateCampaignProcessor {
             command.getRegionList()
         );
 
+        // TODO 보상트랜잭션 추가, Feign client 에러 처리
         reducePoint(command);
-
         return campaignRepository.save(campaign);
     }
 
