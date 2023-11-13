@@ -4,6 +4,7 @@ import com.mmm.clout.memberservice.bookmark.application.*;
 import com.mmm.clout.memberservice.bookmark.domain.provider.AdvertisementProvider;
 import com.mmm.clout.memberservice.bookmark.domain.repository.BookmarkRepository;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
+import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,9 +30,10 @@ public class BookmarkConfig {
 
     @Bean
     public DeleteBookmarkProcessor deleteBookmarkProcessor(
-        BookmarkRepository bookmarkRepository
+        BookmarkRepository bookmarkRepository,
+        MemberRepository memberRepository
     ) {
-        return new DeleteBookmarkProcessor(bookmarkRepository);
+        return new DeleteBookmarkProcessor(bookmarkRepository, memberRepository);
     }
 
     @Bean
