@@ -38,8 +38,8 @@ public class PointFacade {
         return reducePointProcessor.execute(command);
     }
 
-    public void withdrawal(WithdrawCommand command) {
-        withdrawPointProcessor.execute(command);
+    public Point withdrawal(WithdrawCommand command) {
+        return withdrawPointProcessor.execute(command);
     }
 
     public Point getMemberPoint(Long memberId) {

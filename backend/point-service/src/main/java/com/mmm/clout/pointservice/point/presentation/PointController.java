@@ -3,7 +3,6 @@ package com.mmm.clout.pointservice.point.presentation;
 import com.mmm.clout.pointservice.common.docs.PointControllerDocs;
 import com.mmm.clout.pointservice.point.presentation.request.CreatePointRequest;
 import com.mmm.clout.pointservice.point.application.facade.PointFacade;
-import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import com.mmm.clout.pointservice.point.presentation.request.ChargePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.ReducePointRequest;
@@ -76,7 +75,7 @@ public class PointController implements PointControllerDocs {
      * 출금
      */
     @PostMapping("/withdrawal")
-    public ResponseEntity<Void> withdraw(
+    public ResponseEntity<Void> withdrawal(
         @Valid @RequestBody WithdrawPointRequest request
     ) {
         pointFacade.withdrawal(request.toCommand());

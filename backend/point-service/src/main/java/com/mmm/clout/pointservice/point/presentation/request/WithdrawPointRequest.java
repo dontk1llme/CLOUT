@@ -15,7 +15,7 @@ public class WithdrawPointRequest {
 
     @Schema(description = "은행 종류")
     @NotBlank
-    private String bankType; // 은행 종류
+    private BankType bankType; // 은행 종류
 
     @Schema(description = "계좌번호")
     @NotNull
@@ -36,7 +36,7 @@ public class WithdrawPointRequest {
 
     public WithdrawCommand toCommand() {
         return new WithdrawCommand(
-            BankType.converToEnum(bankType),
+            bankType,
             accountNumber,
             withdrawingPoint,
             commission,
