@@ -49,4 +49,12 @@ public class AdvertiserController implements AdvertiserControllerDocs {
         SelectAdrResponse result = SelectAdrResponse.from(advertiserFacade.select(advertiserId));
         return new ResponseEntity<SelectAdrResponse>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/{advertiserId}/contract")
+    public ResponseEntity<SelectAdrResponse> selectAdvertiserForContract(
+            @PathVariable("advertiserId") Long advertiserId
+    ) {
+        SelectAdrResponse result = SelectAdrResponse.from(advertiserFacade.selectForContract(advertiserId));
+        return new ResponseEntity<SelectAdrResponse>(result, HttpStatus.OK);
+    }
 }
