@@ -24,6 +24,12 @@ public class BookmarkAdaptor implements BookmarkRepository {
     public Optional<Bookmark> findById(Long bookmarkId) {
         return jpaBookmarkRepository.findById(bookmarkId);
     }
+
+    @Override
+    public Optional<Bookmark> findByMemberAndTargetId(Long memberId, Long targetId) {
+        return jpaBookmarkRepository.findByMemberAndTargetId(memberId, targetId);
+    }
+
     @Override
     public void delete(Bookmark bookmark) {
         jpaBookmarkRepository.delete(bookmark);
