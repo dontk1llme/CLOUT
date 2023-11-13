@@ -1,6 +1,6 @@
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
-import 'package:clout/widgets/search_detail_bottom_sheet/widgets/followercount_state_dialog.dart';
+import 'package:clout/widgets/platform_follower_count_dialog.dart';
 import 'package:flutter/material.dart'
     hide BoxDecoration, BoxShadow; //  기존 BoxShadow 속성을 가려줘야 함
 import 'package:get/get.dart';
@@ -65,7 +65,7 @@ class InputCustomdrop extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                FollowercountStateDialog(
+                                PlatformFollowerCountDialog(
                                   controllerTag: controllerTag,
                                   title: index != 2 ? '팔로워 수' : '구독자 수',
                                   hintText: '팔로워/구독자 수 입력',
