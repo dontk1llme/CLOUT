@@ -69,8 +69,9 @@ class CampaignDetailInfoBox extends StatelessWidget {
               Text('희망 플랫폼', style: TextStyle(fontSize: 15)),
               Expanded(
                   child: Text(
-                // campaignInfo.adPlatformList,
-                '',
+                campaignInfo.adPlatformList != null
+                    ? campaignInfo.adPlatformList!.join(', ')
+                    : "정보 없음",
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ))
