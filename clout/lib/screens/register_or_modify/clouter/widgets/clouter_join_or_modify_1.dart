@@ -40,7 +40,6 @@ class _ClouterJoinOrModify1State extends State<ClouterJoinOrModify1> {
         Get.find<ClouterInfoController>(tag: widget.controllerTag);
     var responseBody = await registerApi.getRequest(
         '/member-service/v1/members/sendsms',
-        // var responseBody = await registerApi.getRequest('/v1/members/sendsms',
         '?phoneNumber=${clouterRegisterController.phoneNumber}');
     print('인증키 sms 발송');
     final pinController =
