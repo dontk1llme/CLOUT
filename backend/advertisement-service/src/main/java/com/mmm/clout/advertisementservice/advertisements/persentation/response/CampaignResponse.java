@@ -77,6 +77,9 @@ public class CampaignResponse {
     @Schema(description = "모집 종료 여부")
     private Boolean isEnded; // 모집 종료 여부
 
+    @Schema(description = "광고 등록자 (광고주) 고유 식별자 id")
+    private Long registerId;
+
     public static CampaignResponse from(Campaign campaign) {
         return new CampaignResponse(
             campaign.getId(),
@@ -98,7 +101,8 @@ public class CampaignResponse {
             campaign.getMinClouterAge(),
             campaign.getMaxClouterAge(),
             campaign.getMinFollower(),
-            campaign.getIsEnded()
+            campaign.getIsEnded(),
+            campaign.getRegisterId()
         );
     }
 }

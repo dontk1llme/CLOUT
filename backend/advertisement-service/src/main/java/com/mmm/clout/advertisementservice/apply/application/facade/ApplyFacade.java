@@ -13,6 +13,8 @@ import com.mmm.clout.advertisementservice.apply.domain.Apply;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,8 +36,8 @@ public class ApplyFacade {
         cancelApplyProcessor.execute(applyId);
     }
 
-    public List<ApplyListByClouterReader> getAllByApplyStatus(Long clouterId, String type) {
-        return readAllApplyProcessor.execute(clouterId, type);
+    public Page<ApplyListByClouterReader> getAllByApplyStatus(Pageable pageable, Long clouterId, ApplyStatus type) {
+        return readAllApplyProcessor.execute(pageable, clouterId, type);
     }
 
     public List<ApplicantListByCampaignReader> getApplicantList(Long advertisementId) {

@@ -303,7 +303,7 @@ public interface AdvertisementControllerDocs {
             @Parameter(
                 in = ParameterIn.QUERY,
                 name = "keyword",
-                required = true,
+                required = false,
                 description = "검색 키워드"
             ),
             @Parameter(
