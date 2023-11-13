@@ -65,36 +65,38 @@ class _HomeState extends State<Home> {
           ),
         ),
         Container(
-            alignment: FractionalOffset(0.5, 0.5),
-            child: FractionallySizedBox(
-                widthFactor: 1,
-                heightFactor: 0.8,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          alignment: FractionalOffset(0.5, 0.5),
+          child: FractionallySizedBox(
+            widthFactor: 1,
+            heightFactor: 0.8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        MainCarouselText1(
-                          text: '자신의 콘텐츠와 브랜드와의',
-                        ),
-                        MainCarouselText1(
-                          text: '적합성을 평가하여',
-                        ),
-                        MainCarouselText1(
-                          text: '최적의 계약을 체결해보세요!',
-                        )
-                      ],
+                    MainCarouselText1(
+                      text: '자신의 콘텐츠와 브랜드와의',
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: SizedBox(
-                          width: 180,
-                          child: SmallButton(
-                            title: '캠페인 보러가기',
-                          )),
+                    MainCarouselText1(
+                      text: '적합성을 평가하여',
+                    ),
+                    MainCarouselText1(
+                      text: '최적의 계약을 체결해보세요!',
                     )
                   ],
-                )))
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SizedBox(
+                      width: 180,
+                      child: SmallButton(
+                        title: '캠페인 보러가기',
+                      )),
+                )
+              ],
+            ),
+          ),
+        ),
       ],
     ),
     Stack(
@@ -292,7 +294,7 @@ class _HomeState extends State<Home> {
                                       //     clouterInfo.contractCount ?? 0,
                                       categoryList:
                                           clouterInfo.categoryList ?? [''],
-                                      channelList: clouterInfo.channelList!
+                                      adPlatformList: clouterInfo.channelList!
                                           .map((e) => Sns2(
                                                 platform: e.platform,
                                               ))

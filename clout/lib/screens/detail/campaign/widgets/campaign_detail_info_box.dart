@@ -1,9 +1,11 @@
-import 'package:clout/screens/detail/campaign/campaign_detail.dart';
 import 'package:clout/type.dart';
-import 'package:clout/widgets/common/nametag.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:intl/intl.dart';
+
+// widgets
+import 'package:clout/utilities/category_translator.dart';
+import 'package:clout/widgets/common/nametag.dart';
 
 class CampaignDetailInfoBox extends StatelessWidget {
   final CampaignInfo campaignInfo;
@@ -13,6 +15,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
       {super.key, required this.campaignInfo, required this.advertiserInfo});
 
   var f = NumberFormat('###,###,###,###');
+  // final AdCategoryTranslator categoryTranslator = AdCategoryTranslator();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,9 @@ class CampaignDetailInfoBox extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          NameTag(title: campaignInfo.adCategory!),
+          NameTag(
+              title: AdCategoryTranslator.translateAdCategory(
+                  campaignInfo.adCategory!)),
           SizedBox(height: 10),
           Text(
             campaignInfo.title!,
@@ -64,8 +69,9 @@ class CampaignDetailInfoBox extends StatelessWidget {
               Text('희망 플랫폼', style: TextStyle(fontSize: 15)),
               Expanded(
                   child: Text(
-                // campaignInfo.adPlatformList,
-                '',
+                campaignInfo.adPlatformList != null
+                    ? campaignInfo.adPlatformList!.join(', ')
+                    : "정보 없음",
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ))
