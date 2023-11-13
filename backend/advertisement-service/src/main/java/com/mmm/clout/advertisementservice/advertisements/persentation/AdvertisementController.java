@@ -1,7 +1,10 @@
 package com.mmm.clout.advertisementservice.advertisements.persentation;
 
+import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignDto;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
+import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignResponse;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -37,7 +41,9 @@ public class AdvertisementController implements AdvertisementControllerDocs {
 
     private final AdvertisementFacade advertisementFacade;
 
-    // TODO Point 도메인과 연결 & 이미지 저장 필요
+    // TODO 이미지 연결 필요
+    // TODO Point 도메인과 연결 -> Feign client 에러 및 보상트랜잭션 처리
+    // TODO n+1
     // 등록하기 전 포인트 10,000포인트 있어야 함. 없으면 충전 페이지로 이동.
 
     /**
@@ -96,8 +102,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     }
 
     /**
-     * 인기 있는 광고 리스트 (10개) 조회 (신청자 수 많은 순 / 모집기간 내 / 우선순위가 같을경우, 최신순) 복잡한 조건이라 jpa 쿼리로 작성하기에 가독성이 좋지
-     * 않으므로 jpql 사용
+     * 인기 있는 광고 리스트 (10개) 조회 (신청자 수 많은 순 / 모집기간 내 / 우선순위가 같을경우, 최신순)
      */
     @GetMapping("/top10")
     public ResponseEntity<GetTop10CampainListResponse> getTop10Campaigns() {
@@ -139,31 +144,47 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * 광고 검색 / 검색 조건별 전체 조회
+     */
     @GetMapping("/search")
-    public ResponseEntity<List<CampaignDto>> searchAndReadCampaignList(
+    public ResponseEntity<Page<CampaignReader>> searchAndReadCampaignList(
         @RequestParam(defaultValue = "0") Integer page,
         @RequestParam(defaultValue = "10") Integer size,
-        @RequestParam(defaultValue = "a") List<String> category,
-        @RequestParam(defaultValue = "a") List<String> platform,
+        @RequestParam(defaultValue = "ALL") List<String> category,
+        @RequestParam(defaultValue = "INSTAGRAM") List<String> platform,
         @RequestParam(defaultValue = "0") Integer minAge,
         @RequestParam(defaultValue = "100") Integer maxAge,
         @RequestParam(defaultValue = "0") Integer minFollower,
         @RequestParam(defaultValue = "0") Integer minPrice,
         @RequestParam(defaultValue = "1000000000") Integer maxPrice,
-        @RequestParam(defaultValue = "a") List<String> region,
-        @RequestParam String keyword,
-        @RequestParam(defaultValue = "P") String sortKey
+        @RequestParam(defaultValue = "ALL") List<String> region,
+        @RequestParam(required = false) String keyword,
+        @RequestParam(defaultValue = "POPULARITY") CampaignSort sortKey
     ) {
 
-        Pageable pageable = PageRequest.of(page, size);
-        List<CampaignDto> result = advertisementFacade.search(
-            pageable, category, platform, minAge, maxAge, minFollower, minPrice, maxPrice, region,
-            keyword, sortKey
+        Page<CampaignReader> result = advertisementFacade.search(
+            PageRequest.of(page, size),
+            SearchCondition.from(
+                category,
+                platform,
+                minAge,
+                maxAge,
+                minFollower,
+                minPrice,
+                maxPrice,
+                region,
+                keyword,
+                sortKey
+            )
         );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
+    /**
+     * <백엔드 통신용 api>
+     */
     @GetMapping("/ads")
     public ResponseEntity<List<CampaignResponse>> getCampaignListById(
         @RequestParam(name = "adId") List<Long> adIdList
