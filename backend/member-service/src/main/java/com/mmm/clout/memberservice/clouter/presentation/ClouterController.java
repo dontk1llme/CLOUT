@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/v1/clouters")
 @RequiredArgsConstructor
-public class ClouterController {
+public class ClouterController implements ClouterControllerDocs{
 
     private final ClouterFacade clouterFacade;
 
