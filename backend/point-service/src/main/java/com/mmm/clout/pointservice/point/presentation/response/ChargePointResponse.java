@@ -1,6 +1,5 @@
 package com.mmm.clout.pointservice.point.presentation.response;
 
-import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
