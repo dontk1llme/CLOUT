@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 
 @Getter
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class GetCampainListByAdvertiserResponse {
     private AdvertiserResponse advertiserInfo;
 
     public static GetCampainListByAdvertiserResponse from(CampaignListReader reader) {
-        List<Campaign> campaigns = reader.getCampaignList();
+        Page<Campaign> campaigns = reader.getCampaignList();
         AdvertiserInfo advertiser = reader.getAdvertiserInfo();
         return new GetCampainListByAdvertiserResponse(
             campaigns.stream().map(CampaignResponse::from).collect(Collectors.toList()),
