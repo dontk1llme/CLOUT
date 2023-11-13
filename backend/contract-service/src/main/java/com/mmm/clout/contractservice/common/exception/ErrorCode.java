@@ -25,7 +25,8 @@ public enum ErrorCode {
     NOT_F0UND_ADVERTISER(HttpStatus.NOT_FOUND, "NOT_F0UND_ADVERTISER", "존재하지 않는 유저 입니다."),
     NOT_F0UND_CLOUTER(HttpStatus.NOT_FOUND, "NOT_F0UND_CLOUTER", "존재하지 않는 유저 입니다."),
     NOT_FOUND_CONTRACT(HttpStatus.NOT_FOUND,"NOT_FOUND_CONTRACT" , "존재하지 않는 계약입니다."),
-    DUPLICATE_CONTRACT(HttpStatus.CONFLICT, "DUPLICATE_CONTRACT", "이미 계약이 존재 합니다.");
+    DUPLICATE_CONTRACT(HttpStatus.CONFLICT, "DUPLICATE_CONTRACT", "이미 계약이 존재 합니다."),
+    LACK_OF_POINT(HttpStatus.BAD_REQUEST, "LACK_OF_POINT", "차감할 포인트가 부족합니다.");
 
 
     private final HttpStatus status;
