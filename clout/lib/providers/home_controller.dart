@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:clout/type.dart';
+import 'package:clout/utilities/category_translator.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -22,6 +23,7 @@ class HomeController extends GetxController {
       campaignData.value = campaignsJson.map((item) {
         var campaign = Campaign.fromJson(item['campaign']);
         var advertiserInfo = AdvertiserInfo.fromJson(item['advertiserInfo']);
+
         return CampaignInfo(
           campaign.campaignId,
           campaign.adPlatformList,
@@ -29,7 +31,7 @@ class HomeController extends GetxController {
           campaign.details,
           campaign.deletedAt,
           campaign.title,
-          campaign.adCategory,
+          AdCategoryTranslator.translateAdCategory(campaign.adCategory!),
           campaign.isPriceChangeable,
           campaign.isDeliveryRequired,
           campaign.numberOfRecruiter,
