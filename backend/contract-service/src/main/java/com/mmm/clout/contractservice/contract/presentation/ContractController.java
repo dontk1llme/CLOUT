@@ -89,9 +89,4 @@ public class ContractController implements ContractControllerDocs {
         );
         return new ResponseEntity<AllSelectContractsResponse>(response, HttpStatus.OK);
     }
-
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return new ResponseEntity<>("ok", HttpStatus.OK);
-    }
 }
