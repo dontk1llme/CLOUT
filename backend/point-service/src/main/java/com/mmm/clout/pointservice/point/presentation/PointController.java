@@ -1,7 +1,9 @@
 package com.mmm.clout.pointservice.point.presentation;
 
 import com.mmm.clout.pointservice.common.docs.PointControllerDocs;
+import com.mmm.clout.pointservice.point.presentation.request.CreatePointRequest;
 import com.mmm.clout.pointservice.point.application.facade.PointFacade;
+import com.mmm.clout.pointservice.point.domain.Point;
 import com.mmm.clout.pointservice.point.domain.PointTransaction;
 import com.mmm.clout.pointservice.point.presentation.request.ChargePointRequest;
 import com.mmm.clout.pointservice.point.presentation.request.ReducePointRequest;
@@ -9,6 +11,7 @@ import com.mmm.clout.pointservice.point.presentation.request.WithdrawPointReques
 import com.mmm.clout.pointservice.point.presentation.request.AddPointRequest;
 import com.mmm.clout.pointservice.point.presentation.response.AddPointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.ChargePointResponse;
+import com.mmm.clout.pointservice.point.presentation.response.CreatePointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.CustomPageResponse;
 import com.mmm.clout.pointservice.point.presentation.response.GetMemberTotalPointResponse;
 import com.mmm.clout.pointservice.point.presentation.response.PointTransactionResponse;
@@ -116,5 +119,16 @@ public class PointController implements PointControllerDocs {
         );
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * 포인트 초기화 (회원가입시 생성)
+     */
+    @PostMapping
+    public ResponseEntity<CreatePointResponse> create(
+        @Valid @RequestBody CreatePointRequest request
+    ) {
+        CreatePointResponse result = CreatePointResponse.from(pointFacade.create(request.getMemberId()));
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }
