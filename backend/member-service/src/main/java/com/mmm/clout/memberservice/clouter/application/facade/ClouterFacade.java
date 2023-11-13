@@ -2,11 +2,15 @@ package com.mmm.clout.memberservice.clouter.application.facade;
 
 import com.mmm.clout.memberservice.clouter.application.*;
 import com.mmm.clout.memberservice.clouter.application.command.CreateClrCommand;
+import com.mmm.clout.memberservice.clouter.application.command.SearchCondition;
 import com.mmm.clout.memberservice.clouter.application.command.UpdateClrCommand;
 import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
 import com.mmm.clout.memberservice.clouter.domain.Clouter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +25,7 @@ public class ClouterFacade {
     private final SelectClouterProcessor selectClouterProcessor;
     private final SelectClouterForContractProcessor selectClouterForContractProcessor;
     private final SelectTop10ClouterProcessor selectTop10ClouterProcessor;
+    private final SearchClouterListProcessor searchClouterListProcessor;
 
     public Clouter create(CreateClrCommand command) {
         return createClouterProcessor.execute(command);
@@ -34,5 +39,9 @@ public class ClouterFacade {
 
     public List<ClouterReader> selectTop10() {
         return selectTop10ClouterProcessor.execute();
+    }
+
+    public Page<ClouterReader> search(Pageable pageable, SearchCondition condition) {
+        return searchClouterListProcessor.execute(pageable, condition);
     }
 }
