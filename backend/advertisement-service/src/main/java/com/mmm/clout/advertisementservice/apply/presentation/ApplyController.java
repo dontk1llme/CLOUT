@@ -9,15 +9,14 @@ import com.mmm.clout.advertisementservice.apply.presentation.request.CreateApply
 import com.mmm.clout.advertisementservice.apply.presentation.response.ApplicantResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.ApplyMessageResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.CreateApplyResponse;
-import com.mmm.clout.advertisementservice.apply.presentation.response.GetAllByStatusResponse;
 import com.mmm.clout.advertisementservice.apply.presentation.response.GetApplyByStatusResponse;
+import com.mmm.clout.advertisementservice.common.docs.ApplyControllerDocs;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/applies")
 @RequiredArgsConstructor
-public class ApplyController {
+public class ApplyController implements ApplyControllerDocs {
 
     private final ApplyFacade applyFacade;
 
@@ -58,6 +57,7 @@ public class ApplyController {
         applyFacade.cancel(applyId);
         return new ResponseEntity<>("신청 취소 완료", HttpStatus.OK);
     }
+
 
     // TODO 이미지, star 기능 만들어지면 추가 필요
 
@@ -88,6 +88,9 @@ public class ApplyController {
             ), HttpStatus.OK);
     }
 
+    /**
+     * 광고주가) 해당 광고 신청자 목록 조회
+     */
     @GetMapping("/advertisers")
     public ResponseEntity<CustomPageResponse<ApplicantResponse>> getApplicantList(
         @RequestParam Long advertisementId,
@@ -109,6 +112,9 @@ public class ApplyController {
             ), HttpStatus.OK);
     }
 
+    /**
+     * 신청자 한마디 조회
+     */
     @GetMapping("/{applyId}/msg")
     public ResponseEntity<ApplyMessageResponse> getApplyMsg(
         @PathVariable Long applyId
@@ -121,7 +127,7 @@ public class ApplyController {
     }
 
     /**
-     * 채택 -> 계약 생성
+     * 채택 -> TODO 계약 생성
      */
     @PostMapping("/{applyId}/selection")
     public ResponseEntity<Void> selectForContract(
