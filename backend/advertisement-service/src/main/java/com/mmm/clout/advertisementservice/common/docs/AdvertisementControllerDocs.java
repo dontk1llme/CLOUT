@@ -2,7 +2,9 @@ package com.mmm.clout.advertisementservice.common.docs;
 
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignReaderResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CustomPageResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.EndedCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampaignAndAdvertiserResponse;
@@ -185,10 +187,10 @@ public interface AdvertisementControllerDocs {
         @ApiResponse(responseCode = "200", description = "광고주가 올린 광고 목록 조회 성공",
             content =
             @Content(mediaType = "application/json",
-                schema = @Schema(implementation = GetCampainListByAdvertiserResponse.class))
+                schema = @Schema(implementation = CustomPageResponse.class))
         )
     )
-    ResponseEntity<GetCampainListByAdvertiserResponse> getCampaignsByAdvertisers(
+    ResponseEntity<CustomPageResponse<CampaignReaderResponse>> getCampaignsByAdvertisers(
         @RequestParam Long advertiserId,
         @RequestParam int page,
         @RequestParam int size
