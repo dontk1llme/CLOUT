@@ -1,5 +1,9 @@
 package com.mmm.clout.advertisementservice.common.docs;
 
+import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
+import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
+import com.mmm.clout.advertisementservice.advertisements.domain.Region;
+import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignReaderResponse;
@@ -18,6 +22,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -222,6 +227,112 @@ public interface AdvertisementControllerDocs {
     )
     ResponseEntity<EndedCampaignResponse> endCampaign(
         @PathVariable Long advertisementId
+    );
+
+
+    @Operation(summary = "캠페인 검색/전체조회",
+        description = "검색 필터링/카테고리/정렬 조건 등 조건에 따라 알맞은 캠페인 검색 결과를 제공합니다.",
+        parameters = {
+            @Parameter(
+                in = ParameterIn.HEADER,
+                name = "Authorization",
+                required = true,
+                schema = @Schema(type = "string"),
+                description = "인증 토큰"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "page",
+                required = true,
+                description = "현재 페이지"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "size",
+                required = true,
+                description = "한 페이지당 보여줄 데이터 갯수(size)"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "category",
+                required = true,
+                description = "카테고리 리스트"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "platform",
+                required = true,
+                description = "플랫폼 리스트"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "minAge",
+                required = true,
+                description = "클라우터 최소 나이"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "maxAge",
+                required = true,
+                description = "클라우터 최대 나이"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "minFollower",
+                required = true,
+                description = "최소 팔로워 수"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "minPrice",
+                required = true,
+                description = "최소 광고비"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "maxPrice",
+                required = true,
+                description = "최대 광고비"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "region",
+                required = true,
+                description = "지역 리스트"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "keyword",
+                required = false,
+                description = "검색 키워드"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "sortKey",
+                required = true,
+                description = "정렬 조건"
+            )
+        },
+        responses =
+        @ApiResponse(responseCode = "200", description = "광고 캠페인 검색/전체조회",
+            content =
+            @Content(mediaType = "application/json",
+                schema = @Schema(implementation = CustomPageResponse.class))
+        )
+    )
+    ResponseEntity<CustomPageResponse<CampaignReaderResponse>> searchAndReadCampaignList(
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "10") Integer size,
+        @RequestParam(defaultValue = "ALL") List<AdCategory> category,
+        @RequestParam(defaultValue = "INSTAGRAM") List<AdPlatform> platform,
+        @RequestParam(defaultValue = "0") Integer minAge,
+        @RequestParam(defaultValue = "100") Integer maxAge,
+        @RequestParam(defaultValue = "0") Integer minFollower,
+        @RequestParam(defaultValue = "0") Integer minPrice,
+        @RequestParam(defaultValue = "1000000000") Integer maxPrice,
+        @RequestParam(defaultValue = "ALL") List<Region> region,
+        @RequestParam(required = false) String keyword,
+        @RequestParam(defaultValue = "POPULARITY") CampaignSort sortKey
     );
 
 }
