@@ -1,11 +1,13 @@
 package com.mmm.clout.memberservice.bookmark.infrastructure.configuration;
 
+import com.mmm.clout.memberservice.advertiser.domain.repository.AdvertiserRepository;
 import com.mmm.clout.memberservice.bookmark.application.*;
 import com.mmm.clout.memberservice.bookmark.domain.provider.AdvertisementProvider;
 import com.mmm.clout.memberservice.bookmark.domain.repository.BookmarkRepository;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
 import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
+import com.mmm.clout.memberservice.member.infrastructure.auth.service.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,9 +40,9 @@ public class BookmarkConfig {
 
     @Bean
     public SelectAdByMemberIdProcessor selectAdByMemberIdProcessor(
-        BookmarkRepository bookmarkRepository, AdvertisementProvider advertisementProvider
+        BookmarkRepository bookmarkRepository, AdvertisementProvider advertisementProvider, AdvertiserRepository advertiserRepository
     ) {
-        return new SelectAdByMemberIdProcessor(bookmarkRepository, advertisementProvider);
+        return new SelectAdByMemberIdProcessor(bookmarkRepository, advertisementProvider, advertiserRepository);
     }
 
     @Bean
