@@ -2,6 +2,11 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/common/choicechip.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:get/get.dart';
+import 'package:clout/hooks/apis/points_transactions.dart';
+import 'package:clout/type.dart';
+import 'dart:convert';
 
 // widgets
 import 'package:clout/screens/point/widgets/my_wallet.dart';
@@ -16,6 +21,51 @@ class AdvertiserPointList extends StatefulWidget {
 }
 
 class _AdvertiserPointListState extends State<AdvertiserPointList> {
+
+  @override
+  void initState() {
+    super.initState();
+    // initState에서 비동기 작업 수행
+    getPointList();
+  }
+
+
+  final userController = Get.find<UserController>();
+
+  Future<void> getPointList() async {
+
+    var authorization = userController.userLogin['authorization'];
+    var requestBody = {
+      "memberId": userController.memberId,
+      "category": 'ALL', //actionchoice에 따라 바뀌어야 함
+      "page": '0', //temp
+      "size": '10', //temp
+    };
+
+    var response = await PointsTransactionsApi.getRequest(
+      '/point-service/v1/points/transactions',
+      authorization,
+      requestBody,
+    );
+
+
+    print('$requestBody');
+    print('응답: $response');
+    var responseData = json.decode(response);
+    var content = responseData['content'];
+    print("응답2: $content");
+    
+
+    // List<PointItem> pointItems = (json.decode(response.bodyBytes)['content'] as List)
+    //     .map((data) => PointItem.fromJson(data))
+    //     .toList();
+    
+    // print('포인트 아이템');
+    // print(pointItems);
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
