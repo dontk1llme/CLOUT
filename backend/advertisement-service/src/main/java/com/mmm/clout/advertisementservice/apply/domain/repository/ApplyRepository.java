@@ -19,9 +19,11 @@ public interface ApplyRepository {
 
     List<Apply> getAllByStatus(Pageable pageable, Long applicantId, ApplyStatus applyStatus);
 
-    List<Apply> findApplicantList(Long advertisementId);
+    List<Apply> findApplicantList(Long advertisementId, Pageable pageable);
 
     List<Apply> findByCampaign(Campaign campaign);
 
-    JPAQuery<Long> countByStatus(Long applicantId, ApplyStatus applyStatus);
+    JPAQuery<Apply> countByStatus(Long applicantId, ApplyStatus applyStatus);
+
+    JPAQuery<Apply> countByAdvertisement(Long advertisementId);
 }

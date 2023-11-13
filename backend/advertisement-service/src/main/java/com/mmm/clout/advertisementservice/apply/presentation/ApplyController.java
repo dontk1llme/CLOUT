@@ -2,6 +2,7 @@ package com.mmm.clout.advertisementservice.apply.presentation;
 
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CustomPageResponse;
 import com.mmm.clout.advertisementservice.apply.application.facade.ApplyFacade;
+import com.mmm.clout.advertisementservice.apply.application.reader.ApplicantListByCampaignReader;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplyListByClouterReader;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import com.mmm.clout.advertisementservice.apply.presentation.request.CreateApplyRequest;
@@ -88,12 +89,24 @@ public class ApplyController {
     }
 
     @GetMapping("/advertisers")
-    public ResponseEntity<List<ApplicantResponse>> getApplicantList(
-        @RequestParam Long advertisementId
+    public ResponseEntity<CustomPageResponse<ApplicantResponse>> getApplicantList(
+        @RequestParam Long advertisementId,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
     ) {
-        List<ApplicantResponse> result =
-            ApplicantResponse.from(applyFacade.getApplicantList(advertisementId));
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        Page<ApplicantListByCampaignReader> result = applyFacade.getApplicantList(
+            PageRequest.of(page, size), advertisementId);
+        List<ApplicantResponse> content =
+            ApplicantResponse.from(result.getContent());
+
+        return new ResponseEntity<>(
+            new CustomPageResponse<>(
+                content,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalPages(),
+                result.getTotalElements()
+            ), HttpStatus.OK);
     }
 
     @GetMapping("/{applyId}/msg")

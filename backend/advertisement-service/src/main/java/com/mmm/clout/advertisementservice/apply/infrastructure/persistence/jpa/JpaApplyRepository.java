@@ -12,9 +12,7 @@ public interface JpaApplyRepository extends JpaRepository<Apply, Long> {
 
     boolean existsByCampaignAndApplicant_ApplicantId(Campaign campaign, Long clouterId);
 
-    Page<Apply> findByApplicant_ApplicantIdAndApplyStatus(Long applicantId, ApplyStatus applyStatus, Pageable pageable);
-
-    List<Apply> findByCampaignId(Long advertisementId);
+    List<Apply> findByCampaignId(Long advertisementId, Pageable pageable);
 
     List<Apply> findByCampaign(Campaign campaign);
 }

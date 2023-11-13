@@ -27,7 +27,7 @@ public class ReadAllApplyProcessor {
     @Transactional
     public Page<ApplyListByClouterReader> execute(Pageable pageable, Long applicantId, ApplyStatus applyStatus) {
         List<Apply> applyList = applyRepository.getAllByStatus(pageable, applicantId, applyStatus);
-        JPAQuery<Long> countQuery = applyRepository.countByStatus(applicantId, applyStatus);
+        JPAQuery<Apply> countQuery = applyRepository.countByStatus(applicantId, applyStatus);
 
         List<ApplyListByClouterReader> content = new ArrayList<>();
         for (Apply apply: applyList) {

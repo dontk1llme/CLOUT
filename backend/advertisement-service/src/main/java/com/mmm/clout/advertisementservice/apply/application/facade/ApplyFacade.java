@@ -40,8 +40,8 @@ public class ApplyFacade {
         return readAllApplyProcessor.execute(pageable, clouterId, type);
     }
 
-    public List<ApplicantListByCampaignReader> getApplicantList(Long advertisementId) {
-        return readApplicantsByCampaignProcessor.execute(advertisementId);
+    public Page<ApplicantListByCampaignReader> getApplicantList(Pageable pageable, Long advertisementId) {
+        return readApplicantsByCampaignProcessor.execute(pageable, advertisementId);
     }
 
     public String getMessage(Long applyId) {
