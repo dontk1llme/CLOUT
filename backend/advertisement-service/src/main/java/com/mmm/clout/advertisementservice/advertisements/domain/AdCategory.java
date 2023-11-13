@@ -1,10 +1,13 @@
 package com.mmm.clout.advertisementservice.advertisements.domain;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public enum AdCategory {
 
+    ALL("전체"),
     FASHION_BEAUTY("패션/뷰티"),
     HEALTH_LIFESTYLE("건강/생활"),
     TRAVEL_LEISURE("여행/레저"),

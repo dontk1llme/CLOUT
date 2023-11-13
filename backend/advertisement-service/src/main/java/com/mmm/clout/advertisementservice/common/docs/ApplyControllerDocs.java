@@ -65,7 +65,6 @@ public interface ApplyControllerDocs {
                 in = ParameterIn.PATH,
                 name = "applyId",
                 required = true,
-                schema = @Schema(type = "long"),
                 description = "신청(apply) 고유 식별자"
             )
         }

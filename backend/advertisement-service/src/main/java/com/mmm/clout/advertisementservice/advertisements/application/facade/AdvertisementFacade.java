@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.CreateCampa
 import com.mmm.clout.advertisementservice.advertisements.application.DeleteCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.EndCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByAdvertiser;
+import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignListByIdProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.GetTop10CampaignListProcessor;
 import com.mmm.clout.advertisementservice.advertisements.application.SearchCampaignListProcessor;
@@ -11,12 +12,12 @@ import com.mmm.clout.advertisementservice.advertisements.application.UpdateCampa
 import com.mmm.clout.advertisementservice.advertisements.application.command.CreateCampaignCommand;
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.command.UpdateCampaignCommand;
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignDto;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class AdvertisementFacade {
     private final GetCampaignListByAdvertiser getCampaignListByAdvertiserProcessor;
     private final EndCampaignProcessor endCampaignProcessor;
     private final SearchCampaignListProcessor searchCampaignListProcessor;
+    private final GetCampaignListByIdProcessor getCampaignListByIdProcessor;
 
     public Campaign create(CreateCampaignCommand command) {
         return createCampaignProcessor.execute(command);
@@ -61,7 +63,12 @@ public class AdvertisementFacade {
         return endCampaignProcessor.execute(advertisementId);
     }
 
-    public List<CampaignDto> search(SearchCondition condition) {
-        return searchCampaignListProcessor.execute(condition);
+
+    public Page<CampaignReader> search(Pageable pageable, SearchCondition condition) {
+        return searchCampaignListProcessor.execute(pageable, condition);
+    }
+
+    public List<Campaign> getCampaignListByIdList(List<Long> adIdList) {
+        return getCampaignListByIdProcessor.execute(adIdList);
     }
 }

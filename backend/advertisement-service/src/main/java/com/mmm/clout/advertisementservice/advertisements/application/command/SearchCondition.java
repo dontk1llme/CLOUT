@@ -1,27 +1,30 @@
 package com.mmm.clout.advertisementservice.advertisements.application.command;
 
+import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
+import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
+import com.mmm.clout.advertisementservice.advertisements.domain.Region;
+import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.data.domain.Pageable;
 
 @Getter
 @AllArgsConstructor
 public class SearchCondition {
 
-    private Pageable pageable;
-    private List<String> category;
-    private List<String> platform;
+    private List<AdCategory> category;
+    private List<AdPlatform> platform;
     private Integer minAge;
     private Integer maxAge;
     private Integer minFollower;
     private Integer minPrice;
     private Integer maxPrice;
-    private List<String> region;
+    private List<Region> region;
     private String keyword;
-    private String sortKey;
+    private CampaignSort sortKey;
+
     public static SearchCondition from(
-        Pageable pageable,
         List<String> category,
         List<String> platform,
         Integer minAge,
@@ -31,18 +34,23 @@ public class SearchCondition {
         Integer maxPrice,
         List<String> region,
         String keyword,
-        String sortKey
+        CampaignSort sortKey
     ) {
         return new SearchCondition(
-            pageable,
-            category,
-            platform,
+            category.stream().map(
+                AdCategory::valueOf
+            ).collect(Collectors.toList()),
+            platform.stream().map(
+                AdPlatform::valueOf
+            ).collect(Collectors.toList()),
             minAge,
             maxAge,
             minFollower,
             minPrice,
             maxPrice,
-            region,
+            region.stream().map(
+                Region::valueOf
+            ).collect(Collectors.toList()),
             keyword,
             sortKey
         );

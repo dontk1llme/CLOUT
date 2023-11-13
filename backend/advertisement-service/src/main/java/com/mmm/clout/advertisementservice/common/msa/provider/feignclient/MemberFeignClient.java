@@ -1,4 +1,4 @@
-package com.mmm.clout.advertisementservice.apply.infrastructure.provider.feignclient;
+package com.mmm.clout.advertisementservice.common.msa.provider.feignclient;
 
 import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
 import com.mmm.clout.advertisementservice.common.msa.info.ClouterInfo;
