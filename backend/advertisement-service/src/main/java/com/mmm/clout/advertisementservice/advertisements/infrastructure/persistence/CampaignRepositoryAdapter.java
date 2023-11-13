@@ -10,7 +10,6 @@ import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.Region;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.jpa.JpaCampaignRepository;
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -21,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -56,10 +54,6 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
         return pages.getContent();
     }
 
-    public List<Campaign> findAllByCondition(BooleanBuilder builder, Pageable pageable) {
-        return jpaCampaignRepository.findAll(builder, pageable).getContent();
-    }
-
     @Override
     public List<Campaign> findByIdIn(List<Long> adIdList) {
         return jpaCampaignRepository.findByIdIn(adIdList);
@@ -83,10 +77,6 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
-
-//        JPAQuery<Campaign> countQuery = getCountQuery(condition);
-
-//        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
     @Override

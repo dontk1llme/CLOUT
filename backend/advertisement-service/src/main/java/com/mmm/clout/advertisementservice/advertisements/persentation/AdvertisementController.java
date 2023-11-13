@@ -40,7 +40,9 @@ public class AdvertisementController implements AdvertisementControllerDocs {
 
     private final AdvertisementFacade advertisementFacade;
 
-    // TODO Point 도메인과 연결 & 이미지 저장 필요
+    // TODO 이미지 연결 필요
+    // TODO Point 도메인과 연결 -> Feign client 에러 및 보상트랜잭션 처리
+    // TODO n+1
     // 등록하기 전 포인트 10,000포인트 있어야 함. 없으면 충전 페이지로 이동.
 
     /**
