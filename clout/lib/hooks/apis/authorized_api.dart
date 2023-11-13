@@ -64,6 +64,7 @@ class AuthorizedApi {
 
     print('상태코드');
     print(statusCode);
+    print(body);
 
     if (statusCode == 401) {
       print('만료된 토큰');
@@ -73,7 +74,7 @@ class AuthorizedApi {
     }
   }
 
-  putRequest(apiUrl, parameter) async{
+  putRequest(apiUrl, parameter) async {
     var url = Uri.parse('$baseUrl$apiUrl');
     print(url);
     print(json.encode(parameter));
