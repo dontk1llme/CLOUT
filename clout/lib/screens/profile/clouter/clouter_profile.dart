@@ -101,10 +101,10 @@ class _ClouterProfileState extends State<ClouterProfile> {
                           InfoItemBox(
                               titleName: '나이',
                               contentInfo: clouterInfo?.age.toString() ?? ''),
-                          InfoItemBox(
-                              titleName: '주소',
-                              contentInfo:
-                                  '(${clouterInfo?.address!.zipCode!}) ${clouterInfo?.address!.mainAddress!} ${clouterInfo?.address!.detailAddress!}'),
+                          // InfoItemBox(
+                          //     titleName: '주소',
+                          //     contentInfo:
+                          //         '(${clouterInfo?.address!.zipCode!}) ${clouterInfo?.address!.mainAddress!} ${clouterInfo?.address!.detailAddress!}'),
                         ],
                       ),
                       Column(

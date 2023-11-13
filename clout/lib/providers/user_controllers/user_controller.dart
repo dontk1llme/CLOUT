@@ -32,24 +32,24 @@ class UserController extends GetxController {
     update();
   }
 
-  setUserId(input) {
-    userId = input;
-    update();
-  }
+  // setUserId(input) {
+  //   userId = input;
+  //   update();
+  // }
 
-  setPassword(input) {
-    password = input;
-    update();
-  }
+  // setPassword(input) {
+  //   password = input;
+  //   update();
+  // }
 
-  setUserInfo() {
-    userInfo = Login(
-        // user,
-        userId,
-        password);
-    print('유저인포 업데이트');
-    update();
-  }
+  // setUserInfo() {
+  //   userInfo = LoginInfo(
+  //       // user,
+  //       userId,
+  //       password);
+  //   print('유저인포 업데이트');
+  //   update();
+  // }
 
   setUserLogin(input) {
     userLogin = input;

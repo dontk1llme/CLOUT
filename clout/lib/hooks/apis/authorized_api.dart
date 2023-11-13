@@ -34,6 +34,7 @@ class AuthorizedApi {
 
     if (statusCode == 401) {
       print('만료된 토큰');
+      reissueToken();
     } else {
       return returnVal;
     }
@@ -66,6 +67,40 @@ class AuthorizedApi {
 
     if (statusCode == 401) {
       print('만료된 토큰');
+      reissueToken();
+    } else {
+      return returnVal;
+    }
+  }
+
+  putRequest(apiUrl, parameter) async{
+    var url = Uri.parse('$baseUrl$apiUrl');
+    print(url);
+    print(json.encode(parameter));
+    http.Response response = await http.put(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': userController.accessToken
+      },
+      body: json.encode(parameter),
+    );
+
+    print('put 통신 실행 완료');
+
+    var statusCode = response.statusCode;
+    var body = utf8.decode(response.bodyBytes);
+    var returnVal = {
+      'statusCode': statusCode,
+      'body': body,
+    };
+
+    print('상태코드');
+    print(statusCode);
+
+    if (statusCode == 401) {
+      print('만료된 토큰');
+      reissueToken();
     } else {
       return returnVal;
     }
@@ -78,9 +113,8 @@ class AuthorizedApi {
       url,
       headers: {
         // "Content-Type": "application/json",
-        // HttpHeaders.authorizationHeader : userController.refreshToken,
-        'REFRESH_TOKEN': userController.refreshToken,
-        // 'Authorization': userController.accessToken,
+        'REFRESH-TOKEN': userController.refreshToken,
+        'Authorization': userController.accessToken,
       },
     );
     print('토큰 리이슈 Response');

@@ -18,12 +18,7 @@ void logout() async {
   //       'refresh_token': '',
   //       'clout_or_adv': 0,
   // };
-  userController.setUserLogin(null);
-
-  // 2. 유저 정보 삭제
-  userController.setUserId('');
-  userController.setPassword('');
-  userController.setUserInfo();
+  // userController.setUserLogin(null);
 
   // 3. 홈으로 이동
   Get.offAllNamed('/');

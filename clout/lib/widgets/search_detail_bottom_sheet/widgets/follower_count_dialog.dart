@@ -1,6 +1,7 @@
 // Global
 import 'package:clout/providers/follower_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -10,8 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 //이건 getX 쓸때 쓰는 컴포넌트임 일반으로 쓰는 컴포넌트는 followercount_input_dialog.dart
-class FollowercountStateDialog extends StatelessWidget {
-  FollowercountStateDialog(
+class FollowerCountDialog extends StatelessWidget {
+  FollowerCountDialog(
       {super.key,
       required this.title,
       required this.hintText,
@@ -24,13 +25,11 @@ class FollowercountStateDialog extends StatelessWidget {
   final index;
 
   void openDialog() {
-    // final platformSelectController =
-    //     Get.find<PlatformSelectController>(tag: controllerTag);
     Get.defaultDialog(
       title: title,
       titlePadding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-      content: GetBuilder<PlatformSelectController>(
+      content: GetBuilder<FollowerController>(
         tag: controllerTag,
         builder: (controller) => SizedBox(
           height: 75,
@@ -49,17 +48,17 @@ class FollowercountStateDialog extends StatelessWidget {
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                             color: style.colors['main1']!, width: 2))),
-                initialValue: controller.followerCount[index] == '0'
+                initialValue: controller.minimumFollowers == '0'
                     ? ''
-                    : controller.followerCount[index],
+                    : controller.minimumFollowers,
                 onChanged: (newVal) {
-                  controller.setFollowerCount(index, newVal);
+                  controller.setMinimumFollowers(newVal);
                 },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(controller.followerCountString[index]),
+                  Text(controller.minimumFollowersString),
                 ],
               )
             ],
@@ -69,11 +68,9 @@ class FollowercountStateDialog extends StatelessWidget {
       actions: <Widget>[
         SizedBox(
           width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () => Get.back(),
-            style: ElevatedButton.styleFrom(
-                backgroundColor: style.colors['main1']),
-            child: Text("확인"),
+          child: BigButton(
+            function: () => Get.back(),
+            title: '확인',
           ),
         ),
       ],
@@ -82,9 +79,7 @@ class FollowercountStateDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final platformSelectController =
-        Get.find<PlatformSelectController>(tag: controllerTag);
-    return GetBuilder<FollowerContoller>(
+    return GetBuilder<FollowerController>(
       tag: controllerTag,
       builder: (controller) => Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -95,7 +90,7 @@ class FollowercountStateDialog extends StatelessWidget {
                 minimumSize: MaterialStatePropertyAll(Size(200, 50)),
                 alignment: Alignment.centerRight),
             child: Text(
-              platformSelectController.followerCountString[index],
+              controller.minimumFollowersString,
               style: style.textTheme.titleSmall?.copyWith(
                   color: style.colors['main1'],
                   fontWeight: FontWeight.bold,

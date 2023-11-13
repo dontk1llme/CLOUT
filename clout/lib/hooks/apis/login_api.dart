@@ -9,7 +9,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
 class LoginApi {
-
   final userController = Get.find<UserController>();
 
   postRequest(apiUrl, parameter) async {
@@ -28,16 +27,16 @@ class LoginApi {
     print('로그인 response 헤더');
     print(headers);
 
-    var body = utf8.decode(response.bodyBytes); 
+    var body = utf8.decode(response.bodyBytes);
+
+    var messageCode = jsonDecode(body)['code'];
     print('로그인 response 바디');
-    print(jsonDecode(body));
+    print(jsonDecode(body)['code']);
     print(body);
 
     var loginSuccess = false;
     var authorization = headers['authorization'];
-    var refreshToken = headers['refresh_token'];
-
-    
+    var refreshToken = headers['refresh-token'];
 
     var memberRole =
         LoginResponse.fromJson(jsonDecode(body)).memberRole; //바디에서 받아서 설정해야 함
@@ -46,6 +45,7 @@ class LoginApi {
 
     print('멤버타입: $memberRole');
     print('멤버아이디: $memberId');
+    print(statusCode);
 
     if (statusCode == 200) {
       loginSuccess = true;
@@ -61,9 +61,10 @@ class LoginApi {
       userController.setRefreshToken(refreshToken);
       print(responseData);
       return responseData; //{'clouterId'/'advertiserId' : integer}
-    } else if (statusCode != 404 && statusCode != 401) {
-      print('로그인 흐앵');
-      Fluttertoast.showToast(msg: '아이디 혹은 비밀번호를 확인해주세요');
+    } else {
+      if(messageCode =='WRONG_PASSWORD'){
+        Fluttertoast.showToast(msg: '비밀번호를 다시 확인해주세요');
+      }
     }
   }
 }
