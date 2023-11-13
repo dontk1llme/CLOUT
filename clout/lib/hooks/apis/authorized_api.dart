@@ -94,6 +94,7 @@ class AuthorizedApi {
       'statusCode': statusCode,
       'body': body,
     };
+    print(body);
 
     print('상태코드');
     print(statusCode);

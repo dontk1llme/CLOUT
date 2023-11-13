@@ -22,6 +22,7 @@ class AdvertiserInfoController extends GetxController {
 
   var addressController;
   var fourDigitsInputController;
+
   runOtherControllers() {
     addressController = Get.put(
       AddressController(),
@@ -33,12 +34,26 @@ class AdvertiserInfoController extends GetxController {
     );
   }
 
+  loadBeforeModify(Advertiser input) {
+    setName(input.companyInfo!.managerName);
+    setPhoneNumber(input.companyInfo!.managerPhoneNumber);
+    setId(input.userId);
+    setBusinessName(input.companyInfo!.companyName);
+    setHeadName(input.companyInfo!.ceoName);
+    setBusinessNumber(input.companyInfo!.regNum);
+    addressController!.setZipCode(input.address!.zipCode);
+    addressController!.setDaumAddress(input.address!.mainAddress);
+    addressController!.setDetailAddress(input.address!.detailAddress);
+    fourDigitsInputController.setPhoneVerified(true);
+    update();
+  }
+
   setAdvertiser() {
     advertiser = Advertiser(
       id,
       password,
-      Address(addressController.zipCode, addressController.daumAddress,
-          addressController.detailAddress),
+      Address(addressController!.zipCode, addressController!.daumAddress,
+          addressController!.detailAddress),
       CompanyInfo(businessName, businessNumber, headName, name, phoneNumber),
       null,
     );
@@ -111,12 +126,12 @@ class AdvertiserInfoController extends GetxController {
     if (businessNumber.length != 12) {
       return '사업자등록번호를 확인해주세요 📃';
     }
-    if (addressController.zipCode == null ||
-        addressController.zipCode.length == 0) {
+    if (addressController!.zipCode == null ||
+        addressController!.zipCode.length == 0) {
       return '주소를 입력해주세요 🏢';
     }
-    if (addressController.detailAddress == null ||
-        addressController.detailAddress.length == 0) {
+    if (addressController!.detailAddress == null ||
+        addressController!.detailAddress.length == 0) {
       return '상세주소를 입력해주세요 🏠';
     }
     return '';
