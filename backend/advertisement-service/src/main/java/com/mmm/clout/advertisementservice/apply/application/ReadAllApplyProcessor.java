@@ -6,11 +6,15 @@ import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
+import com.querydsl.jpa.impl.JPAQuery;
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -21,18 +25,20 @@ public class ReadAllApplyProcessor {
     private final MemberProvider advertiserInfoProvider;
 
     @Transactional
-    public List<ApplyListByClouterReader> execute(Long applicantId, String applyStatus) {
-        List<Apply> applyList = applyRepository.getAllByStatus(applicantId, ApplyStatus.valueOf(applyStatus));
-        List<ApplyListByClouterReader> readerList = new ArrayList<>();
+    public Page<ApplyListByClouterReader> execute(Pageable pageable, Long applicantId, ApplyStatus applyStatus) {
+        List<Apply> applyList = applyRepository.getAllByStatus(pageable, applicantId, applyStatus);
+        JPAQuery<Apply> countQuery = applyRepository.countByStatus(applicantId, applyStatus);
+
+        List<ApplyListByClouterReader> content = new ArrayList<>();
         for (Apply apply: applyList) {
             Long advertiserId = apply.getCampaign().getAdvertiserId();
             AdvertiserInfo info = advertiserInfoProvider.getAdvertiserInfoByMemberId(advertiserId);
-            readerList.add(
+            content.add(
                 new ApplyListByClouterReader(
                     apply, info.getCompanyInfo().getCompanyName(), 0
                 )
             );
         }
-        return readerList;
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 }
