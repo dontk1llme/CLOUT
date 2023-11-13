@@ -27,7 +27,7 @@ public class CreateApplyRequest {
 
     @NotNull
     @Schema(description = "제안하는 광고비")
-    private Long hodeAdFee;
+    private Long hopeAdFee;
 
 
     public CreateApplyCommand toCommand() {
@@ -35,7 +35,7 @@ public class CreateApplyRequest {
             this.advertisementId,
             this.clouterId,
             this.applyMessage,
-            this.hodeAdFee
+            this.hopeAdFee
         );
     }
 
