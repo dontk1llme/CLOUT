@@ -1,5 +1,4 @@
 import 'package:clout/hooks/apis/authorized_api.dart';
-import 'package:get/get.dart';
 
 Future<void> sendLikeStatus(
     int memberId, int targetId, bool isLiked, bool isClouter) async {
@@ -17,7 +16,7 @@ Future<void> sendLikeStatus(
     var response = await authorizedApi.postRequest(
         '/member-service/v1/bookmarks/ad', requestBody);
 
-    if (response == 200) {
+    if (response['statusCode'] == 200) {
       print('캠페인 Bookmark 성공~~🎉');
     } else {
       print('캠페인 Bookmark 실패 ❌');
@@ -26,7 +25,7 @@ Future<void> sendLikeStatus(
     var response = await authorizedApi.postRequest(
         '/member-service/v1/bookmarks/clouter', requestBody);
 
-    if (response.statusCode == 200) {
+    if (response['statusCode'] == 200) {
       print('클라우터 Bookmark 성공~~🎉');
     } else {
       print('클라우터 Bookmark 실패 ❌');
@@ -35,7 +34,7 @@ Future<void> sendLikeStatus(
     var response = await authorizedApi.deleteRequest(
         '/member-service/v1/bookmarks/delete', requestBody);
 
-    if (response.statusCode == 200) {
+    if (response['statusCode'] == 200) {
       print('Bookmark delete 성공~~🎉');
     } else {
       print('Bookmark delete 실패 ❌');
