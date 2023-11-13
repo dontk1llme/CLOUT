@@ -1,12 +1,13 @@
-import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:clout/utilities/category_translator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-// screens
-import 'package:clout/screens/detail/clouter/clouter_detail.dart';
+// controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
+
+// utilities
+import 'package:clout/utilities/category_translator.dart';
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
@@ -20,7 +21,7 @@ class ClouterItemBox extends StatefulWidget {
   final int minCost;
   final List<String> categoryList;
   // final int contractCount; // 아직 빠져있음 💥 추가하기 (계약한 광고 수)
-  final List<Widget> channelList;
+  final List<Widget> adPlatformList;
   // final String firstImg; // 💥 사진 나중에 추가하기
 
   ClouterItemBox({
@@ -31,7 +32,7 @@ class ClouterItemBox extends StatefulWidget {
     required this.minCost,
     required this.categoryList,
     // required this.contractCount,
-    required this.channelList,
+    required this.adPlatformList,
     // required this.firstImg
   });
 
@@ -56,6 +57,17 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
+    // 'ALL'이 포함되어 있으면 모든 플랫폼에 대한 위젯 리스트 생성
+    List<Widget> adPlatformWidgets;
+    if (widget.adPlatformList
+        .any((widget) => widget is Sns2 && widget.platform == "ALL")) {
+      adPlatformWidgets = ["INSTAGRAM", "TIKTOK", "YOUTUBE"]
+          .map((platform) => Sns2(platform: platform))
+          .toList();
+    } else {
+      // 'ALL'이 없으면 기존 리스트를 사용
+      adPlatformWidgets = widget.adPlatformList;
+    }
     return InkWell(
       onTap: () => Get.toNamed('/clouterdetail', arguments: widget.clouterId),
       child: Container(
@@ -88,7 +100,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     decoration: BoxDecoration(
                         color: style.colors['white'],
                         borderRadius: BorderRadius.circular(5)),
-                    child: Row(children: widget.channelList),
+                    child: Row(children: adPlatformWidgets),
                   ),
                 ),
                 if (userController.memberType == 1)
