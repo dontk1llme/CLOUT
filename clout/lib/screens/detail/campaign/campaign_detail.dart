@@ -1,5 +1,3 @@
-import 'package:clout/hooks/apis/authorized_api.dart';
-import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -7,10 +5,11 @@ import 'package:clout/style.dart' as style;
 // api
 import 'dart:convert';
 import 'package:clout/type.dart';
+import 'package:clout/utilities/like_utils.dart';
+import 'package:clout/hooks/apis/normal_api.dart';
 
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:clout/screens/apply_campaign/apply_campaign.dart';
 
 // widgets
 import 'package:clout/screens/detail/campaign/widgets/campaign_detail_content.dart';
@@ -54,6 +53,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
   CampaignInfo? campaignInfo;
   AdvertiserInfo? advertiserInfo;
   bool isLoading = true;
+  bool isItemLiked = false;
 
   @override
   void initState() {
@@ -62,14 +62,6 @@ class _CampaignDetailState extends State<CampaignDetail> {
   }
 
   final userController = Get.find<UserController>();
-
-  // like 버튼
-  bool isItemLiked = false;
-  void handleItemTap() {
-    setState(() {
-      isItemLiked = !isItemLiked;
-    });
-  }
 
   var campaignId = Get.arguments; // campaign_item_box에서 argument 가져오기
 
@@ -187,8 +179,24 @@ class _CampaignDetailState extends State<CampaignDetail> {
                                   children: [
                                     Text('Like'),
                                     LikeButton(
-                                        isLiked: isItemLiked,
-                                        onTap: handleItemTap),
+                                      isLiked: isItemLiked,
+                                      onTap: () {
+                                        setState(() {
+                                          isItemLiked = !isItemLiked;
+                                        });
+                                        if (campaignInfo != null &&
+                                            campaignInfo!.campaignId != null) {
+                                          sendLikeStatus(
+                                            userController.memberId,
+                                            campaignInfo!.campaignId!,
+                                            isItemLiked,
+                                            false,
+                                          );
+                                        } else {
+                                          print("Campaign 정보 에러 ❌ ");
+                                        }
+                                      },
+                                    )
                                   ],
                                 ),
                           // 사진 캐러셀
