@@ -4,6 +4,7 @@ import com.mmm.clout.memberservice.advertiser.application.CreateAdvertiserProces
 import com.mmm.clout.memberservice.advertiser.application.SelectAdvertiserProcessor;
 import com.mmm.clout.memberservice.advertiser.application.UpdateAdvertiserProcessor;
 import com.mmm.clout.memberservice.advertiser.domain.repository.AdvertiserRepository;
+import com.mmm.clout.memberservice.member.domain.provider.PointProvider;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.memberservice.star.domain.repository.StarRepository;
 import org.springframework.context.annotation.Bean;
@@ -18,10 +19,11 @@ public class AdvertiserConfig {
             AdvertiserRepository advertiserRepository,
             MemberRepository memberRepository,
             BCryptPasswordEncoder encoder,
-            StarRepository starRepository
+            StarRepository starRepository,
+            PointProvider pointProvider
 
     ) {
-        return new CreateAdvertiserProcessor(advertiserRepository, memberRepository, encoder, starRepository);
+        return new CreateAdvertiserProcessor(advertiserRepository, memberRepository, encoder, starRepository, pointProvider);
     }
 
     @Bean
