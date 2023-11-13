@@ -66,4 +66,8 @@ public class ClouterReader {
         this.address = new AddressReader(clouter.getAddress());
     }
 
+    public static ClouterReader from(Clouter clouter) {
+        return null;
+    }
+
 }
