@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.command.Sea
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.QCampaign;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,8 @@ public interface CampaignRepository {
 
     List<Campaign> findByIdIn(List<Long> adIdList);
 
-    Page<Campaign> search(SearchCondition condition, Pageable pageable);
+    List<Campaign> search(SearchCondition condition, Pageable pageable);
+
+    JPAQuery<Campaign> getCountQuery(SearchCondition condition);
 
 }

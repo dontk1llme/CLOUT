@@ -16,7 +16,7 @@ public class GetCampaignListByIdProcessor {
     public List<Campaign> execute(List<Long> adIdList) {
         List<Campaign> campaigns = campaignRepository.findByIdIn(adIdList);
         for (Campaign campaign : campaigns) {
-            campaign.initializeCampaign();
+            campaign.initialize();
         }
         return campaigns;
     }
