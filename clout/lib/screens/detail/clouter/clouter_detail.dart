@@ -1,12 +1,13 @@
-import 'package:clout/hooks/apis/authorized_api.dart';
-import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
-import 'package:get/get.dart';
 
 // api
+import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:clout/type.dart';
+import 'package:clout/utilities/like_utils.dart';
+import 'package:clout/hooks/apis/authorized_api.dart';
+import 'package:clout/hooks/apis/normal_api.dart';
 
 // utility
 import 'package:clout/utilities/bouncing_listview.dart';
@@ -125,7 +126,24 @@ class _ClouterDetailState extends State<ClouterDetail> {
                             children: [
                               Text('Like'),
                               LikeButton(
-                                  isLiked: isItemLiked, onTap: handleItemTap),
+                                isLiked: isItemLiked,
+                                onTap: () {
+                                  setState(() {
+                                    isItemLiked = !isItemLiked;
+                                  });
+                                  if (clouterInfo != null &&
+                                      clouterInfo!.clouterId != null) {
+                                    sendLikeStatus(
+                                      userController.memberId,
+                                      clouterInfo!.clouterId!,
+                                      isItemLiked,
+                                      true,
+                                    );
+                                  } else {
+                                    print("Campaign 정보 에러 ❌ ");
+                                  }
+                                },
+                              )
                             ],
                           )
                       ],

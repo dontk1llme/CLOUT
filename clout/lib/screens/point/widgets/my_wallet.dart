@@ -36,7 +36,6 @@ class _MyWalletState extends State<MyWallet> {
     print('사용자 ID: $memberId');
     print('사용자 토큰: $authorization');
     //api 요청
-    final PointsApi pointsApi = PointsApi();
     var response =
         await PointsApi.getRequest('/point-service/v1/points', memberId, authorization);
     var json = jsonDecode(response);
