@@ -26,8 +26,11 @@ public class SelectAdrResponse {
 
     private CompanyInfoResponse companyInfo;
 
+    @Schema(description = "광고주 별점 평균")
+    private Long avgScore;
 
     public SelectAdrResponse(Advertiser advertiser) {
+        this.avgScore = advertiser.getAvgScore();
         this.advertiserId = advertiser.getId();
         this.userId = advertiser.getUserId();
         this.role = advertiser.getRole();
