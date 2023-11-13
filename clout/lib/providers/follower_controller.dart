@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class FollowerContoller extends GetxController {
+class FollowerController extends GetxController {
   var minimumFollowers = '0';
   var minimumFollowersString = '0 명';
 

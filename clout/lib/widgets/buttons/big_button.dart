@@ -11,17 +11,28 @@ class BigButton extends StatelessWidget {
     this.textColor,
     this.buttonColor,
     this.icon,
+    this.padding,
+    this.fontWeight,
+    this.fontHeight,
+    this.textStyle,
   }) {
     textColor ??= style.colors['white'];
     buttonColor ??= style.colors['main1'];
+    padding ??= EdgeInsets.symmetric(vertical: 12);
+    fontWeight ??= FontWeight.w600;
+    fontHeight ??= 1.2;
+    textStyle ??= style.textTheme.headlineLarge;
   }
 
   final title;
   final function;
-  // 단순 페이지 이동이 아니라 조건(로그인, 검색 조건 설정같은 것이 붙을 경우)
   Color? textColor;
   Color? buttonColor;
   final icon;
+  EdgeInsetsGeometry? padding;
+  FontWeight? fontWeight;
+  double? fontHeight;
+  TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +40,7 @@ class BigButton extends StatelessWidget {
       onPressed: function,
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor,
-        padding: EdgeInsets.symmetric(vertical: 12),
+        padding: padding,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -42,20 +53,20 @@ class BigButton extends StatelessWidget {
                 SizedBox(width: 20),
                 Text(
                   title,
-                  style: style.textTheme.headlineLarge?.copyWith(
+                  style: textStyle?.copyWith(
                     color: textColor,
-                    fontWeight: FontWeight.w600,
-                    height: 1.2,
+                    fontWeight: fontWeight,
+                    height: fontHeight,
                   ),
                 ),
               ],
             )
           : Text(
               title,
-              style: style.textTheme.headlineLarge?.copyWith(
+              style: textStyle?.copyWith(
                 color: textColor,
-                fontWeight: FontWeight.w600,
-                height: 1.2,
+                fontWeight: fontWeight,
+                height: fontHeight,
               ),
             ),
     );

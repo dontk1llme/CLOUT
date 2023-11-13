@@ -39,30 +39,64 @@ class RegionMultiSelect extends StatefulWidget {
 
 class _RegionMultiSelectState extends State<RegionMultiSelect> {
   void showBottomSheet() {
-    final regionController =
-        Get.find<RegionController>(tag: widget.controllerTag);
-    Get.bottomSheet(
-      backgroundColor: Colors.white,
-      isDismissible: true,
-      isScrollControlled: false,
-      BouncingListview(
-        child: Wrap(
-          children: RegionMultiSelect.regions
-              .map((e) => ListTile(
-                    onTap: () => regionController.selectedRegions.contains(e)
-                        ? regionController.removeRegion(e)
-                        : regionController.addRegion(e),
-                    leading: regionController.selectedRegions.contains(e)
-                        ? Icon(
-                            Icons.check_box_outlined,
-                            color: Colors.blue,
-                          )
-                        : Icon(Icons.check_box_outline_blank_outlined),
-                    title: Text(e),
-                  ))
-              .toList(),
-        ),
-      ),
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return GetBuilder<RegionController>(
+          tag: widget.controllerTag,
+          builder: (controller) {
+            return SizedBox(
+              // color: Colors.white,
+              height: 600,
+              child: FractionallySizedBox(
+                widthFactor: 0.9,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(
+                          left: 10.0, right: 10.0, top: 30.0, bottom: 10.0),
+                      child: Text(
+                        '지역 선택',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 24,
+                            fontFamily: 'Jost',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                      height: 450,
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: ListView(
+                        physics: BouncingScrollPhysics(),
+                        children: List.generate(
+                          18,
+                          (index) => CheckboxListTile(
+                            title: Text(
+                                controller.regionsSelectedBool[index].region),
+                            onChanged: (value) =>
+                                {controller.setSelectDeselect(index)},
+                            value: controller.regionsSelectedBool[index].selected,
+                            activeColor: style.colors['main1'],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: BigButton(
+                        title: '확인',
+                        function: () => Get.back(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -76,8 +110,8 @@ class _RegionMultiSelectState extends State<RegionMultiSelect> {
             decoration: BoxDecoration(
               border: Border.all(width: 1, color: style.colors['gray']!),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
+                topLeft: Radius.circular(5),
+                topRight: Radius.circular(5),
               ),
             ),
             child: ElevatedButton(
@@ -86,8 +120,8 @@ class _RegionMultiSelectState extends State<RegionMultiSelect> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+                      topLeft: Radius.circular(5),
+                      topRight: Radius.circular(5),
                     ),
                     side: BorderSide.none),
                 elevation: 0,
@@ -103,21 +137,51 @@ class _RegionMultiSelectState extends State<RegionMultiSelect> {
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            height: 80,
+            padding: EdgeInsets.only(top: 5),
             decoration: BoxDecoration(
-              color: Colors.amber,
+              // color: Colors.amber,
+              border: Border(
+                top: BorderSide(width: 0, color: Colors.grey),
+                left: BorderSide(
+                  width: 1,
+                  color: Colors.grey,
+                ),
+                right: BorderSide(
+                  width: 1,
+                  color: Colors.grey,
+                ),
+                bottom: BorderSide(
+                  width: 1,
+                  color: Colors.grey,
+                ),
+              ),
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(5)),
             ),
-            child: Wrap(
-              children: controller.selectedRegions
-                  .map(
-                    (e) => RegionMultiselectChip(
-                      title: e,
-                      controllerTag: widget.controllerTag,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('     선택 지역 목록'),
+                BouncingListview(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: controller.selectedRegions
+                          .map(
+                            (e) => RegionMultiselectChip(
+                              title: e,
+                              controllerTag: widget.controllerTag,
+                            ),
+                          )
+                          .toList(),
                     ),
-                  )
-                  .toList(),
+                  ),
+                ),
+              ],
             ),
-          )
+          ),
+          SizedBox(height: 20),
         ],
       ),
     );

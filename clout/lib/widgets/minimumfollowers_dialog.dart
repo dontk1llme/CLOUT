@@ -28,7 +28,7 @@ class MinimumfollowersDialog extends StatelessWidget {
           ),
         ),
       ],
-      content: GetBuilder<FollowerContoller>(
+      content: GetBuilder<FollowerController>(
         tag: controllerTag,
         builder: (controller) => SizedBox(
           height: 75,
@@ -67,7 +67,7 @@ class MinimumfollowersDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<FollowerContoller>(
+    return GetBuilder<FollowerController>(
       tag: controllerTag,
       builder: (controller) => SizedBox(
         height: 50,

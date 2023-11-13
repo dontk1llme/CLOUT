@@ -1,5 +1,6 @@
 import 'package:clout/providers/fee_controller.dart';
 import 'package:clout/hooks/numeric_range_formatter.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:flutter/services.dart';
@@ -57,11 +58,9 @@ class PayDialog extends StatelessWidget {
       actions: <Widget>[
         SizedBox(
           width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () => Get.back(),
-            style: ElevatedButton.styleFrom(
-                backgroundColor: style.colors['main1']),
-            child: Text("확인"),
+          child: BigButton(
+            function: () => Get.back(),
+            title: '확인',
           ),
         ),
       ],
