@@ -2,7 +2,8 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/common/choicechip.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
-
+import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:get/get.dart';
 // widgets
 import 'package:clout/screens/point/widgets/my_wallet.dart';
 import 'package:clout/widgets/header/header.dart';
@@ -16,6 +17,10 @@ class ClouterPointList extends StatefulWidget {
 }
 
 class _ClouterPointListState extends State<ClouterPointList> {
+
+  final userController = Get.find<UserController>();
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
