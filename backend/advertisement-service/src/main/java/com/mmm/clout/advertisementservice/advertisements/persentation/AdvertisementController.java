@@ -2,13 +2,16 @@ package com.mmm.clout.advertisementservice.advertisements.persentation;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignReaderResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CustomPageResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.EndedCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampaignAndAdvertiserResponse;
@@ -16,6 +19,7 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.response.G
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetTop10CampainListResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
+import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -116,16 +120,27 @@ public class AdvertisementController implements AdvertisementControllerDocs {
      * 광고주 자신이 올린 광고 목록 조회 (최신순)
      */
     @GetMapping("/advertisements")
-    public ResponseEntity<GetCampainListByAdvertiserResponse> getCampaignsByAdvertisers(
+    public ResponseEntity<CustomPageResponse<CampaignReaderResponse>> getCampaignsByAdvertisers(
         @RequestParam Long advertiserId,
         @RequestParam int page,
         @RequestParam int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        GetCampainListByAdvertiserResponse result =
-            GetCampainListByAdvertiserResponse.from(
-                advertisementFacade.getAllCampaignsByAdvertisers(advertiserId, pageable)
-            );
+        CampaignListReader campaigns = advertisementFacade.getAllCampaignsByAdvertisers(
+            advertiserId, pageable);
+        Page<Campaign> campaignList = campaigns.getCampaignList();
+        AdvertiserInfo advertiserInfo = campaigns.getAdvertiserInfo();
+
+        CustomPageResponse<CampaignReaderResponse> result = new CustomPageResponse<>(
+            campaignList.stream().map(
+                campaign -> CampaignReaderResponse.from(
+                    new CampaignReader(campaign, advertiserInfo))
+            ).collect(Collectors.toList()),
+            campaigns.getCampaignList().getNumber(),
+            campaigns.getCampaignList().getSize(),
+            campaigns.getCampaignList().getTotalPages(),
+            campaigns.getCampaignList().getTotalElements()
+        );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -148,7 +163,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
      * 광고 검색 / 검색 조건별 전체 조회
      */
     @GetMapping("/search")
-    public ResponseEntity<Page<CampaignReader>> searchAndReadCampaignList(
+    public ResponseEntity<CustomPageResponse<CampaignReaderResponse>> searchAndReadCampaignList(
         @RequestParam(defaultValue = "0") Integer page,
         @RequestParam(defaultValue = "10") Integer size,
         @RequestParam(defaultValue = "ALL") List<String> category,
@@ -163,7 +178,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         @RequestParam(defaultValue = "POPULARITY") CampaignSort sortKey
     ) {
 
-        Page<CampaignReader> result = advertisementFacade.search(
+        Page<CampaignReader> searched = advertisementFacade.search(
             PageRequest.of(page, size),
             SearchCondition.from(
                 category,
@@ -178,7 +193,18 @@ public class AdvertisementController implements AdvertisementControllerDocs {
                 sortKey
             )
         );
-        return new ResponseEntity<>(result, HttpStatus.OK);
+
+        CustomPageResponse<CampaignReaderResponse> result = new CustomPageResponse<>(
+            searched.stream().map(
+                CampaignReaderResponse::from
+            ).collect(Collectors.toList()),
+            searched.getNumber(),
+            searched.getSize(),
+            searched.getTotalPages(),
+            searched.getTotalElements()
+        );
+        return new ResponseEntity<>(
+            result, HttpStatus.OK);
     }
 
 
