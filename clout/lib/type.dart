@@ -437,6 +437,8 @@ class Campaign {
   int? maxClouterAge;
   int? minFollower;
   bool? isEnded;
+  int? registerId;
+  List<String>? regionList;
 
   Campaign(
       {this.campaignId,
@@ -458,7 +460,9 @@ class Campaign {
       this.minClouterAge,
       this.maxClouterAge,
       this.minFollower,
-      this.isEnded});
+      this.isEnded,
+      this.registerId,
+      this.regionList});
 
   Campaign.fromJson(Map<String, dynamic> json) {
     campaignId = json['campaignId'];
@@ -481,7 +485,35 @@ class Campaign {
     maxClouterAge = json['maxClouterAge'];
     minFollower = json['minFollower'];
     isEnded = json['isEnded'];
+    registerId = json['registerId'];
+    regionList = json['regionList'];
   }
+
+  Map<String, dynamic> toJson() => {
+        // 'user' : user,
+        'campaignId': campaignId,
+        'adPlatformList': adPlatformList,
+        'price': price,
+        'details': details,
+        'deletedAt': deletedAt,
+        'title': title,
+        'adCategory': adCategory,
+        'isPriceChangeable': isPriceChangeable,
+        'isDeliveryRequired': isDeliveryRequired,
+        'numberOfRecruiter': numberOfRecruiter,
+        'numberOfApplicants': numberOfApplicants,
+        'numberOfSelectedMembers': numberOfSelectedMembers,
+        'offeringDetails': offeringDetails,
+        'sellingLink': sellingLink,
+        'applyStartDate': applyStartDate,
+        'applyEndDate': applyEndDate,
+        'minClouterAge': minClouterAge,
+        'maxClouterAge': maxClouterAge,
+        'minFollower': minFollower,
+        'isEnded': isEnded,
+        'registerId': registerId,
+        'regionList': regionList,
+      };
 }
 
 class AdvertiserInfo {
@@ -661,4 +693,11 @@ class RegionBool {
   bool selected;
 
   RegionBool(this.region, this.selected);
+}
+
+class Category {
+  String english;
+  String korean;
+
+  Category(this.english, this.korean);
 }
