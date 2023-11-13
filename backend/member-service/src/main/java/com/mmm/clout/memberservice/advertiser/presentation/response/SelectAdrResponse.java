@@ -20,17 +20,14 @@ public class SelectAdrResponse {
     @Schema(description = "광고주 유저 role (USER, ADMIN)")
     private Role role;
 
+    @Schema(description = "광고주 별점 평균")
     private Long advertiserAvgStar;
 
     private AddressResponse addressInfo;
 
     private CompanyInfoResponse companyInfo;
 
-    @Schema(description = "광고주 별점 평균")
-    private Long avgScore;
-
     public SelectAdrResponse(Advertiser advertiser) {
-        this.avgScore = advertiser.getAvgScore();
         this.advertiserId = advertiser.getId();
         this.userId = advertiser.getUserId();
         this.role = advertiser.getRole();
