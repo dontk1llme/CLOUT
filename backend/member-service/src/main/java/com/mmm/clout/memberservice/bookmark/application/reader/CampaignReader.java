@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.bookmark.application.reader;
 
+import com.mmm.clout.memberservice.advertiser.domain.Advertiser;
 import com.mmm.clout.memberservice.bookmark.domain.info.CampaignInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,7 +52,11 @@ public class CampaignReader {
 
     private Boolean isEnded; // 모집 종료 여부
 
-    public CampaignReader(CampaignInfo info) {
+    private String companyName;
+
+    private Long companyAvgScore;
+
+    public CampaignReader(CampaignInfo info, Advertiser advertiser) {
         this.campaignId = info.getCampaignId();
         this.adPlatformList = info.getAdPlatformList();
         this.price = info.getPrice();
@@ -72,6 +77,8 @@ public class CampaignReader {
         this.maxClouterAge = info.getMaxClouterAge();
         this.minFollower = info.getMinFollower();
         this.isEnded = info.getIsEnded();
+        this.companyName = advertiser.getCompanyInfo().getCompanyName();
+        this.companyAvgScore = advertiser.getAvgScore();
     }
 
 }
