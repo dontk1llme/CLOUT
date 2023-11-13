@@ -51,4 +51,5 @@ public class CampaignInfo {
 
     private Boolean isEnded; // 모집 종료 여부
 
+    private Long registerId;
 }

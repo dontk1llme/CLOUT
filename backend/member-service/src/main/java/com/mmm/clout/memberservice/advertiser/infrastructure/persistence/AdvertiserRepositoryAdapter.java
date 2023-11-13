@@ -4,8 +4,11 @@ import com.mmm.clout.memberservice.advertiser.domain.Advertiser;
 import com.mmm.clout.memberservice.advertiser.domain.repository.AdvertiserRepository;
 import com.mmm.clout.memberservice.advertiser.domain.exception.NotFoundAdvertiser;
 import com.mmm.clout.memberservice.advertiser.infrastructure.persistence.jpa.JpaAdvertiserRepository;
+import com.mmm.clout.memberservice.clouter.domain.Clouter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -23,5 +26,9 @@ public class AdvertiserRepositoryAdapter implements AdvertiserRepository {
         return jpaAdvertisementRepository.findById(userId).orElseThrow(
             () -> new NotFoundAdvertiser()
         );
+    }
+    @Override
+    public List<Advertiser> findByIdIn(List<Long> idList) {
+        return jpaAdvertisementRepository.findByIdIn(idList);
     }
 }
