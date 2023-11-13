@@ -40,7 +40,7 @@ public class AuthService {
 
         Member member = memberService.getUserByUserId(loginDto.getUserId());
 
-        if (!encoder.matches(loginDto.getPassword(), member.getPwd())) throw new PasswordException("아이디 또는 비밀번호가 틀렸습니다.");
+        if (!encoder.matches(loginDto.getPassword(), member.getPwd())) throw new PasswordException();
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUserId(), loginDto.getPassword());
@@ -66,9 +66,6 @@ public class AuthService {
     @Transactional
     public AuthDto.TokenDto reissue(String requestAccessTokenInHeader, String requestRefreshToken) {
         String requestAccessToken = resolveToken(requestAccessTokenInHeader);
-
-        System.out.println("requestRefreshToken "+requestRefreshToken);
-        System.out.println("requestAccessToken "+requestAccessToken);
 
         Authentication authentication = jwtTokenProvider.getAuthentication(requestAccessToken);
         String principal = getPrincipal(requestAccessToken);
