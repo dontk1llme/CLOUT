@@ -113,7 +113,7 @@ class FeeRangeDialog extends StatelessWidget {
             SizedBox(height: 30),
             SizedBox(
               width: double.infinity,
-              height: 40,
+              height: 50,
               child: BigButton(
                 title: '확인',
                 function: () => {

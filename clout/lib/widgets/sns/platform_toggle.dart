@@ -21,6 +21,7 @@ class PlatformToggle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(width: 5),
             Expanded(
               child: Sns3SelectBox(
                 img: 'assets/images/INSTAGRAM.png',
@@ -30,7 +31,6 @@ class PlatformToggle extends StatelessWidget {
                 controllerTag: controllerTag,
               ),
             ),
-            SizedBox(width: 10),
             Expanded(
               child: Sns3SelectBox(
                 img: 'assets/images/TIKTOK.png',
@@ -40,7 +40,6 @@ class PlatformToggle extends StatelessWidget {
                 controllerTag: controllerTag,
               ),
             ),
-            SizedBox(width: 10),
             Expanded(
               child: Sns3SelectBox(
                 img: 'assets/images/YOUTUBE.png',
@@ -50,6 +49,7 @@ class PlatformToggle extends StatelessWidget {
                 controllerTag: controllerTag,
               ),
             ),
+            SizedBox(width: 5),
           ],
         ));
   }

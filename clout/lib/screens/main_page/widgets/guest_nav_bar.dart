@@ -19,6 +19,7 @@ class GuestNavBar extends StatelessWidget {
           ),
           SizedBox(height: 20),
           SizedBox(
+            width: double.infinity,
             child: BigButton(
               function: () => Get.offNamed('/join'),
               title: 'CLOUT 가입하러 가기',
