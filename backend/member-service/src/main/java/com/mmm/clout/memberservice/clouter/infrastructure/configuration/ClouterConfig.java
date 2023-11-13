@@ -2,6 +2,8 @@ package com.mmm.clout.memberservice.clouter.infrastructure.configuration;
 
 import com.mmm.clout.memberservice.clouter.application.*;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
+import com.mmm.clout.memberservice.image.domain.FileUploader;
+import com.mmm.clout.memberservice.image.domain.repository.ImageRepository;
 import com.mmm.clout.memberservice.member.domain.provider.PointProvider;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.memberservice.star.domain.repository.StarRepository;
@@ -32,9 +34,11 @@ public class ClouterConfig {
             MemberRepository memberRepository,
             BCryptPasswordEncoder encoder,
             StarRepository starRepository,
-            PointProvider pointProvider
+            PointProvider pointProvider,
+            FileUploader fileUploader,
+            ImageRepository imageRepository
     ) {
-        return new CreateClouterProcessor(clouterRepository, memberRepository, encoder, starRepository, pointProvider);
+        return new CreateClouterProcessor(clouterRepository, memberRepository, encoder, starRepository, pointProvider, fileUploader, imageRepository);
     }
 
     @Bean

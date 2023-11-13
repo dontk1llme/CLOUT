@@ -8,6 +8,7 @@ import com.mmm.clout.memberservice.clouter.domain.Clouter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class ClouterFacade {
     private final SelectClouterForContractProcessor selectClouterForContractProcessor;
     private final SelectTop10ClouterProcessor selectTop10ClouterProcessor;
 
-    public Clouter create(CreateClrCommand command) {
-        return createClouterProcessor.execute(command);
+    public Clouter create(CreateClrCommand command, List<MultipartFile> files) throws Exception {
+        return createClouterProcessor.execute(command, files);
     }
 
     public Clouter update(UpdateClrCommand command) { return updateClouterProcessor.execute(command); }

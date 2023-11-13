@@ -10,23 +10,28 @@ import com.mmm.clout.memberservice.clouter.presentation.response.SelectTop10Resp
 import com.mmm.clout.memberservice.clouter.presentation.response.UpdateClrResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/v1/clouters")
 @RequiredArgsConstructor
-public class ClouterController implements ClouterControllerDocs {
+public class ClouterController {
 
     private final ClouterFacade clouterFacade;
 
-    @PostMapping("/signup")
+    @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<CreateClrResponse> create(
-            @RequestBody CreateClrRequest createClrRequest
-            ) {
+            @RequestPart CreateClrRequest createClrRequest,
+            @RequestPart(value = "files") List<MultipartFile> fileList
+            ) throws Exception {
         CreateClrResponse result = CreateClrResponse.from(
-                clouterFacade.create(createClrRequest.toCommand())
+                clouterFacade.create(createClrRequest.toCommand(), fileList)
         );
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
