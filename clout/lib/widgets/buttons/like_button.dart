@@ -1,4 +1,7 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LikeButton extends StatefulWidget {
   final bool isLiked;
@@ -23,10 +26,10 @@ class _LikeButtonState extends State<LikeButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.onTap();
         setState(() {
           isLiked = !isLiked;
         });
+        widget.onTap();
       },
       child: Padding(
         padding: EdgeInsets.all(5),
