@@ -52,8 +52,8 @@ public abstract class Member {
         this.countOfContract = 0;
     }
 
-    public Integer addCountOfContract() {
-        this.countOfContract++;
+    public Integer addCountOfContract(int val) {
+        this.countOfContract += val;
         return this.countOfContract;
     }
 
