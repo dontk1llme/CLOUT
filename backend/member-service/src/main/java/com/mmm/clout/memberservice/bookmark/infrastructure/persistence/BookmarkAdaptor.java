@@ -3,6 +3,7 @@ package com.mmm.clout.memberservice.bookmark.infrastructure.persistence;
 import com.mmm.clout.memberservice.bookmark.domain.Bookmark;
 import com.mmm.clout.memberservice.bookmark.domain.repository.BookmarkRepository;
 import com.mmm.clout.memberservice.bookmark.infrastructure.persistence.jpa.JpaBookmarkRepository;
+import com.mmm.clout.memberservice.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -26,8 +27,8 @@ public class BookmarkAdaptor implements BookmarkRepository {
     }
 
     @Override
-    public Optional<Bookmark> findByMemberAndTargetId(Long memberId, Long targetId) {
-        return jpaBookmarkRepository.findByMemberAndTargetId(memberId, targetId);
+    public Optional<Bookmark> findByMemberAndTargetId(Member member, Long targetId) {
+        return jpaBookmarkRepository.findByMemberAndTargetId(member, targetId);
     }
 
     @Override

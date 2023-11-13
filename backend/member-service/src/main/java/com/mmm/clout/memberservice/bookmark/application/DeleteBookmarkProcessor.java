@@ -5,6 +5,9 @@ import com.mmm.clout.memberservice.bookmark.domain.Bookmark;
 import com.mmm.clout.memberservice.bookmark.domain.exception.NotFoundBookmark;
 import com.mmm.clout.memberservice.bookmark.domain.repository.BookmarkRepository;
 import com.mmm.clout.memberservice.bookmark.presentation.request.BookmarkDeleteRequest;
+import com.mmm.clout.memberservice.member.domain.Member;
+import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
+import com.mmm.clout.memberservice.star.domain.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,10 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeleteBookmarkProcessor {
 
     private final BookmarkRepository bookmarkRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public Long execute(BookmarkDeleteCommand command) {
-        Bookmark findBookmark = bookmarkRepository.findByMemberAndTargetId(command.getMemberId(), command.getTargetId()).orElseThrow(() -> new NotFoundBookmark());
+        Member member = memberRepository.findById(command.getMemberId()).orElseThrow(NotFoundMemberException::new);
+        Bookmark findBookmark = bookmarkRepository.findByMemberAndTargetId(member, command.getTargetId()).orElseThrow(() -> new NotFoundBookmark());
         Long bookmarkId = findBookmark.getId();
         bookmarkRepository.delete(findBookmark);
         return bookmarkId;
