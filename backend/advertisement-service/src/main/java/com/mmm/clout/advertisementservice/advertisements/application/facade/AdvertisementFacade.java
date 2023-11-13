@@ -64,7 +64,7 @@ public class AdvertisementFacade {
     }
 
 
-    public Page<Campaign> search(Pageable pageable, SearchCondition condition) {
+    public Page<CampaignReader> search(Pageable pageable, SearchCondition condition) {
         return searchCampaignListProcessor.execute(pageable, condition);
     }
 

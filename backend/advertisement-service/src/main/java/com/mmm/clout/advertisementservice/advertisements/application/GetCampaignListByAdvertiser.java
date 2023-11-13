@@ -22,7 +22,7 @@ public class GetCampaignListByAdvertiser {
         List<Campaign> campainList =
             campaignRepository.getCampainListByAdvertiserId(advertiserId, pageable);
         for (Campaign campaign : campainList) {
-            campaign.initializeCampaign();
+            campaign.initialize();
         }
         return new CampaignListReader(campainList, advertiserInfo);
     }

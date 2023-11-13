@@ -84,10 +84,12 @@ public class AdvertisementConfig {
 
     @Bean
     public SearchCampaignListProcessor searchCampaignListProcessor(
-        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
+        MemberProvider memberProvider
     ) {
         return new SearchCampaignListProcessor(
-            campaignRepository
+            campaignRepository,
+            memberProvider
         );
     }
 

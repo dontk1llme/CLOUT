@@ -66,8 +66,8 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
     }
 
     @Override
-    public Page<Campaign> search(SearchCondition condition, Pageable pageable) {
-        List<Campaign> content = queryFactory.query()
+    public List<Campaign> search(SearchCondition condition, Pageable pageable) {
+        return queryFactory.query()
             .select(campaign)
             .from(campaign)
             .where(
@@ -84,6 +84,13 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
             .limit(pageable.getPageSize())
             .fetch();
 
+//        JPAQuery<Campaign> countQuery = getCountQuery(condition);
+
+//        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
+    }
+
+    @Override
+    public JPAQuery<Campaign> getCountQuery(SearchCondition condition) {
         JPAQuery<Campaign> countQuery = queryFactory.query()
             .select(campaign)
             .from(campaign)
@@ -97,8 +104,7 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
                 regionEq(condition.getRegion()),
                 platformEq(condition.getPlatform())
             );
-
-        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
+        return countQuery;
     }
 
     private BooleanExpression platformEq(List<AdPlatform> platform) {

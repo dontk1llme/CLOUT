@@ -19,7 +19,7 @@ public class GetCampaignProcessor {
     public CampaignReader execute(Long advertisementId) {
         Campaign campaign = campaignRepository.findById(advertisementId)
             .orElseThrow(CampaignNotFoundException::new);
-        campaign.initializeCampaign();
+        campaign.initialize();
         AdvertiserInfo advertiserInfo = memberProvider.getAdvertiserInfoByMemberId(
             campaign.getAdvertiserId());
         return new CampaignReader(campaign, advertiserInfo);

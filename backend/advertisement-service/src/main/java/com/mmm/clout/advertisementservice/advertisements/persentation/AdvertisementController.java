@@ -2,6 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.persentation;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
@@ -142,7 +143,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Campaign>> searchAndReadCampaignList(
+    public ResponseEntity<Page<CampaignReader>> searchAndReadCampaignList(
         @RequestParam(defaultValue = "0") Integer page,
         @RequestParam(defaultValue = "10") Integer size,
         @RequestParam(defaultValue = "ALL") List<String> category,
@@ -153,11 +154,11 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         @RequestParam(defaultValue = "0") Integer minPrice,
         @RequestParam(defaultValue = "1000000000") Integer maxPrice,
         @RequestParam(defaultValue = "ALL") List<String> region,
-        @RequestParam String keyword,
+        @RequestParam(required = false) String keyword,
         @RequestParam(defaultValue = "P") String sortKey
     ) {
 
-        Page<Campaign> result = advertisementFacade.search(
+        Page<CampaignReader> result = advertisementFacade.search(
             PageRequest.of(page, size),
             SearchCondition.from(
                 category,
@@ -172,7 +173,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
                 sortKey
             )
         );
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
