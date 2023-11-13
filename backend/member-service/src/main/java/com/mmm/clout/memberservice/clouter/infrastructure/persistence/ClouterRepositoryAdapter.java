@@ -32,5 +32,8 @@ public class ClouterRepositoryAdapter implements ClouterRepository {
         return jpaClouterRepository.findTop10ByOrderByAvgScoreDesc();
     }
 
-
+    @Override
+    public List<Clouter> findByIdIn(List<Long> idList) {
+        return jpaClouterRepository.findByIdIn(idList);
+    }
 }
