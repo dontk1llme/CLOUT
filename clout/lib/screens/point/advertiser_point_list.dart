@@ -14,32 +14,30 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/screens/point/widgets/point_item_box.dart';
 
 class AdvertiserPointList extends StatefulWidget {
-  const AdvertiserPointList({super.key});
+  const AdvertiserPointList({Key? key}) : super(key: key);
 
   @override
   State<AdvertiserPointList> createState() => _AdvertiserPointListState();
 }
 
 class _AdvertiserPointListState extends State<AdvertiserPointList> {
+  final userController = Get.find<UserController>();
 
   @override
   void initState() {
     super.initState();
     // initState에서 비동기 작업 수행
-    getPointList();
+    // 이 부분은 비동기로 데이터를 가져오기 위해 사용합니다.
+    // FutureBuilder를 사용하여 비동기 작업이 완료될 때까지 기다리고 결과를 표시합니다.
   }
 
-
-  final userController = Get.find<UserController>();
-
-  Future<void> getPointList() async {
-
+  Future<List<Widget>> getPointList() async {
     var authorization = userController.userLogin['authorization'];
     var requestBody = {
       "memberId": userController.memberId,
-      "category": 'ALL', //actionchoice에 따라 바뀌어야 함
-      "page": '0', //temp
-      "size": '10', //temp
+      "category": 'ALL',
+      "page": '0',
+      "size": '10',
     };
 
     var response = await PointsTransactionsApi.getRequest(
@@ -48,23 +46,30 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
       requestBody,
     );
 
-
     print('$requestBody');
-    print('응답: $response');
     var responseData = json.decode(response);
-    var content = responseData['content'];
-    print("응답2: $content");
-    
+    var contentList = responseData['content'];
 
-    // List<PointItem> pointItems = (json.decode(response.bodyBytes)['content'] as List)
-    //     .map((data) => PointItem.fromJson(data))
-    //     .toList();
-    
-    // print('포인트 아이템');
-    // print(pointItems);
+    List<Widget> pointItemBoxes = [];
 
+    for (var item in contentList) {
+      var pointStatus = item['pointStatus'];
+      var time = item['time'].substring(0, 10); // Extract date only
+      var title = item['counterparty'];
+      var amount = item['amount'].toString();
+
+      var type = (pointStatus == '+') ? '충전' : '사용';
+
+      pointItemBoxes.add(PointItemBox(
+        type: type,
+        time: time,
+        title: title,
+        point: amount,
+      ));
+    }
+
+    return pointItemBoxes;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +79,7 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
         preferredSize: Size.fromHeight(70),
         child: Header(
           header: 4,
-          headerTitle: '포인트 관리', // 채널명 또는 계정명
+          headerTitle: '포인트 관리',
         ),
       ),
       body: Container(
@@ -86,26 +91,36 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
             widthFactor: 0.9,
             child: Column(
               children: [
-                MyWallet(
-                  userType: "advertiser",
-                ),
+                MyWallet(userType: "advertiser"),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('포인트 내역',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 19)),
+                  child: Text(
+                    '포인트 내역',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 19),
+                  ),
                 ),
                 ActionChoiceExample(
-                    labels: ['전체 내역', '사용 내역', '충전 내역'], chipCount: 3),
+                  labels: ['전체 내역', '사용 내역', '충전 내역'],
+                  chipCount: 3,
+                ),
                 Divider(
                   color: style.colors['lightgray'],
                   thickness: 1,
                 ),
-                PointItemBox(type: '출금', time: '시간', title: '이름', point: '32132',),
-                // PointItemBox(type: '충전'),
-                // PointItemBox(type: '사용'),
-                // PointItemBox(type: '사용'),
-                // PointItemBox(type: '출금'),
+                // Replace static PointItemBox with dynamically generated ones
+                FutureBuilder(
+                  future: getPointList(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('에러: ${snapshot.error}');
+                    } else {
+                      List<Widget> pointItemBoxes = snapshot.data ?? [];
+                      return Column(children: pointItemBoxes);
+                    }
+                  },
+                ),
               ],
             ),
           ),
