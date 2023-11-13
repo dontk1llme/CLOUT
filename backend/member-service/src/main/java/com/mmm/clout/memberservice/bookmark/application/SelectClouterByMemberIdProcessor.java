@@ -18,7 +18,7 @@ public class SelectClouterByMemberIdProcessor {
 
     @Transactional
     public List<ClouterReader> execute(Long memberId) {
-        List<Long> idList = bookmarkRepository.findByMemberId(memberId).stream().map(v -> v.getId()).collect(Collectors.toList());
+        List<Long> idList = bookmarkRepository.findByMemberId(memberId).stream().map(v -> v.getTargetId()).collect(Collectors.toList());
         List<Clouter> clouterList = clouterRepository.findByIdIn(idList);
         List<ClouterReader> result = clouterList.stream().map(
             v -> new ClouterReader(v)

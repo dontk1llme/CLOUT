@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.bookmark.presentation.docs;
 
+import com.mmm.clout.memberservice.bookmark.presentation.request.BookmarkDeleteRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateAdBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateClouterBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.response.*;
@@ -52,7 +53,7 @@ public interface BookmarkControllerDocs {
         )
     )
     public ResponseEntity<BookmarkDeleteResponse> delete(
-        @PathVariable("bookmarkId") Long bookmarkId
+        @RequestBody BookmarkDeleteRequest request
     );
 
     @Operation(summary = "광고주가 북마크한 클라우터들 조회 api",

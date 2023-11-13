@@ -2,6 +2,7 @@ package com.mmm.clout.memberservice.bookmark.presentation;
 
 import com.mmm.clout.memberservice.bookmark.application.facade.BookmarkFacade;
 import com.mmm.clout.memberservice.bookmark.presentation.docs.BookmarkControllerDocs;
+import com.mmm.clout.memberservice.bookmark.presentation.request.BookmarkDeleteRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateAdBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateClouterBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.response.*;
@@ -37,12 +38,12 @@ public class BookmarkController implements BookmarkControllerDocs {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{bookmarkId}")
+    @DeleteMapping("/delete")
     public ResponseEntity<BookmarkDeleteResponse> delete(
-        @PathVariable("bookmarkId") Long bookmarkId
+        @RequestBody BookmarkDeleteRequest request
     ) {
         BookmarkDeleteResponse response = BookmarkDeleteResponse.from(
-            bookmarkFacade.delete(bookmarkId)
+            bookmarkFacade.delete(request.toCommand())
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

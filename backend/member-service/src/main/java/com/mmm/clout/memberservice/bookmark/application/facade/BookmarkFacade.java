@@ -1,10 +1,12 @@
 package com.mmm.clout.memberservice.bookmark.application.facade;
 
 import com.mmm.clout.memberservice.bookmark.application.*;
+import com.mmm.clout.memberservice.bookmark.application.command.BookmarkDeleteCommand;
 import com.mmm.clout.memberservice.bookmark.application.command.CreateAdBookmarkCommand;
 import com.mmm.clout.memberservice.bookmark.application.command.CreateClouterBookmarkCommand;
 import com.mmm.clout.memberservice.bookmark.domain.Bookmark;
 import com.mmm.clout.memberservice.bookmark.application.reader.CampaignReader;
+import com.mmm.clout.memberservice.bookmark.presentation.request.BookmarkDeleteRequest;
 import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,8 +33,8 @@ public class BookmarkFacade {
         return createClouterBookmarkProcessor.execute(command);
     }
 
-    public Long delete(Long bookmarkId) {
-        return deleteBookmarkProcessor.execute(bookmarkId);
+    public Long delete(BookmarkDeleteCommand command) {
+        return deleteBookmarkProcessor.execute(command);
     }
 
     public List<CampaignReader> selectAdByMemberId(Long memberId) {
