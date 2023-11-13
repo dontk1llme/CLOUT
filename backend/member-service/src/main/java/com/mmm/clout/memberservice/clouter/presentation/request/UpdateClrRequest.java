@@ -52,10 +52,7 @@ public class UpdateClrRequest {
     @Schema(description = "개인 채널 리스트")
     private List<ChannelRequest> channelList;
 
-    private HopeCostRequest hopeCost;
-
-    @Schema(description = "네고 가능 여부")
-    private boolean negoable;
+    private Long minCost;
 
     @NotNull
     @Size(min = 1, message = "최소 1개의 카테고리는 선택 해야 합니다.")
@@ -79,8 +76,7 @@ public class UpdateClrRequest {
             this.age,
             this.phoneNumber,
             this.channelList.stream().map(ChannelRequest::toCommand).collect(Collectors.toList()),
-            this.hopeCost.toCommand(),
-            this.negoable,
+            this.minCost,
             this.categoryList,
             this.regionList,
             this.address.toCommand()
