@@ -6,6 +6,7 @@ import 'package:clout/providers/four_digits_input_controller.dart';
 import 'package:clout/providers/user_controllers/advertiser_info_controller.dart';
 import 'package:clout/screens/register_or_modify/widgets/number_verify.dart';
 import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,42 +19,45 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
   final modifying;
   final controllerTag;
 
-  final advertiserRegisterController =
-      Get.find<AdvertiserInfoController>(tag: 'advertiserRegister');
-
   final RegisterApi registerApi = RegisterApi();
 
   checkDuplicted() async {
+    final advertiserInfoController =
+        Get.find<AdvertiserInfoController>(tag: controllerTag);
     var responseBody = await registerApi.getRequest(
       '/member-service/v1/members/duplicate',
-      '?userId=${advertiserRegisterController.id}',
+      '?userId=${advertiserInfoController.id}',
     );
     print('중복확인');
     print(responseBody);
     if (responseBody[0] == 200) {
-      advertiserRegisterController.setDoubleId(1);
+      advertiserInfoController.setDoubleId(1);
     } else {
-      advertiserRegisterController.setDoubleId(2);
+      advertiserInfoController.setDoubleId(2);
     }
   }
 
   verify() async {
+    final advertiserInfoController =
+        Get.find<AdvertiserInfoController>(tag: controllerTag);
     // var responseBody = await registerApi.getRequest('/member-service/v1/members/sendsms',
-    var responseBody = await registerApi.getRequest('/member-service/v1/members/sendsms',
-        '?phoneNumber=${advertiserRegisterController.phoneNumber}');
+    var responseBody = await registerApi.getRequest(
+        '/member-service/v1/members/sendsms',
+        '?phoneNumber=${advertiserInfoController.phoneNumber}');
     print('인증키 sms 발송');
     final pinController =
         Get.find<FourDigitsInputController>(tag: controllerTag);
     pinController.setCorrectPin(responseBody[1]);
     print(pinController.correctPin);
     Get.to(() => NumberVerify(
-        phoneNumber: advertiserRegisterController.phoneNumber,
+        phoneNumber: advertiserInfoController.phoneNumber,
         controllerTag: 'advertiserRegister'));
   }
 
   @override
   Widget build(BuildContext context) {
-    final pinController = Get.find<FourDigitsInputController>(tag: controllerTag);
+    final pinController =
+        Get.find<FourDigitsInputController>(tag: controllerTag);
     return GetBuilder<AdvertiserInfoController>(
       tag: controllerTag,
       builder: (controller) => Column(
@@ -78,6 +82,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
             title: '담당자 이름 입력',
             label: '담당자 이름',
             setState: controller.setName,
+            initialValue: controller.name,
             enabled: true,
           ),
           SizedBox(height: 10),
@@ -127,12 +132,29 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                 ),
             ],
           ),
-          SizedBox(height: 30),
-          Text(
-            '계정 설정',
-            style: style.textTheme.headlineSmall,
-            textAlign: TextAlign.left,
-          ),
+          SizedBox(height: 20),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '계정 설정',
+                  style: style.textTheme.headlineMedium,
+                  textAlign: TextAlign.left,
+                ),
+                modifying?
+                SizedBox(
+                  height: 25,
+                  child: BigButton(
+                    function: () {},
+                    title: '비밀번호 변경',
+                    textStyle: style.textTheme.bodySmall,
+                    fontWeight: FontWeight.normal,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  ),
+                ) : Container(),
+              ],
+            ),
           SizedBox(height: 10),
           Stack(
             children: [
@@ -142,6 +164,7 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                 title: '아이디 입력',
                 label: '아이디',
                 setState: controller.setId,
+                initialValue: controller.id,
                 enabled: !modifying,
               ),
               controllerTag != 'advertiserModify'
@@ -191,65 +214,71 @@ class AdvertiserJoinOrModify2 extends StatelessWidget {
                             ),
                 )
               : SizedBox(height: 10),
-          Stack(
-            children: [
-              JoinInput(
-                keyboardType: TextInputType.text,
-                maxLength: 30,
-                title: '비밀번호 입력',
-                label: '비밀번호',
-                setState: controller.setPassword,
-                obscured: controller.obscured,
-                enabled: true,
-              ),
-              Positioned(
-                top: 3,
-                right: 5,
-                child: IconButton(
-                  onPressed: controller.setObscured,
-                  icon: controller.obscured
-                      ? Icon(
-                          Icons.visibility_off_outlined,
-                          color: Colors.grey,
-                        )
-                      : Icon(
-                          Icons.visibility_outlined,
-                          color: Colors.grey,
+          !modifying
+              ? Column(
+                  children: [
+                    Stack(
+                      children: [
+                        JoinInput(
+                          keyboardType: TextInputType.text,
+                          maxLength: 30,
+                          title: '비밀번호 입력',
+                          label: '비밀번호',
+                          setState: controller.setPassword,
+                          obscured: controller.obscured,
+                          enabled: true,
                         ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(height: 10),
-          Stack(
-            children: [
-              JoinInput(
-                keyboardType: TextInputType.text,
-                maxLength: 30,
-                title: '비밀번호 확인',
-                label: '비밀번호 확인',
-                setState: controller.setCheckPassword,
-                obscured: controller.obscured,
-                enabled: true,
-              ),
-              Positioned(
-                top: 3,
-                right: 5,
-                child: IconButton(
-                  onPressed: controller.setObscured,
-                  icon: controller.obscured
-                      ? Icon(
-                          Icons.visibility_off_outlined,
-                          color: Colors.grey,
+                        Positioned(
+                          top: 3,
+                          right: 5,
+                          child: IconButton(
+                            onPressed: controller.setObscured,
+                            icon: controller.obscured
+                                ? Icon(
+                                    Icons.visibility_off_outlined,
+                                    color: Colors.grey,
+                                  )
+                                : Icon(
+                                    Icons.visibility_outlined,
+                                    color: Colors.grey,
+                                  ),
+                          ),
                         )
-                      : Icon(
-                          Icons.visibility_outlined,
-                          color: Colors.grey,
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Stack(
+                      children: [
+                        JoinInput(
+                          keyboardType: TextInputType.text,
+                          maxLength: 30,
+                          title: '비밀번호 확인',
+                          label: '비밀번호 확인',
+                          setState: controller.setCheckPassword,
+                          obscured: controller.obscured,
+                          enabled: true,
                         ),
-                ),
-              )
-            ],
-          ),
+                        Positioned(
+                          top: 3,
+                          right: 5,
+                          child: IconButton(
+                            onPressed: controller.setObscured,
+                            icon: controller.obscured
+                                ? Icon(
+                                    Icons.visibility_off_outlined,
+                                    color: Colors.grey,
+                                  )
+                                : Icon(
+                                    Icons.visibility_outlined,
+                                    color: Colors.grey,
+                                  ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                )
+              : Container(),
         ],
       ),
     );
