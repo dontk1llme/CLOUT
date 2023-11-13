@@ -27,7 +27,7 @@ public class SearchCampaignListProcessor {
     ) {
         List<Campaign> searchResult = campaignRepository.search(condition, pageable);
         JPAQuery<Campaign> countQuery = campaignRepository.getCountQuery(condition);
-        // TODO 리팩토링
+
         List<CampaignReader> content = searchResult.stream().map(
             campaign -> new CampaignReader(
                 campaign.initialize(),
