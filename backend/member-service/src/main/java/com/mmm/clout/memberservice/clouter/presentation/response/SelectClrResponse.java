@@ -58,6 +58,8 @@ public class SelectClrResponse {
 
     private AddressResponse address;
 
+    private Integer countOfContract;
+
     public SelectClrResponse(ClouterReader clouterReader) {
 
         this.clouterId = clouterReader.getClouterId();
@@ -79,6 +81,7 @@ public class SelectClrResponse {
         this.categoryList = clouterReader.getCategoryList();
         this.regionList = clouterReader.getRegionList();
         this.address = new AddressResponse(clouterReader.getAddress());
+        this.countOfContract = clouterReader.getCountOfContract();
     }
 
     public static SelectClrResponse from(ClouterReader clouterReader) {

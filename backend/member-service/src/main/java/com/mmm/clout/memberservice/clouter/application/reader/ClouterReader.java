@@ -47,6 +47,8 @@ public class ClouterReader {
 
     private AddressReader address;
 
+    private Integer countOfContract;
+
     public ClouterReader(Clouter clouter) {
 
         this.clouterId = clouter.getId();
@@ -64,6 +66,7 @@ public class ClouterReader {
         this.categoryList = clouter.allGetCategoryList().stream().map(v->v.toString()).collect(Collectors.toList());
         this.regionList = clouter.allGetRegionList().stream().map(v->v.toString()).collect(Collectors.toList());;
         this.address = new AddressReader(clouter.getAddress());
+        this.countOfContract = clouter.getCountOfContract();
     }
 
 }
