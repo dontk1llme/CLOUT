@@ -10,7 +10,9 @@ import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.Region;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.advertisements.infrastructure.persistence.jpa.JpaCampaignRepository;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.DatePath;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
@@ -42,9 +44,26 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
     @Override
     public List<Campaign> getTop10List() {
         Pageable pageable = PageRequest.of(0, 10);
-        Page<Campaign> pages = jpaCampaignRepository.findActiveCampaignsOrderByApplicants(
-            LocalDate.now(), pageable);
-        return pages.getContent();
+        return queryFactory.query()
+            .select(campaign)
+            .from(campaign)
+            .where(
+                nowBetweenApplyDate(LocalDate.now()),
+                endedEq(false)
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+    }
+
+    private BooleanExpression nowBetweenApplyDate(LocalDate now) {
+        return campaign.applyStartDate.loe(now)
+            .and(campaign.applyEndDate.goe(now));
+    }
+
+
+    private static BooleanExpression endedEq(boolean creteria) {
+        return campaign.isEnded.eq(creteria);
     }
 
     @Override
