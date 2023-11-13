@@ -1,3 +1,4 @@
+import 'package:clout/utilities/category_translator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -87,6 +88,8 @@ class _ClouterDetailState extends State<ClouterDetail> {
       print('clouter detail 에러 ❌.');
     }
   }
+
+  final AdCategoryTranslator categoryTranslator = AdCategoryTranslator();
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +198,14 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                   ],
                                 ),
                                 Text(
-                                    clouterInfo?.categoryList?.join(', ') ?? '',
+                                    clouterInfo?.categoryList != null
+                                        ? clouterInfo!.categoryList!
+                                            .map((category) =>
+                                                AdCategoryTranslator
+                                                    .translateAdCategory(
+                                                        category))
+                                            .join(', ')
+                                        : '',
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w700,
