@@ -5,6 +5,7 @@ import com.mmm.clout.memberservice.common.Category;
 import com.mmm.clout.memberservice.common.Region;
 import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.common.entity.address.response.AddressResponse;
+import com.mmm.clout.memberservice.image.domain.Image;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -60,6 +61,8 @@ public class SelectClrResponse {
 
     private Integer countOfContract;
 
+    private List<Image> imageList;
+
     public SelectClrResponse(ClouterReader clouterReader) {
 
         this.clouterId = clouterReader.getClouterId();
@@ -82,6 +85,7 @@ public class SelectClrResponse {
         this.regionList = clouterReader.getRegionList();
         this.address = new AddressResponse(clouterReader.getAddress());
         this.countOfContract = clouterReader.getCountOfContract();
+        this.imageList = clouterReader.getImageList();
     }
 
     public static SelectClrResponse from(ClouterReader clouterReader) {
