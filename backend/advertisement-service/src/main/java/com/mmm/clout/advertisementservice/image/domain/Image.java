@@ -1,6 +1,7 @@
 package com.mmm.clout.advertisementservice.image.domain;
 
 import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
+import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.sun.istack.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

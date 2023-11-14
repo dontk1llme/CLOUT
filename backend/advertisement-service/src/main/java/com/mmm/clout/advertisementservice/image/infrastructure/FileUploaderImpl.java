@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
+import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.image.domain.FileUploader;
 import com.mmm.clout.advertisementservice.image.domain.Image;
 import com.mmm.clout.advertisementservice.image.domain.repository.ImageRepository;
@@ -37,13 +38,13 @@ public class FileUploaderImpl implements FileUploader {
 
     @Override
     @Transactional
-    public void uploadList(List<MultipartFile> files, Advertisement advertisement) throws IOException {
+    public void uploadList(List<MultipartFile> files, Campaign campaign) throws IOException {
         //file uploader
         for(MultipartFile multipartFile : files) {
             String originalName = multipartFile.getOriginalFilename();
-            String uploadedPath = upload(multipartFile, advertisement.getId());
+            String uploadedPath = upload(multipartFile, campaign.getId());
             Image image = Image.create(
-                advertisement,
+                campaign,
                 originalName,
                 "https://yangkidsbucket.s3.ap-northeast-2.amazonaws.com/" + uploadedPath,
                 uploadedPath
