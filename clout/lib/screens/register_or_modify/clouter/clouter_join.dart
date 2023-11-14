@@ -1,20 +1,22 @@
 import 'package:clout/hooks/apis/register_api.dart';
+import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_2.dart';
+import 'package:clout/type.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-
 import 'package:clout/style.dart' as style;
-
+import 'package:http_parser/http_parser.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_1.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_3.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_4.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:http/http.dart' as http;
 
 class ClouterJoin extends StatefulWidget {
   const ClouterJoin({super.key});
@@ -96,14 +98,29 @@ class ClouterJoinState extends State<ClouterJoin> {
   }
 
   register() async {
-    // registerController.printAll();
+    await registerController.setClouter();
+
+    final imageController =
+        Get.find<ImagePickerController>(tag: clouterController.controllerTag);
+
+    List<dio.MultipartFile> imageFiles = [];
+    for (int i = 0; i < imageController.images.length; i++) {
+      String imagePath = imageController.images[i].path;
+      String fileType =
+          imagePath.substring(imagePath.lastIndexOf('.') + 1, imagePath.length);
+      imageFiles.add(dio.MultipartFile.fromFileSync(imagePath,
+          contentType: MediaType(
+              'image', fileType.toLowerCase(), {'charset': 'utf-8'})));
+    }
 
     RegisterApi registerApi = RegisterApi();
-    registerController.setClouter();
+
     // await을 안붙히면 Future<dynamic> 형식으로 넘어와서 데이터 처리하기 힘듦 => await을 붙히면 String으로 오더라고(항상 이런건지를 모르겠음)
-    var responseBody = await registerApi.postRequest(
-        '/member-service/v1/clouters/signup', registerController.clouter);
-    // '/v1/clouters', registerController.clouter);
+    var responseBody = await registerApi.dioPostRequest(
+        '/member-service/v1/clouters/signup',
+        registerController.clouter,
+        imageFiles);
+
     print(responseBody);
     showSnackBar();
     Get.offAllNamed('/login');
@@ -111,7 +128,6 @@ class ClouterJoinState extends State<ClouterJoin> {
 
   @override
   void initState() {
-    // TODO: implement initState
     clouterController.setControllerTag('clouterRegister');
     registerController.runOtherControllers();
     super.initState();
