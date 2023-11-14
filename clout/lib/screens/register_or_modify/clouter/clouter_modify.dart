@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/hooks/apis/login_api.dart';
+import 'package:clout/hooks/pictures/image_functions.dart';
+import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
 import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:clout/screens/profile/clouter/clouter_profile.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_1.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_2.dart';
 import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or_modify_3.dart';
@@ -12,6 +15,7 @@ import 'package:clout/screens/register_or_modify/clouter/widgets/clouter_join_or
 import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
 import 'package:clout/type.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -32,6 +36,8 @@ class _ClouterModifyState extends State<ClouterModify> {
 
   final controller = Get.put(ClouterInfoController(), tag: 'clouterModify');
 
+  bool _isLoading = true;
+
   AuthorizedApi authorizedApi = AuthorizedApi();
 
   loadClouterInfo() async {
@@ -43,7 +49,8 @@ class _ClouterModifyState extends State<ClouterModify> {
     var clouterData = response['body'];
     var data = Clouter.fromJson(jsonDecode(clouterData));
 
-    controller.loadBeforeModify(data);
+    await controller.loadBeforeModify(data);
+    _isLoading = false;
   }
 
   @override
@@ -56,10 +63,25 @@ class _ClouterModifyState extends State<ClouterModify> {
 
   updateUserInfo() async {
     await controller.setClouter();
-    var response = await authorizedApi.putRequest(
+
+    final imageController =
+        Get.find<ImagePickerController>(tag: clouterController.controllerTag);
+
+    ImageFunctions imageFunctions = ImageFunctions();
+
+    var imageFiles = await imageFunctions
+        .pickedImageToMultiPartFiles(imageController.images);
+
+    var response = await authorizedApi.dioPutRequest(
       '/member-service/v1/clouters/${userController.memberId}',
       controller.clouter,
+      imageFiles,
     );
+    if (response.statusCode == 200) {
+      Get.back();
+      Get.back();
+      Get.off(() => ClouterProfile());
+    }
   }
 
   testLogin() async {
@@ -139,40 +161,70 @@ class _ClouterModifyState extends State<ClouterModify> {
             headerTitle: '회원 정보 수정',
           ),
         ),
-        body: BouncingListview(
-          child: Column(
-            children: [
-              ClouterJoinOrModify1(
-                modifying: true,
-                controllerTag: 'clouterModify',
-              ),
-              ClouterJoinOrModify2(
-                modifying: true,
-                controllerTag: 'clouterModify',
-              ),
-              ClouterJoinOrModify3(
-                modifying: true,
-                controllerTag: 'clouterModify',
-              ),
-              ClouterJoinOrModify4(
-                modifying: true,
-                controllerTag: 'clouterModify',
-              ),
-              SizedBox(height: 20),
-              FractionallySizedBox(
-                widthFactor: 1,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: BigButton(
-                    title: '완료', // pageNum에 따라 버튼 텍스트 변경
-                    function: showPasswordCheck,
-                  ),
+        body: _isLoading
+            ? SizedBox(
+                height: double.infinity,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: 160,
+                      right: 160,
+                      top: 0,
+                      bottom: 280,
+                      child: SizedBox(
+                        height: 100,
+                        child: LoadingWidget(),
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 100,
+                      child: Align(
+                        child: Text(
+                          '사용자 정보를 불러오는 중입니다.\n잠시만 기다려 주세요',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : BouncingListview(
+                child: Column(
+                  children: [
+                    ClouterJoinOrModify1(
+                      modifying: true,
+                      controllerTag: 'clouterModify',
+                    ),
+                    ClouterJoinOrModify2(
+                      modifying: true,
+                      controllerTag: 'clouterModify',
+                    ),
+                    ClouterJoinOrModify3(
+                      modifying: true,
+                      controllerTag: 'clouterModify',
+                    ),
+                    ClouterJoinOrModify4(
+                      modifying: true,
+                      controllerTag: 'clouterModify',
+                    ),
+                    SizedBox(height: 20),
+                    FractionallySizedBox(
+                      widthFactor: 1,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: BigButton(
+                          title: '완료', // pageNum에 따라 버튼 텍스트 변경
+                          function: showPasswordCheck,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                  ],
                 ),
               ),
-              SizedBox(height: 30),
-            ],
-          ),
-        ),
       ),
     );
   }

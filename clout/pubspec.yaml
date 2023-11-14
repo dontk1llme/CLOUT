@@ -143,6 +143,7 @@ flutter:
     - assets/images/join2.png
     - assets/images/join3.png
     - assets/images/join4.png
+    - assets/images/blank-profile.png
     - assets/config/.env
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg

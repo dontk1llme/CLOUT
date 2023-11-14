@@ -356,25 +356,26 @@ class ClouterInfo {
   List<String>? regionList;
   Address? address;
   int? countOfContract;
+  List<dynamic>? imageResponses;
 
   ClouterInfo(
-    this.clouterId,
-    this.userId,
-    this.avgScore,
-    // this.contractCount,
-    this.role,
-    this.nickName,
-    this.name,
-    this.birthday,
-    this.age,
-    this.phoneNumber,
-    this.channelList,
-    this.minCost,
-    this.categoryList,
-    this.regionList,
-    this.address,
-    this.countOfContract,
-  );
+      {this.clouterId,
+      this.userId,
+      this.avgScore,
+      // this.contractCount,
+      this.role,
+      this.nickName,
+      this.name,
+      this.birthday,
+      this.age,
+      this.phoneNumber,
+      this.channelList,
+      this.minCost,
+      this.categoryList,
+      this.regionList,
+      this.address,
+      this.countOfContract,
+      this.imageResponses});
 
   ClouterInfo.fromJson(Map<String, dynamic> json) {
     clouterId = json['clouterId'];
@@ -398,6 +399,7 @@ class ClouterInfo {
     address =
         json['address'] != null ? Address.fromJson(json['address']) : null;
     countOfContract = json['countOfContract'];
+    imageResponses = json['imageResponses'];
   }
 
   Map<String, dynamic> toJson() {
@@ -421,6 +423,7 @@ class ClouterInfo {
       data['address'] = address!.toJson();
     }
     data['countOfContract'] = countOfContract;
+    data['imageResponses'] = imageResponses;
     return data;
   }
 }

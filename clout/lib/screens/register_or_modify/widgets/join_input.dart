@@ -57,47 +57,46 @@ class _JoinInputState extends State<JoinInput> {
       maxLength: widget.maxLength,
       enabled: widget.enabled,
       inputFormatters: widget.inputFormatters,
-      onChanged: widget.index == null
-          ? (value) {
-              if (_timer.isActive) _timer.cancel();
-              _timer = Timer(
-                const Duration(milliseconds: 2000),
-                () {
-                  widget.setState(value);
-                },
-              );
-              if (widget.controllerTag != null) {
-                final pinController = Get.find<FourDigitsInputController>(
-                    tag: widget.controllerTag);
-                pinController.setPhoneVerified(false);
-              }
-            }
-          : (value) {
-              if (_timer.isActive) _timer.cancel();
-              _timer = Timer(
-                const Duration(milliseconds: 2000),
-                () {
-                  widget.setState(widget.index, value);
-                },
-              );
-            },
+      // onChanged: widget.index == null
+      //     ? (value) {
+      //         if (_timer.isActive) _timer.cancel();
+      //         _timer = Timer(
+      //           const Duration(milliseconds: 1000),
+      //           () {
+      //             widget.setState(value);
+      //           },
+      //         );
+      //         if (widget.controllerTag != null) {
+      //           final pinController = Get.find<FourDigitsInputController>(
+      //               tag: widget.controllerTag);
+      //           pinController.setPhoneVerified(false);
+      //         }
+      //       }
+      //     : (value) {
+      //         if (_timer.isActive) _timer.cancel();
+      //         _timer = Timer(
+      //           const Duration(milliseconds: 1000),
+      //           () {
+      //             widget.setState(widget.index, value);
+      //           },
+      //         );
+      //       },
       onTapOutside: widget.index == null
-          ? (event) => widget.setState(textEditingController.text)
-          : (event) =>
-              widget.setState(widget.index, textEditingController.text),
+          ? (event) {
+              widget.setState(textEditingController.text);
+              // _timer.cancel();
+            }
+          : (event) {
+              widget.setState(widget.index, textEditingController.text);
+              // _timer.cancel();
+            },
       obscureText: widget.obscured ?? false,
       decoration: InputDecoration(
         counterText: '',
         contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-        // hintText: widget.initialValue ?? widget.title,
         hintText: widget.title,
         labelText: widget.label,
-        // labelText:
-        //     widget.initialValue == null || widget.initialValue.length == 0
-        //         ? widget.label
-        //         : widget.initialValue,
-        // label: Text(widget.label),
         floatingLabelStyle: TextStyle(color: style.colors['main1']),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
