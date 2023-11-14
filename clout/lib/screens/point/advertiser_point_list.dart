@@ -5,7 +5,6 @@ import 'package:clout/style.dart' as style;
 import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:clout/hooks/apis/points_transactions.dart';
-import 'package:clout/type.dart';
 import 'dart:convert';
 
 // widgets
@@ -33,6 +32,8 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
 
   Future<List<Widget>> getPointList() async {
     var authorization = userController.userLogin['authorization'];
+    print('포인트리스트');
+    print(userController.userLogin);
     var requestBody = {
       "memberId": userController.memberId,
       "category": 'ALL',

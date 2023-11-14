@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:get/get.dart';
+import 'package:clout/hooks/apis/points_transactions.dart';
+import 'dart:convert';
+
 // widgets
 import 'package:clout/screens/point/widgets/my_wallet.dart';
 import 'package:clout/widgets/header/header.dart';
@@ -19,6 +22,56 @@ class ClouterPointList extends StatefulWidget {
 class _ClouterPointListState extends State<ClouterPointList> {
 
   final userController = Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+    // initState에서 비동기 작업 수행
+    // 이 부분은 비동기로 데이터를 가져오기 위해 사용합니다.
+    // FutureBuilder를 사용하여 비동기 작업이 완료될 때까지 기다리고 결과를 표시합니다.
+  }
+
+  Future<List<Widget>> getPointList() async {
+    var authorization = userController.userLogin['authorization'];
+    print('포인트리스트');
+    print(userController.userLogin);
+    var requestBody = {
+      "memberId": userController.memberId,
+      "category": 'ALL',
+      "page": '0',
+      "size": '10',
+    };
+
+    var response = await PointsTransactionsApi.getRequest(
+      '/point-service/v1/points/transactions',
+      authorization,
+      requestBody,
+    );
+
+    print('$requestBody');
+    var responseData = json.decode(response);
+    var contentList = responseData['content'];
+
+    List<Widget> pointItemBoxes = [];
+
+    for (var item in contentList) {
+      var pointStatus = item['pointStatus'];
+      var time = item['time'].substring(0, 10); // Extract date only
+      var title = item['counterparty'];
+      var amount = item['amount'].toString();
+
+      var type = (pointStatus == '+') ? '충전' : '사용';
+
+      pointItemBoxes.add(PointItemBox(
+        type: type,
+        time: time,
+        title: title,
+        point: amount,
+      ));
+    }
+
+    return pointItemBoxes;
+  }
   
 
   @override
@@ -50,15 +103,24 @@ class _ClouterPointListState extends State<ClouterPointList> {
                 ),
                 ActionChoiceExample(
                     labels: ['전체 내역', '적립 내역', '출금 내역'], chipCount: 3),
+                    
                 Divider(
                   color: style.colors['lightgray'],
                   thickness: 1,
                 ),
-                PointItemBox(type: '출금', time: '날짜시간', title: '누구셍세야', point: '500',),
-                // PointItemBox(type: '충전'),
-                // PointItemBox(type: '사용'),
-                // PointItemBox(type: '사용'),
-                // PointItemBox(type: '출금'),
+                FutureBuilder(
+                  future: getPointList(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('에러: ${snapshot.error}');
+                    } else {
+                      List<Widget> pointItemBoxes = snapshot.data ?? [];
+                      return Column(children: pointItemBoxes);
+                    }
+                  },
+                ),
               ],
             ),
           ),
