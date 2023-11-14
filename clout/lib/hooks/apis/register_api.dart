@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'package:clout/type.dart';
+import 'package:dio/dio.dart';
+import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http_parser/http_parser.dart';
 
 String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
@@ -44,5 +48,33 @@ class RegisterApi {
     print(statusCode);
 
     return returnVal;
+  }
+
+  dioPostRequest(
+      apiUrl, Clouter parameter, List<MultipartFile> multiPartFiles) async {
+    var dio = Dio();
+    try {
+      dio.options.contentType = 'multipart/form-data';
+      // dio.options.contentType = 'application/json';
+      // dio.options.contentType = Headers.formUrlEncodedContentType;
+      dio.options.maxRedirects.isFinite;
+
+      FormData formData = FormData.fromMap({
+        'createClrRequest': MultipartFile.fromString(
+            jsonEncode(parameter.toJson()),
+            contentType: MediaType.parse('application/json')),
+        'files': multiPartFiles
+      });
+
+      print(jsonEncode(parameter));
+      print(multiPartFiles);
+
+      var response = await dio.post('$baseUrl$apiUrl', data: formData);
+      print(response);
+      print(response.data);
+    } catch (e) {
+      print('에러 발생');
+      print(e);
+    }
   }
 }

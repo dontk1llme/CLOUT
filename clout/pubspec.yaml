@@ -82,6 +82,10 @@ dependencies:
   flutter_animated_icons: ^1.0.1
   http_status_code: ^0.0.2
   shared_preferences: ^2.2.2
+  dio: ^5.3.3
+  http_parser: ^4.0.2
+  flutter_cache_manager: ^3.3.1
+  path_provider: ^2.1.1
 
 flutter_icons:
   android: "clout"
