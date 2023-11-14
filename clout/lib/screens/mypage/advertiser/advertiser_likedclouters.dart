@@ -15,14 +15,18 @@ import 'package:loading_indicator/loading_indicator.dart';
 
 class AdvertiserLikedclouters extends StatelessWidget {
   AdvertiserLikedclouters({super.key});
+
   final infiniteController = Get.put(ClouterInfiniteScrollController(),
       tag: 'advertiserLikedClouters');
+      
   final userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
+    infiniteController.setCurrentPage(0);
     infiniteController.setEndPoint('/member-service/v1/bookmarks/clouter');
-    infiniteController.setParameter('?memberId=${userController.memberId}');
+    infiniteController.setParameter(
+        '?page=${infiniteController.currentPage}&size=${10}&memberId=${userController.memberId}');
     infiniteController.toggleData(true);
     return GetBuilder<ClouterInfiniteScrollController>(
       tag: 'advertiserLikedClouters',
