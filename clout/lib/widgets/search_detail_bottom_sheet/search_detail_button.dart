@@ -125,7 +125,9 @@ class SearchDetailButton extends StatelessWidget {
                 height: 50,
                 child: BigButton(
                   title: '검색',
-                  function: () => Get.toNamed('/campaignList'),
+                  function: () {
+                    Get.back();
+                  },
                 ),
               ),
             )

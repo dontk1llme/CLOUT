@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 // api
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:clout/type.dart';
 import 'package:clout/hooks/apis/authorized_api.dart';

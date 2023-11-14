@@ -59,18 +59,6 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    // 'ALL'이 포함되어 있으면 모든 플랫폼에 대한 위젯 리스트 생성
-    // List<Widget> adPlatformWidgets;
-    // if (widget.adPlatformList
-    //     .any((widget) => widget is Sns2 && widget.platform == "ALL")) {
-    //   adPlatformWidgets = ["INSTAGRAM", "TIKTOK", "YOUTUBE"]
-    //       .map((platform) => Sns2(platform: platform))
-    //       .toList();
-    // } else {
-    //   // 'ALL'이 없으면 기존 리스트를 사용
-    //   adPlatformWidgets = widget.adPlatformList;
-    // }
-
     return InkWell(
         // 여기 arguments에 해당 캠페인의 id를 넣어야 함
         onTap: () =>
@@ -130,7 +118,10 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth > 400 ? 17 : 15,
                   )),
-              Text(widget.price != 0 ? '${f.format(widget.price)} 포인트' : '포인트 없음',
+              Text(
+                  widget.price != 0
+                      ? '${f.format(widget.price)} 포인트'
+                      : '포인트 없음',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -143,7 +134,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 children: [
                   Flexible(
                     flex: 2,
-                    child: Text('',
+                    child: Text(widget.companyInfo.companyName!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
