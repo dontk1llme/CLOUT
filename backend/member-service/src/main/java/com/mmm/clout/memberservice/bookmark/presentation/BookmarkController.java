@@ -1,12 +1,17 @@
 package com.mmm.clout.memberservice.bookmark.presentation;
 
 import com.mmm.clout.memberservice.bookmark.application.facade.BookmarkFacade;
+import com.mmm.clout.memberservice.bookmark.application.reader.CampaignReader;
 import com.mmm.clout.memberservice.bookmark.presentation.docs.BookmarkControllerDocs;
 import com.mmm.clout.memberservice.bookmark.presentation.request.BookmarkDeleteRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateAdBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateClouterBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.response.*;
+import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
+import com.mmm.clout.memberservice.clouter.presentation.response.CustomPageResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,21 +56,35 @@ public class BookmarkController implements BookmarkControllerDocs {
     }
 
     @GetMapping("/ad")
-    public ResponseEntity<AdBookmarkListResponse> selectAdBookmarkByMemberId(
+    public ResponseEntity<CustomPageResponse<CampaignReader>> selectAdBookmarkByMemberId(
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "10") Integer size,
         @RequestParam("memberId") Long memberId
     ) {
-        AdBookmarkListResponse response = AdBookmarkListResponse.from(
-            bookmarkFacade.selectAdByMemberId(memberId)
+        Page<CampaignReader> searched = bookmarkFacade.selectAdByMemberId(memberId, PageRequest.of(page, size));
+        CustomPageResponse response = new CustomPageResponse(
+            searched.toList(),
+            searched.getNumber(),
+            searched.getSize(),
+            searched.getTotalPages(),
+            searched.getTotalElements()
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/clouter")
-    public ResponseEntity<ClouterBookmarkListResponse> selectClouterBookmarkByMemberId(
+    public ResponseEntity<CustomPageResponse<ClouterReader>> selectClouterBookmarkByMemberId(
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "10") Integer size,
         @RequestParam("memberId") Long memberId
     ) {
-        ClouterBookmarkListResponse response = ClouterBookmarkListResponse.from(
-            bookmarkFacade.selectClouterByMemberId(memberId)
+        Page<ClouterReader> searched = bookmarkFacade.selectClouterByMemberId(memberId, PageRequest.of(page, size));
+        CustomPageResponse response = new CustomPageResponse(
+            searched.toList(),
+            searched.getNumber(),
+            searched.getSize(),
+            searched.getTotalPages(),
+            searched.getTotalElements()
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -48,7 +48,9 @@ public class BookmarkConfig {
 
     @Bean
     public SelectAdByMemberIdProcessor selectAdByMemberIdProcessor(
-        BookmarkRepository bookmarkRepository, AdvertisementProvider advertisementProvider, AdvertiserRepository advertiserRepository
+        BookmarkRepository bookmarkRepository,
+        AdvertisementProvider advertisementProvider,
+        AdvertiserRepository advertiserRepository
     ) {
         return new SelectAdByMemberIdProcessor(bookmarkRepository, advertisementProvider, advertiserRepository);
     }
