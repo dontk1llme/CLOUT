@@ -18,6 +18,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    use-root-path: true
   kafka:
     producer:
       bootstrap-servers: k9a409.p.ssafy.io:9092,k9a409.p.ssafy.io:9093,k9a409.p.ssafy.io:9094
