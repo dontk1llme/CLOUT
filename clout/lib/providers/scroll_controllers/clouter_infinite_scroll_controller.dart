@@ -93,10 +93,7 @@ class ClouterInfiniteScrollController extends GetxController {
             nickName: clouterInfo.nickName!,
             avgScore: clouterInfo.avgScore ?? 0,
             minCost: clouterInfo.minCost ?? 0,
-            categoryList: clouterInfo.categoryList!
-                .map(AdCategoryTranslator.translateAdCategory)
-                .toList(),
-            // : ["분류 없음"],
+            categoryList: clouterInfo.categoryList!,
             adPlatformList: clouterInfo.channelList
                     ?.map((channel) => Sns2(platform: channel.platform))
                     .toList() ??
