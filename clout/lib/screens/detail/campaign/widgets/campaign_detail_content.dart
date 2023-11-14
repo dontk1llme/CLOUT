@@ -27,7 +27,6 @@ class CampaignDetailContent extends StatelessWidget {
           ),
           child: content),
       SizedBox(height: 10)
-      //asdf
     ]);
   }
 }
