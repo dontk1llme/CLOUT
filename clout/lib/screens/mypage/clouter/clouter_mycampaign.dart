@@ -23,7 +23,6 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
     infiniteController.setEndPoint('/member-service/v1/applies/clouters');
     infiniteController.setParameter(
         '?clouter=${userController.memberId}&&type='); // 💥 typeEnum..? 추가하기
-    infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
       tag: 'clouterMyCampaign',
       builder: (controller) => Scaffold(

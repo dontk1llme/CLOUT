@@ -11,6 +11,7 @@ import 'package:clout/widgets/input/search_bar.dart';
 import 'package:clout/widgets/header/header.dart';
 
 // utilities
+import 'package:clout/providers/search_detail_controller.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 
 // controllers
@@ -24,50 +25,54 @@ class CampaignList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    infiniteController.setEndPoint('/advertisements');
+    ////////////////////////////////////////////
+    infiniteController.setEndPoint(
+        '/advertisement-service/v1/advertisements/search?page=0&size=10&');
     infiniteController.setParameter(
-        '/search?...&&page=${infiniteController.currentPage}&&size=${10}'); // 💥 search condition 추가하기
-    final screenWidth = MediaQuery.of(context).size.width;
-    infiniteController.toggleData(false);
+        '/search?page=${infiniteController.currentPage}&size=${10}');
+    ////////////////////////////////////////////
     return GetBuilder<InfiniteScrollController>(
-        tag: 'campaignList',
-        builder: (controller) => Scaffold(
-              drawer: MyDrawer(),
-              backgroundColor: style.colors['white'],
-              appBar: PreferredSize(
-                preferredSize: Size.fromHeight(70),
-                child: Header(
-                  header: 1,
-                  headerTitle: '캠페인 목록',
-                ),
+      tag: 'campaignList',
+      builder: (controller) => Scaffold(
+        drawer: MyDrawer(),
+        backgroundColor: style.colors['white'],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+            header: 1,
+            headerTitle: '캠페인 목록',
+          ),
+        ),
+        body: BouncingListview(
+          child: Column(
+            children: [
+              MySearchBar(
+                controllerTag: 'campaignList',
               ),
-              body: BouncingListview(
-                child: Column(
-                  children: [
-                    MySearchBar(),
-                    CategoryList(),
-                    SearchDetailButton(),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            '전체보기',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 19,
-                            ),
-                          ),
-                        ],
+              CategoryList(),
+              SearchDetailButton(),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '전체보기',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 19,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    CampaignInfiniteScrollBody(controllerTag: 'campaignList'),
-                    SizedBox(height: 30),
                   ],
                 ),
               ),
-            ));
+              SizedBox(height: 20),
+              CampaignInfiniteScrollBody(controllerTag: 'campaignList'),
+              SizedBox(height: 30),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
