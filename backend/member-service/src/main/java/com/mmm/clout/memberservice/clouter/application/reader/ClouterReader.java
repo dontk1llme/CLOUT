@@ -69,4 +69,8 @@ public class ClouterReader {
         this.countOfContract = clouter.getCountOfContract();
     }
 
+    public static ClouterReader from(Clouter clouter) {
+        return null;
+    }
+
 }
