@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:clout/type.dart';
 import 'package:clout/utilities/like_utils.dart';
 import 'package:clout/hooks/apis/authorized_api.dart';
-import 'package:clout/hooks/apis/normal_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // utility
 import 'package:clout/utilities/bouncing_listview.dart';
@@ -54,6 +54,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
   ClouterInfo? clouterInfo;
   var clouterId = Get.arguments;
   final userController = Get.find<UserController>();
+  int? bookmarkId;
 
   @override
   void initState() {
@@ -68,10 +69,47 @@ class _ClouterDetailState extends State<ClouterDetail> {
 
   bool isItemLiked = false;
 
-  void handleItemTap() {
+  // 좋아요 상태 초기화 함수
+  loadInitialLikeStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? storedBookmarkId = prefs.getInt('bookmarkId');
+
     setState(() {
-      isItemLiked = !isItemLiked;
+      // 현재 페이지의 clouterId와 저장된 bookmarkId가 일치하면 좋아요
+      isItemLiked = storedBookmarkId != null && storedBookmarkId == clouterId;
     });
+  }
+
+  Future<void> updateLikeStatus(bool isLiked, int targetId) async {
+    try {
+      final AuthorizedApi api = AuthorizedApi();
+      var requestBody = {
+        "memberId": userController.memberId,
+        "targetId": targetId,
+      };
+
+      if (isLiked) {
+        // 좋아요 상태일 때 서버에 POST 요청
+        var response = await api.postRequest(
+            '/member-sevice/v1/bookmarks/clouter', requestBody);
+        if (response != null && response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
+          setState(() {
+            isItemLiked = true;
+            bookmarkId = responseData['bookmarkId'];
+          });
+        }
+      } else if (bookmarkId != null) {
+        await api.deleteRequest(
+            '/member-service/v1/bookmarks/delete', bookmarkId);
+        setState(() {
+          isItemLiked = false;
+          bookmarkId = null;
+        });
+      }
+    } catch (e) {
+      print("에러~: $e");
+    }
   }
 
   _showDetail() async {
@@ -131,20 +169,8 @@ class _ClouterDetailState extends State<ClouterDetail> {
                               LikeButton(
                                 isLiked: isItemLiked,
                                 onTap: () {
-                                  setState(() {
-                                    isItemLiked = !isItemLiked;
-                                  });
-                                  if (clouterInfo != null &&
-                                      clouterInfo!.clouterId != null) {
-                                    sendLikeStatus(
-                                      userController.memberId,
-                                      clouterInfo!.clouterId!,
-                                      isItemLiked,
-                                      true,
-                                    );
-                                  } else {
-                                    print("Campaign 정보 에러 ❌ ");
-                                  }
+                                  updateLikeStatus(
+                                      !isItemLiked, clouterInfo!.clouterId!);
                                 },
                               )
                             ],
