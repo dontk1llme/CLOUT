@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.member.presentation;
 
+import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.common.entity.sms.SmsService;
 import com.mmm.clout.memberservice.member.application.LoginReader;
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.AuthDto;
@@ -10,6 +11,7 @@ import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
 import com.mmm.clout.memberservice.member.presentation.response.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,6 +94,16 @@ public class MemberController implements MemberControllerDocs {
     public ResponseEntity<String> sendSms(
         @RequestParam String phoneNumber
     ) {
+        String result = smsService.smsSend(phoneNumber, makeAuthKey());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/sendsms/create")
+    public ResponseEntity<String> sendSms(
+        @RequestParam String phoneNumber,
+        @RequestParam Role role
+    ) {
+        memberService.checkPhonenumber(phoneNumber, role);
         String result = smsService.smsSend(phoneNumber, makeAuthKey());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

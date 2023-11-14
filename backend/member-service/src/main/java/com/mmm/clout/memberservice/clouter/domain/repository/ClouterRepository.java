@@ -9,6 +9,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClouterRepository {
 
@@ -23,4 +24,6 @@ public interface ClouterRepository {
     List<Clouter> search(SearchCondition condition, Pageable pageable);
 
     JPAQuery<Clouter> getSearchCountQuery(SearchCondition condition);
+
+    Optional<Clouter> findByPhoneNumber(String phoneNumber);
 }
