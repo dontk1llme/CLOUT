@@ -3,6 +3,7 @@ package com.mmm.clout.memberservice.clouter.infrastructure.configuration;
 import com.mmm.clout.memberservice.clouter.application.*;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
 import com.mmm.clout.memberservice.image.domain.FileUploader;
+import com.mmm.clout.memberservice.image.domain.Image;
 import com.mmm.clout.memberservice.image.domain.repository.ImageRepository;
 import com.mmm.clout.memberservice.member.domain.provider.PointProvider;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
@@ -30,27 +31,29 @@ public class ClouterConfig {
 
     @Bean
     public CreateClouterProcessor createClouterProcessor(
-            ClouterRepository clouterRepository,
-            MemberRepository memberRepository,
-            BCryptPasswordEncoder encoder,
-            StarRepository starRepository,
-            PointProvider pointProvider,
-            FileUploader fileUploader
+        ClouterRepository clouterRepository,
+        MemberRepository memberRepository,
+        BCryptPasswordEncoder encoder,
+        StarRepository starRepository,
+        PointProvider pointProvider,
+        FileUploader fileUploader
     ) {
-        return new CreateClouterProcessor(clouterRepository, memberRepository, encoder, starRepository, pointProvider, fileUploader);
+        return new CreateClouterProcessor(clouterRepository, memberRepository, encoder,
+            starRepository, pointProvider, fileUploader);
     }
 
     @Bean
     public UpdateClouterProcessor updateClouterProcessor(
-            ClouterRepository clouterRepository, BCryptPasswordEncoder encoder
+        ClouterRepository clouterRepository, BCryptPasswordEncoder encoder
     ) {
         return new UpdateClouterProcessor(clouterRepository, encoder);
     }
 
     @Bean
     public SelectClouterProcessor selectClouterProcessor(
-            ClouterRepository clouterRepository
+        ClouterRepository clouterRepository,
+        ImageRepository imageRepository
     ) {
-        return new SelectClouterProcessor(clouterRepository);
+        return new SelectClouterProcessor(clouterRepository, imageRepository);
     }
 }
