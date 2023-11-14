@@ -19,9 +19,8 @@ class ClouterInfiniteScrollBody extends StatelessWidget {
           crossAxisCount: 2,
         ),
         itemBuilder: (_, index) {
-          print(controller.data.length);
-          final clouter = controller.data[index];
-          return clouter;
+          final clouter1 = controller.data[index];
+          return clouter1;
         },
         itemCount: controller.data.length,
       ),

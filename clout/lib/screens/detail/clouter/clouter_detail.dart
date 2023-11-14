@@ -1,4 +1,3 @@
-import 'package:clout/utilities/category_translator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -8,10 +7,10 @@ import 'dart:convert';
 import 'package:clout/type.dart';
 import 'package:clout/utilities/like_utils.dart';
 import 'package:clout/hooks/apis/authorized_api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // utility
 import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/utilities/category_translator.dart';
 
 // widgets
 import 'package:clout/widgets/sns/widgets/sns_item_box.dart';
@@ -54,7 +53,6 @@ class _ClouterDetailState extends State<ClouterDetail> {
   ClouterInfo? clouterInfo;
   var clouterId = Get.arguments;
   final userController = Get.find<UserController>();
-  int? bookmarkId;
 
   @override
   void initState() {
@@ -69,65 +67,38 @@ class _ClouterDetailState extends State<ClouterDetail> {
 
   bool isItemLiked = false;
 
-  // 좋아요 상태 초기화 함수
-  loadInitialLikeStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? storedBookmarkId = prefs.getInt('bookmarkId');
-
-    setState(() {
-      // 현재 페이지의 clouterId와 저장된 bookmarkId가 일치하면 좋아요
-      isItemLiked = storedBookmarkId != null && storedBookmarkId == clouterId;
-    });
-  }
-
-  Future<void> updateLikeStatus(bool isLiked, int targetId) async {
-    try {
-      final AuthorizedApi api = AuthorizedApi();
-      var requestBody = {
-        "memberId": userController.memberId,
-        "targetId": targetId,
-      };
-
-      if (isLiked) {
-        // 좋아요 상태일 때 서버에 POST 요청
-        var response = await api.postRequest(
-            '/member-sevice/v1/bookmarks/clouter', requestBody);
-        if (response != null && response.statusCode == 200) {
-          final responseData = jsonDecode(response.body);
-          setState(() {
-            isItemLiked = true;
-            bookmarkId = responseData['bookmarkId'];
-          });
-        }
-      } else if (bookmarkId != null) {
-        await api.deleteRequest(
-            '/member-service/v1/bookmarks/delete', bookmarkId);
-        setState(() {
-          isItemLiked = false;
-          bookmarkId = null;
-        });
-      }
-    } catch (e) {
-      print("에러~: $e");
-    }
-  }
-
   _showDetail() async {
     final AuthorizedApi api = AuthorizedApi();
-    var response =
+
+    var campaignResponse =
         await api.getRequest('/member-service/v1/clouters/', clouterId);
-    // var statusCode = response['statusCode'];
-    if (response != null) {
-      final decodedResponse = jsonDecode(response['body']);
+
+    var bookmarkResponse = await api.getRequest(
+        '/member-service/v1/bookmarks/check',
+        '?memberId=${userController.memberId}&targetId=$clouterId');
+
+    if (campaignResponse != null) {
+      final decodedResponse = jsonDecode(campaignResponse['body']);
+      print(decodedResponse);
       setState(() {
         clouterInfo = ClouterInfo.fromJson(decodedResponse);
       });
     } else {
       print('clouter detail 에러 ❌.');
     }
-  }
 
-  final AdCategoryTranslator categoryTranslator = AdCategoryTranslator();
+    if (bookmarkResponse != null) {
+      final decodedResponse = jsonDecode(bookmarkResponse['body']);
+      print(decodedResponse);
+      setState(
+        () {
+          isItemLiked = decodedResponse['check'];
+        },
+      );
+    } else {
+      print('clouter bookmark 여부 불러오기 실패 ❌');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +108,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
         preferredSize: Size.fromHeight(70),
         child: Header(
           header: 3,
-          headerTitle: clouterInfo?.nickName, // 채널명 또는 계정명
+          headerTitle: clouterInfo?.nickName ?? '', // 채널명 또는 계정명
         ),
       ),
       body: SizedBox(
@@ -158,7 +129,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                           children: [
                             Icon(Icons.star, color: Colors.amber),
                             SizedBox(width: 3),
-                            Text(clouterInfo?.avgScore?.toString() ?? '0',
+                            Text(clouterInfo?.avgScore.toString() ?? '0',
                                 style: TextStyle(fontWeight: FontWeight.w800)),
                           ],
                         ),
@@ -169,8 +140,18 @@ class _ClouterDetailState extends State<ClouterDetail> {
                               LikeButton(
                                 isLiked: isItemLiked,
                                 onTap: () {
-                                  updateLikeStatus(
-                                      !isItemLiked, clouterInfo!.clouterId!);
+                                  setState(() {
+                                    isItemLiked = !isItemLiked;
+                                  });
+                                  if (clouterInfo != null &&
+                                      clouterInfo!.clouterId != null) {
+                                    sendLikeStatus(
+                                      userController.memberId,
+                                      clouterInfo!.clouterId!,
+                                      isItemLiked,
+                                      true,
+                                    );
+                                  }
                                 },
                               )
                             ],
@@ -238,11 +219,12 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                         color: style.colors['logo'])),
                                 Row(
                                   children: [
-                                    // Text(clouterInfo.contractCount.toString(),
-                                    //     style: TextStyle(
-                                    //         fontSize: 15,
-                                    //         fontWeight: FontWeight.w700,
-                                    //         color: style.colors['logo'])),
+                                    Text(
+                                        clouterInfo!.countOfContract.toString(),
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700,
+                                            color: style.colors['logo'])),
                                     Text(' 건', style: TextStyle(fontSize: 15)),
                                   ],
                                 )
