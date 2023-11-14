@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   var campaignData = RxList<CampaignInfo>();
   var clouterData = RxList<ClouterInfo>();
+  var isLoading = true;
 
   void fetchCampaigns() async {
     final NormalApi api = NormalApi();
@@ -23,7 +24,7 @@ class HomeController extends GetxController {
       campaignData.value = campaignsJson.map((item) {
         var campaign = Campaign.fromJson(item['campaign']);
         var advertiserInfo = AdvertiserInfo.fromJson(item['advertiserInfo']);
-
+        isLoading = false;
         return CampaignInfo(
           campaign.campaignId,
           campaign.adPlatformList,
@@ -52,6 +53,7 @@ class HomeController extends GetxController {
     } else {
       campaignData.value = [];
     }
+    update();
   }
 
   void fetchClouters() async {
@@ -66,26 +68,28 @@ class HomeController extends GetxController {
       clouterData.value = cloutersJson.map((item) {
         var clouterInfo = ClouterInfo.fromJson(item);
         return ClouterInfo(
-          clouterInfo.clouterId,
-          clouterInfo.userId,
-          clouterInfo.avgScore,
+          clouterId: clouterInfo.clouterId,
+          userId: clouterInfo.userId,
+          avgScore: clouterInfo.avgScore,
           // clouterInfo.contractCount, // 💥 계약한 광고 건수 수정
-          clouterInfo.role,
-          clouterInfo.nickName,
-          clouterInfo.name,
-          clouterInfo.birthday,
-          clouterInfo.age,
-          clouterInfo.phoneNumber,
-          clouterInfo.channelList,
-          clouterInfo.minCost,
-          clouterInfo.categoryList,
-          clouterInfo.regionList,
-          clouterInfo.address,
-          clouterInfo.countOfContract,
+          role: clouterInfo.role,
+          nickName: clouterInfo.nickName,
+          name: clouterInfo.name,
+          birthday: clouterInfo.birthday,
+          age: clouterInfo.age,
+          phoneNumber: clouterInfo.phoneNumber,
+          channelList: clouterInfo.channelList,
+          minCost: clouterInfo.minCost,
+          categoryList: clouterInfo.categoryList,
+          regionList: clouterInfo.regionList,
+          address: clouterInfo.address,
+          countOfContract: clouterInfo.countOfContract,
+          // imageResponses: clouterInfo.imageResponses,
         );
       }).toList();
     } else {
       clouterData.value = [];
     }
+    update();
   }
 }
