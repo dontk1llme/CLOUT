@@ -25,9 +25,9 @@ class ClouterList extends GetView<InfiniteScrollController> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    infiniteController.setEndPoint('/clouters');
-    infiniteController.setParameter('search...'); // 💥 search condition 추가하기
-    infiniteController.toggleData(true);
+    infiniteController.setEndPoint('/member-service/v1/clouters/');
+    infiniteController
+        .setParameter('search?page=${controller.currentPage}&size=${10}');
     return GetBuilder<InfiniteScrollController>(
         tag: 'clouterList',
         builder: (controller) => Scaffold(
@@ -42,7 +42,7 @@ class ClouterList extends GetView<InfiniteScrollController> {
             body: BouncingListview(
               child: Column(
                 children: [
-                  MySearchBar(),
+                  // MySearchBar(),
                   CategoryList(),
                   SearchDetailButton(),
                   Padding(
