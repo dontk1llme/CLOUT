@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.mmm.clout.memberservice.clouter.domain.QClouter.clouter;
 import static org.springframework.util.StringUtils.hasText;
@@ -101,6 +102,11 @@ public class ClouterRepositoryAdapter implements ClouterRepository {
                         platformEq(condition.getPlatform())
                 );
         return countQuery;
+    }
+
+    @Override
+    public Optional<Clouter> findByPhoneNumber(String phoneNumber) {
+        return jpaClouterRepository.findByPhoneNumber(phoneNumber);
     }
 
     private BooleanExpression platformEq(List<Platform> platform) {
