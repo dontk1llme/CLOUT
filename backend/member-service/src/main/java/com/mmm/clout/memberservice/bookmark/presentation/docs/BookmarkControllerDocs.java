@@ -1,9 +1,12 @@
 package com.mmm.clout.memberservice.bookmark.presentation.docs;
 
+import com.mmm.clout.memberservice.bookmark.application.reader.CampaignReader;
 import com.mmm.clout.memberservice.bookmark.presentation.request.BookmarkDeleteRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateAdBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.request.CreateClouterBookmarkRequest;
 import com.mmm.clout.memberservice.bookmark.presentation.response.*;
+import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
+import com.mmm.clout.memberservice.clouter.presentation.response.CustomPageResponse;
 import com.mmm.clout.memberservice.star.presentation.request.createStarDetailRequest;
 import com.mmm.clout.memberservice.star.presentation.response.CreateStarResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -74,10 +77,12 @@ public interface BookmarkControllerDocs {
         @ApiResponse(responseCode = "200", description = "클라우터 상세 데이터 리턴",
             content =
             @Content(mediaType="application/json",
-                schema=@Schema(implementation=ClouterBookmarkListResponse.class))
+                schema=@Schema(implementation=CustomPageResponse.class))
         )
     )
-    public ResponseEntity<ClouterBookmarkListResponse> selectClouterBookmarkByMemberId(
+    public ResponseEntity<CustomPageResponse<ClouterReader>> selectClouterBookmarkByMemberId(
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "10") Integer size,
         @RequestParam("memberId") Long memberId
     );
 
@@ -89,7 +94,9 @@ public interface BookmarkControllerDocs {
                 schema=@Schema(implementation=AdBookmarkListResponse.class))
         )
     )
-    public ResponseEntity<AdBookmarkListResponse> selectAdBookmarkByMemberId(
+    public ResponseEntity<CustomPageResponse<CampaignReader>> selectAdBookmarkByMemberId(
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "10") Integer size,
         @RequestParam("memberId") Long memberId
     );
 }
