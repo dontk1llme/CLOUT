@@ -15,4 +15,9 @@ public class MemberserviceApplication {
 		SpringApplication.run(MemberserviceApplication.class, args);
 	}
 
+	@PostConstruct
+    public void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+        log.info("현재 시각: {}", new Date());
+    }
 }
