@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/bookmarks")
@@ -20,7 +22,7 @@ public class BookmarkController implements BookmarkControllerDocs {
 
     @PostMapping("/ad")
     public ResponseEntity<AdBookmarkResponse> adBookmark(
-        @RequestBody CreateAdBookmarkRequest request
+        @Valid @RequestBody CreateAdBookmarkRequest request
     ) {
         AdBookmarkResponse response = AdBookmarkResponse.from(
             bookmarkFacade.createAdBookmark(request.toCommand())
@@ -30,7 +32,7 @@ public class BookmarkController implements BookmarkControllerDocs {
 
     @PostMapping("/clouter")
     public ResponseEntity<ClouterBookmarkResponse> clouterBookmark(
-        @RequestBody CreateClouterBookmarkRequest request
+        @Valid @RequestBody CreateClouterBookmarkRequest request
     ) {
         ClouterBookmarkResponse response = ClouterBookmarkResponse.from(
             bookmarkFacade.createClouterBookmark(request.toCommand())
@@ -40,7 +42,7 @@ public class BookmarkController implements BookmarkControllerDocs {
 
     @DeleteMapping("/delete")
     public ResponseEntity<BookmarkDeleteResponse> delete(
-        @RequestBody BookmarkDeleteRequest request
+        @Valid @RequestBody BookmarkDeleteRequest request
     ) {
         BookmarkDeleteResponse response = BookmarkDeleteResponse.from(
             bookmarkFacade.delete(request.toCommand())
@@ -68,4 +70,14 @@ public class BookmarkController implements BookmarkControllerDocs {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<BookmarkCheckResponse> check(
+        @RequestParam("memberId") Long memberId,
+        @RequestParam("targetId") Long targetId
+    ) {
+        BookmarkCheckResponse response = new BookmarkCheckResponse(
+            bookmarkFacade.check(memberId, targetId)
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
