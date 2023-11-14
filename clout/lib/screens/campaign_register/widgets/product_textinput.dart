@@ -11,7 +11,7 @@ class ProductTextinput extends StatelessWidget {
         height: 55,
         child: InputElement(
           elementType: 'text',
-          placeholder: '제품명',
+          placeholder: '캠페인 제목 입력',
           setData: setProductName,
           maxLength: 50,
         ));

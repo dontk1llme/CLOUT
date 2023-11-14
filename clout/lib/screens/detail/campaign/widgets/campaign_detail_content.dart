@@ -12,12 +12,20 @@ class CampaignDetailContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(height: 10),
-      Text(
-        title,
-        style: style.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700)
-      ),
-      SizedBox(height:5),
-      content,
+      Text(title,
+          style: style.textTheme.headlineMedium
+              ?.copyWith(fontWeight: FontWeight.w700)),
+      SizedBox(height: 5),
+      Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+          child: content),
       SizedBox(height: 10)
       //asdf
     ]);
