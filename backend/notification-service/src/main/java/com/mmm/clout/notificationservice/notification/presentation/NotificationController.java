@@ -1,5 +1,6 @@
 package com.mmm.clout.notificationservice.notification.presentation;
 
+import com.mmm.clout.notificationservice.common.docs.NotificationControllerDocs;
 import com.mmm.clout.notificationservice.notification.application.facade.NotificationFacade;
 import com.mmm.clout.notificationservice.notification.presentation.request.CheckMemberTokenRequest;
 import jakarta.validation.Valid;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/notifications")
 @RequiredArgsConstructor
-public class NotificationController {
+public class NotificationController implements NotificationControllerDocs {
 
     private final NotificationFacade notificationFacade;
 

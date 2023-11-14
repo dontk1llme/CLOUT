@@ -40,7 +40,8 @@ dependencies {
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-
+	//swagger
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.14'
 }
 
 tasks.named('test') {
