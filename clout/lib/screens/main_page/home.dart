@@ -288,6 +288,7 @@ class _HomeState extends State<Home> {
                                     child: ClouterItemBox(
                                         clouterId: clouterInfo.clouterId ?? 0,
                                         userId: clouterInfo.userId ?? '',
+                                        nickName: clouterInfo.nickName ?? '',
                                         avgScore: clouterInfo.avgScore ?? 0,
                                         minCost: clouterInfo.minCost ?? 0,
                                         // contractCount:
@@ -304,7 +305,7 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                     Column(

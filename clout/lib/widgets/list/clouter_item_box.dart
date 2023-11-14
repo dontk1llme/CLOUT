@@ -17,6 +17,7 @@ import 'package:clout/widgets/sns/sns2.dart';
 class ClouterItemBox extends StatefulWidget {
   final int clouterId;
   final String userId;
+  final String nickName;
   final int avgScore;
   final int minCost;
   final List<String> categoryList;
@@ -28,6 +29,7 @@ class ClouterItemBox extends StatefulWidget {
     super.key,
     required this.clouterId,
     required this.userId,
+    required this.nickName,
     required this.avgScore,
     required this.minCost,
     required this.categoryList,
@@ -111,7 +113,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                 title: AdCategoryTranslator.translateAdCategory(
                     widget.categoryList[0])),
             Text(
-              widget.userId,
+              widget.nickName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
