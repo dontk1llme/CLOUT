@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:clout/providers/address_controller.dart';
 import 'package:clout/providers/date_input_controller.dart';
 import 'package:clout/providers/fee_controller.dart';
@@ -9,7 +12,10 @@ import 'package:clout/providers/region_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_controller.dart';
 import 'package:clout/type.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 class ClouterInfoController extends GetxController {
   var name;
@@ -81,7 +87,28 @@ class ClouterInfoController extends GetxController {
   var dateController;
   var imagePickerController;
 
-  loadBeforeModify(Clouter input) {
+  getImageXFileByUrl(List<dynamic> urls) async {
+    List<XFile> returnVal = [];
+    for (int i = 0; i < urls.length; i++) {
+      // File imageFile = File(urls[i].path!);
+      var filePath = ImageResponse.fromJson(urls[i]).path;
+      http.Response responseData = await http.get(Uri.parse(filePath!));
+      var uint8list = responseData.bodyBytes;
+      var buffer = uint8list.buffer;
+      ByteData byteData = ByteData.view(buffer);
+      var tempDir = await getTemporaryDirectory();
+
+      File file = await File('${tempDir.path}/img$i').writeAsBytes(
+          buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+      XFile result = XFile(file.path);
+
+      // XFile result = XFile(ImageResponse.fromJson(urls[i]).path!);
+      returnVal.add(result);
+    }
+    return returnVal;
+  }
+
+  loadBeforeModify(Clouter input) async {
     print(input.name);
     print(input.channelList);
     print(input.address);
@@ -100,6 +127,11 @@ class ClouterInfoController extends GetxController {
     addressController.setDaumAddress(input.address!.mainAddress);
     addressController.setDetailAddress(input.address!.detailAddress);
     fourDigitsInputController.setPhoneVerified(true);
+    print('여기까지 옴1');
+    var images = await getImageXFileByUrl(input.imageResponses!);
+    await imagePickerController.addImage(images);
+    print('여기까지 옴2');
+    print(images);
 
     var channelList = input.channelList!;
     for (int i = 0; i < channelList.length; i++) {
@@ -173,8 +205,8 @@ class ClouterInfoController extends GetxController {
   setClouter() {
     List<ChannelList> channelList = [];
     for (int i = 0; i < 3; i++) {
-      if (platformSelectController!.platforms[i]) {
-        ChannelList channel = ChannelList(
+      if (platformSelectController!.id.length > 0) {
+        final channel = ChannelList(
             platformSelectController!.id[i],
             i == 0
                 ? 'INSTAGRAM'
@@ -186,6 +218,8 @@ class ClouterInfoController extends GetxController {
         channelList.add(channel);
       }
     }
+
+    print(channelList);
 
     List<String> categoryList = [];
     for (int i = 0; i < 12; i++) {
@@ -207,18 +241,18 @@ class ClouterInfoController extends GetxController {
     );
 
     clouter = Clouter(
-        id,
-        password,
-        nickName,
-        name,
-        DateFormat('yyyy-MM-dd').format(dateController!.selectedDate),
-        dateController.age,
-        phoneNumber,
-        channelList,
-        int.parse(feeController!.pay),
-        categoryList,
-        regionList,
-        address);
+        userId: id,
+        pwd: password,
+        nickName: nickName,
+        name: name,
+        birthday: DateFormat('yyyy-MM-dd').format(dateController!.selectedDate),
+        age: age,
+        phoneNumber: phoneNumber,
+        channelList: channelList,
+        minCost: int.parse(feeController!.pay),
+        categoryList: categoryList,
+        regionList: regionList,
+        address: address);
     update();
   }
 
