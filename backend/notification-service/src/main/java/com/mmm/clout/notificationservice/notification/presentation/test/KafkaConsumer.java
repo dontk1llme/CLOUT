@@ -1,14 +1,16 @@
-package com.mmm.clout.notificationservice.notification.presentation;
+package com.mmm.clout.notificationservice.notification.presentation.test;
 
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class KafkaConsumer {
 
     @KafkaListener(topics = "${message.topic.name}")
     public void consume(String message) throws IOException {
-        System.out.println(String.format("Consumed message : %s", message));
+        log.info(String.format("Consumed message : %s", message));
     }
 }

@@ -1,10 +1,12 @@
-package com.mmm.clout.notificationservice.notification.presentation;
+package com.mmm.clout.notificationservice.notification.presentation.test;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class KafkaProducer {
 
@@ -19,7 +21,7 @@ public class KafkaProducer {
     }
 
     public void sendMessage(String message) {
-        System.out.println(String.format("Produce message : %s", message));
+        log.info(String.format("Produce message : %s", message));
         this.kafkaTemplate.send(topicName, message);
     }
 }
