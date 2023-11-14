@@ -81,6 +81,7 @@ class HomeController extends GetxController {
           clouterInfo.categoryList,
           clouterInfo.regionList,
           clouterInfo.address,
+          clouterInfo.countOfContract,
         );
       }).toList();
     } else {
