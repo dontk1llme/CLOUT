@@ -1,3 +1,5 @@
+import 'package:clout/main.dart';
+import 'package:clout/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -26,22 +28,6 @@ import 'package:clout/screens/chatting/chatting_list.dart';
 // controller
 import 'package:clout/providers/user_controllers/user_controller.dart';
 
-// 클라우터 사진들
-List<String> imgList = [
-  'assets/images/clouterImage.jpg',
-  'assets/images/main_carousel_1.jpg',
-  'assets/images/itemImage.jpg',
-];
-
-final List<Widget> imageSliders = imgList
-    .map((item) => Padding(
-          padding: const EdgeInsets.all(0),
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              child: Image.asset(item, fit: BoxFit.cover)),
-        ))
-    .toList();
-
 class ClouterDetail extends StatefulWidget {
   const ClouterDetail({super.key});
 
@@ -52,12 +38,15 @@ class ClouterDetail extends StatefulWidget {
 class _ClouterDetailState extends State<ClouterDetail> {
   ClouterInfo? clouterInfo;
   var clouterId = Get.arguments;
+  var imageSliders;
+
   final userController = Get.find<UserController>();
+  bool _isLoading = true;
 
   @override
   void initState() {
-    super.initState();
     _showDetail();
+    super.initState();
   }
 
   doChat(destination) {
@@ -70,6 +59,8 @@ class _ClouterDetailState extends State<ClouterDetail> {
   _showDetail() async {
     final AuthorizedApi api = AuthorizedApi();
 
+    List<String> imgList = [];
+
     var campaignResponse =
         await api.getRequest('/member-service/v1/clouters/', clouterId);
 
@@ -80,6 +71,35 @@ class _ClouterDetailState extends State<ClouterDetail> {
     if (campaignResponse != null) {
       final decodedResponse = jsonDecode(campaignResponse['body']);
       print(decodedResponse);
+      print(decodedResponse['imageResponses']);
+
+      // 이미지 슬라이더에 이미지 넣는 작업
+      for (var imgInfo in decodedResponse['imageResponses']) {
+        imgList.add(ImageResponse.fromJson(imgInfo).path!);
+      }
+      if (imgList.isEmpty) {
+        imgList.add('assets/images/blank-profile.png');
+        imageSliders = imgList
+            .map((item) => Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      child: Image.asset(item, fit: BoxFit.cover)),
+                ))
+            .toList();
+      } else {
+        imageSliders = imgList
+            .map((item) => Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      child: Image.network(item, fit: BoxFit.cover)),
+                ))
+            .toList();
+      }
+      print(imageSliders.length);
+      print(imgList);
+
       setState(() {
         clouterInfo = ClouterInfo.fromJson(decodedResponse);
       });
@@ -92,12 +112,19 @@ class _ClouterDetailState extends State<ClouterDetail> {
       print(decodedResponse);
       setState(
         () {
-          isItemLiked = decodedResponse['check'];
+          if (decodedResponse['check'] == null) {
+            isItemLiked = false;
+          } else {
+            isItemLiked = decodedResponse['check'];
+          }
         },
       );
     } else {
       print('clouter bookmark 여부 불러오기 실패 ❌');
     }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -111,179 +138,228 @@ class _ClouterDetailState extends State<ClouterDetail> {
           headerTitle: clouterInfo?.nickName ?? '', // 채널명 또는 계정명
         ),
       ),
-      body: SizedBox(
-        width: double.infinity,
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            BouncingListview(
-              child: FractionallySizedBox(
-                widthFactor: 0.9,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.star, color: Colors.amber),
-                            SizedBox(width: 3),
-                            Text(clouterInfo?.avgScore.toString() ?? '0',
-                                style: TextStyle(fontWeight: FontWeight.w800)),
-                          ],
-                        ),
-                        if (userController.memberType == 1)
-                          Row(
-                            children: [
-                              Text('Like'),
-                              LikeButton(
-                                isLiked: isItemLiked,
-                                onTap: () {
-                                  setState(() {
-                                    isItemLiked = !isItemLiked;
-                                  });
-                                  if (clouterInfo != null &&
-                                      clouterInfo!.clouterId != null) {
-                                    sendLikeStatus(
-                                      userController.memberId,
-                                      clouterInfo!.clouterId!,
-                                      isItemLiked,
-                                      true,
-                                    );
-                                  }
-                                },
-                              )
-                            ],
-                          )
-                      ],
+      body: _isLoading
+          ? SizedBox(
+              height: double.infinity,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 160,
+                    right: 160,
+                    top: 0,
+                    bottom: 280,
+                    child: SizedBox(
+                      height: 100,
+                      child: LoadingWidget(),
                     ),
-                    // 사진 캐러셀
-                    ImageCarousel(
-                        imageSliders: imageSliders,
-                        aspectRatio: 1.2,
-                        enlarge: true),
-                    SizedBox(height: 20),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      height: 120,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(7),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 100,
+                    child: Align(
+                      child: Text(
+                        '클라우터 정보를 불러오는 중입니다.\n잠시만 기다려 주세요',
+                        textAlign: TextAlign.center,
                       ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text('희망 광고비', style: TextStyle(fontSize: 15)),
-                                Text('희망 카테고리', style: TextStyle(fontSize: 15)),
-                                Text('계약한 광고 수',
-                                    style: TextStyle(fontSize: 15)),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : SizedBox(
+              width: double.infinity,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Positioned.fill(
+                    child: BouncingListview(
+                      child: FractionallySizedBox(
+                        widthFactor: 0.9,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
-                                    Text(clouterInfo?.minCost.toString() ?? '',
+                                    Icon(Icons.star, color: Colors.amber),
+                                    SizedBox(width: 3),
+                                    Text(
+                                        clouterInfo?.avgScore.toString() ?? '0',
                                         style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700,
-                                            color: style.colors['logo'])),
-                                    Text(' points'),
+                                            fontWeight: FontWeight.w800)),
                                   ],
                                 ),
-                                Text(
-                                    clouterInfo?.categoryList != null
-                                        ? clouterInfo!.categoryList!
-                                            .map((category) =>
-                                                AdCategoryTranslator
-                                                    .translateAdCategory(
-                                                        category))
-                                            .join(', ')
-                                        : '',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700,
-                                        color: style.colors['logo'])),
-                                Row(
-                                  children: [
-                                    Text(
-                                        clouterInfo!.countOfContract.toString(),
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700,
-                                            color: style.colors['logo'])),
-                                    Text(' 건', style: TextStyle(fontSize: 15)),
-                                  ],
-                                )
+                                if (userController.memberType == 1)
+                                  Row(
+                                    children: [
+                                      Text('Like'),
+                                      LikeButton(
+                                        isLiked: isItemLiked,
+                                        onTap: () {
+                                          setState(() {
+                                            isItemLiked = !isItemLiked;
+                                          });
+                                          if (clouterInfo != null &&
+                                              clouterInfo!.clouterId != null) {
+                                            sendLikeStatus(
+                                              userController.memberId,
+                                              clouterInfo!.clouterId!,
+                                              isItemLiked,
+                                              true,
+                                            );
+                                          }
+                                        },
+                                      )
+                                    ],
+                                  )
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 10),
-                      child: Align(
-                        alignment: Alignment.centerLeft, // 왼쪽으로 정렬
-                        child: Text(
-                          'SNS',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 19,
-                          ),
+                            // 사진 캐러셀
+                            ImageCarousel(
+                              imageSliders: imageSliders,
+                              aspectRatio: 1.2,
+                              enlarge: true,
+                              infiniteScroll: imageSliders.length > 1,
+                            ),
+                            SizedBox(height: 20),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                              height: 120,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text('희망 광고비',
+                                            style: TextStyle(fontSize: 15)),
+                                        Text('희망 카테고리',
+                                            style: TextStyle(fontSize: 15)),
+                                        Text('계약한 광고 수',
+                                            style: TextStyle(fontSize: 15)),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                                clouterInfo?.minCost
+                                                        .toString() ??
+                                                    '',
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w700,
+                                                    color:
+                                                        style.colors['logo'])),
+                                            Text(' points'),
+                                          ],
+                                        ),
+                                        Text(
+                                            clouterInfo?.categoryList != null
+                                                ? clouterInfo!.categoryList!
+                                                    .map((category) =>
+                                                        AdCategoryTranslator
+                                                            .translateAdCategory(
+                                                                category))
+                                                    .join(', ')
+                                                : '',
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                                color: style.colors['logo'])),
+                                        Row(
+                                          children: [
+                                            Text(
+                                                clouterInfo!.countOfContract
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w700,
+                                                    color:
+                                                        style.colors['logo'])),
+                                            Text(' 건',
+                                                style: TextStyle(fontSize: 15)),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 20, bottom: 10),
+                              child: Align(
+                                alignment: Alignment.centerLeft, // 왼쪽으로 정렬
+                                child: Text(
+                                  'SNS',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 19,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // 여러개 SNS 정보 반복해서 생성
+                            clouterInfo?.channelList != null
+                                ? Column(
+                                    children: clouterInfo!.channelList!
+                                        .map((e) => SnsItemBox(
+                                            username: e.name,
+                                            followers: e.followerScale,
+                                            snsType: e.platform,
+                                            snsUrl: e.link))
+                                        .toList(),
+                                  )
+                                : Container(),
+                            SizedBox(height: 70),
+                          ],
                         ),
                       ),
                     ),
-                    // 여러개 SNS 정보 반복해서 생성
-                    clouterInfo?.channelList != null
-                        ? Column(
-                            children: clouterInfo!.channelList!
-                                .map((e) => SnsItemBox(
-                                    username: e.name,
-                                    followers: e.followerScale,
-                                    snsType: e.platform,
-                                    snsUrl: e.link))
-                                .toList(),
-                          )
-                        : Container(),
-                    SizedBox(height: 70),
-                  ],
-                ),
+                  ),
+                  userController.memberType != 1
+                      ? Container()
+                      : Positioned(
+                          bottom: 20,
+                          left: 20,
+                          right: 20,
+                          child: Container(
+                            color: Colors.transparent,
+                            child: SizedBox(
+                              height: 50,
+                              child: BigButton(
+                                title: '채팅하기',
+                                function: () => Get.to(Chatting()),
+                              ),
+                            ),
+                          ),
+                        )
+                ],
               ),
             ),
-            userController.memberType != 1
-                ? Container()
-                : Positioned(
-                    bottom: 20,
-                    left: 20,
-                    right: 20,
-                    child: Container(
-                      color: Colors.transparent,
-                      child: SizedBox(
-                        height: 50,
-                        child: BigButton(
-                          title: '채팅하기',
-                          function: () => Get.to(Chatting()),
-                        ),
-                      ),
-                    ),
-                  )
-          ],
-        ),
-      ),
     );
   }
 }

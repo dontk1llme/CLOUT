@@ -1,4 +1,5 @@
 import 'package:clout/hooks/apis/register_api.dart';
+import 'package:clout/hooks/pictures/image_functions.dart';
 import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_controller.dart';
 import 'package:clout/providers/user_controllers/clouter_info_controller.dart';
@@ -103,15 +104,10 @@ class ClouterJoinState extends State<ClouterJoin> {
     final imageController =
         Get.find<ImagePickerController>(tag: clouterController.controllerTag);
 
-    List<dio.MultipartFile> imageFiles = [];
-    for (int i = 0; i < imageController.images.length; i++) {
-      String imagePath = imageController.images[i].path;
-      String fileType =
-          imagePath.substring(imagePath.lastIndexOf('.') + 1, imagePath.length);
-      imageFiles.add(dio.MultipartFile.fromFileSync(imagePath,
-          contentType: MediaType(
-              'image', fileType.toLowerCase(), {'charset': 'utf-8'})));
-    }
+    ImageFunctions imageFunctions = ImageFunctions();
+
+    var imageFiles =
+        imageFunctions.pickedImageToMultiPartFiles(imageController.images);
 
     RegisterApi registerApi = RegisterApi();
 

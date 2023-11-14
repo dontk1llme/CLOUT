@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:clout/type.dart';
 import 'package:dio/dio.dart';
-import 'package:mime/mime.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http_parser/http_parser.dart';
@@ -56,7 +55,6 @@ class RegisterApi {
     try {
       dio.options.contentType = 'multipart/form-data';
       // dio.options.contentType = 'application/json';
-      // dio.options.contentType = Headers.formUrlEncodedContentType;
       dio.options.maxRedirects.isFinite;
 
       FormData formData = FormData.fromMap({
