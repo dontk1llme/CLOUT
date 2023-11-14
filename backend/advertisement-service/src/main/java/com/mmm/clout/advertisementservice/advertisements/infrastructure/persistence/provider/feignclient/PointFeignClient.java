@@ -12,7 +12,7 @@ import javax.validation.Valid;
 @FeignClient(name = "point-service")
 public interface PointFeignClient {
 
-    @PostMapping("v1/points/reduce")
+    @PostMapping("/v1/points/reduce")
     public ResponseEntity<ReducePointInfo> reduce(
             @Valid @RequestBody ReducePointCommand request);
 }

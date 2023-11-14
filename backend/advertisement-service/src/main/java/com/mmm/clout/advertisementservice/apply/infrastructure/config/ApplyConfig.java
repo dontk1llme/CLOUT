@@ -8,6 +8,7 @@ import com.mmm.clout.advertisementservice.apply.application.GetApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
 import com.mmm.clout.advertisementservice.apply.application.ReadApplicantsByCampaignProcessor;
 import com.mmm.clout.advertisementservice.apply.application.SelectApplyForContractProcessor;
+import com.mmm.clout.advertisementservice.common.msa.provider.ContractProvider;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -72,10 +73,11 @@ public class ApplyConfig {
 
     @Bean
     SelectApplyForContractProcessor selectApplyForContractProcessor(
-        ApplyRepository applyRepository
+        ApplyRepository applyRepository,
+        ContractProvider contractProvider
     ) {
         return new SelectApplyForContractProcessor(
-            applyRepository
+            applyRepository, contractProvider
         );
     }
 
