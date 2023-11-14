@@ -79,14 +79,16 @@ class PayDialog extends StatelessWidget {
             TextButton(
               onPressed: () => openPayDialog(),
               style: ButtonStyle(
+                  padding: MaterialStatePropertyAll(EdgeInsets.zero),
                   minimumSize: MaterialStatePropertyAll(Size(200, 50)),
                   alignment: Alignment.centerRight),
               child: Text(
                 controller.payString,
                 style: style.textTheme.titleMedium?.copyWith(
-                    color: style.colors['main1'],
-                    fontWeight: FontWeight.bold,
-                    height: 1.1),
+                  color: style.colors['main1'],
+                  fontWeight: FontWeight.bold,
+                  height: 1.3,
+                ),
               ),
             ),
           ],
