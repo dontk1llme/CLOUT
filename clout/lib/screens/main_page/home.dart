@@ -35,15 +35,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final campaignData = <CampaignInfo>[].obs;
   final clouterData = <ClouterInfo>[].obs;
-
   final userController = Get.find<UserController>();
-  final HomeController homeController = Get.put(HomeController());
 
   @override
   void initState() {
-    super.initState();
+    final HomeController homeController = Get.put(HomeController());
     homeController.fetchCampaigns();
     homeController.fetchClouters();
+    super.initState();
   }
 
   List<String> imgList = [
@@ -243,26 +242,28 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      drawer: MyDrawer(),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: Header(
-          header: 0,
+    return GetBuilder<HomeController>(
+      builder: (controller) => Scaffold(
+        backgroundColor: Colors.white,
+        drawer: MyDrawer(),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+            header: 0,
+          ),
         ),
-      ),
-      body: BouncingListview(
-        child: Column(
-          children: [
-            Container(
-              color: Colors.black,
-              // height: 200,
-              width: double.infinity,
-              child: ImageCarousel(
-                imageSliders: carouselList,
-                aspectRatio: 0,
-                enlarge: false,
+        body: BouncingListview(
+          child: Column(
+            children: [
+              Container(
+                color: Colors.black,
+                // height: 200,
+                width: double.infinity,
+                child: ImageCarousel(
+                  imageSliders: carouselList,
+                  aspectRatio: 0,
+                  enlarge: false,
+                ),
               ),
             ),
             ElevatedButton(
@@ -305,57 +306,58 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      MenuTitle(text: '인기있는 캠페인', destination: 2),
-                      Obx(
-                        () => BouncingListview(
-                          scrollDirection: Axis.horizontal,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 5, right: 5),
-                            child: Row(
-                              children: homeController.campaignData
-                                  .map((campaignInfo) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                                  child: CampaignItemBox(
-                                    campaignId: campaignInfo.campaignId ?? 0,
-                                    adCategory: campaignInfo.adCategory ?? '',
-                                    title: campaignInfo.title ?? '',
-                                    price: campaignInfo.price ?? 0,
-                                    companyInfo: campaignInfo.companyInfo!,
-                                    numberOfSelectedMembers:
-                                        campaignInfo.numberOfSelectedMembers ??
-                                            0,
-                                    numberOfRecruiter:
-                                        campaignInfo.numberOfRecruiter ?? 0,
-                                    adPlatformList: campaignInfo.adPlatformList!
-                                        .map((e) => Sns2(
-                                              platform: e,
-                                            ))
-                                        .toList(),
-                                    advertiserInfo:
-                                        campaignInfo.advertiserInfo!,
-                                  ),
-                                );
-                              }).toList(),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        MenuTitle(text: '인기있는 캠페인', destination: 2),
+                        Obx(
+                          () => BouncingListview(
+                            scrollDirection: Axis.horizontal,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5, right: 5),
+                              child: Row(
+                                children:
+                                    controller.campaignData.map((campaignInfo) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                                    child: CampaignItemBox(
+                                      campaignId: campaignInfo.campaignId ?? 0,
+                                      adCategory: campaignInfo.adCategory ?? '',
+                                      title: campaignInfo.title ?? '',
+                                      price: campaignInfo.price ?? 0,
+                                      companyInfo: campaignInfo.companyInfo!,
+                                      numberOfSelectedMembers: campaignInfo
+                                              .numberOfSelectedMembers ??
+                                          0,
+                                      numberOfRecruiter:
+                                          campaignInfo.numberOfRecruiter ?? 0,
+                                      adPlatformList:
+                                          campaignInfo.adPlatformList!
+                                              .map((e) => Sns2(
+                                                    platform: e,
+                                                  ))
+                                              .toList(),
+                                      advertiserInfo:
+                                          campaignInfo.advertiserInfo!,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-            userController.memberType == 0
-                ? SizedBox(height: 150)
-                : Container(),
-          ],
+              userController.memberType == 0
+                  ? SizedBox(height: 150)
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );

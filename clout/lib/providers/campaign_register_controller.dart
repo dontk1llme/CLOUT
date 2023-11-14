@@ -4,6 +4,8 @@ import 'package:clout/providers/follower_controller.dart';
 import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/providers/region_controller.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:clout/type.dart';
 import 'package:get/get.dart';
 
 class CampaignRegisterController extends GetxController {
@@ -38,6 +40,45 @@ class CampaignRegisterController extends GetxController {
     ImagePickerController(),
     tag: 'campaignRegister',
   );
+  final userController = Get.find<UserController>();
+
+  var campaign;
+
+  setCampaign() {
+    List<String> platformList = [];
+    for (int i = 0; i < 3; i++) {
+      if (platformController.platforms[i]) {
+        if (i == 0) {
+          platformList.add('INSTAGRAM');
+        } else if (i == 1) {
+          platformList.add('TIKTOK');
+        } else if (i == 2) {
+          platformList.add('YOUTUBE');
+        }
+      }
+    }
+    List<String> regionList = [];
+    for (int i = 0; i < regionController.selectedRegions.length; i++) {
+      regionList
+          .add(regionController.getEnum(regionController.selectedRegions[i]));
+    }
+
+    campaign = Campaign(
+        registerId: userController.memberId,
+        adCategory: category,
+        title: productName,
+        numberOfRecruiter: recruitCount,
+        isPriceChangeable: true,
+        isDeliveryRequired: true, // 이거 받는 인풋 있어야 함
+        price: int.parse(payController.pay),
+        details: offeringItems,
+        offeringDetails: itemDetail,
+        adPlatformList: platformList,
+        minClouterAge: ageController.ageRanges.start.toInt(),
+        maxClouterAge: ageController.ageRanges.end.toInt(),
+        minFollower: int.parse(followerController.minimumFollowers),
+        regionList: regionList);
+  }
 
   setCategory(input) {
     category = input;
