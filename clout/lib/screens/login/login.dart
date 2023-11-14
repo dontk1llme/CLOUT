@@ -78,20 +78,20 @@ class _LoginState extends State<Login> {
       //-----------------------------------------
       //여기에서 알람 post 하기 
       final token = await FirebaseMessaging.instance.getToken();
-      final String mobileId = await getMobileId();
-      var notiParam = {
-        'memberId': userController.memberId,
-        'deviceId':mobileId,
-        'fcmToken':token,
-      };
+      // final String mobileId = await getMobileId();
+      // var notiParam = {
+      //   'memberId': userController.memberId,
+      //   'deviceId':mobileId,
+      //   'fcmToken':token,
+      // };
 
       //memberId, deviceId, fcmToken
-      final NotificationTokenApi notificationTokenApi = NotificationTokenApi();
-      var notiData = await notificationTokenApi.postRequest(
-        '/notification-service/v1/notifications/members/token-check', 
-        notiParam);
+      // final NotificationTokenApi notificationTokenApi = NotificationTokenApi();
+      // var notiData = await notificationTokenApi.postRequest(
+      //   '/notification-service/v1/notifications/members/token-check', 
+      //   notiParam);
       
-      print(notiData);
+      // print(notiData);
       
       //홈으로
       Get.offAllNamed('/home');
