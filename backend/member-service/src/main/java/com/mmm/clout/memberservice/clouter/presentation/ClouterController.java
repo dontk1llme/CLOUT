@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class ClouterController implements ClouterControllerDocs {
 
     @PostMapping("/signup")
     public ResponseEntity<CreateClrResponse> create(
-            @RequestBody CreateClrRequest createClrRequest
+            @Valid @RequestBody CreateClrRequest createClrRequest
             ) {
         CreateClrResponse result = CreateClrResponse.from(
                 clouterFacade.create(createClrRequest.toCommand())
@@ -43,7 +44,7 @@ public class ClouterController implements ClouterControllerDocs {
     @PutMapping("/{clouterId}")
     public ResponseEntity<UpdateClrResponse> update(
             @PathVariable("clouterId") Long clouterId,
-            @RequestBody UpdateClrRequest updateClrRequest
+            @Valid @RequestBody UpdateClrRequest updateClrRequest
     ) {
         UpdateClrResponse result = UpdateClrResponse.from(
                 clouterFacade.update(updateClrRequest.toCommand(clouterId))
