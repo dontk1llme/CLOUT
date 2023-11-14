@@ -34,7 +34,7 @@ public class Clouter extends Member {
 
     private Integer age;
 
-    @Column(length = 20)
+    @Column(length = 20, unique = true)
     private String phoneNumber;
 
     @ElementCollection(fetch = FetchType.LAZY)

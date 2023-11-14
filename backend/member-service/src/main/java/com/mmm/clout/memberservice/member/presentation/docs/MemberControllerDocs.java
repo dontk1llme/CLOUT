@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.member.presentation.docs;
 
+import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.member.infrastructure.auth.dto.AuthDto;
 import com.mmm.clout.memberservice.member.presentation.request.PwdUpdateRequst;
 import com.mmm.clout.memberservice.member.presentation.response.AddCountContractResponse;
@@ -103,5 +104,19 @@ public interface MemberControllerDocs {
     public ResponseEntity<AddCountContractResponse> addCount(
             @RequestParam("idList") List<Long> idList,
             @RequestParam("addType") boolean addType
+    );
+
+    @Operation(summary = "회원 가입용 번호 중복 검증 및 인증번호 sms 발송 api",
+        responses =
+        @ApiResponse(responseCode = "200", description = "sms 발송 api",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation=String.class))
+        )
+    )
+    @GetMapping("/sendsms/create")
+    public ResponseEntity<String> sendSms(
+        @RequestParam String phoneNumber,
+        @RequestParam Role role
     );
 }
