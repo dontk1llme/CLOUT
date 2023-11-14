@@ -1,3 +1,4 @@
+import 'package:clout/screens/detail/campaign/widgets/campaign_detail_visit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -38,7 +39,8 @@ final List<Widget> imageSliders = imgList
         ))
     .toList();
 
-String caution = '법적 고지, 책임은 계약 당사자 간 있다, 등등...';
+String caution =
+    '✔ 리뷰 작성기간 미준수시 패널티(제품 비용, 체험 비용 환불 등) 및 계약서에 의거 법적 처벌을 받을 수 있습니다.\n✔ 캠페인 요구사항 및 가이드라인을 확인해서 작성해주시기 바랍니다.\n✔ 수집된 개인정보는 체험단 운영 및 경품 증정 등의 필수 목적으로 사용되고 그 외에 목적으로는 사용되지 않습니다.\n✔ 작성해 주신 리뷰/포스팅/콘텐츠는 최소 6개월 이상 유지를 원칙으로 합니다.\n✔ 제품 발송은 최초 가입 시 등록한 주소지로 발송됩니다.\n✔ 주소 이전 시 회원 정보 미반영으로 인한 피해는 당사에서 책임지지 않습니다.';
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -211,26 +213,24 @@ class _CampaignDetailState extends State<CampaignDetail> {
                                 campaignInfo: campaignInfo!,
                                 advertiserInfo: advertiserInfo!),
                           SizedBox(height: 20),
-                          // 배송 여부 상자
-                          CampaignDetailDeliveryInfo(),
-                          CampaignDetailContent(
-                            title: '협찬 제공 방법',
-                            content: Text(
-                              campaignInfo!.offeringDetails!,
-                              style: style.textTheme.bodyLarge,
-                            ),
-                          ),
+                          campaignInfo!.isDeliveryRequired!
+                              ? CampaignDetailContent(
+                                  title: '협찬 제공 방법',
+                                  content: CampaignDetailDeliveryInfo())
+                              : CampaignDetailContent(
+                                  title: '협찬 제공 방법',
+                                  content: CampaignDetailVisit()),
                           CampaignDetailContent(
                             title: '제공 내역',
                             content: Text(
-                              campaignInfo!.offeringDetails!,
+                              campaignInfo!.details!,
                               style: style.textTheme.bodyLarge,
                             ),
                           ),
                           CampaignDetailContent(
                             title: '요구사항',
                             content: Text(
-                              campaignInfo!.details!,
+                              campaignInfo!.offeringDetails!,
                               style: style.textTheme.bodyLarge,
                             ),
                           ),

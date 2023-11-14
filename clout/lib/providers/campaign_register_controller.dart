@@ -10,11 +10,15 @@ import 'package:get/get.dart';
 
 class CampaignRegisterController extends GetxController {
   var category,
-      productName,
+      campaignTitle,
       recruitCount = 1,
       offeringItems,
       itemDetail,
-      signature;
+      signature,
+      link;
+
+  bool payPositive = false;
+  bool deliveryPositive = false;
 
   final ageController = Get.put(
     AgeController(),
@@ -64,20 +68,22 @@ class CampaignRegisterController extends GetxController {
     }
 
     campaign = Campaign(
-        registerId: userController.memberId,
-        adCategory: category,
-        title: productName,
-        numberOfRecruiter: recruitCount,
-        isPriceChangeable: true,
-        isDeliveryRequired: true, // 이거 받는 인풋 있어야 함
-        price: int.parse(payController.pay),
-        details: offeringItems,
-        offeringDetails: itemDetail,
-        adPlatformList: platformList,
-        minClouterAge: ageController.ageRanges.start.toInt(),
-        maxClouterAge: ageController.ageRanges.end.toInt(),
-        minFollower: int.parse(followerController.minimumFollowers),
-        regionList: regionList);
+      registerId: userController.memberId,
+      adCategory: category,
+      title: campaignTitle,
+      numberOfRecruiter: recruitCount,
+      isPriceChangeable: false,
+      isDeliveryRequired: deliveryPositive,
+      price: int.parse(payController.pay),
+      sellingLink: link,
+      details: offeringItems,
+      offeringDetails: itemDetail,
+      adPlatformList: platformList,
+      minClouterAge: ageController.ageRanges.start.toInt(),
+      maxClouterAge: ageController.ageRanges.end.toInt(),
+      minFollower: int.parse(followerController.minimumFollowers),
+      regionList: regionList,
+    );
   }
 
   setCategory(input) {
@@ -85,8 +91,8 @@ class CampaignRegisterController extends GetxController {
     update();
   }
 
-  setProductName(input) {
-    productName = input;
+  setCampaignTitle(input) {
+    campaignTitle = input;
     update();
   }
 
@@ -111,9 +117,24 @@ class CampaignRegisterController extends GetxController {
     update();
   }
 
+  setPayPositive(input) {
+    payPositive = input;
+    update();
+  }
+
+  setDeliveryPositive(input) {
+    deliveryPositive = input;
+    update();
+  }
+
+  setLink(input) {
+    link = input;
+    update();
+  }
+
   printAll() {
     print(category);
-    print(productName);
+    print(campaignTitle);
     print(recruitCount);
     print(offeringItems);
     print(itemDetail);
