@@ -35,10 +35,9 @@ public class ClouterConfig {
             BCryptPasswordEncoder encoder,
             StarRepository starRepository,
             PointProvider pointProvider,
-            FileUploader fileUploader,
-            ImageRepository imageRepository
+            FileUploader fileUploader
     ) {
-        return new CreateClouterProcessor(clouterRepository, memberRepository, encoder, starRepository, pointProvider, fileUploader, imageRepository);
+        return new CreateClouterProcessor(clouterRepository, memberRepository, encoder, starRepository, pointProvider, fileUploader);
     }
 
     @Bean
