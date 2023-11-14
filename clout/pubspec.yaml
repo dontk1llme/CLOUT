@@ -81,6 +81,7 @@ dependencies:
   format: ^1.4.0
   flutter_animated_icons: ^1.0.1
   http_status_code: ^0.0.2
+  shared_preferences: ^2.2.2
 
 flutter_icons:
   android: "clout"
