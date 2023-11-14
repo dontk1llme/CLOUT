@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class ClouterFacade {
     private final SelectTop10ClouterProcessor selectTop10ClouterProcessor;
     private final SearchClouterListProcessor searchClouterListProcessor;
 
-    public Clouter create(CreateClrCommand command) {
-        return createClouterProcessor.execute(command);
+    public Clouter create(CreateClrCommand command, List<MultipartFile> files) throws Exception {
+        return createClouterProcessor.execute(command, files);
     }
 
     public Clouter update(UpdateClrCommand command) { return updateClouterProcessor.execute(command); }
