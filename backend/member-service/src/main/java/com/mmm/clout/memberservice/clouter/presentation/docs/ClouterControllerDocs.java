@@ -18,6 +18,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -35,8 +37,9 @@ public interface ClouterControllerDocs {
         )
     )
     public ResponseEntity<CreateClrResponse> create(
-        @RequestBody CreateClrRequest createClrRequest
-    );
+            @RequestPart CreateClrRequest createClrRequest,
+            @RequestPart List<MultipartFile> files
+    )throws Exception;
 
     @Operation(summary = "클라우터 수정",
         parameters = {

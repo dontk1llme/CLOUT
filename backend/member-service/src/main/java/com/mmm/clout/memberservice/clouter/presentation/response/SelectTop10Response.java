@@ -33,7 +33,8 @@ public class SelectTop10Response {
                 clouterReader.getCategoryList(),
                 clouterReader.getRegionList(),
                 new AddressResponse(clouterReader.getAddress()),
-                    clouterReader.getCountOfContract()
+                    clouterReader.getCountOfContract(),
+                clouterReader.getImageList()
             )
         ).collect(Collectors.toList()));
     }
