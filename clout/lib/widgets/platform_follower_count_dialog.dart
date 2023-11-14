@@ -94,15 +94,14 @@ class PlatformFollowerCountDialog extends StatelessWidget {
             style: ButtonStyle(
                 minimumSize: MaterialStatePropertyAll(Size(200, 50)),
                 alignment: Alignment.centerRight),
-            // child: Text(
-            //   platformSelectController.followerCountString[index],
-            //   style: style.textTheme.titleSmall?.copyWith(
-            //       color: style.colors['main1'],
-            //       fontWeight: FontWeight.bold,
-            //       height: 1.1),
-            //   textAlign: TextAlign.right,
-            // ),
-            child: Text('asdf'),
+            child: Text(
+              platformSelectController.followerCountString[index],
+              style: style.textTheme.titleSmall?.copyWith(
+                  color: style.colors['main1'],
+                  fontWeight: FontWeight.bold,
+                  height: 1.1),
+              textAlign: TextAlign.right,
+            ),
           ),
         ],
       ),
