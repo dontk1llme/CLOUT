@@ -15,6 +15,6 @@ class AdCategoryTranslator {
       "OTHERS": "기타",
     };
 
-    return adCategoryTranslations[adCategory] ?? "분류 없음";
+    return adCategoryTranslations[adCategory] ?? "";
   }
 }
