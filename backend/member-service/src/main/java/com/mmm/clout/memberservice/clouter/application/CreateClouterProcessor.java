@@ -30,7 +30,6 @@ public class CreateClouterProcessor {
     private final StarRepository starRepository;
     private final PointProvider pointProvider;
     private final FileUploader fileUploader;
-    private final ImageRepository imageRepository;
 
     @Transactional
     public Clouter execute(CreateClrCommand command, List<MultipartFile> files) throws Exception {
@@ -41,18 +40,8 @@ public class CreateClouterProcessor {
         initStar(savedClouter);
         initPoint(savedClouter);
 
-        //file uploader
-        for(MultipartFile multipartFile : files) {
-            String originalName = multipartFile.getOriginalFilename();
-            String uploadedPath = fileUploader.upload(multipartFile, savedClouter.getId());
-            Image image = Image.create(
-                    savedClouter,
-                    originalName,
-                    "https://yangkidsbucket.s3.ap-northeast-2.amazonaws.com/" + uploadedPath,
-                    uploadedPath
-            );
-            imageRepository.save(image);
-        }
+        fileUploader.uploadList(files, savedClouter);
+
         return savedClouter;
     }
 
