@@ -1,5 +1,6 @@
 package com.mmm.clout.notificationservice.notification.domain.entity;
 
+import com.mmm.clout.notificationservice.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ import org.hibernate.annotations.DynamicInsert;
 @DynamicInsert
 @Table(name = "member_fcm_token")
 @Entity
-public class MemberFcmToken {
+public class MemberFcmToken extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
