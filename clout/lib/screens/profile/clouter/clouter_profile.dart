@@ -1,5 +1,6 @@
 import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/screens/profile/clouter/widgets/available_platform.dart';
+import 'package:clout/utilities/category_translator.dart';
 import 'package:clout/widgets/sns/platform_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -149,18 +150,26 @@ class _ClouterProfileState extends State<ClouterProfile> {
                     ),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 카테고리'),
-                    Row(
-                      children: [
-                        for (var category in clouterInfo?.categoryList ?? [])
-                          SelectedCategory(title: category),
-                      ],
-                    ),
+                    SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            for (var category
+                                in clouterInfo?.categoryList ?? [])
+                              SelectedCategory(
+                                  title:
+                                      AdCategoryTranslator.translateAdCategory(
+                                          category)),
+                          ],
+                        )),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 지역'),
                     Row(
                       children: [
                         for (var region in clouterInfo?.regionList ?? [])
-                          SelectedCategory(title: region),
+                          SelectedCategory(
+                              title:
+                                  AdCategoryTranslator.translateRegion(region)),
                       ],
                     ),
 
