@@ -30,7 +30,8 @@ public enum ErrorCode {
     DUPLICATE_USER_ID(HttpStatus.CONFLICT, "DUPLICATE_USER_ID", "이미 사용하고 있는 유저 아이디 입니다."),
     WRONG_PASSWORD(HttpStatus.UNAUTHORIZED, "WRONG_PASSWORD" , "아이디 혹은 비밀번호가 틀렸습니다."),
     NOT_FOUND_BOOKMARK(HttpStatus.NOT_FOUND, "NOT_FOUND_BOOKMARK", "존재하지 않는 북마크 입니다."),
-    CREATE_PLATFORM_ALL_DENY(HttpStatus.BAD_REQUEST, "CREATE_PLATFORM_ALL_DENY" , "채널의 플랫폼은 하나를 지정해야 합니다.");
+    CREATE_PLATFORM_ALL_DENY(HttpStatus.BAD_REQUEST, "CREATE_PLATFORM_ALL_DENY" , "채널의 플랫폼은 하나를 지정해야 합니다."),
+    DUPLICATE_PHONE_NUMBER(HttpStatus.CONFLICT, "DUPLICATE_PHONENUMBER" , "이 번호는 이미 사용중 입니다.");
 
 
     private final HttpStatus status;
