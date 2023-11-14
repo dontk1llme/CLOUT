@@ -265,43 +265,44 @@ class _HomeState extends State<Home> {
                   enlarge: false,
                 ),
               ),
-              ElevatedButton(
-                  onPressed: api.reissueToken, child: Text('리이슈 테슽 버튼')),
-              Container(
-                color: style.colors['white'],
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        MenuTitle(text: '인기있는 클라우터', destination: 1),
-                        Obx(
-                          () => BouncingListview(
-                            scrollDirection: Axis.horizontal,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 5, right: 5),
-                              child: Row(
-                                children:
-                                    controller.clouterData.map((clouterInfo) {
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                                    child: ClouterItemBox(
-                                        clouterId: clouterInfo.clouterId ?? 0,
-                                        userId: clouterInfo.userId ?? '',
-                                        avgScore: clouterInfo.avgScore ?? 0,
-                                        minCost: clouterInfo.minCost ?? 0,
-                                        // contractCount:
-                                        //     clouterInfo.contractCount ?? 0,
-                                        categoryList:
-                                            clouterInfo.categoryList ?? [''],
-                                        adPlatformList: clouterInfo.channelList!
-                                            .map((e) => Sns2(
-                                                  platform: e.platform,
-                                                ))
-                                            .toList()),
-                                  );
-                                }).toList(),
-                              ),
+            ),
+            ElevatedButton(
+                onPressed: api.reissueToken, child: Text('리이슈 테슽 버튼')),
+            Container(
+              color: style.colors['white'],
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      MenuTitle(text: '인기있는 클라우터', destination: 1),
+                      Obx(
+                        () => BouncingListview(
+                          scrollDirection: Axis.horizontal,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 5, right: 5),
+                            child: Row(
+                              children:
+                                  homeController.clouterData.map((clouterInfo) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 10, 5, 20),
+                                  child: ClouterItemBox(
+                                      clouterId: clouterInfo.clouterId ?? 0,
+                                      userId: clouterInfo.userId ?? '',
+                                      nickName: clouterInfo.nickName ?? '',
+                                      avgScore: clouterInfo.avgScore ?? 0,
+                                      minCost: clouterInfo.minCost ?? 0,
+                                      // contractCount:
+                                      //     clouterInfo.contractCount ?? 0,
+                                      categoryList:
+                                          clouterInfo.categoryList ?? [''],
+                                      adPlatformList: clouterInfo.channelList!
+                                          .map((e) => Sns2(
+                                                platform: e.platform,
+                                              ))
+                                          .toList()),
+                                );
+                              }).toList(),
                             ),
                           ),
                         ),
