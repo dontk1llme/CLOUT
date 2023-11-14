@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
-class CampaignDetailDeliveryInfo extends StatelessWidget {
-  CampaignDetailDeliveryInfo({super.key});
+class CampaignDetailVisit extends StatelessWidget {
+  CampaignDetailVisit({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +16,9 @@ class CampaignDetailDeliveryInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(
-            Icons.local_shipping_outlined,
-            size: 35,
+            Icons.where_to_vote_outlined,
             color: style.colors['main1'],
+            size: 35,
           ),
           SizedBox(width: 15),
           Column(
@@ -27,10 +26,10 @@ class CampaignDetailDeliveryInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '협찬 신청 후 제공 여부가',
+                '방문/체험형 캠페인이므로',
                 style: TextStyle(fontSize: 17, height: 1.3),
               ),
-              Text('결정되면 즉시 배송됩니다.',
+              Text('채택 후 매장으로 방문 바랍니다.',
                   style: TextStyle(fontSize: 17, height: 1.3))
             ],
           )

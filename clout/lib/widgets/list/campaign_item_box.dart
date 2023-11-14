@@ -130,7 +130,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth > 400 ? 17 : 15,
                   )),
-              Text('${f.format(widget.price)} 포인트',
+              Text(widget.price != 0 ? '${f.format(widget.price)} 포인트' : '포인트 없음',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

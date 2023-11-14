@@ -7,15 +7,61 @@ import 'package:intl/intl.dart';
 import 'package:clout/utilities/category_translator.dart';
 import 'package:clout/widgets/common/nametag.dart';
 
-class CampaignDetailInfoBox extends StatelessWidget {
+class CampaignDetailInfoBox extends StatefulWidget {
   final CampaignInfo campaignInfo;
   final AdvertiserInfo advertiserInfo;
 
   CampaignDetailInfoBox(
       {super.key, required this.campaignInfo, required this.advertiserInfo});
 
+  @override
+  State<CampaignDetailInfoBox> createState() => _CampaignDetailInfoBoxState();
+}
+
+class _CampaignDetailInfoBoxState extends State<CampaignDetailInfoBox> {
+  @override
+  void initState() {
+    loadPlatform();
+    super.initState();
+  }
+
+  Widget platforms = Container();
+
   var f = NumberFormat('###,###,###,###');
-  // final AdCategoryTranslator categoryTranslator = AdCategoryTranslator();
+
+  loadPlatform() {
+    List<Widget> snsIcons = [];
+    if (widget.campaignInfo.adPlatformList!.contains('INSTAGRAM')) {
+      snsIcons.add(SizedBox(width: 5));
+      snsIcons.add(Image.asset(
+        'assets/images/INSTAGRAM.png',
+        width: 20,
+        fit: BoxFit.cover,
+      ));
+    }
+    if (widget.campaignInfo.adPlatformList!.contains('TIKTOK')) {
+      snsIcons.add(SizedBox(width: 5));
+      snsIcons.add(Image.asset(
+        'assets/images/TIKTOK.png',
+        width: 20,
+        fit: BoxFit.cover,
+      ));
+    }
+    if (widget.campaignInfo.adPlatformList!.contains('YOUTUBE')) {
+      snsIcons.add(SizedBox(width: 5));
+      snsIcons.add(Image.asset(
+        'assets/images/YOUTUBE.png',
+        width: 20,
+        fit: BoxFit.cover,
+      ));
+    }
+    setState(() {
+      platforms = Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: snsIcons,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +74,13 @@ class CampaignDetailInfoBox extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           NameTag(
               title: AdCategoryTranslator.translateAdCategory(
-                  campaignInfo.adCategory!)),
+                  widget.campaignInfo.adCategory!)),
           SizedBox(height: 10),
           Text(
-            campaignInfo.title!,
+            widget.campaignInfo.title!,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 15),
           Row(
             children: [
               Icon(Icons.corporate_fare_outlined),
@@ -45,7 +91,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    advertiserInfo.companyInfo!.companyName!,
+                    widget.advertiserInfo.companyInfo!.companyName!,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(width: 5),
@@ -53,7 +99,7 @@ class CampaignDetailInfoBox extends StatelessWidget {
                     children: [
                       Icon(Icons.star, color: Colors.amber, size: 18),
                       SizedBox(width: 2),
-                      Text(advertiserInfo.advertiserAvgStar.toString(),
+                      Text(widget.advertiserInfo.advertiserAvgStar.toString(),
                           style: TextStyle(fontWeight: FontWeight.w800)),
                     ],
                   ),
@@ -61,23 +107,19 @@ class CampaignDetailInfoBox extends StatelessWidget {
               ))
             ],
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 10),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Icon(Icons.receipt_long_outlined),
               SizedBox(width: 10),
               Text('희망 플랫폼', style: TextStyle(fontSize: 15)),
               Expanded(
-                  child: Text(
-                campaignInfo.adPlatformList != null
-                    ? campaignInfo.adPlatformList!.join(', ')
-                    : "정보 없음",
-                textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-              ))
+                child: platforms,
+              )
             ],
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 10),
           Row(
             children: [
               Icon(Icons.event_outlined),
@@ -85,30 +127,52 @@ class CampaignDetailInfoBox extends StatelessWidget {
               Text('신청 기간', style: TextStyle(fontSize: 15)),
               Expanded(
                   child: Text(
-                '${campaignInfo.applyStartDate} ~ ${campaignInfo.applyEndDate}',
+                '${widget.campaignInfo.applyStartDate} ~ ${widget.campaignInfo.applyEndDate}',
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
               ))
             ],
           ),
-          SizedBox(height: 5),
-          Row(children: [
-            Icon(Icons.monetization_on_outlined, color: style.colors['main1']),
-            SizedBox(width: 10),
-            Text('희망 광고비', style: TextStyle(fontSize: 15)),
-            Expanded(
-                child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Text(
-                f.format(campaignInfo.price),
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-              ),
-              Text(
-                ' 포인트',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-              )
-            ]))
-          ]),
-          SizedBox(height: 5),
+          SizedBox(height: 10),
+          Row(
+            children: [
+              Icon(Icons.monetization_on_outlined,
+                  color: style.colors['main1']),
+              SizedBox(width: 10),
+              Text('지급 포인트', style: TextStyle(fontSize: 15, height: 1.2)),
+              widget.campaignInfo.price == '0'
+                  ? Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            f.format(widget.campaignInfo.price),
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w700),
+                          ),
+                          Text(
+                            ' 포인트',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w700),
+                          )
+                        ],
+                      ),
+                    )
+                  : Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            '없음',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w700),
+                          )
+                        ],
+                      ),
+                    )
+            ],
+          ),
+          SizedBox(height: 8),
           Row(children: [
             Icon(Icons.groups_outlined),
             SizedBox(width: 10),
@@ -117,21 +181,24 @@ class CampaignDetailInfoBox extends StatelessWidget {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(campaignInfo.numberOfSelectedMembers.toString(),
+                Text(widget.campaignInfo.numberOfSelectedMembers.toString(),
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
                 Text('명 / ',
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
-                Text(campaignInfo.numberOfRecruiter.toString(),
+                Text(widget.campaignInfo.numberOfRecruiter.toString(),
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
                 Text('명',
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
               ],
-            ))
+            )),
           ]),
+          SizedBox(
+            height: 7,
+          )
         ]),
       ),
     );
