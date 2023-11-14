@@ -18,7 +18,7 @@ class PointsChargeAPI {
       },
       body: json.encode(parameter)
     ); 
-
+    
     var statusCode = response.statusCode;
     var headers = response.headers;
     print('충전 response 헤더');
