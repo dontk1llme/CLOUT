@@ -1,6 +1,7 @@
 package com.mmm.clout.advertisementservice.apply.application.command;
 
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
+import com.mmm.clout.advertisementservice.apply.infrastructure.constant.DateConstants;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,8 +29,8 @@ public class CreateContractCommand {
     public CreateContractCommand(Apply apply) {
         this.name = apply.getCampaign().getTitle();
         hopeFeeCheck(apply);
-        this.postDeadline = "ONE-MONTH";
-        this.contractExpiration = "SIX-MONTH";
+        this.postDeadline = DateConstants.ONE_MONTH;
+        this.contractExpiration = DateConstants.SIX_MONTH;
         this.contents = apply.getCampaign().getDetails();
         this.advertiserId = apply.getCampaign().getAdvertiserId();
         this.clouterId = apply.getApplicant().getApplicantId();

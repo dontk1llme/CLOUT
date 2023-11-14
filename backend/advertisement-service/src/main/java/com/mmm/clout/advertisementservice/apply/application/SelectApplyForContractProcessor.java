@@ -19,8 +19,6 @@ public class SelectApplyForContractProcessor {
         Apply apply = applyRepository.findById(applyId).orElseThrow(ApplyNotFoundException::new);
         apply.askForContract();
 
-        // TODO 계약 호출
-        CreateContractCommand command = new CreateContractCommand(apply);
-        contractProvider.create(command);
+        contractProvider.create(new CreateContractCommand(apply));
     }
 }
