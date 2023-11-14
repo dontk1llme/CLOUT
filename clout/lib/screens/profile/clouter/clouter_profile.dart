@@ -1,8 +1,7 @@
 import 'package:clout/hooks/apis/authorized_api.dart';
-import 'package:clout/hooks/pictures/image_functions.dart';
 import 'package:clout/screens/profile/clouter/widgets/available_platform.dart';
 import 'package:clout/widgets/loading_indicator.dart';
-import 'package:clout/widgets/sns/platform_toggle.dart';
+import 'package:clout/utilities/category_translator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -21,7 +20,6 @@ import 'package:clout/type.dart';
 
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 class ClouterProfile extends StatefulWidget {
   const ClouterProfile({super.key});
@@ -221,18 +219,26 @@ class _ClouterProfileState extends State<ClouterProfile> {
                     ),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 카테고리'),
-                    Row(
-                      children: [
-                        for (var category in clouterInfo?.categoryList ?? [])
-                          SelectedCategory(title: category),
-                      ],
-                    ),
+                    SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            for (var category
+                                in clouterInfo?.categoryList ?? [])
+                              SelectedCategory(
+                                  title:
+                                      AdCategoryTranslator.translateAdCategory(
+                                          category)),
+                          ],
+                        )),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 지역'),
                     Row(
                       children: [
                         for (var region in clouterInfo?.regionList ?? [])
-                          SelectedCategory(title: region),
+                          SelectedCategory(
+                              title:
+                                  AdCategoryTranslator.translateRegion(region)),
                       ],
                     ),
                     SizedBox(height: 20),

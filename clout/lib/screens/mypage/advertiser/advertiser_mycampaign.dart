@@ -27,7 +27,6 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
         .setEndPoint('/advertisement-service/v1/advertisements/advertisements');
     infiniteController.setParameter(
         '?advertiserId=${userController.memberId}&page=${infiniteController.currentPage}&size=${10}');
-    infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
       tag: 'advertiserMyCampaign',
       builder: (controller) => Scaffold(
