@@ -1,6 +1,6 @@
 // Global
-import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/type.dart';
+import 'package:clout/widgets/loading_indicator.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -33,16 +33,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final campaignData = <CampaignInfo>[].obs;
-  final clouterData = <ClouterInfo>[].obs;
+  // final campaignData = <CampaignInfo>[].obs;
+  // final clouterData = <ClouterInfo>[].obs;
   final userController = Get.find<UserController>();
 
   @override
   void initState() {
+    super.initState();
     final HomeController homeController = Get.put(HomeController());
     homeController.fetchCampaigns();
     homeController.fetchClouters();
-    super.initState();
   }
 
   List<String> imgList = [
@@ -238,8 +238,6 @@ class _HomeState extends State<Home> {
     )
   ];
 
-  AuthorizedApi api = AuthorizedApi();
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
@@ -265,8 +263,6 @@ class _HomeState extends State<Home> {
                   enlarge: false,
                 ),
               ),
-              ElevatedButton(
-                  onPressed: api.reissueToken, child: Text('리이슈 테슽 버튼')),
               Container(
                 color: style.colors['white'],
                 child: Column(
@@ -274,80 +270,99 @@ class _HomeState extends State<Home> {
                     Column(
                       children: [
                         MenuTitle(text: '인기있는 클라우터', destination: 1),
-                        Obx(
-                          () => BouncingListview(
-                            scrollDirection: Axis.horizontal,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 5, right: 5),
-                              child: Row(
-                                children:
-                                    controller.clouterData.map((clouterInfo) {
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                                    child: ClouterItemBox(
-                                        clouterId: clouterInfo.clouterId ?? 0,
-                                        userId: clouterInfo.userId ?? '',
-                                        nickName: clouterInfo.nickName ?? '',
-                                        avgScore: clouterInfo.avgScore ?? 0,
-                                        minCost: clouterInfo.minCost ?? 0,
-                                        countOfContract:
-                                            clouterInfo.countOfContract ?? 0,
-                                        categoryList:
-                                            clouterInfo.categoryList ?? [''],
-                                        adPlatformList: clouterInfo.channelList!
-                                            .map((e) => Sns2(
-                                                  platform: e.platform,
-                                                ))
-                                            .toList()),
-                                  );
-                                }).toList(),
+                        controller.isLoading
+                            ? SizedBox(
+                                height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(70),
+                                  child: LoadingWidget(),
+                                ))
+                            : BouncingListview(
+                                scrollDirection: Axis.horizontal,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: Row(
+                                    children: controller.clouterData
+                                        .map((clouterInfo) {
+                                      return Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            5, 10, 5, 20),
+                                        child: ClouterItemBox(
+                                            clouterId:
+                                                clouterInfo.clouterId ?? 0,
+                                            userId: clouterInfo.userId ?? '',
+                                            nickName:
+                                                clouterInfo.nickName ?? '',
+                                            avgScore: clouterInfo.avgScore ?? 0,
+                                            minCost: clouterInfo.minCost ?? 0,
+                                            countOfContract:
+                                                clouterInfo.countOfContract ??
+                                                    0,
+                                            categoryList:
+                                                clouterInfo.categoryList ??
+                                                    [''],
+                                            adPlatformList:
+                                                clouterInfo.channelList!
+                                                    .map((e) => Sns2(
+                                                          platform: e.platform,
+                                                        ))
+                                                    .toList()),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     Column(
                       children: [
                         MenuTitle(text: '인기있는 캠페인', destination: 2),
-                        Obx(
-                          () => BouncingListview(
-                            scrollDirection: Axis.horizontal,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 5, right: 5),
-                              child: Row(
-                                children:
-                                    controller.campaignData.map((campaignInfo) {
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 10, 5, 20),
-                                    child: CampaignItemBox(
-                                      campaignId: campaignInfo.campaignId ?? 0,
-                                      adCategory: campaignInfo.adCategory ?? '',
-                                      title: campaignInfo.title ?? '',
-                                      price: campaignInfo.price ?? 0,
-                                      companyInfo: campaignInfo.companyInfo!,
-                                      numberOfSelectedMembers: campaignInfo
-                                              .numberOfSelectedMembers ??
-                                          0,
-                                      numberOfRecruiter:
-                                          campaignInfo.numberOfRecruiter ?? 0,
-                                      adPlatformList:
-                                          campaignInfo.adPlatformList!
-                                              .map((e) => Sns2(
-                                                    platform: e,
-                                                  ))
-                                              .toList(),
-                                      advertiserInfo:
-                                          campaignInfo.advertiserInfo!,
-                                    ),
-                                  );
-                                }).toList(),
+                        controller.isLoading
+                            ? SizedBox(
+                                height: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(70),
+                                  child: LoadingWidget(),
+                                ))
+                            : BouncingListview(
+                                scrollDirection: Axis.horizontal,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: Row(
+                                    children: controller.campaignData
+                                        .map((campaignInfo) {
+                                      return Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            5, 10, 5, 20),
+                                        child: CampaignItemBox(
+                                          campaignId:
+                                              campaignInfo.campaignId ?? 0,
+                                          adCategory:
+                                              campaignInfo.adCategory ?? '',
+                                          title: campaignInfo.title ?? '',
+                                          price: campaignInfo.price ?? 0,
+                                          companyInfo:
+                                              campaignInfo.companyInfo!,
+                                          numberOfSelectedMembers: campaignInfo
+                                                  .numberOfSelectedMembers ??
+                                              0,
+                                          numberOfRecruiter:
+                                              campaignInfo.numberOfRecruiter ??
+                                                  0,
+                                          adPlatformList:
+                                              campaignInfo.adPlatformList!
+                                                  .map((e) => Sns2(
+                                                        platform: e,
+                                                      ))
+                                                  .toList(),
+                                          advertiserInfo:
+                                              campaignInfo.advertiserInfo!,
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
                       ],
                     )
                   ],

@@ -1,4 +1,5 @@
 import 'package:clout/screens/detail/campaign/widgets/campaign_detail_visit.dart';
+import 'package:clout/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -144,23 +145,33 @@ class _CampaignDetailState extends State<CampaignDetail> {
         ),
       ),
       body: isLoading
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 40),
-                child: SizedBox(
-                  height: 50,
-                  child: Center(
-                      child: LoadingIndicator(
-                    indicatorType: Indicator.ballRotateChase,
-                    colors: [
-                      style.colors['main1-4']!,
-                      style.colors['main1-3']!,
-                      style.colors['main1-2']!,
-                      style.colors['main1-1']!,
-                      style.colors['main1']!,
-                    ],
-                  )),
-                ),
+          ? SizedBox(
+              height: double.infinity,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 160,
+                    right: 160,
+                    top: 0,
+                    bottom: 280,
+                    child: SizedBox(
+                      height: 100,
+                      child: LoadingWidget(),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 100,
+                    child: Align(
+                      child: Text(
+                        '캠페인 정보를 불러오는 중입니다.\n잠시만 기다려 주세요',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             )
           : SizedBox(
