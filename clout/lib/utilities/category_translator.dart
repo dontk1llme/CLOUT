@@ -18,6 +18,25 @@ class AdCategoryTranslator {
     return adCategoryTranslations[adCategory] ?? "";
   }
 
+  static String translateSearchCategory(String category) {
+    Map<String, String> searchCategoryTranslations = {
+      "전체": "ALL",
+      "패션/뷰티": "FASHION_BEAUTY",
+      "건강/생활": "HEALTH_LIFESTYLE",
+      "여행/레저": "TRAVEL_LEISURE",
+      "육아": "PARENTING",
+      "전자제품": "ELECTRONICS",
+      "음식": "FOOD",
+      "방문/체험": "VISIT_EXPERIENCE",
+      "반려동물": "PETS",
+      "게임": "GAMES",
+      "경제/사업": "ECONOMY_BUSINESS",
+      "기타": "OTHERS",
+    };
+
+    return searchCategoryTranslations[category] ?? "";
+  }
+
   static String translateRegion(String region) {
     Map<String, String> regionTranslations = {
       "ALL": "전국",
