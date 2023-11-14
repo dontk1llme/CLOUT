@@ -15,6 +15,14 @@ import org.springframework.context.annotation.Configuration;
 public class BookmarkConfig {
 
     @Bean
+    public CheckBookmarkProcessor checkBookmarkProcessor(
+        BookmarkRepository bookmarkRepository,
+        MemberRepository memberRepository
+    ) {
+        return new CheckBookmarkProcessor(bookmarkRepository, memberRepository);
+    }
+
+    @Bean
     public CreateAdBookmarkProcessor createAdBookmarkProcessor(
         BookmarkRepository bookmarkRepository,
         MemberRepository memberRepository

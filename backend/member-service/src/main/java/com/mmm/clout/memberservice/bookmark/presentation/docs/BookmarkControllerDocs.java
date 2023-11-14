@@ -19,6 +19,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Tag(name = "북마크 CRUD", description = "북마크를 관리하는 api")
 public interface BookmarkControllerDocs {
 
+    @Operation(summary = "광고 북마크 여부 체크 api",
+        responses =
+        @ApiResponse(responseCode = "200", description = "북마크 여부 boolean 리턴",
+            content =
+            @Content(mediaType="application/json",
+                schema=@Schema(implementation=BookmarkCheckResponse.class))
+        )
+    )
+    public ResponseEntity<BookmarkCheckResponse> check(
+        @RequestParam("memberId") Long memberId,
+        @RequestParam("targetId") Long targetId
+    );
+
 
     @Operation(summary = "광고 북마크 생성 api",
         responses =
