@@ -18,10 +18,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-springdoc:
-  swagger-ui:
-    path: /swagger-ui
-    use-root-path: true
   kafka:
     producer:
       bootstrap-servers: k9a409.p.ssafy.io:9092,k9a409.p.ssafy.io:9093,k9a409.p.ssafy.io:9094
@@ -40,7 +36,7 @@ springdoc:
             value:
               delegate:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
-      group-id: clout-consumer-group
+      group-id: clout-consumer-test
       auto-offset-reset: earliest
 eureka:
   instance:
@@ -53,3 +49,7 @@ eureka:
 message:
   topic:
     name: test-topic-name
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    use-root-path: true
