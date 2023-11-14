@@ -21,7 +21,7 @@ class ClouterItemBox extends StatefulWidget {
   final int avgScore;
   final int minCost;
   final List<String> categoryList;
-  // final int contractCount; // 아직 빠져있음 💥 추가하기 (계약한 광고 수)
+  final int countOfContract;
   final List<Widget> adPlatformList;
   // final String firstImg; // 💥 사진 나중에 추가하기
 
@@ -33,7 +33,7 @@ class ClouterItemBox extends StatefulWidget {
     required this.avgScore,
     required this.minCost,
     required this.categoryList,
-    // required this.contractCount,
+    required this.countOfContract,
     required this.adPlatformList,
     // required this.firstImg
   });
@@ -60,16 +60,16 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     // 'ALL'이 포함되어 있으면 모든 플랫폼에 대한 위젯 리스트 생성
-    List<Widget> adPlatformWidgets;
-    if (widget.adPlatformList
-        .any((widget) => widget is Sns2 && widget.platform == "ALL")) {
-      adPlatformWidgets = ["INSTAGRAM", "TIKTOK", "YOUTUBE"]
-          .map((platform) => Sns2(platform: platform))
-          .toList();
-    } else {
-      // 'ALL'이 없으면 기존 리스트를 사용
-      adPlatformWidgets = widget.adPlatformList;
-    }
+    // List<Widget> adPlatformWidgets;
+    // if (widget.adPlatformList
+    //     .any((widget) => widget is Sns2 && widget.platform == "ALL")) {
+    //   adPlatformWidgets = ["INSTAGRAM", "TIKTOK", "YOUTUBE"]
+    //       .map((platform) => Sns2(platform: platform))
+    //       .toList();
+    // } else {
+    //   // 'ALL'이 없으면 기존 리스트를 사용
+    //   adPlatformWidgets = widget.adPlatformList;
+    // }
     return InkWell(
       onTap: () => Get.toNamed('/clouterdetail', arguments: widget.clouterId),
       child: Container(
@@ -102,7 +102,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     decoration: BoxDecoration(
                         color: style.colors['white'],
                         borderRadius: BorderRadius.circular(5)),
-                    child: Row(children: adPlatformWidgets),
+                    child: Row(children: widget.adPlatformList),
                   ),
                 ),
                 if (userController.memberType == 1)
@@ -139,15 +139,15 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     fontSize: screenWidth > 400 ? 15 : 13,
                   ),
                 ),
-                // Text(
-                //   '${widget.contractCount}건', // 💥 계약한 광고 수
-                //   maxLines: 1,
-                //   overflow: TextOverflow.ellipsis,
-                //   style: TextStyle(
-                //     fontWeight: FontWeight.w600,
-                //     fontSize: screenWidth > 400 ? 15 : 13,
-                //   ),
-                // ),
+                Text(
+                  '${widget.countOfContract}건', // 💥 계약한 광고 수
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: screenWidth > 400 ? 15 : 13,
+                  ),
+                ),
               ],
             ),
           ],

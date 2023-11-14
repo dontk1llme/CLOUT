@@ -25,7 +25,13 @@ class _LikeButtonState extends State<LikeButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: () {
+        setState(() {
+          isLiked = !isLiked;
+        });
+        widget.onTap();
+      },
+      // onTap: widget.onTap,
       child: Padding(
         padding: EdgeInsets.all(5),
         child: Icon(
