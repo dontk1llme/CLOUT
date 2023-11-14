@@ -38,7 +38,7 @@ public class ClouterController implements ClouterControllerDocs{
     @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<CreateClrResponse> create(
             @RequestPart CreateClrRequest createClrRequest,
-            @RequestPart(value = "files") List<MultipartFile> fileList
+            @RequestPart(value = "files", required = false) List<MultipartFile> fileList
             ) throws Exception {
         CreateClrResponse result = CreateClrResponse.from(
                 clouterFacade.create(createClrRequest.toCommand(), fileList)

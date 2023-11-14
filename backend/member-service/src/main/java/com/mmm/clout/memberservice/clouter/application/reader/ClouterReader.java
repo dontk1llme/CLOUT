@@ -6,6 +6,7 @@ import com.mmm.clout.memberservice.common.Region;
 import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.common.entity.address.reader.AddressReader;
 import com.mmm.clout.memberservice.image.domain.Image;
+import com.mmm.clout.memberservice.image.presentation.ImageResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,7 +51,7 @@ public class ClouterReader {
 
     private Integer countOfContract;
 
-    private List<Image> imageList;
+    private List<ImageResponse> imageResponses;
 
     public ClouterReader(Clouter clouter) {
 
@@ -72,7 +73,7 @@ public class ClouterReader {
         this.countOfContract = clouter.getCountOfContract();
     }
 
-    public ClouterReader(Clouter clouter, List<Image> images) {
+    public ClouterReader(Clouter clouter, List<ImageResponse> imageResponses) {
         this.clouterId = clouter.getId();
         this.userId = clouter.getUserId();
         this.avgScore = clouter.getAvgScore();
@@ -89,6 +90,6 @@ public class ClouterReader {
         this.regionList = clouter.allGetRegionList().stream().map(v->v.toString()).collect(Collectors.toList());;
         this.address = new AddressReader(clouter.getAddress());
         this.countOfContract = clouter.getCountOfContract();
-        this.imageList = images;
+        this.imageResponses = imageResponses;
     }
 }
