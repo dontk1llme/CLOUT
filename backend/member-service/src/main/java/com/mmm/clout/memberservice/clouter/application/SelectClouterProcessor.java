@@ -6,6 +6,9 @@ import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
 import com.mmm.clout.memberservice.image.domain.Image;
 import com.mmm.clout.memberservice.image.domain.repository.ImageRepository;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.mmm.clout.memberservice.image.presentation.ImageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +22,10 @@ public class SelectClouterProcessor {
     public ClouterReader execute(Long clouterId) {
         Clouter clouter = clouterRepository.findById(clouterId);
         List<Image> images = imageRepository.findByMemberId(clouterId);
-        ClouterReader reader = new ClouterReader(clouter, images);
+        List<ImageResponse> imageResponses = images.stream().map(
+                v -> new ImageResponse(v)
+        ).collect(Collectors.toList());
+        ClouterReader reader = new ClouterReader(clouter, imageResponses);
         return reader;
     }
 }
