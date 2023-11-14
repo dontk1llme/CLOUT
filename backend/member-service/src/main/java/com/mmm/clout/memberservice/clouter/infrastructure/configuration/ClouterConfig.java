@@ -24,9 +24,10 @@ public class ClouterConfig {
 
     @Bean
     public SelectTop10ClouterProcessor selectTop10ClouterProcessor(
-        ClouterRepository clouterRepository
+        ClouterRepository clouterRepository,
+        ImageRepository imageRepository
     ) {
-        return new SelectTop10ClouterProcessor(clouterRepository);
+        return new SelectTop10ClouterProcessor(clouterRepository, imageRepository);
     }
 
     @Bean
@@ -59,8 +60,9 @@ public class ClouterConfig {
 
     @Bean
     public SearchClouterListProcessor searchClouterListProcessor(
-        ClouterRepository clouterRepository
+        ClouterRepository clouterRepository,
+        ImageRepository imageRepository
     ) {
-        return new SearchClouterListProcessor(clouterRepository);
+        return new SearchClouterListProcessor(clouterRepository, imageRepository);
     }
 }
