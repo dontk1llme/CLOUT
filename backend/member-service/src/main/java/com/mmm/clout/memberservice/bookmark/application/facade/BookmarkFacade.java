@@ -11,6 +11,8 @@ import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,12 +41,12 @@ public class BookmarkFacade {
         return deleteBookmarkProcessor.execute(command);
     }
 
-    public List<CampaignReader> selectAdByMemberId(Long memberId) {
-        return selectAdByMemberIdProcessor.execute(memberId);
+    public Page<CampaignReader> selectAdByMemberId(Long memberId, Pageable pageable) {
+        return selectAdByMemberIdProcessor.execute(memberId, pageable);
     }
 
-    public List<ClouterReader> selectClouterByMemberId(Long memberId) {
-        return selectClouterByMemberIdProcessor.execute(memberId);
+    public Page<ClouterReader> selectClouterByMemberId(Long memberId, Pageable pageable) {
+        return selectClouterByMemberIdProcessor.execute(memberId, pageable);
     }
 
     public boolean check(Long memberId, Long targetId) {
