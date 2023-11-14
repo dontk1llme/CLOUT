@@ -1,12 +1,15 @@
 // global
 import 'package:clout/hooks/apis/login_api.dart';
+import 'package:clout/hooks/apis/notification_token_api.dart';
 import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/screens/find_password/find_password.dart';
+import 'package:clout/screens/notification/widgets/get_mobile_id.dart';
 import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
 import 'package:clout/type.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 // widgets
 import 'package:clout/widgets/buttons/big_button.dart';
@@ -70,6 +73,27 @@ class _LoginState extends State<Login> {
       userController.setMemberId(loginData['memberId']);
       print('여기');
       print(userController.userLogin);
+
+
+      //-----------------------------------------
+      //여기에서 알람 post 하기 
+      final token = await FirebaseMessaging.instance.getToken();
+      final String mobileId = await getMobileId();
+      var notiParam = {
+        'memberId': userController.memberId,
+        'deviceId':mobileId,
+        'fcmToken':token,
+      };
+
+      //memberId, deviceId, fcmToken
+      final NotificationTokenApi notificationTokenApi = NotificationTokenApi();
+      var notiData = await notificationTokenApi.postRequest(
+        '/notification-service/v1/notifications/members/token-check', 
+        notiParam);
+      
+      print(notiData);
+      
+      //홈으로
       Get.offAllNamed('/home');
     }
   }
