@@ -85,11 +85,6 @@ public class ClouterController implements ClouterControllerDocs{
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return new ResponseEntity<>("ok", HttpStatus.OK);
-    }
-
     @GetMapping("/search")
     public ResponseEntity<CustomPageResponse<ClouterReader>> searchAndReadCampaignList(
         @RequestParam(defaultValue = "0") Integer page,
