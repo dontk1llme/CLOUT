@@ -5,7 +5,6 @@ import 'package:clout/style.dart' as style;
 import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:clout/hooks/apis/points_transactions.dart';
-import 'package:clout/type.dart';
 import 'dart:convert';
 
 // widgets
