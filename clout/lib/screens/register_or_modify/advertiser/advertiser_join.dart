@@ -23,8 +23,15 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
   double percent = 1 / 2;
 
   final advertiserController = Get.put(AdvertiserController());
-  final advertiserRegisterController =
+  final advertiserInfoController =
       Get.put(AdvertiserInfoController(), tag: 'advertiserRegister');
+
+  @override
+  void initState() {
+    advertiserController.setControllerTag('advertiserRegister');
+    advertiserInfoController.runOtherControllers();
+    super.initState();
+  }
 
   showSnackBar() {
     Get.snackbar(
@@ -71,7 +78,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
 
   goNext() {
     if (pageNum == 1) {
-      String validationMsg = advertiserRegisterController.canGoSecondPage();
+      String validationMsg = advertiserInfoController.canGoSecondPage();
       if (validationMsg == '') {
         setState(() {
           pageNum += 1;
@@ -81,7 +88,7 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
         Fluttertoast.showToast(msg: validationMsg);
       }
     } else {
-      String validationMsg = advertiserRegisterController.canRegister();
+      String validationMsg = advertiserInfoController.canRegister();
       if (validationMsg == '') {
         register();
       } else {
@@ -91,21 +98,19 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
   }
 
   register() {
-    advertiserRegisterController.setAdvertiser();
-    advertiserRegisterController.printAll();
+    advertiserInfoController.setAdvertiser();
+    advertiserInfoController.printAll();
     // 가입 api 호출
     final RegisterApi registerApi = RegisterApi();
 
-    registerApi.postRequest(
-        '/member-service/v1/advertisers/signup', advertiserRegisterController.advertiser);
+    registerApi.postRequest('/member-service/v1/advertisers/signup',
+        advertiserInfoController.advertiser);
     Get.offNamed('/login');
     showSnackBar();
   }
 
   @override
   Widget build(BuildContext context) {
-    advertiserController.setControllerTag('advertiserRegister');
-    advertiserRegisterController.runOtherControllers();
     return GetBuilder<AdvertiserInfoController>(
       tag: 'advertiserRegister',
       builder: (controller) => Scaffold(

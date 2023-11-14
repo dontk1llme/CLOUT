@@ -14,7 +14,6 @@ import 'package:clout/type.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 // widgets
@@ -30,8 +29,6 @@ class ClouterModify extends StatefulWidget {
 
 class _ClouterModifyState extends State<ClouterModify> {
   final clouterController = Get.put(ClouterController());
-
-  final userController = Get.find<UserController>();
 
   final controller = Get.put(ClouterInfoController(), tag: 'clouterModify');
 

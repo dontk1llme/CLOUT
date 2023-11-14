@@ -60,6 +60,7 @@ class ClouterJoinOrModify2 extends StatelessWidget {
                   style: style.textTheme.headlineMedium,
                   textAlign: TextAlign.left,
                 ),
+                modifying?
                 SizedBox(
                   height: 25,
                   child: BigButton(
@@ -69,7 +70,7 @@ class ClouterJoinOrModify2 extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                   ),
-                ),
+                ) : Container(),
               ],
             ),
             SizedBox(height: 20),

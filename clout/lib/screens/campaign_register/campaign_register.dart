@@ -1,5 +1,6 @@
 // global
 import 'dart:ui';
+import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/providers/campaign_register_controller.dart';
 import 'package:clout/widgets/age_slider.dart';
 import 'package:clout/screens/campaign_register/widgets/category_dropdown.dart';
@@ -21,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
@@ -44,23 +46,26 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
     tag: 'campaignRegister',
   );
 
+  AuthorizedApi authorizedApi = AuthorizedApi();
+
   register() async {
-    // if (category != null &&
-    //     productName != null &&
-    //     pay != null &&
-    //     offeringItems != null &&
-    //     itemDetail != null) {
-    //   //등록하는 api 요청 들어가야 함
-    // } else {
-    await handleSaveButtonPressed(); // 서명 갤러리 저장함수
-    await campaignRegisterController.printAll();
-    // 1. 여기서 axios 통신 해서 db에 내용 저장하고
-    //   -> 이 라인에 써야함
-    // 2. ref.invalidate해서 provider 초기화 시켜주고
-    //    - 2번은 big_button에서 실행하는걸로 함 안먹혀서
-    // 3. 아래 함수로 home으로 빠져나가야 함
-    Get.offNamed('/home');
-    // }
+    if (campaignRegisterController.category != null &&
+        campaignRegisterController.productName != null &&
+        campaignRegisterController.offeringItems != null &&
+        campaignRegisterController.itemDetail != null) {
+      await campaignRegisterController.setCampaign();
+      var response = await authorizedApi.postRequest(
+          '/advertisement-service/v1/advertisements',
+          campaignRegisterController.campaign);
+      await campaignRegisterController.printAll();
+      print(response);
+      if (response['statusCode'] == 201) {
+        await handleSaveButtonPressed(); // 서명 갤러리 저장함수
+        Get.offNamed('/home');
+      } 
+    } else {
+      Fluttertoast.showToast(msg: '필수값 입력');
+    }
   }
 
   bool positive = false;
@@ -169,17 +174,17 @@ class CampaignRegisterState extends ConsumerState<CampaignRegister> {
                   DataTitle(text: '제품 사진 첨부(최대 4장)'),
                   SizedBox(height: 10),
                   ImageWidget(controllerTag: 'campaignRegister'),
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   DataTitle(text: '광고 희망 플랫폼'),
                   SizedBox(height: 10),
                   PlatformToggle(
                     multiAllowed: true,
                     controllerTag: 'campaignRegister',
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   DataTitle(text: '희망 클라우터 나이'),
                   AgeSlider(controllerTag: 'campaignRegister'),
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   DataTitle(text: '희망 최소 팔로워 수'),
                   MinimumfollowersDialog(
                     controllerTag: 'campaignRegister',
