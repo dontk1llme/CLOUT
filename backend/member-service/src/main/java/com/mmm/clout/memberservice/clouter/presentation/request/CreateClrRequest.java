@@ -39,7 +39,7 @@ public class CreateClrRequest {
     @Size(max = 20)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "생일")
     private LocalDate birthday;
 

@@ -50,4 +50,11 @@ public class ClouterConfig {
     ) {
         return new SelectClouterProcessor(clouterRepository);
     }
+
+    @Bean
+    public SearchClouterListProcessor searchClouterListProcessor(
+        ClouterRepository clouterRepository
+    ) {
+        return new SearchClouterListProcessor(clouterRepository);
+    }
 }
