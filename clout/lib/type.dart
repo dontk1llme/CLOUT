@@ -333,6 +333,7 @@ class ClouterInfo {
   List<String>? categoryList;
   List<String>? regionList;
   Address? address;
+  int? countOfContract;
 
   ClouterInfo(
     this.clouterId,
@@ -350,6 +351,7 @@ class ClouterInfo {
     this.categoryList,
     this.regionList,
     this.address,
+    this.countOfContract,
   );
 
   ClouterInfo.fromJson(Map<String, dynamic> json) {
@@ -373,6 +375,7 @@ class ClouterInfo {
     regionList = json['regionList'].cast<String>();
     address =
         json['address'] != null ? Address.fromJson(json['address']) : null;
+    countOfContract = json['countOfContract'];
   }
 
   Map<String, dynamic> toJson() {
@@ -395,6 +398,7 @@ class ClouterInfo {
     if (address != null) {
       data['address'] = address!.toJson();
     }
+    data['countOfContract'] = countOfContract;
     return data;
   }
 }
