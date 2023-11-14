@@ -60,16 +60,16 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     // 'ALL'이 포함되어 있으면 모든 플랫폼에 대한 위젯 리스트 생성
-    List<Widget> adPlatformWidgets;
-    if (widget.adPlatformList
-        .any((widget) => widget is Sns2 && widget.platform == "ALL")) {
-      adPlatformWidgets = ["INSTAGRAM", "TIKTOK", "YOUTUBE"]
-          .map((platform) => Sns2(platform: platform))
-          .toList();
-    } else {
-      // 'ALL'이 없으면 기존 리스트를 사용
-      adPlatformWidgets = widget.adPlatformList;
-    }
+    // List<Widget> adPlatformWidgets;
+    // if (widget.adPlatformList
+    //     .any((widget) => widget is Sns2 && widget.platform == "ALL")) {
+    //   adPlatformWidgets = ["INSTAGRAM", "TIKTOK", "YOUTUBE"]
+    //       .map((platform) => Sns2(platform: platform))
+    //       .toList();
+    // } else {
+    //   // 'ALL'이 없으면 기존 리스트를 사용
+    //   adPlatformWidgets = widget.adPlatformList;
+    // }
 
     return InkWell(
         // 여기 arguments에 해당 캠페인의 id를 넣어야 함
@@ -104,7 +104,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                       decoration: BoxDecoration(
                           color: style.colors['white'],
                           borderRadius: BorderRadius.circular(5)),
-                      child: Row(children: adPlatformWidgets),
+                      child: Row(children: widget.adPlatformList),
                     ),
                   ),
                   if (userController.memberType == -1)

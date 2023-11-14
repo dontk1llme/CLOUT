@@ -1,7 +1,12 @@
 import 'package:clout/hooks/apis/authorized_api.dart';
 
 Future<void> sendLikeStatus(
-    int memberId, int targetId, bool isLiked, bool isClouter) async {
+    int memberId, int? targetId, bool isLiked, bool isClouter) async {
+  // targetId가 null인 경우 함수를 바로 종료합니다.
+  if (targetId == null) {
+    print('targetId가 null입니다.');
+    return;
+  }
   final AuthorizedApi authorizedApi = AuthorizedApi();
 
   var requestBody = {

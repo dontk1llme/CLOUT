@@ -1,3 +1,4 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/utilities/category_translator.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 import 'package:flutter/material.dart';
@@ -17,34 +18,9 @@ import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
-
 class InfiniteScrollController extends GetxController {
-  getRequest(endPoint, parameter) async {
-    var url = Uri.parse('${baseUrl}${endPoint}${parameter}');
-    print('3️⃣');
-    print('${url} 👉 infinite_scroll_controller.dart');
-    print('${json.encode(parameter)} 👉 infinite_scroll_controller.dart');
-    final response = await http.get(
-      url,
-      headers: {"Content-Type": "application/json"},
-    );
-
-    print('4️⃣');
-    print('응답코드 입니다. ${response.statusCode}');
-    print('reponseBody입니다 ${utf8.decode(response.bodyBytes)}');
-    if (response.statusCode == 200) {
-      print(
-          '👻✨ response body: ${response.body} // 👉 infinite_scroll_controller.dart');
-      return utf8.decode(response.bodyBytes);
-    } else {
-      return null;
-    }
-  }
-
   var scrollController = ScrollController().obs;
 
-  var isClouterData = true; // 클라우터 정보인지 아닌지
   List<dynamic> data = [].obs;
 
   int pageSize = 20;
@@ -72,8 +48,6 @@ class InfiniteScrollController extends GetxController {
     update();
   }
 
-  // late Future<Campaign> futureCampaign;
-
   @override
   void onInit() {
     scrollController.value.addListener(() {
@@ -96,31 +70,32 @@ class InfiniteScrollController extends GetxController {
 
     int offset = data.length;
 
-    var response = await getRequest(endPoint, parameter);
+    final AuthorizedApi authorizedApi = AuthorizedApi();
+    var response = await authorizedApi.getRequest(endPoint, parameter);
     print(response);
-    var jsonData = jsonDecode(response);
+    var jsonData = jsonDecode(response['body']);
     var contentList = jsonData['content'] as List;
 
     var appendData = [];
 
-    List<String> allPlatforms = ["INSTAGRAM", "TIKTOK", "YOUTUBE"];
+    // List<String> allPlatforms = ["INSTAGRAM", "TIKTOK", "YOUTUBE"];
 
     if (contentList.isNotEmpty) {
       for (var item in contentList) {
         var campaignData = CampaignInfo.fromJson(item['campaign']);
         var advertiserData = AdvertiserInfo.fromJson(item['advertiserInfo']);
 
-        var adPlatformWidgets;
-        if (campaignData.adPlatformList?.contains("ALL") ?? false) {
-          // "ALL"이 포함되어 있으면 모든 플랫폼을 나타내는 Widget 리스트 생성
-          adPlatformWidgets =
-              allPlatforms.map((platform) => Sns2(platform: platform)).toList();
-        } else {
-          // 그렇지 않으면, adPlatformList에 있는 플랫폼에 대한 Widget 리스트를 생성
-          adPlatformWidgets = campaignData.adPlatformList
-              ?.map((platform) => Sns2(platform: platform))
-              .toList();
-        }
+        // var adPlatformWidgets;
+        // if (campaignData.adPlatformList?.contains("ALL") ?? false) {
+        //   // "ALL"이 포함되어 있으면 모든 플랫폼을 나타내는 Widget 리스트 생성
+        //   adPlatformWidgets =
+        //       allPlatforms.map((platform) => Sns2(platform: platform)).toList();
+                                               // } else {
+        //   // 그렇지 않으면, adPlatformList에 있는 플랫폼에 대한 Widget 리스트를 생성
+        //   adPlatformWidgets = campaignData.adPlatformList
+        //       ?.map((platform) => Sns2(platform: platform))
+        //       .toList();
+        // }
 
         var campaignItemBox = Padding(
           padding: const EdgeInsets.all(10.0),
@@ -133,7 +108,10 @@ class InfiniteScrollController extends GetxController {
             companyInfo: advertiserData.companyInfo!,
             numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
             numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
-            adPlatformList: adPlatformWidgets,
+            adPlatformList: campaignData.adPlatformList
+                    ?.map((platform) => Sns2(platform: platform))
+                    .toList() ??
+                [],
             advertiserInfo: advertiserData,
             // firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
           ),
@@ -163,7 +141,6 @@ class InfiniteScrollController extends GetxController {
   }
 
   toggleData(input) {
-    isClouterData = input;
     data = [];
     _getData();
     update();

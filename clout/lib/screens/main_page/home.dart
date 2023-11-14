@@ -291,8 +291,8 @@ class _HomeState extends State<Home> {
                                         nickName: clouterInfo.nickName ?? '',
                                         avgScore: clouterInfo.avgScore ?? 0,
                                         minCost: clouterInfo.minCost ?? 0,
-                                        // contractCount:
-                                        //     clouterInfo.contractCount ?? 0,
+                                        countOfContract:
+                                            clouterInfo.countOfContract ?? 0,
                                         categoryList:
                                             clouterInfo.categoryList ?? [''],
                                         adPlatformList: clouterInfo.channelList!
