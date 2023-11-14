@@ -109,9 +109,17 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                   LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
-            NameTag(
-                title: AdCategoryTranslator.translateAdCategory(
-                    widget.categoryList[0])),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: widget.categoryList
+                    .map((category) => NameTag(
+                        title:
+                            AdCategoryTranslator.translateAdCategory(category)))
+                    .toList(),
+              ),
+            ),
             Text(
               widget.nickName,
               maxLines: 1,
