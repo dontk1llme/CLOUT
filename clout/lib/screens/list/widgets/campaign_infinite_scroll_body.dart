@@ -18,29 +18,12 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
         gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
         ),
-        // controller: controller.scrollController.value,
         itemBuilder: (_, index) {
           print(
               '💥 데이터 개수 : ${controller.data.length} 👉 campaign_infinite_scroll_body.dart');
-          // if (controller.data.isNotEmpty && controller.hasMore) {
           final campaign1 = controller.data[index];
-          // return Padding(
-          //   padding: const EdgeInsets.all(10),
-          //   child: CampaignItemBox(
-          //     adCategory: campaign1.adCategory ?? "",
-          //     title: campaign1.title,
-          //     price: campaign1.price,
-          //     companyInfo: campaign1.advertiser.companyInfo,
-          //     numberOfSelectedMembers: campaign1.numberOfSelectedMembers,
-          //     numberOfRecruiter: campaign1.numberOfRecruiter,
-          //     adPlatformList: campaign1.adPlatformList,
-          //     advertiserInfo: campaign1.advertiserInfo,
-          //     // firstImg: 'images/assets/itemImage.jpg', // 💥 사진 나중에 수정
-          //   ),
-          // );
+
           return campaign1;
-          // } else {}
-          // return Container(color: Colors.red, height: 20);
         },
         itemCount: controller.data.length,
       ),

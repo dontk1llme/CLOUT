@@ -19,7 +19,6 @@ class ClouterList extends GetView<InfiniteScrollController> {
 
   var clouterId = Get.arguments;
 
-  Clouter clouter = Clouter();
   final infiniteController =
       Get.put(InfiniteScrollController(), tag: 'clouterList');
 
