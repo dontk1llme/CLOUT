@@ -39,6 +39,8 @@ class InfiniteScrollController extends GetxController {
     parameter = input;
     update();
   }
+  // 그니까 내가 원하는건 파라미터가 새로 갱신되는게 아니라 뒤에 덧붙여졌으면 좋겠음 ㅜ 먼말인지 아는데
+  // 나도 이 플로우를 알아야 어디서 그걸 끼워넣을지를 판단을 해서 한번 보는 중이얌
 
   setCurrentPage(input) {
     final userController = Get.find<UserController>();
@@ -78,24 +80,10 @@ class InfiniteScrollController extends GetxController {
 
     var appendData = [];
 
-    // List<String> allPlatforms = ["INSTAGRAM", "TIKTOK", "YOUTUBE"];
-
     if (contentList.isNotEmpty) {
       for (var item in contentList) {
         var campaignData = CampaignInfo.fromJson(item['campaign']);
         var advertiserData = AdvertiserInfo.fromJson(item['advertiserInfo']);
-
-        // var adPlatformWidgets;
-        // if (campaignData.adPlatformList?.contains("ALL") ?? false) {
-        //   // "ALL"이 포함되어 있으면 모든 플랫폼을 나타내는 Widget 리스트 생성
-        //   adPlatformWidgets =
-        //       allPlatforms.map((platform) => Sns2(platform: platform)).toList();
-                                               // } else {
-        //   // 그렇지 않으면, adPlatformList에 있는 플랫폼에 대한 Widget 리스트를 생성
-        //   adPlatformWidgets = campaignData.adPlatformList
-        //       ?.map((platform) => Sns2(platform: platform))
-        //       .toList();
-        // }
 
         var campaignItemBox = Padding(
           padding: const EdgeInsets.all(10.0),
@@ -140,9 +128,4 @@ class InfiniteScrollController extends GetxController {
     update();
   }
 
-  toggleData(input) {
-    data = [];
-    _getData();
-    update();
-  }
 }

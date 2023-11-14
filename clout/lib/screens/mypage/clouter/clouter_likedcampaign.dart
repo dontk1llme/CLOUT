@@ -22,7 +22,6 @@ class ClouterLikedCampaign extends GetView<InfiniteScrollController> {
   Widget build(BuildContext context) {
     infiniteController.setEndPoint('/member-service/v1/bookmarks/ad');
     infiniteController.setParameter('?memberId=${userController.memberId}');
-    infiniteController.toggleData(false);
     return GetBuilder<InfiniteScrollController>(
       tag: 'clouterLikedCampaign',
       builder: (controller) => Scaffold(
