@@ -109,7 +109,7 @@ public class MemberController implements MemberControllerDocs {
 
     @PatchMapping("/pwd")
     public ResponseEntity<PwdUpdateResponse> pwdUpdate(
-        @RequestBody PwdUpdateRequst request
+        @Valid @RequestBody PwdUpdateRequst request
     ) {
         PwdUpdateResponse response = PwdUpdateResponse.from(
             memberService.updateUserPassword(request)

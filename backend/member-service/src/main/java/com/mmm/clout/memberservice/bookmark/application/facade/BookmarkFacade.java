@@ -10,6 +10,7 @@ import com.mmm.clout.memberservice.bookmark.presentation.request.BookmarkDeleteR
 import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class BookmarkFacade {
     private final DeleteBookmarkProcessor deleteBookmarkProcessor;
     private final SelectAdByMemberIdProcessor selectAdByMemberIdProcessor;
     private final SelectClouterByMemberIdProcessor selectClouterByMemberIdProcessor;
+    private final CheckBookmarkProcessor checkBookmarkProcessor;
 
     public Bookmark createAdBookmark(CreateAdBookmarkCommand command) {
         return createAdBookmarkProcessor.execute(command);
@@ -43,5 +45,9 @@ public class BookmarkFacade {
 
     public List<ClouterReader> selectClouterByMemberId(Long memberId) {
         return selectClouterByMemberIdProcessor.execute(memberId);
+    }
+
+    public boolean check(Long memberId, Long targetId) {
+        return checkBookmarkProcessor.execute(memberId, targetId);
     }
 }

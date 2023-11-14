@@ -145,6 +145,7 @@ public class ClouterRepositoryAdapter implements ClouterRepository {
     }
 
     private BooleanExpression keywordContains(String keyword) {
-        return hasText(keyword) ? clouter.name.contains(keyword) : null;
+        return hasText(keyword) ? clouter.nickName.contains(keyword)
+            .or(clouter.channelList.any().name.contains(keyword)) : null;
     }
 }
