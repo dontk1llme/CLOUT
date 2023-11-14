@@ -17,34 +17,7 @@ import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-class Clouter {
-  int clouterId = 1;
-  String nickname = '모카우유';
-  int starRating = 20;
-  int fee = 500000;
-  String category = '반려동물';
-  int contractCount = 5;
-  List<String> selectedPlatform = [
-    "YOUTUBE",
-    "INSTAGRAM",
-    "TIKTOK",
-  ];
-  String firstImg = 'assets/images/clouterImage.jpg';
-}
-
 String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
-
-// Future<Campaign> fetchCampaign(String endPoint, String parameter) async {
-//   final response =
-//       await http.get(Uri.parse('${baseUrl}/v1/${endPoint}${parameter}'));
-
-//   if (response.statusCode == 200) {
-//     print('👻✨ response body: ${response.body}');
-//     return Campaign.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw Exception('캠페인 불러오기 실패 💨');
-//   }
-// }
 
 class InfiniteScrollController extends GetxController {
   getRequest(endPoint, parameter) async {
@@ -167,13 +140,6 @@ class InfiniteScrollController extends GetxController {
         );
         appendData.add(campaignItemBox);
       }
-      // var appendData = isClouterData
-      //     ? List<Clouter>.generate(10, (i) {
-      //         var clouter = Clouter();
-      //         clouter.clouterId = i + 1 + offset;
-      //         return clouter;
-      //       })
-      //     : [campaignItemBox];
       data.addAll(appendData);
 
       isLoading = false;
