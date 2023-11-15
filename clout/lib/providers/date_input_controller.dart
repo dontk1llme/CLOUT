@@ -12,7 +12,7 @@ class DateInputController extends GetxController {
     update();
   }
 
-  setSelectedDateDirectly(input){
+  setSelectedDateDirectly(input) {
     selectedDate = input;
     update();
   }
