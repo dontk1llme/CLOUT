@@ -5,6 +5,7 @@ import com.mmm.clout.memberservice.bookmark.application.*;
 import com.mmm.clout.memberservice.bookmark.domain.provider.AdvertisementProvider;
 import com.mmm.clout.memberservice.bookmark.domain.repository.BookmarkRepository;
 import com.mmm.clout.memberservice.clouter.domain.repository.ClouterRepository;
+import com.mmm.clout.memberservice.image.domain.repository.ImageRepository;
 import com.mmm.clout.memberservice.member.domain.Member;
 import com.mmm.clout.memberservice.member.domain.repository.MemberRepository;
 import com.mmm.clout.memberservice.member.infrastructure.auth.service.MemberService;
@@ -58,8 +59,9 @@ public class BookmarkConfig {
     @Bean
     public SelectClouterByMemberIdProcessor selectClouterByMemberIdProcessor(
         BookmarkRepository bookmarkRepository,
-        ClouterRepository clouterRepository
+        ClouterRepository clouterRepository,
+        ImageRepository imageRepository
     ) {
-        return new SelectClouterByMemberIdProcessor(bookmarkRepository, clouterRepository);
+        return new SelectClouterByMemberIdProcessor(bookmarkRepository, clouterRepository, imageRepository);
     }
 }
