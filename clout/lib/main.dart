@@ -1,5 +1,4 @@
 // Global
-import 'package:clout/screens/clouter_select/clouter_select.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -38,6 +37,7 @@ import 'package:clout/screens/apply_campaign/apply_campaign.dart';
 import 'package:clout/screens/detail/clouter/clouter_detail.dart';
 import 'package:clout/screens/point/add/add_complete.dart';
 import 'package:clout/screens/review_register/review_register.dart';
+import 'package:clout/screens/clouter_select/clouter_select.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("백그라운드 메시지 처리.. ${message.notification!.body!}");

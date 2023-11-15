@@ -8,13 +8,12 @@ import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
 import 'package:clout/screens/detail/clouter/widgets/medium_text.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
-import 'package:clout/screens/clouter_select/widgets/select_item_box.dart';
 import 'package:get/get.dart';
 
 class ClouterSelect extends StatelessWidget {
   ClouterSelect({super.key});
 
-  final selectInfiniteController =
+  final SelectInfiniteScrollController selectInfiniteController =
       Get.put(SelectInfiniteScrollController(), tag: 'clouterSelect');
 
   @override
@@ -27,6 +26,7 @@ class ClouterSelect extends StatelessWidget {
     return GetBuilder<SelectInfiniteScrollController>(
       tag: 'clouterSelect',
       builder: (controller) => Scaffold(
+        backgroundColor: style.colors['white'],
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70),
           child: Header(
@@ -34,33 +34,24 @@ class ClouterSelect extends StatelessWidget {
             headerTitle: '클라우터 채택',
           ),
         ),
-        body: Container(
-          color: Colors.white,
-          width: double.infinity,
-          height: double.infinity,
-          child: BouncingListview(
-            child: FractionallySizedBox(
-                widthFactor: 0.9,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(Icons.filter_list, size: 20),
-                        Text(' 정렬'),
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 110),
-                      child: Column(children: [
-                        SelectInfiniteScrollBody(
-                            controllerTag: 'clouterSelect'),
-                      ]),
-                    ),
-                  ],
-                )),
+        body: BouncingListview(
+            child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(Icons.filter_list, size: 20),
+                  Text(' 정렬'),
+                ],
+              ),
+              SelectInfiniteScrollBody(controller: selectInfiniteController),
+            ],
           ),
-        ),
+        )),
         bottomSheet: Container(
           height: 110,
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -84,7 +75,9 @@ class ClouterSelect extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MediumText(text: '전체 지원자'),
-                    BoldText(text: '121명'),
+                    BoldText(
+                        text:
+                            '${selectInfiniteController.numberOfApplicants}명'),
                   ],
                 ),
               ),
@@ -101,12 +94,15 @@ class ClouterSelect extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('2명',
+                        Text(
+                            '${selectInfiniteController.numberOfSelectedMembers}명',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 19,
                                 color: style.colors['main1'])),
-                        BoldText(text: ' / 5명')
+                        BoldText(
+                            text:
+                                ' / ${selectInfiniteController.numberOfRecruiter}명')
                       ],
                     )
                   ],

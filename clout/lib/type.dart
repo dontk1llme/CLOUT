@@ -753,6 +753,7 @@ class AppliedClouterInfo {
   String? nickname;
   int? clouterAvgStar;
   List<ClouterChannelList>? clouterChannelList;
+  int? clouterId;
 
   AppliedClouterInfo(
       this.campaignId,
@@ -763,7 +764,8 @@ class AppliedClouterInfo {
       this.applyStatus,
       this.nickname,
       this.clouterAvgStar,
-      this.clouterChannelList);
+      this.clouterChannelList,
+      this.clouterId);
 
   AppliedClouterInfo.fromJson(Map<String, dynamic> json) {
     campaignId = json['campaignId'];
@@ -780,6 +782,7 @@ class AppliedClouterInfo {
         clouterChannelList!.add(ClouterChannelList.fromJson(v));
       });
     }
+    clouterId = json['clouterId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -796,6 +799,7 @@ class AppliedClouterInfo {
       data['clouterChannelList'] =
           clouterChannelList!.map((v) => v.toJson()).toList();
     }
+    data['clouterId'] = clouterId;
     return data;
   }
 }
