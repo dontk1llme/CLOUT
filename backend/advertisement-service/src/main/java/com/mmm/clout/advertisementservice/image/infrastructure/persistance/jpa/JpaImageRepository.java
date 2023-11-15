@@ -9,4 +9,5 @@ public interface JpaImageRepository extends JpaRepository<Image, Long> {
 
         List<Image> findByCampaign_Id(Long Id);
 
+        List<Image> findByCampaign_IdIn(List<Long> idList);
 }

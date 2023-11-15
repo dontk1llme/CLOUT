@@ -10,6 +10,8 @@ public interface ImageRepository {
 
     List<Image> findByAdvertisementId(Long advertisementId);
 
+    List<Image> findByCampaignIdIn(List<Long> idList);
+
     Image delete(Long id);
 
     Image find(Long id);
