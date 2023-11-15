@@ -114,4 +114,11 @@ public class ContractController implements ContractControllerDocs {
         
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping("/file/{contractId}")
+    public ResponseEntity<String> selectFile(
+            @PathVariable("contractId") Long id
+    ) {
+        String path = contractFacade.getContractFile(id);
+        return new ResponseEntity<>(path, HttpStatus.OK);
+    }
 }

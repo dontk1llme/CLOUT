@@ -4,9 +4,6 @@ import com.mmm.clout.contractservice.contract.application.*;
 import com.mmm.clout.contractservice.contract.application.command.CreateContractCommand;
 import com.mmm.clout.contractservice.contract.application.reader.ContractReader;
 import com.mmm.clout.contractservice.contract.domain.Contract;
-import com.mmm.clout.contractservice.contract.presentation.response.DeleteContractResponse;
-import com.mmm.clout.contractservice.contract.presentation.response.UpdateRRNContractResponse;
-import com.mmm.clout.contractservice.contract.presentation.response.UpdateStateContractResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -29,6 +25,7 @@ public class ContractFacade {
     private final SelectContractProcessor selectContractProcessor;
     private final SelectAllContractClouterProcessor selectAllContractClouterProcessor;
     private final SelectAllContractAdvertiserProcessor selectAllContractAdvertiserProcessor;
+    private final GetContractFileProcessor GetContractFileProcessor;
 
     public Contract create(CreateContractCommand command) {
         return createContractProcessor.execute(command);
@@ -56,5 +53,10 @@ public class ContractFacade {
 
     public Page<ContractReader> selectAllAdvertiser(Long advertiserId, Pageable pageable) {
         return selectAllContractAdvertiserProcessor.execute(advertiserId, pageable);
+    }
+
+    //계약서 가져오기
+    public String getContractFile(Long contractId){
+        return GetContractFileProcessor.execute(contractId);
     }
 }
