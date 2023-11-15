@@ -2,11 +2,13 @@ server:
   port: 8890
 
 spring:
+  config:
+    import: secret/application-secret.yml
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
   application:
-    name: contract-service
+    name: contract-service-test
   datasource:
     url: jdbc:mariadb://3.38.213.43:3306/contractdb
     driver-class-name: org.mariadb.jdbc.Driver
