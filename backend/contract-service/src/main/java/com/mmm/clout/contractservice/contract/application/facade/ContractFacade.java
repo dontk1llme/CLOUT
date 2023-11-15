@@ -12,7 +12,9 @@ import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Getter
@@ -36,8 +38,8 @@ public class ContractFacade {
         return updateRRNContractProcessor.execute(id, residentRegistrationNumber);
     }
 
-    public Contract updateState(Long id) {
-        return updateStateContractProcessor.execute(id);
+    public Contract updateState(Long id, MultipartFile file) throws IOException {
+        return updateStateContractProcessor.execute(id, file);
     }
 
     public Long delete(Long id) {
