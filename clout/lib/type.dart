@@ -351,8 +351,8 @@ class ClouterInfo {
   String? phoneNumber;
   List<dynamic>? channelList;
   int? minCost;
-  List<String>? categoryList;
-  List<String>? regionList;
+  List<dynamic>? categoryList;
+  List<dynamic>? regionList;
   Address? address;
   int? countOfContract;
   List<dynamic>? imageResponses;
@@ -588,16 +588,20 @@ class AdvertiserInfo {
   int? advertiserAvgStar;
   Address? address;
   CompanyInfo? companyInfo;
+  String? companyName;
+  String? advertiserAddress;
 
-  AdvertiserInfo(
+  AdvertiserInfo({
     this.advertiserId,
     this.userId,
     this.totalPoint,
     this.role,
     this.advertiserAvgStar,
     this.address,
+    this.companyName,
     this.companyInfo,
-  );
+    this.advertiserAddress,
+  });
 
   Map<String, dynamic> toJson() => {
         'advertiserId': advertiserId,
@@ -607,30 +611,22 @@ class AdvertiserInfo {
         'advertiserAvgStar': advertiserAvgStar,
         'address': address,
         'companyInfo': companyInfo,
+        'companyName': companyName,
+        'advertiserAddress': advertiserAddress,
       };
 
   factory AdvertiserInfo.fromJson(Map<String, dynamic> json) {
-    if (json['companyInfo'] == null) {
-      return AdvertiserInfo(
-        json['advertiserId'],
-        json['userId'],
-        json['totalPoint'],
-        json['role'],
-        json['advertiserAvgStar'],
-        json['address'] != null ? Address.fromJson(json['address']) : null,
-        null, // companyInfo가 없는 경우 null로 설정
-      );
-    } else {
-      return AdvertiserInfo(
-        json['advertiserId'],
-        json['userId'],
-        json['totalPoint'],
-        json['role'],
-        json['advertiserAvgStar'],
-        json['address'] != null ? Address.fromJson(json['address']) : null,
-        CompanyInfo.fromJson(json['companyInfo']),
-      );
-    }
+    return AdvertiserInfo(
+      advertiserId: json['advertiserId'],
+      userId: json['userId'],
+      totalPoint: json['totalPoint'],
+      role: json['role'],
+      advertiserAvgStar: json['advertiserAvgStar'],
+      // address: Address.fromJson(json['address'] ?? ''),
+      companyName: json['companyName'],
+      companyInfo: CompanyInfo.fromJson(json['companyInfo']),
+      advertiserAddress: json['advertiserAddress'],
+    );
   }
 }
 
@@ -779,57 +775,6 @@ class ClouterRegisterForm {
       };
 }
 
-class ContractResponse {
-  List<dynamic>? content;
-
-  ContractResponse({this.content});
-
-  factory ContractResponse.fromJson(Map<String, dynamic> json) {
-    return ContractResponse(content: json['content']);
-  }
-}
-
-class ContractContent {
-  int? contractId;
-  String? name;
-  int? price;
-  String? postDeadline;
-  String? contractExpiration;
-  String? contents;
-  ClouterInfo? clouterInfo;
-  AdvertiserInfo? advertiserInfo;
-  String? state;
-  String? path;
-
-  ContractContent({
-    this.contractId,
-    this.name,
-    this.price,
-    this.postDeadline,
-    this.contractExpiration,
-    this.contents,
-    this.clouterInfo,
-    this.advertiserInfo,
-    this.state,
-    this.path,
-  });
-
-  factory ContractContent.fromJson(Map<String, dynamic> json) {
-    return ContractContent(
-      contractId: json['contractId'],
-      name: json['name'],
-      price: json['price'],
-      postDeadline: json['postDeadline'],
-      contractExpiration: json['contractExpiration'],
-      contents: json['contents'],
-      clouterInfo: ClouterInfo.fromJson(json['clouterInfo']),
-      advertiserInfo: AdvertiserInfo.fromJson(json['advertiserInfo']),
-      state: json['state'],
-      path: json['path'],
-    );
-  }
-}
-
 class AppliedClouterInfo {
   int? applyId;
   int? campaignId;
@@ -920,6 +865,145 @@ class ClouterChannelList {
   }
 }
 
+/////////////////////////////////////////////////////////////////// 계약 관련
+class ContractResponse {
+  List<dynamic>? content;
+
+  ContractResponse({this.content});
+
+  factory ContractResponse.fromJson(Map<String, dynamic> json) {
+    return ContractResponse(content: json['content']);
+  }
+}
+
+class ContractContent {
+  int? contractId;
+  String? name;
+  int? price;
+  String? postDeadline;
+  String? contractExpiration;
+  String? contents;
+  ContractClouter? clouterInfo;
+  ContractAdvertiser? advertiserInfo;
+  String? state;
+  String? path;
+
+  ContractContent({
+    this.contractId,
+    this.name,
+    this.price,
+    this.postDeadline,
+    this.contractExpiration,
+    this.contents,
+    this.clouterInfo,
+    this.advertiserInfo,
+    this.state,
+    this.path,
+  });
+
+  factory ContractContent.fromJson(Map<String, dynamic> json) {
+    return ContractContent(
+      contractId: json['contractId'],
+      name: json['name'],
+      price: json['price'],
+      postDeadline: json['postDeadline'],
+      contractExpiration: json['contractExpiration'],
+      contents: json['contents'],
+      clouterInfo: ContractClouter.fromJson(json['clouterInfo']),
+      advertiserInfo: ContractAdvertiser.fromJson(json['advertiserInfo']),
+      state: json['state'],
+      path: json['path'],
+    );
+  }
+}
+
+class Contract {
+  int? contractId;
+  String? name;
+  int? price;
+  String? postDeadline;
+  String? contractExpiration;
+  String? contents;
+  ContractClouter? clouterInfo;
+  ContractAdvertiser? advertiserInfo;
+  String? path;
+
+  Contract({
+    this.contractId,
+    this.name,
+    this.price,
+    this.postDeadline,
+    this.contractExpiration,
+    this.contents,
+    this.clouterInfo,
+    this.advertiserInfo,
+    this.path,
+  });
+
+  factory Contract.fromJson(Map<String, dynamic> json) {
+    return Contract(
+      contractId: json['contractId'],
+      name: json['name'],
+      price: json['price'],
+      postDeadline: json['postDeadline'],
+      contractExpiration: json['contractExpiration'],
+      contents: json['contents'],
+      clouterInfo: ContractClouter.fromJson(json['clouterInfo']),
+      advertiserInfo: ContractAdvertiser.fromJson(json['advertiserInfo']),
+      path: json['path'],
+    );
+  }
+}
+
+class ContractClouter {
+  int? clouterId;
+  String? clouterName;
+  String? clouterAddress;
+  String? residentRegistrationNumber;
+
+  ContractClouter(
+      {this.clouterId,
+      this.clouterName,
+      this.clouterAddress,
+      this.residentRegistrationNumber});
+
+  factory ContractClouter.fromJson(Map<String, dynamic> json) {
+    return ContractClouter(
+      clouterId: json['clouterId'],
+      clouterName: json['clouterName'],
+      clouterAddress: json['clouterAddress'],
+      residentRegistrationNumber: json['residentRegistrationNumber'],
+    );
+  }
+}
+
+class ContractAdvertiser {
+  int? advertiserId;
+  String? representativeName;
+  String? advertiserAddress;
+  String? companyName;
+  String? regNum;
+
+  ContractAdvertiser({
+    this.advertiserId,
+    this.representativeName,
+    this.advertiserAddress,
+    this.companyName,
+    this.regNum,
+  });
+
+  factory ContractAdvertiser.fromJson(Map<String, dynamic> json) {
+    return ContractAdvertiser(
+      advertiserId: json['advertiserId'],
+      representativeName: json['representativeName'],
+      advertiserAddress: json['advertiserAddress'],
+      companyName: json['companyName'],
+      regNum: json['regNum'],
+    );
+  }
+}
+
+/////////////////////////////////////////////////////////////////// 계약 관련
 class ApplyContent {
   int? applyId;
   int? campaignId;

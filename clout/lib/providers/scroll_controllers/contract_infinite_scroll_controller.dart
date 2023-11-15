@@ -33,7 +33,7 @@ class ContractInfiniteScrollController extends GetxController {
         setCurrentPage(currentPage + 1);
         getData();
       }
-      if (scrollController.value.position.pixels < -250) {
+      if (scrollController.value.position.pixels < -150) {
         if (!_timer.isActive) {
           HapticFeedback.mediumImpact();
           reload();
@@ -80,7 +80,7 @@ class ContractInfiniteScrollController extends GetxController {
     List<Widget> appendData = [];
 
     var response;
-    
+
     if (userController.memberType == -1) {
       // 클라우터일경우
       response = await authorizedApi.getRequest(
@@ -105,7 +105,8 @@ class ContractInfiniteScrollController extends GetxController {
           appendData.add(SmallContract(
               name: content.name!,
               pay: content.price.toString(),
-              progress: content.state! == 'WAITING' ? false : true));
+              progress: content.state! == 'WAITING' ? false : true,
+              contractId: content.contractId!));
         }
         data.addAll(appendData);
         dataLoading = false;

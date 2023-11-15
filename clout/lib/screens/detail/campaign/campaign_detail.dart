@@ -177,6 +177,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
                     style: style.textTheme.headlineLarge
                         ?.copyWith(fontWeight: FontWeight.w400),
                   ),
+                  SizedBox(height: 200),
                 ],
               ),
             )
