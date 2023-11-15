@@ -338,7 +338,6 @@ class ImageResponse {
   }
 }
 
-// 💥 계약한 광고 건수 추가하기
 class ClouterInfo {
   int? clouterId;
   String? userId;
@@ -828,5 +827,95 @@ class ContractContent {
       state: json['state'],
       path: json['path'],
     );
+  }
+}
+
+class AppliedClouterInfo {
+  int? applyId;
+  int? campaignId;
+  int? numberOfRecruiter;
+  int? numberOfApplicants;
+  int? numberOfSelectedMembers;
+  int? hopeAdFee;
+  String? applyStatus;
+  String? nickname;
+  int? clouterAvgStar;
+  List<ClouterChannelList>? clouterChannelList;
+  int? clouterId;
+
+  AppliedClouterInfo(
+      this.applyId,
+      this.campaignId,
+      this.numberOfRecruiter,
+      this.numberOfApplicants,
+      this.numberOfSelectedMembers,
+      this.hopeAdFee,
+      this.applyStatus,
+      this.nickname,
+      this.clouterAvgStar,
+      this.clouterChannelList,
+      this.clouterId);
+
+  AppliedClouterInfo.fromJson(Map<String, dynamic> json) {
+    campaignId = json['campaignId'];
+    numberOfRecruiter = json['numberOfRecruiter'];
+    numberOfApplicants = json['numberOfApplicants'];
+    numberOfSelectedMembers = json['numberOfSelectedMembers'];
+    hopeAdFee = json['hopeAdFee'];
+    applyStatus = json['applyStatus'];
+    nickname = json['nickname'];
+    clouterAvgStar = json['clouterAvgStar'];
+    if (json['clouterChannelList'] != null) {
+      clouterChannelList = <ClouterChannelList>[];
+      json['clouterChannelList'].forEach((v) {
+        clouterChannelList!.add(ClouterChannelList.fromJson(v));
+      });
+    }
+    clouterId = json['clouterId'];
+    applyId = json['applyId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['campaignId'] = campaignId;
+    data['numberOfRecruiter'] = numberOfRecruiter;
+    data['numberOfApplicants'] = numberOfApplicants;
+    data['numberOfSelectedMembers'] = numberOfSelectedMembers;
+    data['hopeAdFee'] = hopeAdFee;
+    data['applyStatus'] = applyStatus;
+    data['nickname'] = nickname;
+    data['clouterAvgStar'] = clouterAvgStar;
+    if (clouterChannelList != null) {
+      data['clouterChannelList'] =
+          clouterChannelList!.map((v) => v.toJson()).toList();
+    }
+    data['clouterId'] = clouterId;
+    data['applyId'] = applyId;
+    return data;
+  }
+}
+
+class ClouterChannelList {
+  String? name;
+  String? platform;
+  String? link;
+  String? followerScale;
+
+  ClouterChannelList({this.name, this.platform, this.link, this.followerScale});
+
+  ClouterChannelList.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    platform = json['platform'];
+    link = json['link'];
+    followerScale = json['followerScale'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['name'] = name;
+    data['platform'] = platform;
+    data['link'] = link;
+    data['followerScale'] = followerScale;
+    return data;
   }
 }

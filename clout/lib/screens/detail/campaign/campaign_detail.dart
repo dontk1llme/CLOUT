@@ -294,9 +294,9 @@ class _CampaignDetailState extends State<CampaignDetail> {
                                       height: 50,
                                       child: BigButton(
                                         title: '신청자 목록보기',
-                                        function: () => Get.to(
-                                          () => ClouterSelect(),
-                                        ),
+                                        function: () => Get.toNamed(
+                                            '/clouterselect',
+                                            arguments: campaignId),
                                       ),
                                     ),
                                   ),
