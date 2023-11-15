@@ -18,30 +18,22 @@ class AvailablePlatform extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Container(
         decoration: BoxDecoration(
-            color: style.colors['main3'],
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            boxShadow:
-                // [
-                //   BoxShadow(
-                //       color: Colors.grey.withOpacity(0.7),
-                //       spreadRadius: 0,
-                //       blurRadius: 5,
-                //       offset: Offset(2, 4),
-                //       inset: true)
-                // ]),
-                [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: Offset(0, 0),
-                  inset: true),
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 0,
-                  blurRadius: 5,
-                  offset: Offset(2, 4))
-            ]),
+          color: style.colors['main3'],
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: Offset(0, 0),
+                inset: true),
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 0,
+                blurRadius: 5,
+                offset: Offset(2, 4))
+          ],
+        ),
         padding: EdgeInsets.all(10),
         child: Wrap(
           alignment: WrapAlignment.center,
@@ -56,7 +48,7 @@ class AvailablePlatform extends StatelessWidget {
             ),
             Text(
               platform,
-              style: style.textTheme.headlineSmall
+              style: style.textTheme.bodyMedium
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
           ],

@@ -1,3 +1,4 @@
+import 'package:clout/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -71,17 +72,7 @@ class ContractList extends GetView<ContractInfiniteScrollController> {
                           padding: const EdgeInsets.only(top: 20, bottom: 40),
                           child: SizedBox(
                             height: 50,
-                            child: Center(
-                                child: LoadingIndicator(
-                              indicatorType: Indicator.ballRotateChase,
-                              colors: [
-                                style.colors['main1-4']!,
-                                style.colors['main1-3']!,
-                                style.colors['main1-2']!,
-                                style.colors['main1-1']!,
-                                style.colors['main1']!,
-                              ],
-                            )),
+                            child: Center(child: LoadingWidget()),
                           ),
                         );
                       }

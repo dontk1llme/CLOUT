@@ -13,6 +13,7 @@ import 'package:clout/widgets/buttons/big_button.dart';
 
 //provider
 import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class MyWallet extends StatefulWidget {
   final String userType; // clouter 인지 advertiser 인지
@@ -36,10 +37,10 @@ class _MyWalletState extends State<MyWallet> {
     print('사용자 ID: $memberId');
     print('사용자 토큰: $authorization');
     //api 요청
-    var response =
-        await PointsApi.getRequest('/point-service/v1/points', memberId, authorization);
+    var response = await PointsApi.getRequest(
+        '/point-service/v1/points', memberId, authorization);
     var json = jsonDecode(response);
-    
+
     // print('API 응답: $response');
     // print('파싱된 JSON: $json');
 
@@ -87,7 +88,49 @@ class _MyWalletState extends State<MyWallet> {
       future: fetchUserPoints(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Container(
+            padding: EdgeInsets.fromLTRB(25, 20, 25, 20),
+            margin: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+            width: double.infinity,
+            height: 185,
+            decoration: BoxDecoration(
+              color: style.colors['white'],
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: style.shadows['shadow'],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.account_balance_wallet_outlined),
+                    SizedBox(width: 10),
+                    Text('내 지갑',
+                        style: TextStyle(
+                          fontSize: 20,
+                        )),
+                  ],
+                ),
+                SizedBox(
+                  height: 50,
+                  child: LoadingIndicator(
+                    indicatorType: Indicator.ballRotateChase,
+                    colors: [
+                      style.colors['main1-4']!,
+                      style.colors['main1-3']!,
+                      style.colors['main1-2']!,
+                      style.colors['main1-1']!,
+                      style.colors['main1']!,
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 1,
+                )
+              ],
+            ),
+          );
         } else if (snapshot.hasError) {
           return Text('에러 발생: ${snapshot.error}');
         } else {
