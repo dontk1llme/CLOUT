@@ -1,12 +1,11 @@
-import 'package:clout/screens/campaign_list/campaign_list.dart';
-import 'package:clout/screens/mypage/contract.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // screens
-import 'package:clout/screens/review_register/review_register.dart';
-import 'package:clout/screens/clouter/clouter_select.dart';
+
+// widgets
+import 'package:clout/screens/contract_list/widgets/contract_button.dart';
 
 class NotificationItem extends StatefulWidget {
   final int result;
@@ -116,7 +115,7 @@ class _NotificationItemState extends State<NotificationItem> {
                           width: 200,
                           child: ElevatedButton(
                             onPressed: () {
-                              Get.to(() => CampaignList());
+                              Get.toNamed('/reviewregister');
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: style.colors['main1'],
@@ -126,7 +125,7 @@ class _NotificationItemState extends State<NotificationItem> {
                               padding: EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 20),
                             ),
-                            child: Text('다른 캠페인 찾기'),
+                            child: Text('별점 남기기'),
                           ),
                         ),
                 ],

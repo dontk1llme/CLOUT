@@ -4,15 +4,22 @@ import 'package:clout/providers/follower_controller.dart';
 import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/providers/platform_select_controller.dart';
 import 'package:clout/providers/region_controller.dart';
+import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:clout/type.dart';
 import 'package:get/get.dart';
 
 class CampaignRegisterController extends GetxController {
   var category,
-      productName,
+      campaignTitle,
       recruitCount = 1,
       offeringItems,
       itemDetail,
-      signature;
+      signature,
+      link;
+
+  bool isBlank = true;
+  bool payPositive = false;
+  bool deliveryPositive = false;
 
   final ageController = Get.put(
     AgeController(),
@@ -27,7 +34,7 @@ class CampaignRegisterController extends GetxController {
     tag: 'campaignRegister',
   );
   final followerController = Get.put(
-    FollowerContoller(),
+    FollowerController(),
     tag: 'campaignRegister',
   );
   final regionController = Get.put(
@@ -38,14 +45,55 @@ class CampaignRegisterController extends GetxController {
     ImagePickerController(),
     tag: 'campaignRegister',
   );
+  final userController = Get.find<UserController>();
+
+  var campaign;
+
+  setCampaign() {
+    List<String> platformList = [];
+    for (int i = 0; i < 3; i++) {
+      if (platformController.platforms[i]) {
+        if (i == 0) {
+          platformList.add('INSTAGRAM');
+        } else if (i == 1) {
+          platformList.add('TIKTOK');
+        } else if (i == 2) {
+          platformList.add('YOUTUBE');
+        }
+      }
+    }
+    List<String> regionList = [];
+    for (int i = 0; i < regionController.selectedRegions.length; i++) {
+      regionList
+          .add(regionController.getEnum(regionController.selectedRegions[i]));
+    }
+
+    campaign = Campaign(
+      registerId: userController.memberId,
+      adCategory: category,
+      title: campaignTitle,
+      numberOfRecruiter: recruitCount,
+      isPriceChangeable: false,
+      isDeliveryRequired: deliveryPositive,
+      price: int.parse(payController.pay),
+      sellingLink: link,
+      details: offeringItems,
+      offeringDetails: itemDetail,
+      adPlatformList: platformList,
+      minClouterAge: ageController.ageRanges.start.toInt(),
+      maxClouterAge: ageController.ageRanges.end.toInt(),
+      minFollower: int.parse(followerController.minimumFollowers),
+      regionList: regionList,
+    );
+  }
 
   setCategory(input) {
     category = input;
     update();
   }
 
-  setProductName(input) {
-    productName = input;
+  setCampaignTitle(input) {
+    campaignTitle = input;
     update();
   }
 
@@ -70,9 +118,29 @@ class CampaignRegisterController extends GetxController {
     update();
   }
 
+  setPayPositive(input) {
+    payPositive = input;
+    update();
+  }
+
+  setDeliveryPositive(input) {
+    deliveryPositive = input;
+    update();
+  }
+
+  setLink(input) {
+    link = input;
+    update();
+  }
+
+  setBlank(input){
+    isBlank = input;
+    update();
+  }
+
   printAll() {
     print(category);
-    print(productName);
+    print(campaignTitle);
     print(recruitCount);
     print(offeringItems);
     print(itemDetail);

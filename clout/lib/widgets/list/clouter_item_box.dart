@@ -1,11 +1,13 @@
-import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-// screens
-import 'package:clout/screens/clouter/clouter_detail.dart';
+// controllers
+import 'package:clout/providers/user_controllers/user_controller.dart';
+
+// utilities
+import 'package:clout/utilities/category_translator.dart';
 
 // widgets
 import 'package:clout/widgets/buttons/like_button.dart';
@@ -13,23 +15,27 @@ import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 
 class ClouterItemBox extends StatefulWidget {
-  final String nickname;
-  final int starRating;
-  final int fee;
-  final String category;
-  final int contractCount;
-  final List<String> selectedPlatform;
-  final String firstImg;
+  final int clouterId;
+  final String userId;
+  final String nickName;
+  final int avgScore;
+  final int minCost;
+  final List<String> categoryList;
+  final int countOfContract;
+  final List<Widget> adPlatformList;
+  final String? firstImg; // 💥 사진 나중에 추가하기
 
   ClouterItemBox(
       {super.key,
-      required this.nickname,
-      required this.starRating,
-      required this.fee,
-      required this.category,
-      required this.contractCount,
-      required this.selectedPlatform,
-      required this.firstImg});
+      required this.clouterId,
+      required this.userId,
+      required this.nickName,
+      required this.avgScore,
+      required this.minCost,
+      required this.categoryList,
+      required this.countOfContract,
+      required this.adPlatformList,
+      this.firstImg});
 
   @override
   State<ClouterItemBox> createState() => _ClouterItemBoxState();
@@ -51,11 +57,21 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => ClouterDetail());
-      },
+    // 'ALL'이 포함되어 있으면 모든 플랫폼에 대한 위젯 리스트 생성
+    // List<Widget> adPlatformWidgets;
+    // if (widget.adPlatformList
+    //     .any((widget) => widget is Sns2 && widget.platform == "ALL")) {
+    //   adPlatformWidgets = ["INSTAGRAM", "TIKTOK", "YOUTUBE"]
+    //       .map((platform) => Sns2(platform: platform))
+    //       .toList();
+    // } else {
+    //   // 'ALL'이 없으면 기존 리스트를 사용
+    //   adPlatformWidgets = widget.adPlatformList;
+    // }
+    return InkWell(
+      onTap: () => Get.toNamed('/clouterdetail', arguments: widget.clouterId),
       child: Container(
         width: screenWidth / 2 - 25,
         padding: EdgeInsets.all(10),
@@ -71,12 +87,25 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
               alignment: Alignment.topRight,
               children: [
                 // 제일 큰 이미지
-                Image.asset(
-                  widget.firstImg,
-                  width: screenWidth / 2 - 40,
-                  height: screenWidth / 2 - 65,
-                  fit: BoxFit.cover,
-                ),
+                widget.firstImg != ''
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        child: Image.network(
+                          widget.firstImg!,
+                          width: screenWidth / 2 - 40,
+                          height: screenHeight / 2 - 270,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        child: Image.asset(
+                          'assets/images/blank-profile.png',
+                          width: screenWidth / 2 - 40,
+                          height: screenHeight / 2 - 270,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                 // 이미지에 떠있는 플랫폼 이미지
                 Positioned(
                   bottom: 5,
@@ -86,18 +115,26 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     decoration: BoxDecoration(
                         color: style.colors['white'],
                         borderRadius: BorderRadius.circular(5)),
-                    child: Row(children: [
-                      Sns2(selectedPlatform: widget.selectedPlatform)
-                    ]),
+                    child: Row(children: widget.adPlatformList),
                   ),
                 ),
-                if (userController.user == 1)
+                if (userController.memberType == 1)
                   LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
-            NameTag(title: widget.category),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: widget.categoryList
+                    .map((category) => NameTag(
+                        title:
+                            AdCategoryTranslator.translateAdCategory(category)))
+                    .toList(),
+              ),
+            ),
             Text(
-              widget.nickname,
+              widget.nickName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -106,7 +143,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
               ),
             ),
             Text(
-              '${f.format(widget.fee)} 포인트',
+              '${f.format(widget.minCost)} 포인트',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -124,7 +161,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                   ),
                 ),
                 Text(
-                  '${widget.contractCount}건',
+                  '${widget.countOfContract}건', // 💥 계약한 광고 수
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

@@ -1,10 +1,12 @@
 import 'package:clout/providers/campaign_apply_controller.dart';
-import 'package:clout/screens/campaign_register/widgets/pay_dialog.dart';
-import 'package:clout/screens/join/widgets/big_button.dart';
+import 'package:clout/providers/fee_controller.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/pay_dialog.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/input/input_elements/widgets/text_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -21,11 +23,16 @@ class _ApplyCampaignState extends State<ApplyCampaign> {
 
   final applyController =
       Get.put(CampaginApplyController(), tag: 'campaignApply');
+  final feeController = Get.find<FeeController>(tag: 'campaignApply');
 
   doApply() {
     if (applyController.agreed) {
+      applyController.applyCampaign().then((_) {
+        showSnackBar();
+      }).catchError((error) {
+        showSnackBar(); // 실패 에러
+      });
       Get.back();
-      showSnackBar();
     } else {
       // showCustomToast();
       Fluttertoast.showToast(msg: '개인정보 수집 및 이용에 동의해주세요');

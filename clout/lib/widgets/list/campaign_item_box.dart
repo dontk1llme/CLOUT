@@ -13,18 +13,20 @@ import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 
 class CampaignItemBox extends StatefulWidget {
+  final int campaignId;
   final String adCategory;
   final String title;
   final int price;
   final CompanyInfo companyInfo;
   final int numberOfSelectedMembers;
   final int numberOfRecruiter;
-  final List<String> adPlatformList;
+  final List<Widget> adPlatformList;
   final AdvertiserInfo advertiserInfo;
-  final String firstImg;
+  final String? firstImg;
 
   const CampaignItemBox({
     super.key,
+    required this.campaignId,
     required this.adCategory,
     required this.title,
     required this.price,
@@ -33,7 +35,7 @@ class CampaignItemBox extends StatefulWidget {
     required this.numberOfRecruiter,
     required this.adPlatformList,
     required this.advertiserInfo,
-    required this.firstImg,
+    this.firstImg,
   });
 
   @override
@@ -56,10 +58,12 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return InkWell(
         // 여기 arguments에 해당 캠페인의 id를 넣어야 함
-        onTap: () => Get.toNamed('/campaignDetail', arguments: 1),
+        onTap: () =>
+            Get.toNamed('/campaignDetail', arguments: widget.campaignId),
         child: Container(
           width: screenWidth / 2 - 25,
           // height: 100,
@@ -75,12 +79,26 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
               Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  Image.asset(
-                    widget.firstImg, // 💥 사진 수정하기
-                    width: screenWidth / 2 - 40,
-                    // height: screenHeight / 2 - 65,
-                    fit: BoxFit.cover,
-                  ),
+                  // 제일 큰 이미지
+                  widget.firstImg != null && widget.firstImg != ''
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          child: Image.network(
+                            widget.firstImg!,
+                            width: screenWidth / 2 - 40,
+                            height: screenHeight / 2 - 270,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          child: Image.asset(
+                            'assets/images/blank-product.jpg',
+                            width: screenWidth / 2 - 40,
+                            height: screenHeight / 2 - 270,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                   Positioned(
                     bottom: 5,
                     right: 5,
@@ -89,12 +107,10 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                       decoration: BoxDecoration(
                           color: style.colors['white'],
                           borderRadius: BorderRadius.circular(5)),
-                      child: Row(children: [
-                        Sns2(selectedPlatform: widget.adPlatformList)
-                      ]),
+                      child: Row(children: widget.adPlatformList),
                     ),
                   ),
-                  if (userController.user != 0)
+                  if (userController.memberType == -1)
                     LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
                 ],
               ),
@@ -117,7 +133,10 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth > 400 ? 17 : 15,
                   )),
-              Text('${f.format(widget.price)} 포인트',
+              Text(
+                  widget.price != 0
+                      ? '${f.format(widget.price)} 포인트'
+                      : '포인트 없음',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

@@ -7,7 +7,7 @@ import 'package:clout/screens/chatting/chatting.dart';
 
 class Chatting {
   String image = 'assets/images/clouterImage.jpg';
-  String nickname = '모카우유';
+  String nickName = '모카우유';
   DateTime lastChatTime = DateTime.now();
   String lastMessage = '혹시 어떤 장난감인지 사이트나 사진인지 볼 수 있을까요~~?~~?~';
   int unreadMessages = 3;
@@ -67,7 +67,7 @@ class ChattingItemBox extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(chatting.nickname,
+                        Text(chatting.nickName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

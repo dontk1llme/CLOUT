@@ -1,47 +1,68 @@
 import 'package:get/get.dart';
 import 'package:clout/type.dart';
-import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:get/get.dart';
 
 class UserController extends GetxController {
-  int user = 0;
-  var userId;
+  int memberType = 0;
+  int memberId = -1; // db에서 관리하는 유저의 primaryKey
+  var userId; // 유저가 로그인할때 사용하는 id
   var password;
+  var accessToken;
+  var refreshToken;
 
   var userInfo;
+  var userLogin;
 
   void setAdvertiser() {
-    user = 1;
+    memberType = 1;
     update();
   }
 
   void setClouter() {
-    user = -1;
+    memberType = -1;
     update();
   }
 
   void setGuest() {
-    user = 0;
+    memberType = 0;
     update();
   }
 
-  setUserId(input) {
-    userId = input;
+  setMemberId(input){
+    memberId = input;
     update();
   }
 
-  setPassword(input) {
-    password = input;
+  // setUserId(input) {
+  //   userId = input;
+  //   update();
+  // }
+
+  // setPassword(input) {
+  //   password = input;
+  //   update();
+  // }
+
+  // setUserInfo() {
+  //   userInfo = LoginInfo(
+  //       // user,
+  //       userId,
+  //       password);
+  //   print('유저인포 업데이트');
+  //   update();
+  // }
+
+  setUserLogin(input) {
+    userLogin = input;
     update();
   }
 
-  setUserInfo(){
-    userInfo = Login(
-      // user,
-      userId,
-      password
-    );
-    print('유저인포 업데이트');
+  setAccessToken(input){
+    accessToken = input;
+    update();
+  }
+
+  setRefreshToken(input){
+    refreshToken = input;
     update();
   }
 }
