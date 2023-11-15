@@ -10,10 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/contracts")
@@ -43,12 +46,13 @@ public class ContractController implements ContractControllerDocs {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/{contractId}/complete")
+    @PatchMapping(value = "/{contractId}/complete", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<UpdateStateContractResponse> updateState(
-            @PathVariable("contractId") Long id
-    ) {
+            @PathVariable("contractId") Long id,
+            @RequestPart(value = "files", required = false) MultipartFile file
+    ) throws Exception {
         UpdateStateContractResponse response = UpdateStateContractResponse.from(
-                contractFacade.updateState(id)
+                contractFacade.updateState(id, file)
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

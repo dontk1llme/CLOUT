@@ -38,8 +38,9 @@ public class Contract extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private State state;
 
+    private String path;
 
-    public Contract(String name, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo) {
+    public Contract(String name, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo, String path) {
         this.name = name;
         this.price = price;
         this.postDeadline = postDeadline;
@@ -48,9 +49,10 @@ public class Contract extends BaseEntity {
         this.clouterInfo = clouterInfo;
         this.advertiserInfo = advertiserInfo;
         this.state = State.WATING;
+        this.path = path;
     }
-    public static Contract create(String name, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo) {
-        return new Contract(name,price,postDeadline,contractExpiration,contents,clouterInfo,advertiserInfo);
+    public static Contract create(String name, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo, String path) {
+        return new Contract(name,price,postDeadline,contractExpiration,contents,clouterInfo,advertiserInfo, path);
     }
 
     public Contract updateResidentRegistrationNumber(String rnn) {

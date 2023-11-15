@@ -2,6 +2,8 @@ server:
   port: 8890
 
 spring:
+  config:
+    import: secret/application-secret.yml
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

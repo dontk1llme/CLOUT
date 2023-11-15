@@ -6,9 +6,12 @@ import com.mmm.clout.contractservice.contract.domain.provider.MemberProvider;
 import com.mmm.clout.contractservice.contract.domain.provider.PointProvider;
 import com.mmm.clout.contractservice.contract.domain.provider.dto.AddClouterPointRequest;
 import com.mmm.clout.contractservice.contract.domain.repository.ContractRepository;
+import com.mmm.clout.contractservice.image.domain.FileUploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +21,16 @@ public class UpdateStateContractProcessor {
     private final ContractRepository contractRepository;
     private final MemberProvider memberProvider;
     private final PointProvider pointProvider;
+    private final FileUploader fileUploader;
 
     @Transactional
-    public Contract execute(Long id) {
+    public Contract execute(Long id, MultipartFile file) throws IOException {
         Contract contract = findContract(id);
         addContractCountList(contract);
         addClouterPoint(contract);
         contract.updateState();
+
+        fileUploader.uploadContract(file, contract);
         return contract;
     }
 
