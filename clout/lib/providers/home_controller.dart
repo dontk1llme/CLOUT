@@ -1,11 +1,32 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:clout/type.dart';
 import 'package:clout/utilities/category_translator.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
+  var scrollController = ScrollController().obs;
+
+  Timer _timer = Timer(Duration(milliseconds: 2000), () {});
+
+  @override
+  void onInit() {
+    scrollController.value.addListener(() {
+      if (scrollController.value.position.pixels < -200) {
+        if (!_timer.isActive) {
+          HapticFeedback.mediumImpact();
+          reload();
+          _timer = Timer(Duration(milliseconds: 2000), () {});
+        }
+      }
+    });
+    super.onInit();
+  }
+
   var campaignData = RxList<CampaignInfo>();
   var clouterData = RxList<ClouterInfo>();
   var isLoading = true;
@@ -19,11 +40,14 @@ class HomeController extends GetxController {
 
     var json = jsonDecode(response['body']);
 
+    print(json);
+
     List<dynamic> campaignsJson = json['top10CampaignList'];
     if (campaignsJson != null) {
       campaignData.value = campaignsJson.map((item) {
         var campaign = Campaign.fromJson(item['campaign']);
         var advertiserInfo = AdvertiserInfo.fromJson(item['advertiserInfo']);
+        var imageList = item['imageList'];
         isLoading = false;
         return CampaignInfo(
           campaignId: campaign.campaignId,
@@ -32,7 +56,8 @@ class HomeController extends GetxController {
           details: campaign.details,
           deletedAt: campaign.deletedAt,
           title: campaign.title,
-          adCategory: AdCategoryTranslator.translateAdCategory(campaign.adCategory!),
+          adCategory:
+              AdCategoryTranslator.translateAdCategory(campaign.adCategory!),
           isPriceChangeable: campaign.isPriceChangeable,
           isDeliveryRequired: campaign.isDeliveryRequired,
           numberOfRecruiter: campaign.numberOfRecruiter,
@@ -48,7 +73,7 @@ class HomeController extends GetxController {
           companyInfo: advertiserInfo.companyInfo,
           address: advertiserInfo.address,
           advertiserInfo: advertiserInfo,
-          // imageResponses: campaign.i
+          imageList: imageList,
         );
       }).toList();
     } else {
@@ -91,6 +116,17 @@ class HomeController extends GetxController {
     } else {
       clouterData.value = [];
     }
+    update();
+  }
+
+  reload() async {
+    isLoading = true;
+    campaignData.clear();
+    clouterData.clear();
+    isLoading = true;
+
+    fetchCampaigns();
+    fetchClouters();
     update();
   }
 }
