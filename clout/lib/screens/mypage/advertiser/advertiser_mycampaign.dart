@@ -10,7 +10,6 @@ import 'package:clout/screens/list/widgets/campaign_infinite_scroll_body.dart';
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
   AdvertiserMycampaign({super.key});
@@ -27,6 +26,8 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
         .setEndPoint('/advertisement-service/v1/advertisements/advertisements');
     infiniteController.setParameter(
         '?advertiserId=${userController.memberId}&page=${infiniteController.currentPage}&size=${10}');
+    infiniteController.getData();
+    print('왜 아무것도 안되지?');
     return GetBuilder<InfiniteScrollController>(
       tag: 'advertiserMyCampaign',
       builder: (controller) => Scaffold(
@@ -53,7 +54,7 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
                       ),
                     )
                   : Container(
-                      height: 30,
+                      height: 700,
                     )
             ],
           ),

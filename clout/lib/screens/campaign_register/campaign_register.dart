@@ -1,7 +1,10 @@
 // global
+import 'dart:io';
 import 'dart:ui';
 import 'package:clout/hooks/apis/authorized_api.dart';
+import 'package:clout/hooks/pictures/image_functions.dart';
 import 'package:clout/providers/campaign_register_controller.dart';
+import 'package:clout/providers/image_picker_controller.dart';
 import 'package:clout/widgets/age_slider.dart';
 import 'package:clout/screens/campaign_register/widgets/category_dropdown.dart';
 import 'package:clout/widgets/input/input_elements/widgets/text_input.dart';
@@ -17,14 +20,16 @@ import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/buttons/toggle_button.dart';
 import 'package:clout/widgets/image_pickder/image_widget.dart';
 import 'package:clout/widgets/sns/platform_toggle.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:clout/style.dart' as style;
 import 'dart:ui' as ui;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide MultipartFile;
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 // Screens
@@ -47,15 +52,47 @@ class CampaignRegister extends StatelessWidget {
     if (campaignRegisterController.category != null &&
         campaignRegisterController.campaignTitle != null &&
         campaignRegisterController.offeringItems != null &&
-        campaignRegisterController.itemDetail != null) {
+        campaignRegisterController.itemDetail != null &&
+        !campaignRegisterController.isBlank) {
       await campaignRegisterController.setCampaign();
-      var response = await authorizedApi.postRequest(
+
+      final imageController =
+          Get.find<ImagePickerController>(tag: 'campaignRegister');
+
+      ImageFunctions imageFunctions = ImageFunctions();
+
+      List<MultipartFile> imgFiles = [];
+
+      // 서명 controller에 저장
+      await handleSignature();
+
+      var tempDir = await getTemporaryDirectory();
+
+      var signatureImg = campaignRegisterController.signature;
+      File file = await File('${tempDir.path}/img').writeAsBytes(signatureImg);
+
+      // 서명 사진 MultipartFile 형태로 변환해서 imgFiles에 저장
+      imgFiles.add(imageFunctions.pickedImageToMultiPartFiles(file));
+
+      // 제품 사진 변환해서 productImages 변수에 할당
+      List<MultipartFile> productImages =
+          imageFunctions.pickedImagesToMultiPartFiles(imageController.images);
+
+      // dio 통신에 넘길 'files'에 추가
+      imgFiles.addAll(productImages);
+
+      var response = await authorizedApi.dioPostRequest(
           '/advertisement-service/v1/advertisements',
-          campaignRegisterController.campaign);
-      await campaignRegisterController.printAll();
+          campaignRegisterController.campaign,
+          imgFiles);
+
+      // await campaignRegisterController.printAll();
+
       print(response);
-      if (response['statusCode'] == 201) {
-        await handleSaveButtonPressed(); // 서명 갤러리 저장함수
+      print(response.statusCode);
+
+      if (response.statusCode == 201) {
+        await handleSignature(); // 서명 갤러리 저장함수
         Get.offNamed('/home');
       }
     } else {
@@ -67,7 +104,7 @@ class CampaignRegister extends StatelessWidget {
   final GlobalKey<SfSignaturePadState> signatureGlobalKey = GlobalKey();
   final GlobalKey stackGlobalKey = GlobalKey();
 
-  Future<void> handleSaveButtonPressed() async {
+  Future<void> handleSignature() async {
     print("START CAPTURE");
     final renderObject = stackGlobalKey.currentContext!.findRenderObject();
     if (renderObject is RenderRepaintBoundary) {
@@ -75,10 +112,9 @@ class CampaignRegister extends StatelessWidget {
       ui.Image image = await boundary.toImage(pixelRatio: 5.0);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       if (byteData != null) {
-        // 나중에 axios로 db에 넣을때 여기 if 안에서 넣어야 함
-        campaignRegisterController.setSignature(byteData);
-        await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
-        Utils.toast('서명이 갤러리에 저장되었습니다.');
+        campaignRegisterController.setSignature(byteData.buffer.asUint8List());
+        // await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
+        Utils.toast('서명이 안전하게 처리되었습니다.');
       }
     } else {
       print('여기로 왔는데?');
@@ -237,8 +273,10 @@ class CampaignRegister extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   Signature(
-                      globalKey: stackGlobalKey,
-                      signatureKey: signatureGlobalKey),
+                    globalKey: stackGlobalKey,
+                    signatureKey: signatureGlobalKey,
+                    setBlank: controller.setBlank,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 20),
                     child: SizedBox(

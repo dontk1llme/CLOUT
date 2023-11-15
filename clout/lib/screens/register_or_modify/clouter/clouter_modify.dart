@@ -70,7 +70,7 @@ class _ClouterModifyState extends State<ClouterModify> {
     ImageFunctions imageFunctions = ImageFunctions();
 
     var imageFiles = await imageFunctions
-        .pickedImageToMultiPartFiles(imageController.images);
+        .pickedImagesToMultiPartFiles(imageController.images);
 
     var response = await authorizedApi.dioPutRequest(
       '/member-service/v1/clouters/${userController.memberId}',
