@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +36,8 @@ public class AdvertisementFacade {
     private final SearchCampaignListProcessor searchCampaignListProcessor;
     private final GetCampaignListByIdProcessor getCampaignListByIdProcessor;
 
-    public Campaign create(CreateCampaignCommand command) {
-        return createCampaignProcessor.execute(command);
+    public Campaign create(CreateCampaignCommand command, List<MultipartFile> files, MultipartFile sign)throws Exception {
+        return createCampaignProcessor.execute(command, files, sign);
     }
 
     public Campaign update(Long advertisementId, UpdateCampaignCommand command) {
