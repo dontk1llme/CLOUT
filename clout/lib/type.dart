@@ -919,3 +919,65 @@ class ClouterChannelList {
     return data;
   }
 }
+
+class ApplyContent {
+  int? applyId;
+  int? campaignId;
+  String? applyStatus;
+  String? adCategory;
+  String? title;
+  int? price;
+  int? numberOfSelectedMembers;
+  int? numberOfRecruiter;
+  int? numberOfApplicants;
+  String? companyName;
+  int? advertiserAvgStar;
+  List<String>? adPlatformList;
+
+  ApplyContent({
+    this.applyId,
+    this.campaignId,
+    this.applyStatus,
+    this.adCategory,
+    this.title,
+    this.price,
+    this.numberOfSelectedMembers,
+    this.numberOfRecruiter,
+    this.numberOfApplicants,
+    this.companyName,
+    this.advertiserAvgStar,
+    this.adPlatformList,
+  });
+
+  ApplyContent.fromJson(Map<String, dynamic> json) {
+    applyId = json['applyId'];
+    campaignId = json['campaignId'];
+    applyStatus = json['applyStatus'];
+    adCategory = json['adCategory'];
+    title = json['title'];
+    price = json['price'];
+    numberOfSelectedMembers = json['numberOfSelectedMembers'];
+    numberOfRecruiter = json['numberOfRecruiter'];
+    numberOfApplicants = json['numberOfApplicants'];
+    companyName = json['companyName'];
+    advertiserAvgStar = json['advertiserAvgStar'];
+    adPlatformList = json['adPlatformList'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['applyId'] = applyId;
+    data['campaignId'] = campaignId;
+    data['applyStatus'] = applyStatus;
+    data['adCategory'] = adCategory;
+    data['title'] = title;
+    data['price'] = price;
+    data['numberOfSelectedMembers'] = numberOfSelectedMembers;
+    data['numberOfRecruiter'] = numberOfRecruiter;
+    data['numberOfApplicants'] = numberOfApplicants;
+    data['companyName'] = companyName;
+    data['advertiserAvgStar'] = advertiserAvgStar;
+    data['adPlatformList'] = adPlatformList;
+    return data;
+  }
+}
