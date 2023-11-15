@@ -6,6 +6,7 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 class SmallContract extends StatefulWidget {
+  final int contractId;
   final String name;
   final String pay;
   final bool progress;
@@ -13,6 +14,7 @@ class SmallContract extends StatefulWidget {
   const SmallContract({
     super.key,
     required this.name,
+    required this.contractId,
     required this.pay,
     required this.progress,
   });
@@ -59,11 +61,13 @@ class _SmallContractState extends State<SmallContract> {
             )
           ],
         ),
-        widget.progress == false
-            ? userController.memberType == -1
-                ? ContractButton(title: '계약서 작성')
-                : ContractButton(title: '계약서 대기')
-            : ContractButton(title: '계약서 보기'),
+        Column(
+          children: [
+            widget.progress == false ? Text('계약 대기중') : Text('계약 확정'),
+            SizedBox(height: 10),
+            ContractButton(title: '계약서 보기', contractId: widget.contractId),
+          ],
+        ),
       ]),
     );
   }
