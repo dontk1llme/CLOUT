@@ -101,6 +101,7 @@ class SelectInfiniteScrollController extends GetxController {
         var selectItemBox = Padding(
           padding: EdgeInsets.all(5),
           child: SelectItemBox(
+            applyId: clouterInfo.applyId,
             clouterId: clouterInfo.clouterId,
             fee: clouterInfo.hopeAdFee,
             nickName: clouterInfo.nickname,
@@ -127,6 +128,8 @@ class SelectInfiniteScrollController extends GetxController {
       update();
     }
   }
+
+  
 
   reload() async {
     isLoading = true;
