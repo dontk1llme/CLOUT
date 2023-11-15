@@ -20,7 +20,6 @@ class ClouterPointList extends StatefulWidget {
 }
 
 class _ClouterPointListState extends State<ClouterPointList> {
-
   final userController = Get.find<UserController>();
 
   @override
@@ -72,7 +71,6 @@ class _ClouterPointListState extends State<ClouterPointList> {
 
     return pointItemBoxes;
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -101,9 +99,9 @@ class _ClouterPointListState extends State<ClouterPointList> {
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 19)),
                 ),
-                ActionChoiceExample(
-                    labels: ['전체 내역', '적립 내역', '출금 내역'], chipCount: 3),
-                    
+                // ActionChoiceExample(
+                //     labels: ['전체 내역', '적립 내역', '출금 내역'], chipCount: 3),
+
                 Divider(
                   color: style.colors['lightgray'],
                   thickness: 1,
