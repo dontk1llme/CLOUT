@@ -250,7 +250,9 @@ class _HomeState extends State<Home> {
             header: 0,
           ),
         ),
-        body: BouncingListview(
+        body: SingleChildScrollView(
+          controller: controller.scrollController.value,
+          physics: BouncingScrollPhysics(),
           child: Column(
             children: [
               Container(
@@ -268,6 +270,7 @@ class _HomeState extends State<Home> {
                 child: Column(
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         MenuTitle(text: '인기있는 클라우터', destination: 1),
                         controller.isLoading
@@ -325,6 +328,7 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         MenuTitle(text: '인기있는 캠페인', destination: 2),
                         controller.isLoading
@@ -359,6 +363,16 @@ class _HomeState extends State<Home> {
                                           numberOfRecruiter:
                                               campaignInfo.numberOfRecruiter ??
                                                   0,
+                                          firstImg: campaignInfo
+                                                          .imageList !=
+                                                      null &&
+                                                  campaignInfo.imageList!
+                                                      .isNotEmpty
+                                              ? ImageResponse.fromJson(
+                                                      campaignInfo
+                                                          .imageList?[0])
+                                                  .path
+                                              : '',
                                           adPlatformList:
                                               campaignInfo.adPlatformList!
                                                   .map((e) => Sns2(
@@ -380,7 +394,7 @@ class _HomeState extends State<Home> {
               ),
               userController.memberType == 0
                   ? SizedBox(height: 150)
-                  : Container(),
+                  : SizedBox(height: 50),
             ],
           ),
         ),
