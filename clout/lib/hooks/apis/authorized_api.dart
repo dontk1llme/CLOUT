@@ -1,15 +1,15 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:get/get.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart' hide MultipartFile, FormData;
 
 String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
 class AuthorizedApi {
   final userController = Get.find<UserController>();
-
   getRequest(apiUrl, parameter) async {
     var url = Uri.parse('$baseUrl$apiUrl$parameter');
     print(url);
@@ -157,5 +157,29 @@ class AuthorizedApi {
     } else {
       return returnVal;
     }
+  }
+
+  dioPutRequest(apiUrl, parameter, List<MultipartFile> multiPartFiles) async {
+    var dio = Dio();
+    dio.options.contentType = 'multipart/form-data';
+    // dio.options.contentType = 'application/json';
+    dio.options.maxRedirects.isFinite;
+
+    FormData formData = FormData.fromMap({
+      'createClrRequest': MultipartFile.fromString(
+          jsonEncode(parameter.toJson()),
+          contentType: MediaType.parse('application/json')),
+      'files': multiPartFiles
+    });
+
+    print(jsonEncode(parameter));
+    print(multiPartFiles);
+
+    var response = await dio.put('$baseUrl$apiUrl', data: formData);
+    print('여기 바로 아래 뭐가 오나?');
+    print(response.statusCode);
+    print(response.statusMessage);
+    print(response.data);
+    return response;
   }
 }
