@@ -3,29 +3,29 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // controllers
-import 'package:clout/providers/search_combination_controller.dart';
+import 'package:clout/providers/clouter_search_combination_controller.dart';
 
-class CategoryList extends StatefulWidget {
-  CategoryList({super.key});
+class ClouterCategoryList extends StatefulWidget {
+  ClouterCategoryList({super.key});
 
   @override
-  State<CategoryList> createState() => _CategoryListState();
+  State<ClouterCategoryList> createState() => _ClouterCategoryListState();
 }
 
-class _CategoryListState extends State<CategoryList> {
-  final searchCombinationController =
-      Get.put(SearchCombinationController(), tag: 'campaignList');
+class _ClouterCategoryListState extends State<ClouterCategoryList> {
+  final clouterSearchCombinationController =
+      Get.put(ClouterSearchCombinationController(), tag: 'clouterList');
 
   @override
   build(BuildContext context) {
-    final searchCombinationController =
-        Get.find<SearchCombinationController>(tag: 'campaignList');
+    final clouterSearchCombinationController =
+        Get.find<ClouterSearchCombinationController>(tag: 'clouterList');
 
     double buttonSize = 50;
-    searchCombinationController.setControllerTag('campaignList');
-    searchCombinationController.runOtherControllers();
-    return GetBuilder<SearchCombinationController>(
-        tag: 'campaignList',
+    clouterSearchCombinationController.setControllerTag('clouterList');
+    clouterSearchCombinationController.runOtherControllers();
+    return GetBuilder<ClouterSearchCombinationController>(
+        tag: 'clouterList',
         builder: (controller) => Container(
               width: double.infinity,
               // height: 225,
@@ -43,19 +43,19 @@ class _CategoryListState extends State<CategoryList> {
     final uniqueIndexes = List.generate(
         lastIndex - startIndex + 1, (index) => startIndex + index);
 
-    final searchCombinationController =
-        Get.find<SearchCombinationController>(tag: 'campaignList');
+    final clouterSearchCombinationController =
+        Get.find<ClouterSearchCombinationController>(tag: 'clouterList');
 
     return uniqueIndexes.map((index) {
       return Column(
         children: [
           _categoryButton(
             context,
-            searchCombinationController.categoryData[index]['path']!,
+            clouterSearchCombinationController.categoryData[index]['path']!,
             buttonSize,
             index,
           ),
-          Text(searchCombinationController.categoryData[index]['name']!,
+          Text(clouterSearchCombinationController.categoryData[index]['name']!,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
               )),
@@ -68,28 +68,29 @@ class _CategoryListState extends State<CategoryList> {
       BuildContext context, String imagePath, double buttonSize, int index) {
     final double screenWidth = MediaQuery.of(context).size.width;
 
-    final searchCombinationController =
-        Get.find<SearchCombinationController>(tag: 'campaignList');
+    final clouterSearchCombinationController =
+        Get.find<ClouterSearchCombinationController>(tag: 'clouterList');
 
     bool isSelected =
-        searchCombinationController.selectedCategories.contains(index);
+        clouterSearchCombinationController.selectedCategories.contains(index);
 
     return InkWell(
       onTap: () {
         setState(() {
           if (index == 0) {
-            searchCombinationController.selectedCategories.clear();
-            searchCombinationController.selectedCategories.add(0);
+            clouterSearchCombinationController.selectedCategories.clear();
+            clouterSearchCombinationController.selectedCategories.add(0);
           } else {
-            searchCombinationController.selectedCategories.remove(0);
-            if (searchCombinationController.selectedCategories
+            clouterSearchCombinationController.selectedCategories.remove(0);
+            if (clouterSearchCombinationController.selectedCategories
                 .contains(index)) {
-              searchCombinationController.selectedCategories.remove(index);
+              clouterSearchCombinationController.selectedCategories
+                  .remove(index);
             } else {
-              searchCombinationController.selectedCategories.add(index);
+              clouterSearchCombinationController.selectedCategories.add(index);
             }
           }
-          searchCombinationController.fetchSearchResults();
+          clouterSearchCombinationController.fetchSearchResults();
         });
       },
       child: Padding(
