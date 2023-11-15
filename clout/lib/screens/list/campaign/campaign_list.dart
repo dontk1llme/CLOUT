@@ -11,7 +11,6 @@ import 'package:clout/widgets/input/search_bar.dart';
 import 'package:clout/widgets/header/header.dart';
 
 // utilities
-import 'package:clout/providers/search_detail_controller.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 
 // controllers
@@ -49,7 +48,9 @@ class CampaignList extends StatelessWidget {
               MySearchBar(
                 controllerTag: 'campaignList',
               ),
-              CategoryList(),
+              CategoryList(
+                tagName: 'campaignList',
+              ),
               SearchDetailButton(),
               Padding(
                 padding: EdgeInsets.only(left: 20),
