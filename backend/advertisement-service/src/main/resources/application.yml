@@ -2,6 +2,8 @@ server:
   port: 8889
 
 spring:
+  config:
+    import: secret/application-secret.yml
   application:
     name: advertisement-service
   datasource:
