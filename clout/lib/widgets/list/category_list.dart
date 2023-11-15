@@ -1,30 +1,30 @@
-import 'package:clout/providers/search_combination_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 
 // controllers
-
-// utilties
+import 'package:clout/providers/search_combination_controller.dart';
 
 class CategoryList extends StatefulWidget {
-  CategoryList({super.key});
+  CategoryList({super.key, required this.tagName});
+
+  final String tagName;
 
   @override
   State<CategoryList> createState() => _CategoryListState();
 }
 
 class _CategoryListState extends State<CategoryList> {
-  final searchCombinationController =
-      Get.put(SearchCombinationController(), tag: 'campaignList');
-
   @override
   build(BuildContext context) {
-    double buttonSize = 50; // 이미지 버튼 크기를 화면 너비에 따라 조정
-    searchCombinationController.setControllerTag('campaignList');
+    final searchCombinationController =
+        Get.find<SearchCombinationController>(tag: '${widget.tagName}');
+
+    double buttonSize = 50;
+    searchCombinationController.setControllerTag(widget.tagName);
     searchCombinationController.runOtherControllers();
     return GetBuilder<SearchCombinationController>(
-        tag: 'campaignList',
+        tag: widget.tagName,
         builder: (controller) => Container(
               width: double.infinity,
               // height: 225,
@@ -41,6 +41,9 @@ class _CategoryListState extends State<CategoryList> {
       BuildContext context, int startIndex, int lastIndex, double buttonSize) {
     final uniqueIndexes = List.generate(
         lastIndex - startIndex + 1, (index) => startIndex + index);
+
+    final searchCombinationController =
+        Get.find<SearchCombinationController>(tag: '${widget.tagName}');
 
     return uniqueIndexes.map((index) {
       return Column(
@@ -63,6 +66,9 @@ class _CategoryListState extends State<CategoryList> {
   Widget _categoryButton(
       BuildContext context, String imagePath, double buttonSize, int index) {
     final double screenWidth = MediaQuery.of(context).size.width;
+
+    final searchCombinationController =
+        Get.find<SearchCombinationController>(tag: '${widget.tagName}');
 
     bool isSelected =
         searchCombinationController.selectedCategories.contains(index);
