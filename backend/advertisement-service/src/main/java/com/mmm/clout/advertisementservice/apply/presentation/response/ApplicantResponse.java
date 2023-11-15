@@ -41,6 +41,9 @@ public class ApplicantResponse {
     @Schema(description = "클라우터 sns 플랫폼 채널 리스트")
     private List<ChannelResponse> clouterChannelList;
 
+    @Schema(description = "클라우터 id")
+    private Long clouterId;
+
     public static List<ApplicantResponse> from(List<ApplicantListByCampaignReader> applicantList) {
         return applicantList.stream().map(
             a -> new ApplicantResponse(
@@ -52,7 +55,8 @@ public class ApplicantResponse {
                 a.getApplyStatus(),
                 a.getNickname(),
                 a.getClouterAvgStar(),
-                ChannelResponse.from(a.getClouterChannelList())
+                ChannelResponse.from(a.getClouterChannelList()),
+                a.getClouterId()
             )
         ).collect(Collectors.toList());
     }
