@@ -1,12 +1,15 @@
 package com.mmm.clout.advertisementservice.apply.presentation.response;
 
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
+import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplyListByClouterReader;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -44,22 +47,31 @@ public class GetApplyByStatusResponse {
     private String companyName;
 
     @Schema(description = "광고주 평균 별점")
-    private Integer advertiserAvgStar;
+    private Long advertiserAvgStar;
+
+    @Schema(description = "캠페인 아이디")
+    private Long campaignId;
+
+    @Schema(description = "캠페인 희망 플랫폼 리스트")
+    private List<AdPlatform> adPlatformList;
+
 
     public static GetApplyByStatusResponse from(ApplyListByClouterReader reader) {
         Apply apply = reader.getApply();
         Campaign campaign = apply.getCampaign();
         return new GetApplyByStatusResponse(
-            apply.getId(),
-            apply.getApplyStatus(),
-            campaign.getAdCategory(),
-            campaign.getTitle(),
-            campaign.getPrice(),
-            campaign.getNumberOfSelectedMembers(),
-            campaign.getNumberOfRecruiter(),
-            campaign.getNumberOfApplicants(),
-            reader.getCompanyName(),
-            reader.getAdvertiserAvgStar()
+                apply.getId(),
+                apply.getApplyStatus(),
+                campaign.getAdCategory(),
+                campaign.getTitle(),
+                campaign.getPrice(),
+                campaign.getNumberOfSelectedMembers(),
+                campaign.getNumberOfRecruiter(),
+                campaign.getNumberOfApplicants(),
+                reader.getCompanyName(),
+                reader.getAdvertiserAvgStar(),
+                reader.getCampaignId(),
+                reader.getAdPlatformList()
         );
     }
 }
