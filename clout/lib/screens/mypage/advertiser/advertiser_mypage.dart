@@ -94,25 +94,27 @@ class _AdvertiserMyPageState extends State<AdvertiserMyPage> {
               MyPageList(
                   title: '내 계약서',
                   btnTitle: '더보기',
-                  onButtonPressed: () => Get.to(ContractList())), //
+                  onButtonPressed: () => Get.to(() => ContractList())), //
               Divider(
                   thickness: 1, height: 1, color: style.colors['lightgray']),
               MyPageList(
                   title: '내 캠페인',
                   btnTitle: '더보기',
-                  onButtonPressed: () => Get.to(AdvertiserMycampaign())), //
+                  onButtonPressed: () =>
+                      Get.to(() => AdvertiserMycampaign())), //
               Divider(
                   thickness: 1, height: 1, color: style.colors['lightgray']),
               MyPageList(
                   title: '관심있는 클라우터',
                   btnTitle: '더보기',
-                  onButtonPressed: () => Get.to(AdvertiserLikedclouters())),
+                  onButtonPressed: () =>
+                      Get.to(() => AdvertiserLikedclouters())),
               Divider(
                   thickness: 1, height: 1, color: style.colors['lightgray']),
               MyPageList(
                   title: '포인트 관리',
                   btnTitle: '더보기',
-                  onButtonPressed: () => Get.to(AdvertiserPointList())),
+                  onButtonPressed: () => Get.to(() => AdvertiserPointList())),
               Divider(
                   thickness: 1, height: 1, color: style.colors['lightgray']),
             ]),

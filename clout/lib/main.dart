@@ -37,6 +37,7 @@ import 'package:clout/screens/apply_campaign/apply_campaign.dart';
 import 'package:clout/screens/detail/clouter/clouter_detail.dart';
 import 'package:clout/screens/point/add/add_complete.dart';
 import 'package:clout/screens/review_register/review_register.dart';
+import 'package:clout/screens/clouter_select/clouter_select.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("백그라운드 메시지 처리.. ${message.notification!.body!}");
@@ -164,6 +165,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/addsecond', page: () => AddSecond()),
         GetPage(name: '/addcomplete', page: () => AddComplete()),
         GetPage(name: '/applycampaign', page: () => ApplyCampaign()),
+        GetPage(name: '/clouterselect', page: () => ClouterSelect()),
       ],
     );
   }
