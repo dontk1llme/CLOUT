@@ -19,10 +19,7 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
           crossAxisCount: 2,
         ),
         itemBuilder: (_, index) {
-          print(
-              '💥 데이터 개수 : ${controller.data.length} 👉 campaign_infinite_scroll_body.dart');
           final campaign1 = controller.data[index];
-
           return campaign1;
         },
         itemCount: controller.data.length,
