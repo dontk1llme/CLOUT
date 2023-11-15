@@ -1,5 +1,7 @@
+import 'package:clout/widgets/refreshable_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:clout/style.dart' as style;
 
 // widgets
 import 'package:clout/widgets/header/header.dart';
@@ -23,7 +25,9 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
     infiniteController.setEndPoint(
         '/advertisement-service/v1/applies/clouters?clouterId=${userController.memberId}&page=${infiniteController.currentPage}&size=${10}');
     infiniteController.setParameter('&type=WAITING'); // 💥 typeEnum..? 추가하기
-    infiniteController.getData();
+    final screenHeight = MediaQuery.of(context).size.height;
+    infiniteController.reload();
+    // infiniteController.getData();
     return GetBuilder<InfiniteScrollController>(
       tag: 'clouterMyCampaign',
       builder: (controller) => Scaffold(
@@ -35,23 +39,27 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
             headerTitle: '신청한 캠페인',
           ),
         ),
-        body: SingleChildScrollView(
+        body: RefreshablePage(
           controller: controller.scrollController.value,
-          physics: BouncingScrollPhysics(),
           child: Column(
             children: [
               CampaignInfiniteScrollBody(controllerTag: 'clouterMyCampaign'),
-              infiniteController.hasMore
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 40),
-                      child: SizedBox(
-                        height: 50,
-                        child: LoadingWidget(),
-                      ),
+              infiniteController.isLoading
+                  ? Column(
+                      children: [
+                        SizedBox(height: screenHeight / 3),
+                        SizedBox(
+                            height: 70, child: Center(child: LoadingWidget())),
+                        SizedBox(height: 20),
+                        Text(
+                          '신청한 캠페인을 불러오는 중입니다.\n잠시만 기다려 주세요.',
+                          style: style.textTheme.headlineLarge
+                              ?.copyWith(fontWeight: FontWeight.w400),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
                     )
-                  : Container(
-                      height: 700,
-                    )
+                  : Container()
             ],
           ),
         ),
