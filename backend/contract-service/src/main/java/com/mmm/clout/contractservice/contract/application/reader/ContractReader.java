@@ -37,6 +37,8 @@ public class ContractReader {
     @Schema(description = "조회된 계약 상태")
     private State state;
 
+    private String path;
+
     public ContractReader(Contract contract) {
         this.contractId = contract.getId();
         this.name = contract.getName();
@@ -47,6 +49,7 @@ public class ContractReader {
         this.clouterInfo = new ClouterInfoReader(contract.getClouterInfo());
         this.advertiserInfo = new AdvertiserInfoReader(contract.getAdvertiserInfo());
         this.state = contract.getState();
+        this.path = contract.getPath();
     }
 
     public static ContractReader from(Contract contract) {
@@ -59,7 +62,8 @@ public class ContractReader {
             contract.getContents(),
             new ClouterInfoReader(contract.getClouterInfo()),
             new AdvertiserInfoReader(contract.getAdvertiserInfo()),
-            contract.getState()
+            contract.getState(),
+                contract.getPath()
         );
     }
 
