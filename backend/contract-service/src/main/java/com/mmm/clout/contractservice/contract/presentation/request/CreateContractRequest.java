@@ -40,6 +40,9 @@ public class CreateContractRequest {
     @NotNull
     private Long clouterId;
 
+    @Schema(description = "광고주 사인")
+    @NotNull
+    private String path;
 
     public CreateContractCommand toCommand() {
            return new CreateContractCommand(
@@ -49,7 +52,8 @@ public class CreateContractRequest {
                    this.contractExpiration,
                    this.contents,
                    this.clouterId,
-                   this.advertiserId
+                   this.advertiserId,
+                   this.path
            );
     }
 }

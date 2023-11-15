@@ -10,12 +10,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Tag(name = "계약 CRUD", description = "계약 회원가입, 수정, 조회를 제공하는 api")
 public interface ContractControllerDocs {
@@ -55,8 +54,9 @@ public interface ContractControllerDocs {
             )
     )
     public ResponseEntity<UpdateStateContractResponse> updateState(
-            @PathVariable("contractId") Long id
-    );
+            @PathVariable("contractId") Long id,
+            @RequestPart(value = "files", required = false) MultipartFile file
+    ) throws Exception;
 
     @Operation(summary = "계약 취소/삭제, 광고주가 계약 클라우터 선택 취소",
             responses =
