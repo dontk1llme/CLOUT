@@ -43,8 +43,6 @@ class InfiniteScrollController extends GetxController {
   setCurrentPage(input) {
     final userController = Get.find<UserController>();
     currentPage = input;
-    parameter =
-        '?advertiserId=${userController.memberId}&page=${currentPage}&size=${10}';
     update();
   }
 
@@ -94,31 +92,62 @@ class InfiniteScrollController extends GetxController {
     var appendData = [];
 
     if (contentList.isNotEmpty) {
+      print('여기까지 옴3');
       for (var item in contentList) {
-        var campaignData = CampaignInfo.fromJson(item['campaign']);
-        var advertiserData = AdvertiserInfo.fromJson(item['advertiserInfo']);
-        var imageList = item['imageList'];
-        var campaignItemBox = Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: CampaignItemBox(
-            campaignId: campaignData.campaignId ?? 0,
-            adCategory: AdCategoryTranslator.translateAdCategory(
-                campaignData.adCategory!),
-            title: campaignData.title ?? "제목없음",
-            price: campaignData.price ?? 0,
-            companyInfo: advertiserData.companyInfo!,
-            numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
-            numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
-            firstImg: ImageResponse.fromJson(imageList[0]).path,
-            adPlatformList: campaignData.adPlatformList
-                    ?.map((platform) => Sns2(platform: platform))
-                    .toList() ??
-                [],
-            advertiserInfo: advertiserData,
-            // firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
-          ),
-        );
-        appendData.add(campaignItemBox);
+        print('여기까지 옴4');
+        print(contentList[0]);
+        if (item.containsKey('applyId')) {
+          var campaignData = ApplyContent.fromJson(item);
+          // var imageList = item['imageList'];
+          print('🌟 계약으로 오나..?');
+
+          var campaignItemBox = Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: CampaignItemBox(
+              applyId: campaignData.applyId,
+              campaignId: campaignData.campaignId,
+              adCategory: AdCategoryTranslator.translateAdCategory(
+                  campaignData.adCategory!),
+              title: campaignData.title,
+              price: campaignData.price,
+              companyName: campaignData.companyName!,
+              numberOfSelectedMembers: campaignData.numberOfSelectedMembers,
+              numberOfRecruiter: campaignData.numberOfRecruiter,
+              // firstImg: ImageResponse.fromJson(imageList[0]).path,
+              advertiserAvgStar: campaignData.advertiserAvgStar,
+              adPlatformList: campaignData.adPlatformList
+                  ?.map((platform) => Sns2(platform: platform))
+                  .toList(),
+            ),
+          );
+          appendData.add(campaignItemBox);
+        } else {
+          var campaignData = CampaignInfo.fromJson(item['campaign']);
+          var advertiserData = AdvertiserInfo.fromJson(item['advertiserInfo']);
+          var imageList = item['imageList'];
+          print('❌ 캠페인으로 가나..?');
+          var campaignItemBox = Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: CampaignItemBox(
+              campaignId: campaignData.campaignId ?? 0,
+              adCategory: AdCategoryTranslator.translateAdCategory(
+                  campaignData.adCategory!),
+              title: campaignData.title ?? "제목없음",
+              price: campaignData.price ?? 0,
+              companyInfo: advertiserData.companyInfo!,
+              numberOfSelectedMembers:
+                  campaignData.numberOfSelectedMembers ?? 0,
+              numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
+              firstImg: ImageResponse.fromJson(imageList[0]).path,
+              adPlatformList: campaignData.adPlatformList
+                      ?.map((platform) => Sns2(platform: platform))
+                      .toList() ??
+                  [],
+              advertiserInfo: advertiserData,
+            ),
+          );
+          appendData.add(campaignItemBox);
+        }
       }
       data.addAll(appendData);
 
