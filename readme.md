@@ -1,5 +1,5 @@
 # CLOUT
-<img src="/readme/Clout_Logo.png" width="100%" height="300px"/>
+<img src="/readme/Clout_Logo.png" height="300px"/>
 
 
 ## 📖목차
