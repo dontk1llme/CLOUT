@@ -66,7 +66,6 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     /**
      * 캠페인 수정
      */
-
     @PutMapping("/{advertisementId}")
     public ResponseEntity<UpdateCampaignResponse> updateCampaign(
         @PathVariable Long advertisementId,
@@ -93,7 +92,6 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     /**
      * 캠페인 캠페인 상세 조회 (광고주 정보 포함)
      */
-
     @GetMapping("/{advertisementId}")
     public ResponseEntity<GetCampaignAndAdvertiserResponse> getCampaignDetails(
         @PathVariable Long advertisementId
@@ -131,10 +129,16 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         Page<Campaign> campaignList = campaigns.getCampaignList();
         AdvertiserInfo advertiserInfo = campaigns.getAdvertiserInfo();
 
+
         CustomPageResponse<CampaignReaderResponse> result = new CustomPageResponse<>(
             campaignList.stream().map(
                 campaign -> CampaignReaderResponse.from(
-                    new CampaignReader(campaign, advertiserInfo))
+                    new CampaignReader(campaign,
+                        advertiserInfo,
+                        campaigns.getImageMap().get(campaign.getId()),
+                        campaigns.getSignMap().get(campaign.getId())
+                    )
+                )
             ).collect(Collectors.toList()),
             campaigns.getCampaignList().getNumber(),
             campaigns.getCampaignList().getSize(),

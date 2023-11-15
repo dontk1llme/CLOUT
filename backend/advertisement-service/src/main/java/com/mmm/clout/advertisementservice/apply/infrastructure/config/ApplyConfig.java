@@ -11,6 +11,7 @@ import com.mmm.clout.advertisementservice.apply.application.SelectApplyForContra
 import com.mmm.clout.advertisementservice.common.msa.provider.ContractProvider;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
+import com.mmm.clout.advertisementservice.image.domain.repository.AdvertiseSignRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -74,10 +75,11 @@ public class ApplyConfig {
     @Bean
     SelectApplyForContractProcessor selectApplyForContractProcessor(
         ApplyRepository applyRepository,
-        ContractProvider contractProvider
+        ContractProvider contractProvider,
+        AdvertiseSignRepository advertiseSignRepository
     ) {
         return new SelectApplyForContractProcessor(
-            applyRepository, contractProvider
+            applyRepository, contractProvider, advertiseSignRepository
         );
     }
 
