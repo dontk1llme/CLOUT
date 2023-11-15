@@ -77,7 +77,7 @@ public class ContractController implements ContractControllerDocs {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/cloter")
+    @GetMapping("/clouter")
     public ResponseEntity<CustomPageResponse<ContractReader>> selectClouter(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
