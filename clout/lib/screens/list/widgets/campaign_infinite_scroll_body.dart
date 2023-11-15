@@ -14,7 +14,7 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
       tag: controllerTag,
       builder: (controller) => MasonryGridView.builder(
         shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
         ),
