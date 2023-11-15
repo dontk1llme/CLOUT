@@ -159,8 +159,6 @@ class _SelectItemBoxState extends State<SelectItemBox> {
 
   _showContent() {
     getData() async {
-      await Future.delayed(Duration(seconds: 2));
-
       final AuthorizedApi authorizedApi = AuthorizedApi();
       var response = await authorizedApi.getRequest(
           '/advertisement-service/v1/applies/', '${widget.applyId}/msg');
@@ -168,6 +166,8 @@ class _SelectItemBoxState extends State<SelectItemBox> {
       var jsonData = jsonDecode(response['body']);
       message = jsonData['message'];
       applyId = jsonData['applyId'];
+
+      await Future.delayed(Duration(seconds: 2));
     }
 
     initState() {

@@ -15,8 +15,8 @@ class UpdateButton extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: () {
         userController.memberType == -1
-            ? Get.to(ClouterModify())
-            : Get.to(AdvertiserModify());
+            ? Get.to(() => ClouterModify())
+            : Get.to(() => AdvertiserModify());
       }, //클라우터
       icon: Icon(
         Icons.manage_accounts,

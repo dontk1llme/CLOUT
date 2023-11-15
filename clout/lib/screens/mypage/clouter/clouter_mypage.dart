@@ -140,7 +140,8 @@ class _ClouterMyPageState extends State<ClouterMyPage> {
                       MyPageList(
                           title: '신청한 캠페인',
                           btnTitle: '더보기',
-                          onButtonPressed: () => Get.to(ClouterMyCampaign())),
+                          onButtonPressed: () =>
+                              Get.to(() => ClouterMyCampaign())),
                       Divider(
                           thickness: 1,
                           height: 1,
@@ -149,7 +150,7 @@ class _ClouterMyPageState extends State<ClouterMyPage> {
                           title: '관심있는 캠페인',
                           btnTitle: '더보기',
                           onButtonPressed: () =>
-                              Get.to(ClouterLikedCampaign())),
+                              Get.to(() => ClouterLikedCampaign())),
                       Divider(
                           thickness: 1,
                           height: 1,
@@ -157,7 +158,8 @@ class _ClouterMyPageState extends State<ClouterMyPage> {
                       MyPageList(
                           title: '포인트 관리',
                           btnTitle: '더보기',
-                          onButtonPressed: () => Get.to(ClouterPointList())),
+                          onButtonPressed: () =>
+                              Get.to(() => ClouterPointList())),
                       Divider(
                           thickness: 1,
                           height: 1,
