@@ -1,3 +1,5 @@
+import 'package:clout/providers/scroll_controllers/select_infinite_scroll_controller.dart';
+import 'package:clout/screens/list/widgets/select_infinite_scroll_body.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -7,52 +9,59 @@ import 'package:clout/screens/detail/clouter/widgets/medium_text.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/screens/clouter_select/widgets/select_item_box.dart';
+import 'package:get/get.dart';
 
 class ClouterSelect extends StatelessWidget {
-  const ClouterSelect({super.key});
+  ClouterSelect({super.key});
+
+  final selectInfiniteController =
+      Get.put(SelectInfiniteScrollController(), tag: 'clouterSelect');
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
-        child: Header(
-          header: 4,
-          headerTitle: '클라우터 채택',
+    /////////////////////////////////////////////////////
+    selectInfiniteController.setParameter(
+        '?advertisementId=${selectInfiniteController.campaignId}&page=${selectInfiniteController.currentPage}&size=${10}');
+    /////////////////////////////////////////////////////
+
+    return GetBuilder<SelectInfiniteScrollController>(
+      tag: 'clouterSelect',
+      builder: (controller) => Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Header(
+            header: 4,
+            headerTitle: '클라우터 채택',
+          ),
         ),
-      ),
-      body: Container(
-        color: Colors.white,
-        width: double.infinity,
-        height: double.infinity,
-        child: BouncingListview(
-          child: FractionallySizedBox(
-              widthFactor: 0.9,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(Icons.filter_list, size: 20),
-                      Text(' 정렬'),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 110),
-                    child: Column(children: [
-                      SelectItemBox(),
-                      SelectItemBox(),
-                      SelectItemBox(),
-                      SelectItemBox(),
-                      SelectItemBox(),
-                      SelectItemBox(),
-                    ]),
-                  ),
-                ],
-              )),
+        body: Container(
+          color: Colors.white,
+          width: double.infinity,
+          height: double.infinity,
+          child: BouncingListview(
+            child: FractionallySizedBox(
+                widthFactor: 0.9,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(Icons.filter_list, size: 20),
+                        Text(' 정렬'),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 110),
+                      child: Column(children: [
+                        SelectInfiniteScrollBody(
+                            controllerTag: 'clouterSelect'),
+                      ]),
+                    ),
+                  ],
+                )),
+          ),
         ),
-      ),
-      bottomSheet: Container(
+        bottomSheet: Container(
           height: 110,
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           decoration: BoxDecoration(
@@ -104,7 +113,9 @@ class ClouterSelect extends StatelessWidget {
                 ),
               )
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

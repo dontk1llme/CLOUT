@@ -11,21 +11,21 @@ import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
 import 'package:clout/widgets/sns/sns4.dart';
 
-class Clouter {
-  int clouterId = 1;
-  String nickName = '모카우유';
-  int starRating = 20;
-  int fee = 500000;
-  List<String> selectedPlatform = [
-    "YOUTUBE",
-    "INSTAGRAM",
-    "TIKTOK",
-  ];
-  String firstImg = 'assets/images/clouterImage.jpg';
-}
-
 class SelectItemBox extends StatefulWidget {
-  const SelectItemBox({super.key});
+  final int? clouterId;
+  final String? nickName;
+  final int? starRating;
+  final int? fee;
+  final List<String>? selectedPlatform;
+  // String? firstImg; // 💥 사진 추가
+
+  const SelectItemBox(
+      {super.key,
+      this.clouterId,
+      this.nickName,
+      this.starRating,
+      this.fee,
+      this.selectedPlatform});
 
   @override
   State<SelectItemBox> createState() => _SelectItemBoxState();
@@ -34,7 +34,6 @@ class SelectItemBox extends StatefulWidget {
 // 💥 clouter Container 누르면 해당 clouter의 Detail 페이지로 이동시키기
 class _SelectItemBoxState extends State<SelectItemBox> {
   var clouterId = Get.arguments;
-  Clouter clouter = Clouter();
 
   var f = NumberFormat('###,###,###,###');
 
@@ -71,7 +70,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                 children: [
                   ClipOval(
                     child: Image.asset(
-                      clouter.firstImg,
+                      'assets/images/clouterImage.jpg',
                       height: 120,
                       width: 120,
                       fit: BoxFit.cover,
@@ -81,7 +80,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(clouter.nickName,
+                      Text(widget.nickName!,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 22,
@@ -160,7 +159,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                     children: [
                       ClipOval(
                         child: Image.asset(
-                          clouter.firstImg,
+                          'assets/images/clouterImage.jpg',
                           height: 70,
                           width: 70,
                           fit: BoxFit.cover,
@@ -173,7 +172,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                         children: [
                           Row(
                             children: [
-                              Text(clouter.nickName,
+                              Text(widget.nickName!,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22,
@@ -216,7 +215,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                               color: style.colors['darkgray'],
                               fontWeight: FontWeight.w600)),
                       SizedBox(width: 20),
-                      DataTitle(text: '${f.format(clouter.fee)} 포인트'),
+                      DataTitle(text: '${f.format(widget.fee)} 포인트'),
                     ],
                   ),
                   SizedBox(height: 30),
@@ -278,7 +277,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                   Flexible(
                     flex: 1,
                     child: Image.asset(
-                      clouter.firstImg,
+                      'assets/images/clouterImage.jpg',
                       height: 100,
                       width: imageWidth,
                       fit: BoxFit.cover,
@@ -293,11 +292,11 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            DataTitle(text: '${clouter.nickName} '),
+                            DataTitle(text: '${widget.nickName} '),
                             Row(
                               children: [
                                 Icon(Icons.star, color: Colors.amber, size: 20),
-                                Text('${clouter.starRating}'),
+                                Text('${widget.starRating}'),
                               ],
                             ),
                           ],
@@ -309,7 +308,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                             Text('희망 광고비'),
                             Row(
                               children: [
-                                Text('${f.format(clouter.fee)} 포인트',
+                                Text('${f.format(widget.fee)} 포인트',
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: style.colors['main1'],
@@ -320,7 +319,7 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                         ),
                         SizedBox(height: 15),
                         // 여기에 sns 팔로워 수 정보
-                        Sns4(selectedPlatform: clouter.selectedPlatform),
+                        Sns4(selectedPlatform: widget.selectedPlatform!),
                       ],
                     ),
                   )

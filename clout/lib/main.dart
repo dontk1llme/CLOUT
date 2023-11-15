@@ -1,4 +1,5 @@
 // Global
+import 'package:clout/screens/clouter_select/clouter_select.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -164,6 +165,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/addsecond', page: () => AddSecond()),
         GetPage(name: '/addcomplete', page: () => AddComplete()),
         GetPage(name: '/applycampaign', page: () => ApplyCampaign()),
+        GetPage(name: '/clouterselect', page: () => ClouterSelect()),
       ],
     );
   }
