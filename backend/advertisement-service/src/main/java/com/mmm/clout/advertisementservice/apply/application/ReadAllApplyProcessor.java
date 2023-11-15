@@ -1,5 +1,6 @@
 package com.mmm.clout.advertisementservice.apply.application;
 
+import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplyListByClouterReader;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
@@ -33,9 +34,14 @@ public class ReadAllApplyProcessor {
         for (Apply apply: applyList) {
             Long advertiserId = apply.getCampaign().getAdvertiserId();
             AdvertiserInfo info = advertiserInfoProvider.getAdvertiserInfoByMemberId(advertiserId);
+            Campaign campaign = apply.getCampaign().initialize();
             content.add(
                 new ApplyListByClouterReader(
-                    apply, info.getCompanyInfo().getCompanyName(), 0
+                        apply,
+                        info.getCompanyInfo().getCompanyName(),
+                        info.getAdvertiserAvgStar(),
+                        campaign.getId(),
+                        campaign.getAdPlatformList()
                 )
             );
         }
