@@ -56,6 +56,7 @@ class ContractList extends GetView<ContractInfiniteScrollController> {
                           ActionChoiceExample(
                             labels: ['전체 내역', '서명 대기', '진행중', '계약 만료'],
                             chipCount: 4,
+                            onChipSelected: (label) {},
                           ),
                           Column(children: controller.data),
                           controller.hasMore && controller.dataLoading
