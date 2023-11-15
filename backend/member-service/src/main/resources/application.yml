@@ -8,7 +8,7 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   application:
-    name: member-service
+    name: member-service-bookmarktest
   datasource:
     url: jdbc:mariadb://3.38.213.43:3306/memberdb
     driver-class-name: org.mariadb.jdbc.Driver
