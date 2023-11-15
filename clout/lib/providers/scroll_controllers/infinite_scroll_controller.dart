@@ -1,6 +1,3 @@
-import 'package:clout/hooks/apis/authorized_api.dart';
-import 'package:clout/utilities/category_translator.dart';
-import 'package:clout/widgets/sns/sns2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,15 +5,17 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:clout/type.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:clout/hooks/apis/authorized_api.dart';
+
+// utilities
+import 'package:clout/utilities/category_translator.dart';
 
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
 
 // widgets
+import 'package:clout/widgets/sns/sns2.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 class InfiniteScrollController extends GetxController {
   var scrollController = ScrollController().obs;
@@ -39,8 +38,6 @@ class InfiniteScrollController extends GetxController {
     parameter = input;
     update();
   }
-  // 그니까 내가 원하는건 파라미터가 새로 갱신되는게 아니라 뒤에 덧붙여졌으면 좋겠음 ㅜ 먼말인지 아는데
-  // 나도 이 플로우를 알아야 어디서 그걸 끼워넣을지를 판단을 해서 한번 보는 중이얌
 
   setCurrentPage(input) {
     final userController = Get.find<UserController>();
@@ -69,8 +66,6 @@ class InfiniteScrollController extends GetxController {
     hasMore = true;
 
     await Future.delayed(Duration(seconds: 2));
-
-    int offset = data.length;
 
     final AuthorizedApi authorizedApi = AuthorizedApi();
     var response = await authorizedApi.getRequest(endPoint, parameter);
@@ -127,5 +122,4 @@ class InfiniteScrollController extends GetxController {
     _getData();
     update();
   }
-
 }
