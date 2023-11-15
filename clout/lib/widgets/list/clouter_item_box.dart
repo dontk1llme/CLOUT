@@ -23,20 +23,19 @@ class ClouterItemBox extends StatefulWidget {
   final List<String> categoryList;
   final int countOfContract;
   final List<Widget> adPlatformList;
-  // final String firstImg; // 💥 사진 나중에 추가하기
+  final String? firstImg; // 💥 사진 나중에 추가하기
 
-  ClouterItemBox({
-    super.key,
-    required this.clouterId,
-    required this.userId,
-    required this.nickName,
-    required this.avgScore,
-    required this.minCost,
-    required this.categoryList,
-    required this.countOfContract,
-    required this.adPlatformList,
-    // required this.firstImg
-  });
+  ClouterItemBox(
+      {super.key,
+      required this.clouterId,
+      required this.userId,
+      required this.nickName,
+      required this.avgScore,
+      required this.minCost,
+      required this.categoryList,
+      required this.countOfContract,
+      required this.adPlatformList,
+      this.firstImg});
 
   @override
   State<ClouterItemBox> createState() => _ClouterItemBoxState();
@@ -58,6 +57,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     // 'ALL'이 포함되어 있으면 모든 플랫폼에 대한 위젯 리스트 생성
     // List<Widget> adPlatformWidgets;
@@ -87,12 +87,25 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
               alignment: Alignment.topRight,
               children: [
                 // 제일 큰 이미지
-                Image.asset(
-                  'assets/images/clouterImage.jpg',
-                  width: screenWidth / 2 - 40,
-                  height: screenWidth / 2 - 65,
-                  fit: BoxFit.cover,
-                ),
+                widget.firstImg != ''
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        child: Image.network(
+                          widget.firstImg!,
+                          width: screenWidth / 2 - 40,
+                          height: screenHeight / 2 - 270,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        child: Image.asset(
+                          'assets/images/blank-profile.png',
+                          width: screenWidth / 2 - 40,
+                          height: screenHeight / 2 - 270,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                 // 이미지에 떠있는 플랫폼 이미지
                 Positioned(
                   bottom: 5,
