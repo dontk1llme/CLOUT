@@ -10,4 +10,5 @@ public interface JpaAdvertiseSignRepository extends JpaRepository<AdvertiseSign,
 
         List<AdvertiseSign> findByCampaign_Id(Long Id);
 
+        List<AdvertiseSign> findByCampaign_IdIn(List<Long> idList);
 }

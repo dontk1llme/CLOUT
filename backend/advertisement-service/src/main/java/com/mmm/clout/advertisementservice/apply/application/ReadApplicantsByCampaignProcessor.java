@@ -22,8 +22,10 @@ public class ReadApplicantsByCampaignProcessor {
     private final MemberProvider clouterProvider;
     @Transactional
     public Page<ApplicantListByCampaignReader> execute(Pageable pageable, Long advertisementId) {
+
         List<Apply> applyList = applyRepository.findApplicantList(advertisementId, pageable);
         JPAQuery<Apply> countQuery = applyRepository.countByAdvertisement(advertisementId);
+
         List<ApplicantListByCampaignReader> content = new ArrayList<>();
         for (Apply apply: applyList) {
             Long applicantId = apply.getApplicant().getApplicantId();
@@ -40,7 +42,8 @@ public class ReadApplicantsByCampaignProcessor {
                     apply.getApplyStatus().toString(),
                     info.getNickName(),
                     info.getAvgScore(),
-                    info.getChannelList()
+                    info.getChannelList(),
+                    apply.getApplicant().getApplicantId()
                 )
             );
         }
