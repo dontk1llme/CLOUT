@@ -20,7 +20,7 @@ class ClouterItemBox extends StatefulWidget {
   final String nickName;
   final int avgScore;
   final int minCost;
-  final List<String> categoryList;
+  final List<dynamic> categoryList;
   final int countOfContract;
   final List<Widget> adPlatformList;
   final String? firstImg; // 💥 사진 나중에 추가하기

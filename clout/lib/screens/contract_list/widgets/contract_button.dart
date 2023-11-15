@@ -1,15 +1,21 @@
 // 계약서
 import 'dart:typed_data';
+import 'package:clout/providers/contract_controller.dart';
 import 'package:clout/screens/contract_list/utilities/save_file_mobile.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
 class ContractButton extends StatelessWidget {
-  ContractButton({super.key, required this.title});
+  ContractButton({super.key, required this.title, required this.contractId});
 
   final title;
+  final contractId;
+
+  final contractController = Get.put(ContractController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,10 @@ class ContractButton extends StatelessWidget {
         ),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       ),
-      onPressed: generateContract,
+      onPressed: () async {
+        await contractController.loadContractData(contractId);
+        generateContract();
+      },
       child: Text(title),
     );
   }
@@ -112,7 +121,8 @@ class ContractButton extends StatelessWidget {
             alignment: PdfTextAlignment.center,
             lineAlignment: PdfVerticalAlignment.bottom));
 
-    page.graphics.drawString('<계약 ID>', tableLabelFont,
+    page.graphics.drawString(
+        '<${contractController.contractInfo!.contractId}>', tableLabelFont,
         brush: PdfBrushes.white,
         bounds: Rect.fromLTWH(400, 23, pageSize.width - 400, 33),
         format: PdfStringFormat(
@@ -362,10 +372,12 @@ class ContractButton extends StatelessWidget {
     page.graphics.drawLine(linePen, Offset(0, pageSize.height - 350),
         Offset(pageSize.width, pageSize.height - 350));
 
-    page.graphics.drawString('--계약 날짜--', contentFont,
+    page.graphics.drawString(
+        'ㅡ  ${DateFormat('yyyy.MM.dd').format(DateTime.now())}  ㅡ', contentFont,
         format: PdfStringFormat(alignment: PdfTextAlignment.center),
         bounds: Rect.fromLTWH(0, pageSize.height - 320, pageSize.width, 0));
 
+// 광고주 정보 적는 란
     String advertiserTitle_1 = '[ 광 고 주 ]';
     page.graphics.drawString(advertiserTitle_1, tableLabelFont,
         brush: PdfBrushes.black,
@@ -382,17 +394,34 @@ class ContractButton extends StatelessWidget {
     page.graphics.drawString(advertiserSignature, contentFont,
         brush: PdfBrushes.black,
         bounds: Rect.fromLTWH(
-            350, pageSize.height - 250, pageSize.width - 200, 100),
+            400, pageSize.height - 250, pageSize.width - 200, 100),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
 
-    String ClouterTitle_1 = '[ 수 임 인 ]';
-    page.graphics.drawString(ClouterTitle_1, tableLabelFont,
+    String advertiserContent_2 =
+        '${contractController.contractInfo!.advertiserInfo!.companyName}\n${contractController.contractInfo!.advertiserInfo!.regNum}\n${contractController.contractInfo!.advertiserInfo!.advertiserAddress}\n${contractController.contractInfo!.advertiserInfo!.representativeName}';
+    page.graphics.drawString(advertiserContent_2, contentFont,
+        brush: PdfBrushes.black,
+        bounds: Rect.fromLTWH(
+            120, pageSize.height - 270, pageSize.width - 200, 100),
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
+
+    // 여기에 서명 그려야 함////////////////////////////////
+    String advertiserSignaturePicture = '(광고주 서명)';
+    page.graphics.drawString(advertiserSignaturePicture, contentFont,
+        brush: PdfBrushes.black,
+        bounds: Rect.fromLTWH(
+            400, pageSize.height - 250, pageSize.width - 200, 100),
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
+
+// 수임인 정보 적는 란
+    String clouterTitle_1 = '[ 수 임 인 ]';
+    page.graphics.drawString(clouterTitle_1, tableLabelFont,
         brush: PdfBrushes.black,
         bounds:
             Rect.fromLTWH(70, pageSize.height - 210, pageSize.width - 200, 100),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
-    String ClouterTitle_2 = '이\t\t름 :\n등록번호 :\n주\t\t소: \n';
-    page.graphics.drawString(ClouterTitle_2, contentFont,
+    String clouterTitle_2 = '이\t\t름 :\n주민등록번호 :\n주\t\t소: \n';
+    page.graphics.drawString(clouterTitle_2, contentFont,
         brush: PdfBrushes.black,
         bounds:
             Rect.fromLTWH(70, pageSize.height - 175, pageSize.width - 200, 100),
@@ -401,7 +430,22 @@ class ContractButton extends StatelessWidget {
     page.graphics.drawString(clouterSignature, contentFont,
         brush: PdfBrushes.black,
         bounds: Rect.fromLTWH(
-            350, pageSize.height - 165, pageSize.width - 200, 100),
+            400, pageSize.height - 165, pageSize.width - 200, 100),
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
+    String clouterContent_2 =
+        '${contractController.contractInfo!.clouterInfo!.clouterName}\n${contractController.contractInfo!.clouterInfo!.residentRegistrationNumber}\n${contractController.contractInfo!.clouterInfo!.clouterAddress}\n';
+    page.graphics.drawString(clouterContent_2, contentFont,
+        brush: PdfBrushes.black,
+        bounds: Rect.fromLTWH(
+            120, pageSize.height - 175, pageSize.width - 200, 100),
+        format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
+
+    // 여기에 서명 그려야 함////////////////////////////////
+    String clouterSignaturePicture = '(수임인 서명)';
+    page.graphics.drawString(clouterSignaturePicture, contentFont,
+        brush: PdfBrushes.black,
+        bounds: Rect.fromLTWH(
+            400, pageSize.height - 165, pageSize.width - 200, 100),
         format: PdfStringFormat(lineAlignment: PdfVerticalAlignment.middle));
   }
 
@@ -414,15 +458,18 @@ class ContractButton extends StatelessWidget {
     //Create the header row of the grid.
 
     //Add rows
-    addColumn('계약건명', '~~ 캠페인', grid);
-    addColumn('브랜드', '브랜드 이름', grid);
-    addColumn('계약 금액', '*** 포인트', grid);
-    addColumn('계약 기간', '계약 체결일로부터 ~ 개월까지', grid);
-    addColumn('게시 마감일', '계약 체결일로부터 ~일 이내', grid);
+    addColumn('계약건명', contractController.contractInfo!.name!, grid);
+    addColumn('브랜드',
+        contractController.contractInfo!.advertiserInfo!.companyName!, grid);
+    addColumn('계약 금액',
+        '${contractController.contractInfo!.price!.toString()}포인트', grid);
     addColumn(
-        '용역 수행 내역',
-        '용역 수행 내역 용역 수행 내역 용역 수행 내역 용역 수행 내역 용역 수행 내역 \n용역 수행 내역 용역 수행 내역 용역 수행 내역 용역 수행\n 내역 용역 수행 내역 용역 수행 내역 용역 수행 내역 용역 수행 내역 수행 내역 용역 수행 내역 용역 수행 내역 용역 수행\n수행 내역 용역 수행 내역 용역 수행 내역 용역 수행\n\n용역 수행 내역 용역 수행 내역 용역 수행 내역 용역 수행\n 내역 용역 수행 내역 용역 수행 내역 용역 수행 내역 용역 수행 내역 수행 내역 용역 수행 내역 용역 수행 내역 용역 수행\n수행 내역 용역 수행 내역 용역 수행 내역 용역 수행\n\n 글자수 제한 1000',
+        '계약 기간',
+        '계약 체결일로부터 ${contractController.contractInfo!.contractExpiration}개월까지',
         grid);
+    addColumn('게시 마감일',
+        '계약 체결일로부터 ${contractController.contractInfo!.postDeadline}일 이내', grid);
+    addColumn('용역 수행 내역', contractController.contractInfo!.contents!, grid);
 
     grid.applyBuiltInStyle(PdfGridBuiltInStyle.gridTable3Accent1);
 

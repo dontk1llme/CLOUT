@@ -73,13 +73,13 @@ class ContractList extends GetView<ContractInfiniteScrollController> {
                       )
                     : Column(
                         children: [
-                          SizedBox(height: screenHeight / 3),
+                          SizedBox(height: screenHeight / 4),
                           SizedBox(
                               height: 70,
                               child: Center(child: LoadingWidget())),
                           SizedBox(height: 20),
                           Text(
-                            '계약서를 불러오는 중입니다.\n잠시만 기다려 주세요.',
+                            '계약서 목록을 불러오는 중입니다.\n잠시만 기다려 주세요.',
                             style: style.textTheme.headlineLarge
                                 ?.copyWith(fontWeight: FontWeight.w400),
                             textAlign: TextAlign.center,
