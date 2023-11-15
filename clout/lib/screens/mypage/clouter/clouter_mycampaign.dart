@@ -42,7 +42,7 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
               CampaignInfiniteScrollBody(controllerTag: 'clouterMyCampaign'),
               infiniteController.hasMore
                   ? Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 40),
+                      padding: const EdgeInsets.only(top: 0, bottom: 40),
                       child: SizedBox(
                         height: 50,
                         child: LoadingWidget(),
