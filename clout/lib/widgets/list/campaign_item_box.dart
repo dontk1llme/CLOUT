@@ -72,7 +72,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
             Get.toNamed('/campaignDetail', arguments: widget.campaignId),
         child: Container(
           width: screenWidth / 2 - 25,
-          // height: 100,
+          // height: screenHeight/2 - 160,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: style.colors['white'],
@@ -93,7 +93,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                             widget.firstImg!,
                             width: screenWidth / 2 - 40,
                             height: screenHeight / 2 - 270,
-                            fit: BoxFit.fitHeight,
+                            fit: BoxFit.cover,
                           ),
                         )
                       : ClipRRect(
