@@ -13,29 +13,41 @@ import 'package:clout/widgets/common/nametag.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 
 class CampaignItemBox extends StatefulWidget {
-  final int campaignId;
-  final String adCategory;
-  final String title;
-  final int price;
-  final CompanyInfo companyInfo;
-  final int numberOfSelectedMembers;
-  final int numberOfRecruiter;
-  final List<Widget> adPlatformList;
-  final AdvertiserInfo advertiserInfo;
-  final String? firstImg;
+  int? campaignId;
+  String? adCategory;
+  String? title;
+  int? price;
+  CompanyInfo? companyInfo;
+  int? numberOfSelectedMembers;
+  int? numberOfRecruiter;
+  List<Widget>? adPlatformList;
+  AdvertiserInfo? advertiserInfo;
+  String? firstImg;
+  int? applyId;
+  String? companyName;
+  int? advertiserAvgStar;
 
-  const CampaignItemBox({
+  // String? type;
+  // ApplyContent? applyContent; != null
+  // CampaignInfo? campaignInfo;
+  // AdvertiserInf? advertiserInfo;
+  // List<dynamic> imageList;
+
+  CampaignItemBox({
     super.key,
-    required this.campaignId,
-    required this.adCategory,
-    required this.title,
-    required this.price,
-    required this.companyInfo,
-    required this.numberOfSelectedMembers,
-    required this.numberOfRecruiter,
-    required this.adPlatformList,
-    required this.advertiserInfo,
+    this.campaignId,
+    this.adCategory,
+    this.title,
+    this.price,
+    this.companyInfo,
+    this.numberOfSelectedMembers,
+    this.numberOfRecruiter,
+    this.adPlatformList,
+    this.advertiserInfo,
     this.firstImg,
+    this.applyId,
+    this.companyName,
+    this.advertiserAvgStar,
   });
 
   @override
@@ -107,7 +119,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                       decoration: BoxDecoration(
                           color: style.colors['white'],
                           borderRadius: BorderRadius.circular(5)),
-                      child: Row(children: widget.adPlatformList),
+                      child: Row(children: widget.adPlatformList!),
                     ),
                   ),
                   if (userController.memberType == -1)
@@ -118,7 +130,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  NameTag(title: widget.adCategory),
+                  NameTag(title: widget.adCategory!),
                   Text(
                       '${widget.numberOfSelectedMembers}명 / ${widget.numberOfRecruiter}명',
                       style: TextStyle(
@@ -126,7 +138,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                       )),
                 ],
               ),
-              Text(widget.title,
+              Text(widget.title!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -149,7 +161,8 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                 children: [
                   Flexible(
                     flex: 2,
-                    child: Text(widget.companyInfo.companyName!,
+                    child: Text(
+                        widget.companyInfo?.companyName ?? widget.companyName!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -166,8 +179,9 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
                             size: screenWidth > 400 ? 18 : 15,
                           ),
                           Text(
-                              widget.advertiserInfo.advertiserAvgStar
-                                  .toString(),
+                              widget.advertiserInfo?.advertiserAvgStar
+                                      .toString() ??
+                                  widget.advertiserAvgStar.toString(),
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth > 400 ? 13 : 11,
