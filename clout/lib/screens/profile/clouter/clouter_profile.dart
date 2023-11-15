@@ -99,6 +99,7 @@ class _ClouterProfileState extends State<ClouterProfile> {
       myImages = BouncingListview(
         scrollDirection: Axis.horizontal,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: images,
         ),
       );
@@ -190,7 +191,10 @@ class _ClouterProfileState extends State<ClouterProfile> {
                       ])),
               _isLoading
                   ? SizedBox(height: 50, child: LoadingWidget())
-                  : myImages,
+                  : Align(
+                      alignment: Alignment.centerLeft,
+                      child: myImages,
+                    ),
               FractionallySizedBox(
                 widthFactor: 0.9,
                 child: Column(
@@ -219,7 +223,7 @@ class _ClouterProfileState extends State<ClouterProfile> {
                     ),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 카테고리'),
-                    SingleChildScrollView(
+                    BouncingListview(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
@@ -233,15 +237,18 @@ class _ClouterProfileState extends State<ClouterProfile> {
                         )),
                     SizedBox(height: 20),
                     DataTitle(text: '희망 지역'),
-                    Row(
-                      children: [
-                        for (var region in clouterInfo?.regionList ?? [])
-                          SelectedCategory(
-                              title:
-                                  AdCategoryTranslator.translateRegion(region)),
-                      ],
+                    BouncingListview(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          for (var region in clouterInfo?.regionList ?? [])
+                            SelectedCategory(
+                                title: AdCategoryTranslator.translateRegion(
+                                    region)),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 100),
                   ],
                 ),
               )

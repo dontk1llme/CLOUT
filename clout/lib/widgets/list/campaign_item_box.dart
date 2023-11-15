@@ -22,7 +22,7 @@ class CampaignItemBox extends StatefulWidget {
   final int numberOfRecruiter;
   final List<Widget> adPlatformList;
   final AdvertiserInfo advertiserInfo;
-  // final String firstImg;W
+  final String? firstImg;
 
   const CampaignItemBox({
     super.key,
@@ -35,7 +35,7 @@ class CampaignItemBox extends StatefulWidget {
     required this.numberOfRecruiter,
     required this.adPlatformList,
     required this.advertiserInfo,
-    // required this.firstImg,
+    this.firstImg,
   });
 
   @override
@@ -58,6 +58,7 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return InkWell(
         // 여기 arguments에 해당 캠페인의 id를 넣어야 함
@@ -78,12 +79,26 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
               Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  Image.asset(
-                    'assets/images/itemImage.jpg', // 💥 사진 수정하기
-                    width: screenWidth / 2 - 40,
-                    // height: screenHeight / 2 - 65,
-                    fit: BoxFit.cover,
-                  ),
+                  // 제일 큰 이미지
+                  widget.firstImg != null && widget.firstImg != ''
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          child: Image.network(
+                            widget.firstImg!,
+                            width: screenWidth / 2 - 40,
+                            height: screenHeight / 2 - 270,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          child: Image.asset(
+                            'assets/images/blank-product.jpg',
+                            width: screenWidth / 2 - 40,
+                            height: screenHeight / 2 - 270,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                   Positioned(
                     bottom: 5,
                     right: 5,
