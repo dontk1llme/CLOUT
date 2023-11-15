@@ -6,6 +6,7 @@ import com.mmm.clout.contractservice.contract.infrastructure.persistence.Contrac
 import com.mmm.clout.contractservice.contract.infrastructure.persistence.MemberServiceFeignClientAdapter;
 import com.mmm.clout.contractservice.contract.infrastructure.persistence.feign.MemberServiceFeignClient;
 import com.mmm.clout.contractservice.contract.infrastructure.persistence.jpa.JpaContractRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,8 +14,11 @@ import org.springframework.context.annotation.Configuration;
 public class ContractRepositoryConfiguration {
 
     @Bean
-    public ContractRepository contractRepository(JpaContractRepository jpaContractRepository) {
-        return new ContractRepositoryAdapter(jpaContractRepository);
+    public ContractRepository contractRepository(
+        JpaContractRepository jpaContractRepository,
+        JPAQueryFactory queryFactory
+    ) {
+        return new ContractRepositoryAdapter(jpaContractRepository, queryFactory);
     }
 
     @Bean
