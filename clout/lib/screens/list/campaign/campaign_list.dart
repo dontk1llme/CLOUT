@@ -14,6 +14,7 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 
 // controllers
+import 'package:clout/providers/search_combination_controller.dart';
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
 
 class CampaignList extends StatelessWidget {
@@ -22,11 +23,14 @@ class CampaignList extends StatelessWidget {
   final infiniteController =
       Get.put(InfiniteScrollController(), tag: 'campaignList');
 
+  final searchCombinationController =
+      Get.put(SearchCombinationController(), tag: 'campaignList');
+
   @override
   Widget build(BuildContext context) {
     ////////////////////////////////////////////
     infiniteController.setEndPoint(
-        '/advertisement-service/v1/advertisements/search?page=0&size=10&');
+        '/advertisement-service/v1/advertisements/search?page=${infiniteController.currentPage}&size=10&');
     infiniteController.setParameter(
         '/search?page=${infiniteController.currentPage}&size=${10}');
     ////////////////////////////////////////////
@@ -48,9 +52,7 @@ class CampaignList extends StatelessWidget {
               MySearchBar(
                 controllerTag: 'campaignList',
               ),
-              CategoryList(
-                tagName: 'campaignList',
-              ),
+              CategoryList(),
               SearchDetailButton(),
               Padding(
                 padding: EdgeInsets.only(left: 20),
