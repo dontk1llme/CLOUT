@@ -88,7 +88,7 @@ class Address {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['zipCode'] = zipCode;
     data['mainAddress'] = mainAddress;
     data['detailAddress'] = detailAddress;
@@ -393,8 +393,8 @@ class ClouterInfo {
       });
     }
     minCost = json['minCost'];
-    categoryList = json['categoryList'].cast<String>();
-    regionList = json['regionList'].cast<String>();
+    categoryList = json['categoryList'];
+    regionList = json['regionList'];
     address =
         json['address'] != null ? Address.fromJson(json['address']) : null;
     countOfContract = json['countOfContract'];
@@ -444,6 +444,38 @@ class LoginInfo {
       };
 }
 
+class CampaignResponse {
+  CampaignInfo? campaignInfo;
+  AdvertiserInfo? advertiserInfo;
+  List<dynamic>? imageList;
+
+  CampaignResponse({
+    this.campaignInfo,
+    this.advertiserInfo,
+    this.imageList,
+  });
+
+  factory CampaignResponse.fromJson(Map<String, dynamic> json) {
+    print('이거');
+    print(json['campaignInfo']);
+    print('똥');
+    print(json['advertiserInfo']);
+    print(json['imageList']);
+    return CampaignResponse(
+      campaignInfo: CampaignInfo.fromJson(json['campaignInfo']),
+      advertiserInfo: AdvertiserInfo.fromJson(json['advertiserInfo']),
+      imageList: json['imageList'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'campaignInfo': campaignInfo,
+        'advertiserInfo': advertiserInfo,
+        // 'companyInfo': companyInfo,
+        // 'imageList': imageList,
+      };
+}
+
 class Campaign {
   int? campaignId;
   List<String>? adPlatformList;
@@ -467,6 +499,7 @@ class Campaign {
   bool? isEnded;
   int? registerId;
   List<String>? regionList;
+  List<dynamic>? imageList;
 
   Campaign(
       {this.campaignId,
@@ -490,7 +523,8 @@ class Campaign {
       this.minFollower,
       this.isEnded,
       this.registerId,
-      this.regionList});
+      this.regionList,
+      this.imageList});
 
   Campaign.fromJson(Map<String, dynamic> json) {
     campaignId = json['campaignId'];
@@ -515,6 +549,7 @@ class Campaign {
     isEnded = json['isEnded'];
     registerId = json['registerId'];
     regionList = json['regionList'];
+    imageList = json['imageList'];
   }
 
   Map<String, dynamic> toJson() => {
@@ -541,6 +576,7 @@ class Campaign {
         'isEnded': isEnded,
         'registerId': registerId,
         'regionList': regionList,
+        'imageList': imageList,
       };
 }
 
@@ -654,7 +690,7 @@ class CampaignInfo {
   AdvertiserInfo? advertiserInfo;
   Address? address;
   CompanyInfo? companyInfo;
-  List<dynamic>? imageResponses;
+  List<dynamic>? imageList;
 
   CampaignInfo({
     this.campaignId,
@@ -679,7 +715,7 @@ class CampaignInfo {
     this.companyInfo,
     this.address,
     this.advertiserInfo,
-    this.imageResponses,
+    this.imageList,
   });
 
   factory CampaignInfo.fromJson(Map<String, dynamic> json) {
@@ -713,7 +749,7 @@ class CampaignInfo {
         advertiserInfo: json['advertiserInfo'] != null
             ? AdvertiserInfo.fromJson(json['advertiserInfo'])
             : null,
-        imageResponses: json['imageResponses']);
+        imageList: json['imageList']);
   }
 }
 
@@ -741,6 +777,57 @@ class ClouterRegisterForm {
         'createClrRequest': clouter,
         'files': files,
       };
+}
+
+class ContractResponse {
+  List<dynamic>? content;
+
+  ContractResponse({this.content});
+
+  factory ContractResponse.fromJson(Map<String, dynamic> json) {
+    return ContractResponse(content: json['content']);
+  }
+}
+
+class ContractContent {
+  int? contractId;
+  String? name;
+  int? price;
+  String? postDeadline;
+  String? contractExpiration;
+  String? contents;
+  ClouterInfo? clouterInfo;
+  AdvertiserInfo? advertiserInfo;
+  String? state;
+  String? path;
+
+  ContractContent({
+    this.contractId,
+    this.name,
+    this.price,
+    this.postDeadline,
+    this.contractExpiration,
+    this.contents,
+    this.clouterInfo,
+    this.advertiserInfo,
+    this.state,
+    this.path,
+  });
+
+  factory ContractContent.fromJson(Map<String, dynamic> json) {
+    return ContractContent(
+      contractId: json['contractId'],
+      name: json['name'],
+      price: json['price'],
+      postDeadline: json['postDeadline'],
+      contractExpiration: json['contractExpiration'],
+      contents: json['contents'],
+      clouterInfo: ClouterInfo.fromJson(json['clouterInfo']),
+      advertiserInfo: AdvertiserInfo.fromJson(json['advertiserInfo']),
+      state: json['state'],
+      path: json['path'],
+    );
+  }
 }
 
 class AppliedClouterInfo {

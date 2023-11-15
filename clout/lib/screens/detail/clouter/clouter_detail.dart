@@ -1,3 +1,4 @@
+import 'package:clout/hooks/apis/normal_api.dart';
 import 'package:clout/main.dart';
 import 'package:clout/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
   bool isItemLiked = false;
 
   _showDetail() async {
-    final AuthorizedApi api = AuthorizedApi();
+    final NormalApi api = NormalApi();
 
     List<String> imgList = [];
 
@@ -89,12 +90,20 @@ class _ClouterDetailState extends State<ClouterDetail> {
             .toList();
       } else {
         imageSliders = imgList
-            .map((item) => Padding(
-                  padding: const EdgeInsets.all(0),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      child: Image.network(item, fit: BoxFit.cover)),
-                ))
+            .map(
+              (item) => Padding(
+                padding: const EdgeInsets.all(0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  child: Image.network(
+                    item,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            )
             .toList();
       }
       print(imageSliders.length);
@@ -308,10 +317,16 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                                               'category'],
                                                           borderRadius:
                                                               BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      20))),
+                                                                  Radius
+                                                                      .circular(
+                                                                          20))),
                                                       child: Text(
-                                                          AdCategoryTranslator.translateAdCategory(category), style: TextStyle(height: 1.2),)))
+                                                        AdCategoryTranslator
+                                                            .translateAdCategory(
+                                                                category),
+                                                        style: TextStyle(
+                                                            height: 1.2),
+                                                      )))
                                                   .toList()
                                               : [Container()],
                                         ),
