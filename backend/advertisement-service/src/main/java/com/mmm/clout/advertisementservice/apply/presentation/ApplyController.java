@@ -136,6 +136,4 @@ public class ApplyController implements ApplyControllerDocs {
         applyFacade.selectForContract(applyId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

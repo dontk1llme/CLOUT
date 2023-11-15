@@ -2,13 +2,17 @@ package com.mmm.clout.advertisementservice.advertisements.persentation.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.FeignCampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.image.presentation.ImageResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -80,6 +84,8 @@ public class CampaignResponse {
     @Schema(description = "광고 등록자 (광고주) 고유 식별자 id")
     private Long registerId;
 
+    private List<ImageResponse> imageList;
+
     public static CampaignResponse from(Campaign campaign) {
         return new CampaignResponse(
             campaign.getId(),
@@ -102,7 +108,34 @@ public class CampaignResponse {
             campaign.getMaxClouterAge(),
             campaign.getMinFollower(),
             campaign.getIsEnded(),
-            campaign.getRegisterId()
+            campaign.getRegisterId(),
+            null
+        );
+    }
+    public static CampaignResponse from(FeignCampaignReader reader) {
+        return new CampaignResponse(
+            reader.getCampaign().getId(),
+            reader.getCampaign().getAdPlatformList(),
+            reader.getCampaign().getPrice(),
+            reader.getCampaign().getDetails(),
+            reader.getCampaign().getDeletedAt(),
+            reader.getCampaign().getTitle(),
+            reader.getCampaign().getAdCategory(),
+            reader.getCampaign().getIsPriceChangeable(),
+            reader.getCampaign().getIsDeliveryRequired(),
+            reader.getCampaign().getNumberOfRecruiter(),
+            reader.getCampaign().getNumberOfApplicants(),
+            reader.getCampaign().getNumberOfSelectedMembers(),
+            reader.getCampaign().getOfferingDetails(),
+            reader.getCampaign().getSellingLink(),
+            reader.getCampaign().getApplyStartDate(),
+            reader.getCampaign().getApplyEndDate(),
+            reader.getCampaign().getMinClouterAge(),
+            reader.getCampaign().getMaxClouterAge(),
+            reader.getCampaign().getMinFollower(),
+            reader.getCampaign().getIsEnded(),
+            reader.getCampaign().getRegisterId(),
+            reader.getImageList().stream().map(v -> new ImageResponse(v)).collect(Collectors.toList())
         );
     }
 }

@@ -26,6 +26,11 @@ public class AdvertiseSignRepositoryAdapter implements AdvertiseSignRepository {
     }
 
     @Override
+    public List<AdvertiseSign> findByCampaignIdIn(List<Long> idList) {
+        return jpaAdvertiseSignRepository.findByCampaign_IdIn(idList);
+    }
+
+    @Override
     public AdvertiseSign delete(Long id){
         AdvertiseSign advertiseSign = jpaAdvertiseSignRepository.findById(id)
                 .orElseThrow(IllegalAccessError::new);

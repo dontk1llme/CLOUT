@@ -11,13 +11,9 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class CampaignReader {
+public class FeignCampaignReader {
 
     private Campaign campaign;
 
-    private AdvertiserInfo advertiserInfo;
-
     private List<Image> imageList;
-
-    private AdvertiseSign signImage;
 }

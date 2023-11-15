@@ -13,5 +13,7 @@ public interface MemberFeignClient {
     AdvertiserInfo selectAdvertiser(@PathVariable Long advertiserId);
 
     @GetMapping("/v1/clouters/{clouterId}")
-    ClouterInfo selectClouter(Long clouterId);
+    ClouterInfo selectClouter(
+        @PathVariable("clouterId") Long clouterId
+    );
 }
