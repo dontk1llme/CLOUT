@@ -48,7 +48,7 @@ public class Contract extends BaseEntity {
         this.contents = contents;
         this.clouterInfo = clouterInfo;
         this.advertiserInfo = advertiserInfo;
-        this.state = State.WATING;
+        this.state = State.WAITING;
         this.path = path;
     }
     public static Contract create(String name, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo, String path) {
