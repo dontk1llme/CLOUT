@@ -16,7 +16,8 @@ class ImagePickerService {
 
   Future<List<XFile>> pickImage() async {
     try {
-      final pickedFile = await _picker.pickMultiImage();
+      final pickedFile = await _picker.pickMultiImage(
+          maxHeight: 1000, maxWidth: 1000, imageQuality: 50);
       return pickedFile;
     } catch (e) {
       print('ImagePickerService: $e');
@@ -27,7 +28,10 @@ class ImagePickerService {
   Future<XFile?> pickSingleImage() async {
     try {
       final pickedFile = await _picker.pickImage(
-          source: ImageSource.gallery, imageQuality: 1);
+          source: ImageSource.gallery,
+          maxHeight: 1000,
+          maxWidth: 1000,
+          imageQuality: 50);
       return pickedFile;
     } catch (e) {
       print('ImagePickerService: $e');
