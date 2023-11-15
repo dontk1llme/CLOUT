@@ -1,6 +1,5 @@
 package com.mmm.clout.memberservice.clouter.presentation;
 
-import com.mmm.clout.memberservice.bookmark.application.reader.CampaignReader;
 import com.mmm.clout.memberservice.clouter.application.command.SearchCondition;
 import com.mmm.clout.memberservice.clouter.application.facade.ClouterFacade;
 import com.mmm.clout.memberservice.clouter.application.reader.ClouterReader;
@@ -22,11 +21,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/v1/clouters")
