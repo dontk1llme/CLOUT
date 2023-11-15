@@ -17,6 +17,7 @@ class CampaignRegisterController extends GetxController {
       signature,
       link;
 
+  bool isBlank = true;
   bool payPositive = false;
   bool deliveryPositive = false;
 
@@ -129,6 +130,11 @@ class CampaignRegisterController extends GetxController {
 
   setLink(input) {
     link = input;
+    update();
+  }
+
+  setBlank(input){
+    isBlank = input;
     update();
   }
 

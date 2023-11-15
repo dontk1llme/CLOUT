@@ -4,13 +4,14 @@ import 'package:clout/style.dart' as style;
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 class Signature extends StatefulWidget {
-  const Signature({
-    super.key,
-    required this.globalKey,
-    required this.signatureKey,
-  });
+  Signature(
+      {super.key,
+      required this.globalKey,
+      required this.signatureKey,
+      required this.setBlank});
   final globalKey;
   final signatureKey;
+  var setBlank;
 
   @override
   State<Signature> createState() => _SignatureState();
@@ -19,6 +20,7 @@ class Signature extends StatefulWidget {
 class _SignatureState extends State<Signature> {
   void _handleClearButtonPressed() {
     widget.signatureKey.currentState!.clear();
+    widget.setBlank(true);
   }
 
   @override
@@ -27,9 +29,7 @@ class _SignatureState extends State<Signature> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           DataTitle(text: '전자 서명'),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -61,8 +61,9 @@ class _SignatureState extends State<Signature> {
                       borderRadius: BorderRadius.all(Radius.circular(5))),
                 )),
             RepaintBoundary(
-                key: widget.globalKey,
-                child: Stack(children: [
+              key: widget.globalKey,
+              child: Stack(
+                children: [
                   Positioned(
                       bottom: 3,
                       top: 3,
@@ -89,12 +90,18 @@ class _SignatureState extends State<Signature> {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: SfSignaturePad(
                         key: widget.signatureKey,
+                        onDrawEnd: () {
+                          widget.setBlank(false);
+                          // return true;
+                        },
                         backgroundColor: Colors.transparent,
                         strokeColor: Colors.black,
                         minimumStrokeWidth: 1.0,
                         maximumStrokeWidth: 4.0),
                   ),
-                ]))
+                ],
+              ),
+            )
           ],
         ),
         // SizedBox(height: 10),
