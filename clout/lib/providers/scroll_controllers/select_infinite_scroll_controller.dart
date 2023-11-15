@@ -1,3 +1,4 @@
+import 'package:clout/widgets/sns/sns4.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,14 +8,10 @@ import 'dart:async';
 import 'package:clout/type.dart';
 import 'package:clout/hooks/apis/authorized_api.dart';
 
-// controllers
-import 'package:clout/providers/user_controllers/user_controller.dart';
-
 // widgets
-import 'package:clout/widgets/sns/sns2.dart';
-import 'package:clout/widgets/list/clouter_item_box.dart';
+import 'package:clout/screens/clouter_select/widgets/select_item_box.dart';
 
-class ClouterInfiniteScrollController extends GetxController {
+class SelectInfiniteScrollController extends GetxController {
   var scrollController = ScrollController().obs;
 
   List<dynamic> data = [].obs;
@@ -25,6 +22,11 @@ class ClouterInfiniteScrollController extends GetxController {
   var currentPage = 0;
   var endPoint = '';
   var parameter = '';
+  var campaignId = Get.arguments;
+
+  int numberOfRecruiter = 0;
+  int numberOfApplicants = 0;
+  int numberOfSelectedMembers = 0;
 
   setEndPoint(input) {
     endPoint = input;
@@ -37,11 +39,23 @@ class ClouterInfiniteScrollController extends GetxController {
   }
 
   setCurrentPage(input) {
-    final userController = Get.find<UserController>();
     currentPage = input;
-    parameter =
-        // '?advertiserId=${userController.memberId}&page=${currentPage}&size=${10}';
-        '?page=$currentPage&size=${10}&memberId=${userController.memberId}';
+    parameter = '?advertisementId=$campaignId&page=$currentPage&size=${10}';
+    update();
+  }
+
+  setNumberOfRecruiter(input) {
+    numberOfRecruiter = input;
+    update();
+  }
+
+  setNumberOfApplicants(input) {
+    numberOfApplicants = input;
+    update();
+  }
+
+  setNumberOfSelectedMembers(input) {
+    numberOfSelectedMembers = input;
     update();
   }
 
@@ -56,6 +70,7 @@ class ClouterInfiniteScrollController extends GetxController {
       }
     });
 
+    _getData();
     super.onInit();
   }
 
@@ -66,36 +81,40 @@ class ClouterInfiniteScrollController extends GetxController {
     await Future.delayed(Duration(seconds: 2));
 
     final AuthorizedApi authorizedApi = AuthorizedApi();
+    print(parameter);
+    var response = await authorizedApi.getRequest(
+        '/advertisement-service/v1/applies/advertisers', parameter);
 
-    var response = await authorizedApi.getRequest(endPoint, parameter);
-    print(response);
     var jsonData = jsonDecode(response['body']);
     var contentList = jsonData['content'] as List;
-
+    print(contentList);
     var appendData = [];
+
+    setNumberOfRecruiter(contentList[0]['numberOfRecruiter']);
+    setNumberOfApplicants(contentList[0]['numberOfApplicants']);
+    setNumberOfSelectedMembers(contentList[0]['numberOfSelectedMembers']);
 
     if (contentList.isNotEmpty) {
       for (var item in contentList) {
-        var clouterInfo = ClouterInfo.fromJson(item);
+        var clouterInfo = AppliedClouterInfo.fromJson(item);
 
-        var clouterItemBox = Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ClouterItemBox(
-            clouterId: clouterInfo.clouterId!,
-            userId: clouterInfo.userId!,
-            nickName: clouterInfo.nickName!,
-            avgScore: clouterInfo.avgScore ?? 0,
-            minCost: clouterInfo.minCost ?? 0,
-            categoryList: clouterInfo.categoryList!,
-            adPlatformList: clouterInfo.channelList
-                    ?.map((channel) => Sns2(platform: channel.platform))
+        var selectItemBox = Padding(
+          padding: EdgeInsets.all(5),
+          child: SelectItemBox(
+            clouterId: clouterInfo.clouterId,
+            fee: clouterInfo.hopeAdFee,
+            nickName: clouterInfo.nickname,
+            starRating: clouterInfo.clouterAvgStar,
+            selectedPlatform: clouterInfo.clouterChannelList
+                    ?.map((channel) => Sns4(
+                          platform: channel.platform,
+                          followerScale: channel.followerScale,
+                        ))
                     .toList() ??
                 [],
-            countOfContract: clouterInfo.countOfContract ?? 0,
-            // firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
           ),
         );
-        appendData.add(clouterItemBox);
+        appendData.add(selectItemBox);
       }
       data.addAll(appendData);
 
