@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface JpaImageRepository extends JpaRepository<Image, Long> {
 
-        List<Image> findByContract_Id(Long Id);
+        Image findByContract_Id(Long Id);
 
 }
