@@ -1,5 +1,6 @@
 package com.mmm.clout.contractservice.contract.presentation.docs;
 
+import com.mmm.clout.contractservice.contract.application.reader.ContractReader;
 import com.mmm.clout.contractservice.contract.presentation.request.CreateContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.request.UpdateRRNContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.response.*;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,10 +75,10 @@ public interface ContractControllerDocs {
             @ApiResponse(responseCode = "200", description = "조회된 계약 리턴",
                     content =
                     @Content(mediaType="application/json",
-                            schema=@Schema(implementation=SelectContractResponse.class))
+                            schema=@Schema(implementation= ContractReader.class))
             )
     )
-    public ResponseEntity<SelectContractResponse> select(
+    public ResponseEntity<ContractReader> select(
             @PathVariable("contractId") Long id
     );
 
@@ -85,11 +87,13 @@ public interface ContractControllerDocs {
             @ApiResponse(responseCode = "200", description = "조회된 클라우터 계약들 리턴",
                     content =
                     @Content(mediaType="application/json",
-                            schema=@Schema(implementation=AllSelectContractsResponse.class))
+                            schema=@Schema(implementation=CustomPageResponse.class))
             )
     )
-    public ResponseEntity<AllSelectContractsResponse> selectClouter(
-            @RequestParam("clouterId") Long clouterId
+    public ResponseEntity<CustomPageResponse<ContractReader>> selectClouter(
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "10") Integer size,
+        @RequestParam("clouterId") Long clouterId
     );
 
     @Operation(summary = "광고주 계약 전체 조회",
@@ -97,11 +101,14 @@ public interface ContractControllerDocs {
             @ApiResponse(responseCode = "200", description = "조회된 광고주 계약들 리턴",
                     content =
                     @Content(mediaType="application/json",
-                            schema=@Schema(implementation=AllSelectContractsResponse.class))
+                            schema=@Schema(implementation=CustomPageResponse.class))
             )
     )
-    public ResponseEntity<AllSelectContractsResponse> selectAdvertiser(
-            @RequestParam("advertiserId") Long advertiserId
+    @GetMapping("/advertiser")
+    public ResponseEntity<CustomPageResponse<ContractReader>> selectAdvertiser(
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "10") Integer size,
+        @RequestParam("advertiserId") Long advertiserId
     );
 }
 
