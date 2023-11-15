@@ -18,7 +18,7 @@ class AdvertiserLikedclouters extends StatelessWidget {
 
   final infiniteController = Get.put(ClouterInfiniteScrollController(),
       tag: 'advertiserLikedClouters');
-      
+
   final userController = Get.find<UserController>();
 
   @override
@@ -27,7 +27,6 @@ class AdvertiserLikedclouters extends StatelessWidget {
     infiniteController.setEndPoint('/member-service/v1/bookmarks/clouter');
     infiniteController.setParameter(
         '?page=${infiniteController.currentPage}&size=${10}&memberId=${userController.memberId}');
-    infiniteController.toggleData(true);
     return GetBuilder<ClouterInfiniteScrollController>(
       tag: 'advertiserLikedClouters',
       builder: (controller) => Scaffold(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 // api
@@ -8,17 +7,12 @@ import 'dart:async';
 import 'package:clout/type.dart';
 import 'package:clout/hooks/apis/authorized_api.dart';
 
-// utilities
-import 'package:clout/utilities/category_translator.dart';
-
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
 
 // widgets
 import 'package:clout/widgets/sns/sns2.dart';
 import 'package:clout/widgets/list/clouter_item_box.dart';
-
-String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
 
 class ClouterInfiniteScrollController extends GetxController {
   var scrollController = ScrollController().obs;
@@ -121,12 +115,6 @@ class ClouterInfiniteScrollController extends GetxController {
 
     await Future.delayed(Duration(seconds: 2));
 
-    _getData();
-    update();
-  }
-
-  toggleData(input) {
-    data = [];
     _getData();
     update();
   }
