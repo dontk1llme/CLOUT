@@ -159,6 +159,36 @@ class AuthorizedApi {
     }
   }
 
+  dioPostRequest(apiUrl, parameter, List<MultipartFile> multiPartFiles) async {
+    var dio = Dio();
+    dio.options.contentType = 'multipart/form-data';
+    dio.options.maxRedirects.isFinite;
+    dio.options.headers = {'Authorization': userController.accessToken};
+
+    FormData formData = FormData.fromMap({
+      'createCampaignRequest': MultipartFile.fromString(
+          jsonEncode(parameter.toJson()),
+          contentType: MediaType.parse('application/json')),
+      'files': multiPartFiles
+    });
+
+    print(jsonEncode(parameter));
+    print(multiPartFiles);
+
+    var response = await dio.post('$baseUrl$apiUrl', data: formData);
+    print('여기 바로 아래 뭐가 오나?');
+    print(response.statusCode);
+    print(response.statusMessage);
+    print(response.data);
+
+    if (response.statusCode == 401) {
+      print('만료된 토큰');
+      reissueToken();
+    } else {
+      return response;
+    }
+  }
+
   dioPutRequest(apiUrl, parameter, List<MultipartFile> multiPartFiles) async {
     var dio = Dio();
     dio.options.contentType = 'multipart/form-data';

@@ -654,7 +654,7 @@ class CampaignInfo {
   AdvertiserInfo? advertiserInfo;
   Address? address;
   CompanyInfo? companyInfo;
-  List<String>? imageResponses;
+  List<dynamic>? imageResponses;
 
   CampaignInfo({
     this.campaignId,
