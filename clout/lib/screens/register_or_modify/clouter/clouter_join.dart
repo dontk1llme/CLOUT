@@ -107,7 +107,7 @@ class ClouterJoinState extends State<ClouterJoin> {
     ImageFunctions imageFunctions = ImageFunctions();
 
     var imageFiles =
-        imageFunctions.pickedImageToMultiPartFiles(imageController.images);
+        imageFunctions.pickedImagesToMultiPartFiles(imageController.images);
 
     RegisterApi registerApi = RegisterApi();
 
@@ -119,7 +119,7 @@ class ClouterJoinState extends State<ClouterJoin> {
 
     print(responseBody);
     showSnackBar();
-    // Get.offAllNamed('/login');
+    Get.offAllNamed('/login');
   }
 
   @override

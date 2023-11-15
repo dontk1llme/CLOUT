@@ -50,23 +50,28 @@ class InfiniteScrollController extends GetxController {
   @override
   void onInit() {
     scrollController.value.addListener(() {
+      print(scrollController.value.position.pixels);
+      // print(scrollController.value.position.minScrollExtent);
       if (scrollController.value.position.pixels ==
               scrollController.value.position.maxScrollExtent &&
           hasMore) {
         setCurrentPage(currentPage + 1);
-        _getData();
+      }
+      if (scrollController.value.position.pixels < -3000) {
+        setCurrentPage(1);
+        reload();
       }
     });
 
     super.onInit();
   }
 
-  _getData() async {
+  getData() async {
     isLoading = true;
-    hasMore = true;
-
+    // hasMore = true;
+    print('여기까지 옴1');
     await Future.delayed(Duration(seconds: 2));
-
+    print('여기까지 옴2');
     final AuthorizedApi authorizedApi = AuthorizedApi();
     var response = await authorizedApi.getRequest(endPoint, parameter);
     print(response);
@@ -91,6 +96,8 @@ class InfiniteScrollController extends GetxController {
             companyInfo: advertiserData.companyInfo!,
             numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
             numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
+            // firstImg:
+            //     ImageResponse.fromJson(campaignData.imageResponses?[0]).path,
             adPlatformList: campaignData.adPlatformList
                     ?.map((platform) => Sns2(platform: platform))
                     .toList() ??
@@ -108,7 +115,7 @@ class InfiniteScrollController extends GetxController {
       update();
     } else {
       hasMore = false;
-      isLoading = false;
+      // isLoading = contentList.isNotEmpty;
       update();
     }
   }
@@ -116,10 +123,11 @@ class InfiniteScrollController extends GetxController {
   reload() async {
     isLoading = true;
     data.clear();
-
+    update();
+    setCurrentPage(0);
     await Future.delayed(Duration(seconds: 2));
 
-    _getData();
+    getData();
     update();
   }
 }
