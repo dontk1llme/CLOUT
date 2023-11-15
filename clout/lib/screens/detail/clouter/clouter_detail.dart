@@ -227,41 +227,22 @@ class _ClouterDetailState extends State<ClouterDetail> {
                             ),
                             SizedBox(height: 20),
                             Container(
-                              padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                              height: 120,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
+                                padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                  ),
+                                  borderRadius: BorderRadius.circular(7),
                                 ),
-                                borderRadius: BorderRadius.circular(7),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text('희망 광고비',
                                             style: TextStyle(fontSize: 15)),
-                                        Text('희망 카테고리',
-                                            style: TextStyle(fontSize: 15)),
-                                        Text('계약한 광고 수',
-                                            style: TextStyle(fontSize: 15)),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
                                         Row(
                                           children: [
                                             Text(
@@ -276,19 +257,15 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                             Text(' points'),
                                           ],
                                         ),
-                                        Text(
-                                            clouterInfo?.categoryList != null
-                                                ? clouterInfo!.categoryList!
-                                                    .map((category) =>
-                                                        AdCategoryTranslator
-                                                            .translateAdCategory(
-                                                                category))
-                                                    .join(', ')
-                                                : '',
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w700,
-                                                color: style.colors['logo'])),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('계약한 광고 수',
+                                            style: TextStyle(fontSize: 15)),
                                         Row(
                                           children: [
                                             Text(
@@ -302,13 +279,120 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                             Text(' 건',
                                                 style: TextStyle(fontSize: 15)),
                                           ],
-                                        )
+                                        ),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                                    SizedBox(height: 10),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('희망 카테고리',
+                                            style: TextStyle(fontSize: 15)),
+                                        SizedBox(height: 5),
+                                        Wrap(
+                                          runSpacing: 5,
+                                          spacing: 3,
+                                          children: clouterInfo?.categoryList !=
+                                                  null
+                                              ? clouterInfo!.categoryList!
+                                                  .map((category) => Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 15,
+                                                              vertical: 8),
+                                                      decoration: BoxDecoration(
+                                                          color: style.colors[
+                                                              'category'],
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      20))),
+                                                      child: Text(
+                                                          AdCategoryTranslator.translateAdCategory(category), style: TextStyle(height: 1.2),)))
+                                                  .toList()
+                                              : [Container()],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                                // Row(
+                                //   children: [
+                                //     Expanded(
+                                //       flex: 1,
+                                //       child: Column(
+                                //         crossAxisAlignment:
+                                //             CrossAxisAlignment.start,
+                                //         mainAxisAlignment:
+                                //             MainAxisAlignment.spaceAround,
+                                //         children: [
+                                // Text('희망 광고비',
+                                //     style: TextStyle(fontSize: 15)),
+                                // Text('계약한 광고 수',
+                                //     style: TextStyle(fontSize: 15)),
+                                // Text('희망 카테고리',
+                                //     style: TextStyle(fontSize: 15)),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //     Expanded(
+                                //       flex: 1,
+                                //       child: Column(
+                                //         crossAxisAlignment:
+                                //             CrossAxisAlignment.start,
+                                //         mainAxisAlignment:
+                                //             MainAxisAlignment.spaceAround,
+                                //         children: [
+                                //           Row(
+                                //             children: [
+                                // Text(
+                                //     clouterInfo?.minCost
+                                //             .toString() ??
+                                //         '',
+                                //     style: TextStyle(
+                                //         fontSize: 15,
+                                //         fontWeight: FontWeight.w700,
+                                //         color:
+                                //             style.colors['logo'])),
+                                // Text(' points'),
+                                //             ],
+                                //           ),
+                                //           Row(
+                                //             children: [
+                                // Text(
+                                //     clouterInfo!.countOfContract
+                                //         .toString(),
+                                //     style: TextStyle(
+                                //         fontSize: 15,
+                                //         fontWeight: FontWeight.w700,
+                                //         color:
+                                //             style.colors['logo'])),
+                                // Text(' 건',
+                                //     style: TextStyle(fontSize: 15)),
+                                //             ],
+                                //           ),
+                                // Text(
+                                //     clouterInfo?.categoryList != null
+                                //         ? clouterInfo!.categoryList!
+                                //             .map((category) =>
+                                //                 AdCategoryTranslator
+                                //                     .translateAdCategory(
+                                //                         category))
+                                //             .join(', ')
+                                //         : '',
+                                //     style: TextStyle(
+                                //         fontSize: 15,
+                                //         fontWeight: FontWeight.w700,
+                                //         color: style.colors['logo'])),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                                ),
                             Padding(
                               padding: EdgeInsets.only(top: 20, bottom: 10),
                               child: Align(

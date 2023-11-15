@@ -655,9 +655,9 @@ class CampaignInfo {
   AdvertiserInfo? advertiserInfo;
   Address? address;
   CompanyInfo? companyInfo;
-  // String? image;
+  List<String>? imageResponses;
 
-  CampaignInfo(
+  CampaignInfo({
     this.campaignId,
     this.adPlatformList,
     this.price,
@@ -680,40 +680,41 @@ class CampaignInfo {
     this.companyInfo,
     this.address,
     this.advertiserInfo,
-    // required this.firstImg,
-  );
+    this.imageResponses,
+  });
 
   factory CampaignInfo.fromJson(Map<String, dynamic> json) {
     return CampaignInfo(
-      json['campaignId'],
-      json['adPlatformList'] != null
-          ? List<String>.from(json['adPlatformList'])
-          : null,
-      json['price'],
-      json['details'],
-      json['deletedAt'],
-      json['title'],
-      json['adCategory'],
-      json['isPriceChangeable'],
-      json['isDeliveryRequired'],
-      json['numberOfRecruiter'],
-      json['numberOfApplicants'],
-      json['numberOfSelectedMembers'],
-      json['offeringDetails'],
-      json['sellingLink'],
-      json['applyStartDate'],
-      json['applyEndDate'],
-      json['minClouterAge'],
-      json['maxClouterAge'],
-      json['minFollower'],
-      json['companyInfo'] != null
-          ? CompanyInfo.fromJson(json['companyInfo'])
-          : null,
-      json['address'] != null ? Address.fromJson(json['address']) : null,
-      json['advertiserInfo'] != null
-          ? AdvertiserInfo.fromJson(json['advertiserInfo'])
-          : null,
-    );
+        campaignId: json['campaignId'],
+        adPlatformList: json['adPlatformList'] != null
+            ? List<String>.from(json['adPlatformList'])
+            : null,
+        price: json['price'],
+        details: json['details'],
+        deletedAt: json['deletedAt'],
+        title: json['title'],
+        adCategory: json['adCategory'],
+        isPriceChangeable: json['isPriceChangeable'],
+        isDeliveryRequired: json['isDeliveryRequired'],
+        numberOfRecruiter: json['numberOfRecruiter'],
+        numberOfApplicants: json['numberOfApplicants'],
+        numberOfSelectedMembers: json['numberOfSelectedMembers'],
+        offeringDetails: json['offeringDetails'],
+        sellingLink: json['sellingLink'],
+        applyStartDate: json['applyStartDate'],
+        applyEndDate: json['applyEndDate'],
+        minClouterAge: json['minClouterAge'],
+        maxClouterAge: json['maxClouterAge'],
+        minFollower: json['minFollower'],
+        companyInfo: json['companyInfo'] != null
+            ? CompanyInfo.fromJson(json['companyInfo'])
+            : null,
+        address:
+            json['address'] != null ? Address.fromJson(json['address']) : null,
+        advertiserInfo: json['advertiserInfo'] != null
+            ? AdvertiserInfo.fromJson(json['advertiserInfo'])
+            : null,
+        imageResponses: json['imageResponses']);
   }
 }
 
