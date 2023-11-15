@@ -37,4 +37,9 @@ public class ImageRepositoryAdapter implements ImageRepository {
 
         return image;
     }
+
+    @Override
+    public List<Image> findByIdIn(List<Long> ids){
+        return jpaImageRepository.findByMember_IdIn(ids);
+    }
 }
