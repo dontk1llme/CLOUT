@@ -1,5 +1,9 @@
+import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/common/choicechip.dart';
+import 'package:clout/widgets/refreshable_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:clout/style.dart' as style;
 
 // widgets
 import 'package:clout/widgets/header/header.dart';
@@ -21,8 +25,11 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
   Widget build(BuildContext context) {
     infiniteController.setCurrentPage(0);
     infiniteController.setEndPoint(
-        '/advertisement-service/v1/applies/clouters?clouter=${userController.memberId}&page=${infiniteController.currentPage}&size=${10}');
-    infiniteController.setParameter('&type=ACCEPTED'); // 💥 typeEnum..? 추가하기
+        '/advertisement-service/v1/applies/clouters?clouterId=${userController.memberId}&page=${infiniteController.currentPage}&size=${10}');
+    infiniteController.setParameter('&type=WAITING'); // 💥 typeEnum..? 추가하기
+    final screenHeight = MediaQuery.of(context).size.height;
+    infiniteController.reload();
+    // infiniteController.getData();
     return GetBuilder<InfiniteScrollController>(
       tag: 'clouterMyCampaign',
       builder: (controller) => Scaffold(
@@ -34,23 +41,56 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
             headerTitle: '신청한 캠페인',
           ),
         ),
-        body: SingleChildScrollView(
+        body: RefreshablePage(
           controller: controller.scrollController.value,
-          physics: BouncingScrollPhysics(),
           child: Column(
             children: [
+              BouncingListview(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: ActionChoiceExample(
+                    labels: ['대기중', '채택된 캠페인', '미채택된 캠페인', '신청 취소'],
+                    chipCount: 4,
+                    onChipSelected: (label) {
+                      String typeParam = '';
+                      switch (label) {
+                        case '대기중':
+                          typeParam = '&type=WAITING';
+                          break;
+                        case '채택된 캠페인':
+                          typeParam = '&type=ACCEPTED';
+                          break;
+                        case '미채택된 캠페인':
+                          typeParam = '&type=NOT_ACCEPTED';
+                          break;
+                        case '신청 취소':
+                          typeParam = '&type=CANCEL';
+                          break;
+                      }
+                      infiniteController.setParameter(typeParam);
+                      infiniteController.reload();
+                    },
+                  ),
+                ),
+              ),
               CampaignInfiniteScrollBody(controllerTag: 'clouterMyCampaign'),
-              infiniteController.hasMore
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 0, bottom: 40),
-                      child: SizedBox(
-                        height: 50,
-                        child: LoadingWidget(),
-                      ),
+              infiniteController.isLoading
+                  ? Column(
+                      children: [
+                        SizedBox(height: screenHeight / 3),
+                        SizedBox(
+                            height: 70, child: Center(child: LoadingWidget())),
+                        SizedBox(height: 20),
+                        Text(
+                          '신청한 캠페인을 불러오는 중입니다.\n잠시만 기다려 주세요.',
+                          style: style.textTheme.headlineLarge
+                              ?.copyWith(fontWeight: FontWeight.w400),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
                     )
-                  : Container(
-                      height: 700,
-                    )
+                  : Container()
             ],
           ),
         ),
