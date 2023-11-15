@@ -102,32 +102,32 @@ class _NotificationItemState extends State<NotificationItem> {
                       ),
                     ],
                   ),
-                  widget.result != -1
-                      ? SizedBox(
-                          width: 200,
-                          child: ContractButton(
-                            title: widget.result == 0 ? '계약서 작성하기' : '계약서 열람하기',
-                          ),
-                        )
-                      :
-                      // SizedBox(width: screenWidth - 600),
-                      SizedBox(
-                          width: 200,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Get.toNamed('/reviewregister');
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: style.colors['main1'],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 20),
-                            ),
-                            child: Text('별점 남기기'),
-                          ),
+                  // widget.result != -1
+                  //     ? SizedBox(
+                  //         width: 200,
+                  //         child: ContractButton(
+                  //           title: widget.result == 0 ? '계약서 작성하기' : '계약서 열람하기',
+                  //         ),
+                  //       )
+                  //     :
+                  // SizedBox(width: screenWidth - 600),
+                  SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.toNamed('/reviewregister');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: style.colors['main1'],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      ),
+                      child: Text('별점 남기기'),
+                    ),
+                  ),
                 ],
               ),
             )
