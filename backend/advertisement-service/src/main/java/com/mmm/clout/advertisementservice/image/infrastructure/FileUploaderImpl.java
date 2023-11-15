@@ -5,8 +5,10 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.image.domain.AdvertiseSign;
 import com.mmm.clout.advertisementservice.image.domain.FileUploader;
 import com.mmm.clout.advertisementservice.image.domain.Image;
+import com.mmm.clout.advertisementservice.image.domain.repository.AdvertiseSignRepository;
 import com.mmm.clout.advertisementservice.image.domain.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +37,7 @@ public class FileUploaderImpl implements FileUploader {
     private String bucket;
     private final AmazonS3Client amazonS3Client;
     private final ImageRepository imageRepository;
+    private final AdvertiseSignRepository advertiseSignRepository;
 
     @Override
     @Transactional
@@ -42,7 +45,7 @@ public class FileUploaderImpl implements FileUploader {
         //file uploader
         for(MultipartFile multipartFile : files) {
             String originalName = multipartFile.getOriginalFilename();
-            String uploadedPath = upload(multipartFile, campaign.getId());
+            String uploadedPath = upload(multipartFile, campaign.getAdvertiserId());
             Image image = Image.create(
                 campaign,
                 originalName,
@@ -65,7 +68,35 @@ public class FileUploaderImpl implements FileUploader {
         int max = 100000;
         int random = (int) ((Math.random() * (max - min)) + min);
 
-        String filename = "clouter/targetId"+targetId+"-"+random+"-"+multipartFile.getOriginalFilename();
+        String filename = "campaign/targetId"+targetId+"-"+random+"-"+multipartFile.getOriginalFilename();
+        log.info("S3Uploader_upload_end(MultipartFile): " + uploadFile);
+        String uploadPath = upload(uploadFile, filename);
+        return filename;
+    }
+
+    @Override
+    public String uploadSign(MultipartFile multipartFile,Campaign campaign) throws IOException {
+        log.info("S3Uploader_upload_start(MultipartFile): " + multipartFile.getOriginalFilename() + " - " + multipartFile);
+
+        String originalName = multipartFile.getOriginalFilename();
+        String uploadedPath = upload(multipartFile, campaign.getAdvertiserId());
+        AdvertiseSign advertiseSign = AdvertiseSign.create(
+                campaign,
+                originalName,
+                "https://yangkidsbucket.s3.ap-northeast-2.amazonaws.com/" + uploadedPath,
+                uploadedPath
+        );
+        advertiseSignRepository.save(advertiseSign);
+
+        File uploadFile = convert(multipartFile)
+                .orElseThrow(IOException::new);
+
+        //난수생성
+        int min = 1;
+        int max = 100000;
+        int random = (int) ((Math.random() * (max - min)) + min);
+
+        String filename = "advertisementSign/targetId"+campaign.getAdvertiserId()+"-"+random+"-"+multipartFile.getOriginalFilename();
         log.info("S3Uploader_upload_end(MultipartFile): " + uploadFile);
         String uploadPath = upload(uploadFile, filename);
         return filename;

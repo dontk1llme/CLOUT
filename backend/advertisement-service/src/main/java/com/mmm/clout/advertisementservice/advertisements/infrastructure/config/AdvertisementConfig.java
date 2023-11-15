@@ -13,6 +13,7 @@ import com.mmm.clout.advertisementservice.advertisements.domain.repository.Campa
 import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import com.mmm.clout.advertisementservice.common.msa.provider.PointProvider;
+import com.mmm.clout.advertisementservice.image.domain.FileUploader;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -24,9 +25,10 @@ public class AdvertisementConfig {
     @Bean
     public CreateCampaignProcessor createAdvertisementProcessor(
             @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
-            PointProvider pointProvider
+            PointProvider pointProvider,
+            FileUploader fileUploader
             ) {
-        return new CreateCampaignProcessor(campaignRepository, pointProvider);
+        return new CreateCampaignProcessor(campaignRepository, pointProvider, fileUploader);
     }
 
     @Bean

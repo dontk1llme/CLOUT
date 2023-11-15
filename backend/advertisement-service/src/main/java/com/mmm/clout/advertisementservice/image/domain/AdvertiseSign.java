@@ -1,6 +1,5 @@
 package com.mmm.clout.advertisementservice.image.domain;
 
-import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -16,9 +15,9 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @SuperBuilder
 @DynamicInsert
-@Table(name = "image")
+@Table(name = "advertiseSign")
 @Entity
-public class Image {
+public class AdvertiseSign {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,20 +43,20 @@ public class Image {
     private Campaign campaign;
 
 
-    public Image(Campaign campaign, String originalName, String path, String imageName) {
+    public AdvertiseSign(Campaign campaign, String originalName, String path, String imageName) {
         this.campaign = campaign;
         this.path = path;
         this.imageName = imageName;
         this.originalName = originalName;
     }
 
-    public static Image create(
+    public static AdvertiseSign create(
             Campaign campaign,
             String originalName,
             String path,
             String imageName
     ){
-        return new Image(
+        return new AdvertiseSign(
                 campaign,
                 originalName,
                 path,

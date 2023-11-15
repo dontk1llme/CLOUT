@@ -58,8 +58,9 @@ public interface AdvertisementControllerDocs {
         )
     )
     ResponseEntity<CreateCampaignResponse> createCampaign(
-        @RequestBody CreateCampaignRequest request,
-        @RequestPart(value = "files", required = false) List<MultipartFile> fileList
+        @RequestPart CreateCampaignRequest request,
+        @RequestPart(value = "files", required = true) List<MultipartFile> fileList
+//        @RequestPart(value = "sign", required = true) MultipartFile sign
     ) throws Exception;
 
 

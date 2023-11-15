@@ -12,6 +12,8 @@ import java.util.List;
 public interface FileUploader {
     public String upload(MultipartFile multipartFile,Long targetId) throws Exception;
 
+    public String uploadSign(MultipartFile multipartFile,Campaign campaign) throws Exception;
+
     public boolean delete(String imagePath);
 
     public ResponseEntity<UrlResource> downloadImage(String originalFilename);

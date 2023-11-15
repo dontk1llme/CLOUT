@@ -1,12 +1,13 @@
 package com.mmm.clout.advertisementservice.image.infrastructure.persistance.jpa;
 
+import com.mmm.clout.advertisementservice.image.domain.AdvertiseSign;
 import com.mmm.clout.advertisementservice.image.domain.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface JpaImageRepository extends JpaRepository<Image, Long> {
+public interface JpaAdvertiseSignRepository extends JpaRepository<AdvertiseSign, Long> {
 
-        List<Image> findByCampaign_Id(Long Id);
+        List<AdvertiseSign> findByCampaign_Id(Long Id);
 
 }
