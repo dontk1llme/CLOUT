@@ -301,6 +301,16 @@ class _HomeState extends State<Home> {
                                             categoryList:
                                                 clouterInfo.categoryList ??
                                                     [''],
+                                            firstImg: clouterInfo
+                                                            .imageResponses !=
+                                                        null &&
+                                                    clouterInfo.imageResponses!
+                                                        .isNotEmpty
+                                                ? ImageResponse.fromJson(
+                                                        clouterInfo
+                                                            .imageResponses?[0])
+                                                    .path
+                                                : '',
                                             adPlatformList:
                                                 clouterInfo.channelList!
                                                     .map((e) => Sns2(

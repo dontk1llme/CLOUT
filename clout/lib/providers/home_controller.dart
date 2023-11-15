@@ -26,28 +26,29 @@ class HomeController extends GetxController {
         var advertiserInfo = AdvertiserInfo.fromJson(item['advertiserInfo']);
         isLoading = false;
         return CampaignInfo(
-          campaign.campaignId,
-          campaign.adPlatformList,
-          campaign.price,
-          campaign.details,
-          campaign.deletedAt,
-          campaign.title,
-          AdCategoryTranslator.translateAdCategory(campaign.adCategory!),
-          campaign.isPriceChangeable,
-          campaign.isDeliveryRequired,
-          campaign.numberOfRecruiter,
-          campaign.numberOfApplicants,
-          campaign.numberOfSelectedMembers,
-          campaign.offeringDetails,
-          campaign.sellingLink,
-          campaign.applyStartDate,
-          campaign.applyEndDate,
-          campaign.minClouterAge,
-          campaign.maxClouterAge,
-          campaign.minFollower,
-          advertiserInfo.companyInfo,
-          advertiserInfo.address,
-          advertiserInfo,
+          campaignId: campaign.campaignId,
+          adPlatformList: campaign.adPlatformList,
+          price: campaign.price,
+          details: campaign.details,
+          deletedAt: campaign.deletedAt,
+          title: campaign.title,
+          adCategory: AdCategoryTranslator.translateAdCategory(campaign.adCategory!),
+          isPriceChangeable: campaign.isPriceChangeable,
+          isDeliveryRequired: campaign.isDeliveryRequired,
+          numberOfRecruiter: campaign.numberOfRecruiter,
+          numberOfApplicants: campaign.numberOfApplicants,
+          numberOfSelectedMembers: campaign.numberOfSelectedMembers,
+          offeringDetails: campaign.offeringDetails,
+          sellingLink: campaign.sellingLink,
+          applyStartDate: campaign.applyStartDate,
+          applyEndDate: campaign.applyEndDate,
+          minClouterAge: campaign.minClouterAge,
+          maxClouterAge: campaign.maxClouterAge,
+          minFollower: campaign.minFollower,
+          companyInfo: advertiserInfo.companyInfo,
+          address: advertiserInfo.address,
+          advertiserInfo: advertiserInfo,
+          // imageResponses: campaign.i
         );
       }).toList();
     } else {
@@ -84,7 +85,7 @@ class HomeController extends GetxController {
           regionList: clouterInfo.regionList,
           address: clouterInfo.address,
           countOfContract: clouterInfo.countOfContract,
-          // imageResponses: clouterInfo.imageResponses,
+          imageResponses: clouterInfo.imageResponses,
         );
       }).toList();
     } else {

@@ -119,7 +119,7 @@ class ClouterJoinState extends State<ClouterJoin> {
 
     print(responseBody);
     showSnackBar();
-    Get.offAllNamed('/login');
+    // Get.offAllNamed('/login');
   }
 
   @override
