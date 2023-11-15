@@ -29,4 +29,6 @@ public class ApplicantListByCampaignReader {
     private Long clouterAvgStar;
 
     private List<ChannelInfo> clouterChannelList;
+
+    private Long clouterId;
 }

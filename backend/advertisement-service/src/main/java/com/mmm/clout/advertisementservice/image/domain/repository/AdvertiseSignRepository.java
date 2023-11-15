@@ -11,6 +11,8 @@ public interface AdvertiseSignRepository {
 
     List<AdvertiseSign> findByAdvertisementId(Long advertisementId);
 
+    List<AdvertiseSign> findByCampaignIdIn(List<Long> idList);
+
     AdvertiseSign delete(Long id);
 
     AdvertiseSign find(Long id);

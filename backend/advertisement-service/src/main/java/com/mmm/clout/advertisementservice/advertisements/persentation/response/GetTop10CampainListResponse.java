@@ -12,8 +12,6 @@ public class GetTop10CampainListResponse {
 
     private List<CampaignReaderResponse> top10CampaignList;
 
-
-
     public static GetTop10CampainListResponse from(List<CampaignReader> result) {
         List<CampaignReaderResponse> top10List = result.stream().map(
             CampaignReaderResponse::from
