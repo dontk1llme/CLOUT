@@ -38,7 +38,7 @@ class CampaginApplyController extends GetxController {
         await api.postRequest('/advertisement-service/v1/applies', requestBody);
     print('$requestBody');
     print('$response');
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       Fluttertoast.showToast(msg: '캠페인 지원이 완료되었습니다. ✨');
     } else {
       Fluttertoast.showToast(msg: '캠페인 지원에 실패하였습니다.. 다시 한 번 시도해주세요!😥');
