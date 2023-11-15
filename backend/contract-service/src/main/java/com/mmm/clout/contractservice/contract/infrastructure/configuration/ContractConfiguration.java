@@ -4,6 +4,8 @@ import com.mmm.clout.contractservice.contract.application.*;
 import com.mmm.clout.contractservice.contract.domain.provider.MemberProvider;
 import com.mmm.clout.contractservice.contract.domain.provider.PointProvider;
 import com.mmm.clout.contractservice.contract.domain.repository.ContractRepository;
+import com.mmm.clout.contractservice.image.domain.FileUploader;
+import com.mmm.clout.contractservice.image.domain.repository.ImageRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,9 +30,10 @@ public class ContractConfiguration {
     public UpdateStateContractProcessor updateStateContractProcessor(
             ContractRepository contractRepository,
             MemberProvider memberProvider,
-            PointProvider pointProvider
+            PointProvider pointProvider,
+            FileUploader fileUploader
     ) {
-        return new UpdateStateContractProcessor(contractRepository, memberProvider, pointProvider);
+        return new UpdateStateContractProcessor(contractRepository, memberProvider, pointProvider, fileUploader);
     }
 
     @Bean
@@ -54,5 +57,10 @@ public class ContractConfiguration {
     @Bean
     public SelectAllContractAdvertiserProcessor selectAllContractAdvertiserProcessor(ContractRepository contractRepository) {
         return new SelectAllContractAdvertiserProcessor(contractRepository);
+    }
+
+    @Bean
+    public GetContractFileProcessor getContractFileProcessor(ImageRepository imageRepository){
+        return new GetContractFileProcessor(imageRepository);
     }
 }
