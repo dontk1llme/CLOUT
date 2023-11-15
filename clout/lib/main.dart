@@ -1,9 +1,7 @@
 // Global
-import 'package:clout/screens/apply_campaign/apply_campaign.dart';
-import 'package:clout/screens/detail/clouter/clouter_detail.dart';
-import 'package:clout/screens/point/add/add_complete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //notification
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +33,10 @@ import 'package:clout/screens/mypage/clouter/clouter_mycampaign.dart';
 import 'package:clout/screens/point/add/add_first.dart';
 import 'package:clout/screens/point/add/add_second.dart';
 import 'package:clout/screens/point/advertiser_point_list.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:clout/screens/apply_campaign/apply_campaign.dart';
+import 'package:clout/screens/detail/clouter/clouter_detail.dart';
+import 'package:clout/screens/point/add/add_complete.dart';
+import 'package:clout/screens/review_register/review_register.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("백그라운드 메시지 처리.. ${message.notification!.body!}");
@@ -140,6 +141,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/campaignRegister', page: () => CampaignRegister()),
         GetPage(name: '/notification', page: () => NotificationPage()),
         GetPage(name: '/reviewcomplete', page: () => ReviewComplete()),
+        GetPage(name: '/reviewregister', page: () => ReviewRegister()),
         GetPage(name: '/chattinglist', page: () => ChattingList()),
         GetPage(name: '/clouterpointlist', page: () => ClouterPointList()),
         GetPage(name: '/cloutermypage', page: () => ClouterMyPage()),
