@@ -21,8 +21,9 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
   Widget build(BuildContext context) {
     infiniteController.setCurrentPage(0);
     infiniteController.setEndPoint(
-        '/advertisement-service/v1/applies/clouters?clouter=${userController.memberId}&page=${infiniteController.currentPage}&size=${10}');
-    infiniteController.setParameter('&type=ACCEPTED'); // 💥 typeEnum..? 추가하기
+        '/advertisement-service/v1/applies/clouters?clouterId=${userController.memberId}&page=${infiniteController.currentPage}&size=${10}');
+    infiniteController.setParameter('&type=WAITING'); // 💥 typeEnum..? 추가하기
+    infiniteController.getData();
     return GetBuilder<InfiniteScrollController>(
       tag: 'clouterMyCampaign',
       builder: (controller) => Scaffold(

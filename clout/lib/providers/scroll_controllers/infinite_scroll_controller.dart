@@ -57,7 +57,7 @@ class InfiniteScrollController extends GetxController {
           hasMore) {
         setCurrentPage(currentPage + 1);
       }
-      if (scrollController.value.position.pixels < -3000) {
+      if (scrollController.value.position.pixels < -300) {
         setCurrentPage(1);
         reload();
       }
@@ -81,32 +81,60 @@ class InfiniteScrollController extends GetxController {
     var appendData = [];
 
     if (contentList.isNotEmpty) {
+      print('여기까지 옴3');
       for (var item in contentList) {
-        var campaignData = CampaignInfo.fromJson(item['campaign']);
-        var advertiserData = AdvertiserInfo.fromJson(item['advertiserInfo']);
+        print('여기까지 옴4');
 
-        var campaignItemBox = Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: CampaignItemBox(
-            campaignId: campaignData.campaignId ?? 0,
-            adCategory: AdCategoryTranslator.translateAdCategory(
-                campaignData.adCategory!),
-            title: campaignData.title ?? "제목없음",
-            price: campaignData.price ?? 0,
-            companyInfo: advertiserData.companyInfo!,
-            numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
-            numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
-            // firstImg:
-            //     ImageResponse.fromJson(campaignData.imageResponses?[0]).path,
-            adPlatformList: campaignData.adPlatformList
-                    ?.map((platform) => Sns2(platform: platform))
-                    .toList() ??
-                [],
-            advertiserInfo: advertiserData,
-            // firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
-          ),
-        );
-        appendData.add(campaignItemBox);
+        if (item.containsKey('applyId')) {
+          var campaignData = ApplyContent.fromJson(item);
+          print('🌟 계약으로 오나..?');
+
+          var campaignItemBox = Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: CampaignItemBox(
+              applyId: campaignData.applyId ?? 0,
+              campaignId: campaignData.campaignId ?? 0,
+              adCategory: AdCategoryTranslator.translateAdCategory(
+                  campaignData.adCategory!),
+              title: campaignData.title ?? "제목없음",
+              price: campaignData.price ?? 0,
+              companyName: campaignData.companyName!,
+              numberOfSelectedMembers:
+                  campaignData.numberOfSelectedMembers ?? 0,
+              numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
+              advertiserAvgStar: campaignData.advertiserAvgStar ?? 0,
+              adPlatformList: campaignData.adPlatformList
+                      ?.map((platform) => Sns2(platform: platform))
+                      .toList() ??
+                  [],
+            ),
+          );
+          appendData.add(campaignItemBox);
+        } else {
+          var campaignData = CampaignInfo.fromJson(item['campaign']);
+          var advertiserData = AdvertiserInfo.fromJson(item['advertiserInfo']);
+          print('❌ 캠페인으로 가나..?');
+          var campaignItemBox = Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: CampaignItemBox(
+              campaignId: campaignData.campaignId ?? 0,
+              adCategory: AdCategoryTranslator.translateAdCategory(
+                  campaignData.adCategory!),
+              title: campaignData.title ?? "제목없음",
+              price: campaignData.price ?? 0,
+              companyInfo: advertiserData.companyInfo!,
+              numberOfSelectedMembers:
+                  campaignData.numberOfSelectedMembers ?? 0,
+              numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
+              adPlatformList: campaignData.adPlatformList
+                      ?.map((platform) => Sns2(platform: platform))
+                      .toList() ??
+                  [],
+              advertiserInfo: advertiserData,
+            ),
+          );
+          appendData.add(campaignItemBox);
+        }
       }
       data.addAll(appendData);
 
