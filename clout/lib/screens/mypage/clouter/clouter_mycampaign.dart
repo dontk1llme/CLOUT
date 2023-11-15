@@ -1,3 +1,5 @@
+import 'package:clout/utilities/bouncing_listview.dart';
+import 'package:clout/widgets/common/choicechip.dart';
 import 'package:clout/widgets/refreshable_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,6 +45,35 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
           controller: controller.scrollController.value,
           child: Column(
             children: [
+              BouncingListview(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: ActionChoiceExample(
+                    labels: ['대기중', '채택된 캠페인', '미채택된 캠페인', '신청 취소'],
+                    chipCount: 4,
+                    onChipSelected: (label) {
+                      String typeParam = '';
+                      switch (label) {
+                        case '대기중':
+                          typeParam = '&type=WAITING';
+                          break;
+                        case '채택된 캠페인':
+                          typeParam = '&type=ACCEPTED';
+                          break;
+                        case '미채택된 캠페인':
+                          typeParam = '&type=NOT_ACCEPTED';
+                          break;
+                        case '신청 취소':
+                          typeParam = '&type=CANCEL';
+                          break;
+                      }
+                      infiniteController.setParameter(typeParam);
+                      infiniteController.reload();
+                    },
+                  ),
+                ),
+              ),
               CampaignInfiniteScrollBody(controllerTag: 'clouterMyCampaign'),
               infiniteController.isLoading
                   ? Column(
