@@ -19,7 +19,7 @@ public class ImageRepositoryAdapter implements ImageRepository {
 
     @Override
     public List<Image> findByAdvertisementId(Long advertisementId) {
-        return jpaImageRepository.findByAdvertisement_Id(advertisementId);
+        return jpaImageRepository.findByCampaign_Id(advertisementId);
     }
 
     @Override

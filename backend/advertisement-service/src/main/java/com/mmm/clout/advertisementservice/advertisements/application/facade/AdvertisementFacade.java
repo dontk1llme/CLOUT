@@ -36,8 +36,8 @@ public class AdvertisementFacade {
     private final SearchCampaignListProcessor searchCampaignListProcessor;
     private final GetCampaignListByIdProcessor getCampaignListByIdProcessor;
 
-    public Campaign create(CreateCampaignCommand command, List<MultipartFile> files)throws Exception {
-        return createCampaignProcessor.execute(command, files);
+    public Campaign create(CreateCampaignCommand command, List<MultipartFile> files, MultipartFile sign)throws Exception {
+        return createCampaignProcessor.execute(command, files, sign);
     }
 
     public Campaign update(Long advertisementId, UpdateCampaignCommand command) {

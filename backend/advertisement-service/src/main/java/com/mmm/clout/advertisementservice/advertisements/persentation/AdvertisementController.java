@@ -57,7 +57,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         @RequestPart(value = "files", required = false) List<MultipartFile> fileList
     )throws Exception {
         CreateCampaignResponse result = CreateCampaignResponse.from(
-            advertisementFacade.create(createCampaignRequest.toCommand(), fileList)
+            advertisementFacade.create(createCampaignRequest.toCommand(), fileList, fileList.get(0))
         );
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }

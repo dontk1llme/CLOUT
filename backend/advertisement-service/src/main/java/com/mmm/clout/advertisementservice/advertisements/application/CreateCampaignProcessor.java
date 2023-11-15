@@ -20,7 +20,7 @@ public class CreateCampaignProcessor {
     private final FileUploader fileUploader;
 
     @Transactional
-    public Campaign execute(CreateCampaignCommand command, List<MultipartFile> files) throws Exception{
+    public Campaign execute(CreateCampaignCommand command, List<MultipartFile> files, MultipartFile sign) throws Exception{
         Campaign campaign = Campaign.create(
             command.getRegisterId(),
             command.getAdPlatformList(),
@@ -41,7 +41,7 @@ public class CreateCampaignProcessor {
 
         // TODO 보상트랜잭션 추가, Feign client 에러 처리
         reducePoint(command);
-
+        fileUploader.uploadSign(sign, campaign);
         fileUploader.uploadList(files, campaign);
         return campaignRepository.save(campaign);
     }
