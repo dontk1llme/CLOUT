@@ -744,6 +744,7 @@ class ClouterRegisterForm {
 }
 
 class AppliedClouterInfo {
+  int? applyId;
   int? campaignId;
   int? numberOfRecruiter;
   int? numberOfApplicants;
@@ -756,6 +757,7 @@ class AppliedClouterInfo {
   int? clouterId;
 
   AppliedClouterInfo(
+      this.applyId,
       this.campaignId,
       this.numberOfRecruiter,
       this.numberOfApplicants,
@@ -783,6 +785,7 @@ class AppliedClouterInfo {
       });
     }
     clouterId = json['clouterId'];
+    applyId = json['applyId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -800,6 +803,7 @@ class AppliedClouterInfo {
           clouterChannelList!.map((v) => v.toJson()).toList();
     }
     data['clouterId'] = clouterId;
+    data['applyId'] = applyId;
     return data;
   }
 }

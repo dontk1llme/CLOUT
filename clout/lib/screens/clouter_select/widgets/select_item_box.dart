@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
@@ -9,9 +12,9 @@ import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/buttons/small_button.dart';
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
-import 'package:clout/widgets/sns/sns4.dart';
 
 class SelectItemBox extends StatefulWidget {
+  final int? applyId;
   final int? clouterId;
   final String? nickName;
   final int? starRating;
@@ -21,6 +24,7 @@ class SelectItemBox extends StatefulWidget {
 
   const SelectItemBox(
       {super.key,
+      this.applyId,
       this.clouterId,
       this.nickName,
       this.starRating,
@@ -114,7 +118,10 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                           flex: 1,
                           child: BigButton(
                             title: '채택하기',
-                            function: () {},
+                            function: () {
+                              selection();
+                              Get.back();
+                            },
                           )),
                     ],
                   ))
@@ -125,7 +132,49 @@ class _SelectItemBoxState extends State<SelectItemBox> {
     );
   }
 
-  void _showContent() {
+  // 채택 api
+  selection() async {
+    final AuthorizedApi authorizedApi = AuthorizedApi();
+
+    var requestBody = {
+      "applyId": widget.applyId,
+    };
+
+    var response = await authorizedApi.postRequest(
+        '/advertisement-service/v1/applies/${widget.applyId}/selection',
+        requestBody);
+
+    print(response);
+
+    if (response['statusCode'] == 200) {
+      print('클라우터 채택 성공~~ 🎉');
+    } else {
+      print('클라우터 채택 실패.. 😥');
+    }
+  }
+
+  // 한마디 보기 api
+  var message = '';
+  int applyId = 0;
+
+  _showContent() {
+    getData() async {
+      await Future.delayed(Duration(seconds: 2));
+
+      final AuthorizedApi authorizedApi = AuthorizedApi();
+      var response = await authorizedApi.getRequest(
+          '/advertisement-service/v1/applies/', '${widget.applyId}/msg');
+
+      var jsonData = jsonDecode(response['body']);
+      message = jsonData['message'];
+      applyId = jsonData['applyId'];
+    }
+
+    initState() {
+      getData();
+      super.initState();
+    }
+
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -196,11 +245,14 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                       ),
                     ),
                     height: 200,
-                    child: BouncingListview(
-                      child: Text(
-                        '저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다. 저 정말 잘할 자신 있읍니다.  저 정말 잘할 자신 있읍니다.  저 정말 잘할 자신 있읍니다.',
-                        style: TextStyle(
-                          fontSize: 17,
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: BouncingListview(
+                        child: Text(
+                          message,
+                          style: TextStyle(
+                            fontSize: 17,
+                          ),
                         ),
                       ),
                     ),
@@ -239,12 +291,15 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                       width: 5,
                     ),
                     Expanded(
-                        flex: 1,
-                        child: BigButton(
-                            title: '채택하기',
-                            function: () {
-                              _selectClouter();
-                            })),
+                      flex: 1,
+                      child: BigButton(
+                        title: '채택하기',
+                        function: () {
+                          Get.back();
+                          _selectClouter();
+                        },
+                      ),
+                    ),
                   ],
                 ),
               )
@@ -350,7 +405,9 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                     flex: 1,
                     child: SmallButton(
                       title: '한마디 보기',
-                      function: _showContent,
+                      function: () {
+                        _showContent();
+                      },
                     ),
                   ),
                   SizedBox(width: 10),
@@ -358,7 +415,10 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                     flex: 1,
                     child: SmallButton(
                       title: '채택하기',
-                      function: _selectClouter,
+                      function: () {
+                        _selectClouter();
+                        Get.back();
+                      },
                     ),
                   )
                 ],
