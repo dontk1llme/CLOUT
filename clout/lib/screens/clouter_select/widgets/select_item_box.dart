@@ -16,7 +16,7 @@ class SelectItemBox extends StatefulWidget {
   final String? nickName;
   final int? starRating;
   final int? fee;
-  final List<String>? selectedPlatform;
+  final List<Widget>? selectedPlatform;
   // String? firstImg; // 💥 사진 추가
 
   const SelectItemBox(
@@ -257,11 +257,22 @@ class _SelectItemBoxState extends State<SelectItemBox> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> platformWidgets = [];
+
+    if (widget.selectedPlatform != null) {
+      for (var platformWidget in widget.selectedPlatform!) {
+        platformWidgets.add(platformWidget);
+        platformWidgets.add(SizedBox(width: 5));
+      }
+    }
+
     return LayoutBuilder(builder: (context, constraints) {
       double containerWidth = constraints.maxWidth;
       double imageWidth = containerWidth * 0.3;
 
-      return Container(
+      return InkWell(
+        onTap: () => Get.toNamed('/clouterdetail', arguments: widget.clouterId),
+        child: Container(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
           margin: EdgeInsets.only(bottom: 15),
           width: containerWidth,
@@ -292,7 +303,9 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            DataTitle(text: '${widget.nickName} '),
+                            Text('${widget.nickName}',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
                             Row(
                               children: [
                                 Icon(Icons.star, color: Colors.amber, size: 20),
@@ -317,9 +330,14 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                             )
                           ],
                         ),
-                        SizedBox(height: 15),
-                        // 여기에 sns 팔로워 수 정보
-                        Sns4(selectedPlatform: widget.selectedPlatform!),
+                        SizedBox(height: 10),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: platformWidgets,
+                          ),
+                        ),
                       ],
                     ),
                   )
@@ -346,7 +364,9 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                 ],
               )
             ],
-          ));
+          ),
+        ),
+      );
     });
   }
 }

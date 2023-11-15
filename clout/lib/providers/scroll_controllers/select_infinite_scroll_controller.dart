@@ -8,9 +8,6 @@ import 'dart:async';
 import 'package:clout/type.dart';
 import 'package:clout/hooks/apis/authorized_api.dart';
 
-// controllers
-import 'package:clout/providers/user_controllers/user_controller.dart';
-
 // widgets
 import 'package:clout/screens/clouter_select/widgets/select_item_box.dart';
 
@@ -26,6 +23,10 @@ class SelectInfiniteScrollController extends GetxController {
   var endPoint = '';
   var parameter = '';
   var campaignId = Get.arguments;
+
+  int numberOfRecruiter = 0;
+  int numberOfApplicants = 0;
+  int numberOfSelectedMembers = 0;
 
   setEndPoint(input) {
     endPoint = input;
@@ -43,6 +44,21 @@ class SelectInfiniteScrollController extends GetxController {
     update();
   }
 
+  setNumberOfRecruiter(input) {
+    numberOfRecruiter = input;
+    update();
+  }
+
+  setNumberOfApplicants(input) {
+    numberOfApplicants = input;
+    update();
+  }
+
+  setNumberOfSelectedMembers(input) {
+    numberOfSelectedMembers = input;
+    update();
+  }
+
   @override
   void onInit() {
     scrollController.value.addListener(() {
@@ -54,6 +70,7 @@ class SelectInfiniteScrollController extends GetxController {
       }
     });
 
+    _getData();
     super.onInit();
   }
 
@@ -66,12 +83,16 @@ class SelectInfiniteScrollController extends GetxController {
     final AuthorizedApi authorizedApi = AuthorizedApi();
     print(parameter);
     var response = await authorizedApi.getRequest(
-        '/advertisement-service/v1/applies/advertisers?', parameter);
+        '/advertisement-service/v1/applies/advertisers', parameter);
 
     var jsonData = jsonDecode(response['body']);
     var contentList = jsonData['content'] as List;
-
+    print(contentList);
     var appendData = [];
+
+    setNumberOfRecruiter(contentList[0]['numberOfRecruiter']);
+    setNumberOfApplicants(contentList[0]['numberOfApplicants']);
+    setNumberOfSelectedMembers(contentList[0]['numberOfSelectedMembers']);
 
     if (contentList.isNotEmpty) {
       for (var item in contentList) {
@@ -80,14 +101,17 @@ class SelectInfiniteScrollController extends GetxController {
         var selectItemBox = Padding(
           padding: EdgeInsets.all(5),
           child: SelectItemBox(
-            clouterId: clouterInfo.campaignId,
+            clouterId: clouterInfo.clouterId,
             fee: clouterInfo.hopeAdFee,
             nickName: clouterInfo.nickname,
             starRating: clouterInfo.clouterAvgStar,
-            // selectedPlatform: clouterInfo.clouterChannelList
-            //         ?.map((channel) => Sns4(selectedPlatform: channel.platform))
-            //         .toList() ??
-            //     [],
+            selectedPlatform: clouterInfo.clouterChannelList
+                    ?.map((channel) => Sns4(
+                          platform: channel.platform,
+                          followerScale: channel.followerScale,
+                        ))
+                    .toList() ??
+                [],
           ),
         );
         appendData.add(selectItemBox);
