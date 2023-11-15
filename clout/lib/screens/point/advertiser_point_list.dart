@@ -100,10 +100,10 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 19),
                   ),
                 ),
-                ActionChoiceExample(
-                  labels: ['전체 내역', '사용 내역', '충전 내역'],
-                  chipCount: 3,
-                ),
+                // ActionChoiceExample(
+                //   labels: ['전체 내역', '사용 내역', '충전 내역'],
+                //   chipCount: 3,
+                // ),
                 Divider(
                   color: style.colors['lightgray'],
                   thickness: 1,

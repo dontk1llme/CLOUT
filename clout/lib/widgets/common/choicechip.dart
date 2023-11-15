@@ -4,9 +4,13 @@ import 'package:clout/style.dart' as style;
 class ActionChoiceExample extends StatefulWidget {
   final List<String> labels;
   final int chipCount;
+  final Function(String) onChipSelected;
 
   const ActionChoiceExample(
-      {Key? key, required this.labels, required this.chipCount})
+      {Key? key,
+      required this.labels,
+      required this.chipCount,
+      required this.onChipSelected})
       : super(key: key);
 
   @override
@@ -26,7 +30,7 @@ class _ActionChoiceExampleState extends State<ActionChoiceExample> {
             widget.chipCount,
             (int index) {
               return ChoiceChip(
-                pressElevation:0,
+                pressElevation: 0,
                 showCheckmark: true,
                 checkmarkColor: style.colors['main1'],
                 surfaceTintColor: Colors.black,
@@ -36,8 +40,10 @@ class _ActionChoiceExampleState extends State<ActionChoiceExample> {
                   setState(() {
                     _value = selected ? index : null;
                   });
+                  if (selected) {
+                    widget.onChipSelected(widget.labels[index]);
+                  }
                 },
-                // disabledColor: Colors.red,
                 backgroundColor: _value == index
                     ? style.colors['main2']
                     : Colors.transparent,
