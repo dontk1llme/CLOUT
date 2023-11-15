@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 // api
@@ -47,6 +48,13 @@ class InfiniteScrollController extends GetxController {
     update();
   }
 
+  setIsLoading(input) {
+    isLoading = input;
+    update();
+  }
+
+  Timer _timer = Timer(Duration(milliseconds: 3000), () {});
+
   @override
   void onInit() {
     scrollController.value.addListener(() {
@@ -57,9 +65,14 @@ class InfiniteScrollController extends GetxController {
           hasMore) {
         setCurrentPage(currentPage + 1);
       }
-      if (scrollController.value.position.pixels < -3000) {
-        setCurrentPage(1);
-        reload();
+      if (scrollController.value.position.pixels < -200) {
+        if (!_timer.isActive) {
+          HapticFeedback.mediumImpact();
+          setCurrentPage(0);
+          reload();
+          // isLoading = true;
+          _timer = Timer(Duration(milliseconds: 3000), () {});
+        }
       }
     });
 
@@ -84,7 +97,7 @@ class InfiniteScrollController extends GetxController {
       for (var item in contentList) {
         var campaignData = CampaignInfo.fromJson(item['campaign']);
         var advertiserData = AdvertiserInfo.fromJson(item['advertiserInfo']);
-
+        var imageList = item['imageList'];
         var campaignItemBox = Padding(
           padding: const EdgeInsets.all(10.0),
           child: CampaignItemBox(
@@ -96,8 +109,7 @@ class InfiniteScrollController extends GetxController {
             companyInfo: advertiserData.companyInfo!,
             numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
             numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
-            // firstImg:
-            //     ImageResponse.fromJson(campaignData.imageResponses?[0]).path,
+            firstImg: ImageResponse.fromJson(imageList[0]).path,
             adPlatformList: campaignData.adPlatformList
                     ?.map((platform) => Sns2(platform: platform))
                     .toList() ??
@@ -114,20 +126,19 @@ class InfiniteScrollController extends GetxController {
       hasMore = contentList.isNotEmpty;
       update();
     } else {
+      isLoading = false;
       hasMore = false;
-      // isLoading = contentList.isNotEmpty;
       update();
     }
   }
 
   reload() async {
-    isLoading = true;
+    setIsLoading(true);
     data.clear();
-    update();
     setCurrentPage(0);
-    await Future.delayed(Duration(seconds: 2));
+    // await Future.delayed(Duration(seconds: 2));
 
-    getData();
+    await getData();
     update();
   }
 }
