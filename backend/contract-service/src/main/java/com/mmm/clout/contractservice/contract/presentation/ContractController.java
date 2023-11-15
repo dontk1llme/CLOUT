@@ -1,11 +1,14 @@
 package com.mmm.clout.contractservice.contract.presentation;
 
 import com.mmm.clout.contractservice.contract.application.facade.ContractFacade;
+import com.mmm.clout.contractservice.contract.application.reader.ContractReader;
 import com.mmm.clout.contractservice.contract.presentation.docs.ContractControllerDocs;
 import com.mmm.clout.contractservice.contract.presentation.request.CreateContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.request.UpdateRRNContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.response.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,32 +64,50 @@ public class ContractController implements ContractControllerDocs {
     }
 
     @GetMapping("/{contractId}")
-    public ResponseEntity<SelectContractResponse> select(
+    public ResponseEntity<ContractReader> select(
             @PathVariable("contractId") Long id
     ) {
-        SelectContractResponse response = SelectContractResponse.from(
+        ContractReader response = ContractReader.from(
                 contractFacade.select(id)
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/cloter")
-    public ResponseEntity<AllSelectContractsResponse> selectClouter(
+    public ResponseEntity<CustomPageResponse<ContractReader>> selectClouter(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
             @RequestParam("clouterId") Long clouterId
     ) {
-        AllSelectContractsResponse response = AllSelectContractsResponse.from(
-                contractFacade.selectAllClouter(clouterId)
+        Page<ContractReader> searched = contractFacade.selectAllClouter(clouterId, PageRequest.of(page, size));
+
+        CustomPageResponse response = new CustomPageResponse(
+            searched.toList(),
+            searched.getNumber(),
+            searched.getSize(),
+            searched.getTotalPages(),
+            searched.getTotalElements()
         );
-        return new ResponseEntity<AllSelectContractsResponse>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/advertiser")
-    public ResponseEntity<AllSelectContractsResponse> selectAdvertiser(
+    public ResponseEntity<CustomPageResponse<ContractReader>> selectAdvertiser(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
             @RequestParam("advertiserId") Long advertiserId
     ) {
-        AllSelectContractsResponse response = AllSelectContractsResponse.from(
-                contractFacade.selectAllAdvertiser(advertiserId)
+
+        Page<ContractReader> searched = contractFacade.selectAllAdvertiser(advertiserId, PageRequest.of(page, size));
+
+        CustomPageResponse response = new CustomPageResponse(
+            searched.toList(),
+            searched.getNumber(),
+            searched.getSize(),
+            searched.getTotalPages(),
+            searched.getTotalElements()
         );
-        return new ResponseEntity<AllSelectContractsResponse>(response, HttpStatus.OK);
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

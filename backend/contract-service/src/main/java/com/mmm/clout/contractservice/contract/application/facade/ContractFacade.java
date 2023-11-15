@@ -2,12 +2,15 @@ package com.mmm.clout.contractservice.contract.application.facade;
 
 import com.mmm.clout.contractservice.contract.application.*;
 import com.mmm.clout.contractservice.contract.application.command.CreateContractCommand;
+import com.mmm.clout.contractservice.contract.application.reader.ContractReader;
 import com.mmm.clout.contractservice.contract.domain.Contract;
 import com.mmm.clout.contractservice.contract.presentation.response.DeleteContractResponse;
 import com.mmm.clout.contractservice.contract.presentation.response.UpdateRRNContractResponse;
 import com.mmm.clout.contractservice.contract.presentation.response.UpdateStateContractResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,11 +48,11 @@ public class ContractFacade {
         return selectContractProcessor.execute(id);
     }
 
-    public List<Contract> selectAllClouter(Long clouterId) {
-        return selectAllContractClouterProcessor.execute(clouterId);
+    public Page<ContractReader> selectAllClouter(Long clouterId, Pageable pageable) {
+        return selectAllContractClouterProcessor.execute(clouterId, pageable);
     }
 
-    public List<Contract> selectAllAdvertiser(Long advertiserId) {
-        return selectAllContractAdvertiserProcessor.execute(advertiserId);
+    public Page<ContractReader> selectAllAdvertiser(Long advertiserId, Pageable pageable) {
+        return selectAllContractAdvertiserProcessor.execute(advertiserId, pageable);
     }
 }
