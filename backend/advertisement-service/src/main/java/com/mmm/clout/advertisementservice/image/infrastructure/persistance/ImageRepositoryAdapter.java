@@ -23,6 +23,11 @@ public class ImageRepositoryAdapter implements ImageRepository {
     }
 
     @Override
+    public List<Image> findByCampaignIdIn(List<Long> idList) {
+        return jpaImageRepository.findByCampaign_IdIn(idList);
+    }
+
+    @Override
     public Image delete(Long id){
         Image image = jpaImageRepository.findById(id)
                 .orElseThrow(IllegalAccessError::new);

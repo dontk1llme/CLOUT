@@ -26,7 +26,9 @@ public class CreateContractCommand {
 
     private Long clouterId;
 
-    public CreateContractCommand(Apply apply) {
+    private String path;
+
+    public CreateContractCommand(Apply apply, String path) {
         this.name = apply.getCampaign().getTitle();
         hopeFeeCheck(apply);
         this.postDeadline = DateConstants.ONE_MONTH;
@@ -34,6 +36,7 @@ public class CreateContractCommand {
         this.contents = apply.getCampaign().getDetails();
         this.advertiserId = apply.getCampaign().getAdvertiserId();
         this.clouterId = apply.getApplicant().getApplicantId();
+        this.path = path;
     }
 
     private void hopeFeeCheck(Apply apply) {
