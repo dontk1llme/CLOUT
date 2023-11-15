@@ -77,7 +77,8 @@ class _RegionMultiSelectState extends State<RegionMultiSelect> {
                                 controller.regionsSelectedBool[index].region),
                             onChanged: (value) =>
                                 {controller.setSelectDeselect(index)},
-                            value: controller.regionsSelectedBool[index].selected,
+                            value:
+                                controller.regionsSelectedBool[index].selected,
                             activeColor: style.colors['main1'],
                           ),
                         ),
