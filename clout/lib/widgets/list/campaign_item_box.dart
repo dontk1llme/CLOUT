@@ -27,6 +27,12 @@ class CampaignItemBox extends StatefulWidget {
   String? companyName;
   int? advertiserAvgStar;
 
+  // String? type;
+  // ApplyContent? applyContent; != null
+  // CampaignInfo? campaignInfo;
+  // AdvertiserInf? advertiserInfo;
+  // List<dynamic> imageList;
+
   CampaignItemBox({
     super.key,
     this.campaignId,
@@ -153,39 +159,35 @@ class _CampaignItemBoxState extends State<CampaignItemBox> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Flexible(
-                  //   flex: 2,
-                  //   child: Text(
-                  //       widget.companyInfo!.companyName! == null
-                  //           ? widget.companyName!
-                  //           : '',
-                  //       maxLines: 1,
-                  //       overflow: TextOverflow.ellipsis,
-                  //       style: TextStyle(
-                  //         fontSize: screenWidth > 400 ? 13 : 11,
-                  //       )),
-                  // ),
-                  // Flexible(
-                  //     flex: 1,
-                  //     child: Row(
-                  //       children: [
-                  //         Icon(
-                  //           Icons.star,
-                  //           color: Colors.yellow,
-                  //           size: screenWidth > 400 ? 18 : 15,
-                  //         ),
-                  //         Text(
-                  //             widget.advertiserInfo!.advertiserAvgStar!
-                  //                         .toString() ==
-                  //                     null
-                  //                 ? widget.advertiserAvgStar!.toString()
-                  //                 : '0',
-                  //             style: TextStyle(
-                  //               fontWeight: FontWeight.w600,
-                  //               fontSize: screenWidth > 400 ? 13 : 11,
-                  //             )),
-                  //       ],
-                  //     )),
+                  Flexible(
+                    flex: 2,
+                    child: Text(
+                        widget.companyInfo?.companyName ?? widget.companyName!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: screenWidth > 400 ? 13 : 11,
+                        )),
+                  ),
+                  Flexible(
+                      flex: 1,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                            size: screenWidth > 400 ? 18 : 15,
+                          ),
+                          Text(
+                              widget.advertiserInfo?.advertiserAvgStar
+                                      .toString() ??
+                                  widget.advertiserAvgStar.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth > 400 ? 13 : 11,
+                              )),
+                        ],
+                      )),
                 ],
               )
             ],
