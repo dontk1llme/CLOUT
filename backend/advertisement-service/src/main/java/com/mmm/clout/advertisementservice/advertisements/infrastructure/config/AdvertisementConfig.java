@@ -45,9 +45,11 @@ public class AdvertisementConfig {
 
     @Bean
     public DeleteCampaignProcessor deleteCampaignProcessor(
-        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
+        FileUploader fileUploader,
+        ImageRepository imageRepository
     ) {
-        return new DeleteCampaignProcessor(campaignRepository);
+        return new DeleteCampaignProcessor(campaignRepository, imageRepository, fileUploader);
     }
 
     @Bean
