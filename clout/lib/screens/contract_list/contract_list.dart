@@ -1,5 +1,5 @@
 import 'package:clout/widgets/loading_indicator.dart';
-import 'package:clout/widgets/refreshable_page.dart';
+import 'package:clout/widgets/refreshable_container.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -13,12 +13,6 @@ import 'package:clout/screens/contract_list/widgets/small_contract.dart';
 // controllers
 import 'package:clout/providers/scroll_controllers/contract_infinite_scroll_controller.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-
-// class Contract {
-//   int contractId = 1;
-//   String name = '못골영농조합법인';
-//   String pay = '1,000 포인트'; // 포인트 또는 제공물품
-// }
 
 class ContractList extends GetView<ContractInfiniteScrollController> {
   ContractList({super.key});
@@ -41,54 +35,70 @@ class ContractList extends GetView<ContractInfiniteScrollController> {
         ),
       ),
       body: GetBuilder<ContractInfiniteScrollController>(
-        builder: (controller) => RefreshablePage(
+        builder: (controller) => RefreshableContainer(
           controller: controller.scrollController.value,
-          child: Container(
-            color: Colors.white,
-            width: double.infinity,
-            child: BouncingListview(
-              child: FractionallySizedBox(
-                alignment: Alignment.center,
-                widthFactor: 0.9,
-                child: !controller.isLoading
-                    ? Column(
-                        children: [
-                          ActionChoiceExample(
-                            labels: ['전체 내역', '서명 대기', '진행중', '계약 만료'],
-                            chipCount: 4,
-                            onChipSelected: (label) {},
-                          ),
-                          Column(children: controller.data),
-                          controller.hasMore && controller.dataLoading
-                              ? Column(
-                                  children: [
-                                    SizedBox(height: 50),
-                                    SizedBox(
-                                        height: 70,
-                                        child: Center(child: LoadingWidget())),
-                                  ],
+          child: FractionallySizedBox(
+              widthFactor: 0.9,
+              child: Column(
+                children: [
+                  ActionChoiceExample(
+                    labels: ['전체 내역', '서명 대기', '진행중', '계약 만료'],
+                    chipCount: 4,
+                    onChipSelected: (label) {},
+                  ),
+                  !controller.isLoading
+                      ? controller.data.isEmpty
+                          ? Column(
+                              children: [
+                                SizedBox(height: 50),
+                                Image.asset(
+                                  'assets/images/empty_campaign.png',
+                                  width: 70,
+                                  fit: BoxFit.fitWidth,
+                                ),
+                                SizedBox(height: 20),
+                                Text(
+                                  '대기 중이거나 확정된 계약서가 없어요 😢',
+                                  style: style.textTheme.headlineSmall
+                                      ?.copyWith(fontWeight: FontWeight.w400),
+                                  textAlign: TextAlign.center,
                                 )
-                              : SizedBox(height: 30),
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          SizedBox(height: screenHeight / 4),
-                          SizedBox(
-                              height: 70,
-                              child: Center(child: LoadingWidget())),
-                          SizedBox(height: 20),
-                          Text(
-                            '계약서 목록을 불러오는 중입니다.\n잠시만 기다려 주세요.',
-                            style: style.textTheme.headlineLarge
-                                ?.copyWith(fontWeight: FontWeight.w400),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-              ),
-            ),
-          ),
+                              ],
+                            )
+                          : Column(
+                              children: [
+                                ...controller.data,
+                                controller.hasMore && controller.dataLoading
+                                    ? Column(
+                                        children: [
+                                          SizedBox(height: 50),
+                                          SizedBox(
+                                              height: 70,
+                                              child: Center(
+                                                  child: LoadingWidget())),
+                                        ],
+                                      )
+                                    : Container()
+                              ],
+                            )
+                      : Column(
+                          children: [
+                            SizedBox(height: screenHeight / 4),
+                            SizedBox(
+                                height: 70,
+                                child: Center(child: LoadingWidget())),
+                            SizedBox(height: 20),
+                            Text(
+                              '계약서 목록을 불러오는 중입니다.\n잠시만 기다려 주세요.',
+                              style: style.textTheme.headlineMedium
+                                  ?.copyWith(fontWeight: FontWeight.w400),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                  SizedBox(height: 30),
+                ],
+              )),
         ),
       ),
     );

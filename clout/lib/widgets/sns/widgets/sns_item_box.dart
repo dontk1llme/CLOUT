@@ -38,7 +38,7 @@ class SnsItemBox extends StatelessWidget {
 
     return GestureDetector(
         onTap: () {
-          launchUrl(Uri.parse(snsUrl));
+          launchUrl(Uri.parse('https://$snsUrl'));
           print('연결된 링크로 이동~👻');
         },
         child: Container(
