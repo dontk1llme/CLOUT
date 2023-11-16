@@ -30,4 +30,10 @@ public class AddressResponse {
         this.mainAddress = address.getMainAddress();
         this.detailAddress = address.getDetailAddress();
     }
+
+    public void blur() {
+        this.zipCode = "@@@@@";
+        this.mainAddress = "@@@@@";
+        this.detailAddress = "@@@@@";
+    }
 }

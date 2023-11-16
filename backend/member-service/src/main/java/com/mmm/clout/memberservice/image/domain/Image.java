@@ -38,7 +38,7 @@ public class Image {
     //시간 + 난수생성 + 오리지널
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name="member_id", referencedColumnName = "member_id")
     private Member member;
 

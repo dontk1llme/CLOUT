@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Getter
@@ -32,7 +33,7 @@ public class ClouterFacade {
         return createClouterProcessor.execute(command, files);
     }
 
-    public Clouter update(UpdateClrCommand command) { return updateClouterProcessor.execute(command); }
+    public Clouter update(UpdateClrCommand command, List<MultipartFile> fileList) throws IOException { return updateClouterProcessor.execute(command, fileList); }
 
     public ClouterReader select(Long clouterId) { return selectClouterProcessor.execute(clouterId); }
 
