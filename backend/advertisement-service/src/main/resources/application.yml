@@ -5,7 +5,7 @@ spring:
   config:
     import: secret/application-secret.yml
   application:
-    name: advertisement-service-test
+    name: advertisement-service
   datasource:
     url: jdbc:mariadb://3.38.213.43:3306/advertisementdb
     driver-class-name: org.mariadb.jdbc.Driver
