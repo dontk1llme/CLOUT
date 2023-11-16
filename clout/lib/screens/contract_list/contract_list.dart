@@ -1,4 +1,5 @@
 import 'package:clout/widgets/loading_indicator.dart';
+import 'package:clout/widgets/refreshable_page.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
@@ -24,77 +25,67 @@ class ContractList extends GetView<ContractInfiniteScrollController> {
 
   var contractId = Get.arguments;
 
-  Contract contract = Contract();
+  final contractController = Get.put(ContractInfiniteScrollController());
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ContractInfiniteScrollController());
-    return GetBuilder<ContractInfiniteScrollController>(
-      builder: (controller) => Scaffold(
-        backgroundColor: style.colors['white'],
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70),
-          child: Header(
-            header: 4,
-            headerTitle: '내 계약서 목록',
-          ),
+    contractController.reload();
+    final screenHeight = MediaQuery.of(context).size.height;
+    return Scaffold(
+      backgroundColor: style.colors['white'],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: Header(
+          header: 4,
+          headerTitle: '내 계약서 목록',
         ),
-        body: Container(
-          color: Colors.white,
-          width: double.infinity,
-          child: BouncingListview(
-            child: FractionallySizedBox(
-              alignment: Alignment.center,
-              widthFactor: 0.9,
-              child: Column(
-                children: [
-                  ActionChoiceExample(
-                    labels: ['전체 내역', '서명 대기', '진행중', '계약 만료'],
-                    chipCount: 4,
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    controller: controller.scrollController.value,
-                    itemBuilder: (_, index) {
-                      if (index < controller.data.length) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: SmallContract(
-                              name: controller.data[index].name,
-                              pay: controller.data[index].pay,
-                              progress: false),
-                        );
-                      }
-
-                      if (controller.hasMore || controller.isLoading) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 20, bottom: 40),
-                          child: SizedBox(
-                            height: 50,
-                            child: Center(child: LoadingWidget()),
-                          ),
-                        );
-                      }
-
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+      body: GetBuilder<ContractInfiniteScrollController>(
+        builder: (controller) => RefreshablePage(
+          controller: controller.scrollController.value,
+          child: Container(
+            color: Colors.white,
+            width: double.infinity,
+            child: BouncingListview(
+              child: FractionallySizedBox(
+                alignment: Alignment.center,
+                widthFactor: 0.9,
+                child: !controller.isLoading
+                    ? Column(
                         children: [
-                          Text('데이터의 마지막 입니다'),
-                          IconButton(
-                            onPressed: () {
-                              controller.reload();
-                            },
-                            icon: Icon(Icons.refresh_outlined),
+                          ActionChoiceExample(
+                            labels: ['전체 내역', '서명 대기', '진행중', '계약 만료'],
+                            chipCount: 4,
+                            onChipSelected: (label) {},
                           ),
+                          Column(children: controller.data),
+                          controller.hasMore && controller.dataLoading
+                              ? Column(
+                                  children: [
+                                    SizedBox(height: 50),
+                                    SizedBox(
+                                        height: 70,
+                                        child: Center(child: LoadingWidget())),
+                                  ],
+                                )
+                              : SizedBox(height: 30),
                         ],
-                      );
-                    },
-                    itemCount: controller.data.length + 1,
-                  ),
-                  SizedBox(height: 30),
-                ],
+                      )
+                    : Column(
+                        children: [
+                          SizedBox(height: screenHeight / 4),
+                          SizedBox(
+                              height: 70,
+                              child: Center(child: LoadingWidget())),
+                          SizedBox(height: 20),
+                          Text(
+                            '계약서 목록을 불러오는 중입니다.\n잠시만 기다려 주세요.',
+                            style: style.textTheme.headlineLarge
+                                ?.copyWith(fontWeight: FontWeight.w400),
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      ),
               ),
             ),
           ),

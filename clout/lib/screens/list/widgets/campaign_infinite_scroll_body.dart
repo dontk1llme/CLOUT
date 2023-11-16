@@ -14,15 +14,12 @@ class CampaignInfiniteScrollBody extends StatelessWidget {
       tag: controllerTag,
       builder: (controller) => MasonryGridView.builder(
         shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
         ),
         itemBuilder: (_, index) {
-          print(
-              '💥 데이터 개수 : ${controller.data.length} 👉 campaign_infinite_scroll_body.dart');
           final campaign1 = controller.data[index];
-
           return campaign1;
         },
         itemCount: controller.data.length,

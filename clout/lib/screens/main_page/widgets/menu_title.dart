@@ -13,9 +13,9 @@ class MenuTitle extends StatelessWidget {
   final destination;
   move() {
     if (destination == 1) {
-      Get.to(ClouterList());
+      Get.to(() => ClouterList());
     } else {
-      Get.to(CampaignList());
+      Get.to(() => CampaignList());
     }
   }
 
