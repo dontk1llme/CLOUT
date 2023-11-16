@@ -12,6 +12,7 @@ import com.mmm.clout.memberservice.common.Category;
 import com.mmm.clout.memberservice.common.Platform;
 import com.mmm.clout.memberservice.common.Region;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -22,11 +23,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/v1/clouters")
 @RequiredArgsConstructor
+@Slf4j
 public class ClouterController implements ClouterControllerDocs{
 
     private final ClouterFacade clouterFacade;
@@ -42,13 +45,15 @@ public class ClouterController implements ClouterControllerDocs{
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{clouterId}")
+    @PostMapping(value = "/{clouterId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<UpdateClrResponse> update(
             @PathVariable("clouterId") Long clouterId,
-            @Valid @RequestBody UpdateClrRequest updateClrRequest
-    ) {
+            @RequestPart @Valid  UpdateClrRequest updateClrRequest,
+            @RequestPart(value = "files") List<MultipartFile> fileList
+    ) throws IOException {
+        log.info("넌 오니?");
         UpdateClrResponse result = UpdateClrResponse.from(
-                clouterFacade.update(updateClrRequest.toCommand(clouterId))
+                clouterFacade.update(updateClrRequest.toCommand(clouterId), fileList)
         );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

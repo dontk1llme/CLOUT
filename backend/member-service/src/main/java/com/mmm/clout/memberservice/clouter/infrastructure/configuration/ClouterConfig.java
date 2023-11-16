@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.IOException;
+
 @Configuration
 public class ClouterConfig {
 
@@ -44,10 +46,12 @@ public class ClouterConfig {
     }
 
     @Bean
-    public UpdateClouterProcessor updateClouterProcessor(
-        ClouterRepository clouterRepository, BCryptPasswordEncoder encoder
-    ) {
-        return new UpdateClouterProcessor(clouterRepository, encoder);
+    public UpdateClouterProcessor updateClouterProcessor (
+        ClouterRepository clouterRepository, BCryptPasswordEncoder encoder,
+        ImageRepository imageRepository,
+        FileUploader fileUploader
+    ) throws IOException {
+        return new UpdateClouterProcessor(clouterRepository, encoder, imageRepository, fileUploader);
     }
 
     @Bean

@@ -20,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "클라우터 CRUD", description = "클라우터 회원가입, 수정, 조회를 제공하는 api")
@@ -59,8 +61,9 @@ public interface ClouterControllerDocs {
     )
     public ResponseEntity<UpdateClrResponse> update(
         @PathVariable("clouterId") Long clouterId,
-        @RequestBody UpdateClrRequest updateClrRequest
-    );
+        @Valid @RequestPart UpdateClrRequest updateClrRequest,
+        @RequestPart(value = "files") List<MultipartFile> fileList
+    ) throws IOException;
 
 
     @Operation(summary = "클라우터 단건 조회",
