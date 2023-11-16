@@ -14,11 +14,10 @@ public class CheckApplyProcessor {
     @Transactional
     public ApplyCheckReader execute(Long advertisementId, Long clouterId) {
         Apply apply = applyRepository.findByCampaign_IdAndApplicant_ApplicantId(advertisementId, clouterId).orElse(null);
-
-        if (apply != null) {
-            return new ApplyCheckReader(apply.getId(), true);
-        } else {
+        if (Apply.invalid(apply)) {
             return new ApplyCheckReader(null, false);
+        } else {
+            return new ApplyCheckReader(apply.getId(), true);
         }
     }
 }

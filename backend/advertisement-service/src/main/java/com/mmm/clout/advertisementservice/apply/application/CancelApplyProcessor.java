@@ -15,6 +15,7 @@ public class CancelApplyProcessor {
     @Transactional
     public void execute(Long applyId) {
         Apply apply = applyRepository.findById(applyId).orElseThrow(EntityNotFoundException::new);
+        if (apply.getApplyStatus() == Apply.ApplyStatus.CANCEL) throw new EntityNotFoundException();
         apply.cancelApply();
     }
 }
