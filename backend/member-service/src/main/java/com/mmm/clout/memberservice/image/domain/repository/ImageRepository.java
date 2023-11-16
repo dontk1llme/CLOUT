@@ -16,4 +16,5 @@ public interface ImageRepository {
 
     List<Image> findByIdIn(List<Long> ids);
 
+    void deleteImage(Long id);
 }
