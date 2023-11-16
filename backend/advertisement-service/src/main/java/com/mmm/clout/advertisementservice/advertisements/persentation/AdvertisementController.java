@@ -23,6 +23,8 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.response.G
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
 import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -66,13 +68,14 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     /**
      * 캠페인 수정
      */
-    @PutMapping("/{advertisementId}")
+    @PostMapping(value = "/{advertisementId}/modify", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<UpdateCampaignResponse> updateCampaign(
         @PathVariable Long advertisementId,
-        @RequestBody @Valid UpdateCampaignRequest updateCampaignRequest
-    ) {
+        @RequestPart @Valid UpdateCampaignRequest updateCampaignRequest,
+        @RequestPart(value = "files") List<MultipartFile> fileList
+    ) throws Exception {
         UpdateCampaignResponse result = UpdateCampaignResponse.from(
-            advertisementFacade.update(advertisementId, updateCampaignRequest.toCommand()));
+            advertisementFacade.update(advertisementId, updateCampaignRequest.toCommand(), fileList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
