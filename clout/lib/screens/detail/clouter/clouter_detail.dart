@@ -1,6 +1,3 @@
-import 'package:clout/hooks/apis/normal_api.dart';
-import 'package:clout/main.dart';
-import 'package:clout/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -10,6 +7,7 @@ import 'dart:convert';
 import 'package:clout/type.dart';
 import 'package:clout/utilities/like_utils.dart';
 import 'package:clout/hooks/apis/authorized_api.dart';
+import 'package:clout/hooks/apis/normal_api.dart';
 
 // utility
 import 'package:clout/utilities/bouncing_listview.dart';
@@ -22,12 +20,14 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/buttons/like_button.dart';
 import 'package:clout/screens/chatting/widgets/chatting_item_box.dart';
+import 'package:clout/widgets/loading_indicator.dart';
 
 // screen
 import 'package:clout/screens/chatting/chatting_list.dart';
 
 // controller
 import 'package:clout/providers/user_controllers/user_controller.dart';
+import 'package:intl/intl.dart';
 
 class ClouterDetail extends StatefulWidget {
   const ClouterDetail({super.key});
@@ -40,6 +40,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
   ClouterInfo? clouterInfo;
   var clouterId = Get.arguments;
   var imageSliders;
+  var f = NumberFormat('###,###,###,###,###');
 
   final userController = Get.find<UserController>();
   bool _isLoading = true;
@@ -264,10 +265,7 @@ class _ClouterDetailState extends State<ClouterDetail> {
                                             style: TextStyle(fontSize: 15)),
                                         Row(
                                           children: [
-                                            Text(
-                                                clouterInfo?.minCost
-                                                        .toString() ??
-                                                    '',
+                                            Text(f.format(clouterInfo?.minCost),
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.w700,

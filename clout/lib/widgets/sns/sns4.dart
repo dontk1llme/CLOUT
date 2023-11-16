@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:intl/intl.dart';
 
 class Sns4 extends StatelessWidget {
   const Sns4({super.key, required this.platform, required this.followerScale});
@@ -9,6 +10,9 @@ class Sns4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int followerCount = int.tryParse(followerScale ?? '0') ?? 0;
+    String formattedFollowerScale =
+        NumberFormat('###,###,###,###').format(followerCount);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
@@ -19,7 +23,7 @@ class Sns4 extends StatelessWidget {
         children: [
           Image.asset('assets/images/${platform}.png', width: 20, height: 20),
           Text(
-            ' $followerScale명',
+            ' $formattedFollowerScale 명',
             style: TextStyle(fontSize: 12, color: style.colors['darkgray']),
           ),
         ],
