@@ -51,7 +51,6 @@ public class ClouterController implements ClouterControllerDocs{
             @RequestPart @Valid  UpdateClrRequest updateClrRequest,
             @RequestPart(value = "files") List<MultipartFile> fileList
     ) throws IOException {
-        log.info("넌 오니?");
         UpdateClrResponse result = UpdateClrResponse.from(
                 clouterFacade.update(updateClrRequest.toCommand(clouterId), fileList)
         );
@@ -65,6 +64,17 @@ public class ClouterController implements ClouterControllerDocs{
         SelectClrResponse result = SelectClrResponse.from(
                 clouterFacade.select(clouterId)
         );
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/noneAuth/{clouterId}")
+    public ResponseEntity<SelectClrResponse> selectClouterForNoneAuth(
+        @PathVariable("clouterId") Long clouterId
+    ) {
+        SelectClrResponse result = SelectClrResponse.from(
+            clouterFacade.select(clouterId)
+        );
+        result.blur();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
