@@ -78,6 +78,8 @@ public class ApplyRepositoryAdapter implements ApplyRepository {
             .where(campaignIdEq(advertisementId));
     }
 
+
+
     private static BooleanExpression campaignIdEq(Long advertisementId) {
         return apply.campaign.id.eq(advertisementId);
     }
@@ -93,5 +95,8 @@ public class ApplyRepositoryAdapter implements ApplyRepository {
         return jpaApplyRepository.findByCampaign(campaign);
     }
 
-
+    @Override
+    public Optional<Apply> findByCampaign_IdAndApplicant_ApplicantId(Long advertisementId, Long clouterId) {
+        return jpaApplyRepository.findByCampaign_IdAndApplicant_ApplicantId(advertisementId, clouterId);
+    }
 }
