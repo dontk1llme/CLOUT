@@ -47,7 +47,6 @@ class _RegionMultiSelectState extends State<RegionMultiSelect> {
           tag: widget.controllerTag,
           builder: (controller) {
             return SizedBox(
-              // color: Colors.white,
               height: 600,
               child: FractionallySizedBox(
                 widthFactor: 0.9,
