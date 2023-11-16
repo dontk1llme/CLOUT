@@ -54,7 +54,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<CreateCampaignResponse> createCampaign(
         @RequestPart @Valid CreateCampaignRequest createCampaignRequest,
-        @RequestPart(value = "files", required = false) List<MultipartFile> fileList
+        @RequestPart(value = "files") List<MultipartFile> fileList
     )throws Exception {
         MultipartFile sign = fileList.remove(0);
         CreateCampaignResponse result = CreateCampaignResponse.from(
@@ -99,7 +99,6 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         GetCampaignAndAdvertiserResponse result = GetCampaignAndAdvertiserResponse.from(
             advertisementFacade.get(advertisementId)
         );
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
