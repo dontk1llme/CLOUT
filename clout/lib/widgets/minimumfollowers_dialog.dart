@@ -47,7 +47,9 @@ class MinimumfollowersDialog extends StatelessWidget {
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                             color: style.colors['main1']!, width: 2))),
-                initialValue: controller.minimumFollowers,
+                initialValue: controller.minimumFollowers == '0'
+                    ? ''
+                    : controller.minimumFollowers,
                 onChanged: (newVal) {
                   controller.setMinimumFollowers(newVal);
                 },

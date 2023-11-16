@@ -1,9 +1,11 @@
 // Global
 import 'package:clout/type.dart';
 import 'package:clout/widgets/loading_indicator.dart';
+import 'package:clout/widgets/refreshable_container.dart';
 import 'package:clout/widgets/sns/sns2.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
 // utilities
@@ -250,9 +252,8 @@ class _HomeState extends State<Home> {
             header: 0,
           ),
         ),
-        body: SingleChildScrollView(
+        body: RefreshableContainer(
           controller: controller.scrollController.value,
-          physics: BouncingScrollPhysics(),
           child: Column(
             children: [
               Container(
@@ -363,16 +364,15 @@ class _HomeState extends State<Home> {
                                           numberOfRecruiter:
                                               campaignInfo.numberOfRecruiter ??
                                                   0,
-                                          firstImg: campaignInfo
-                                                          .imageList !=
-                                                      null &&
-                                                  campaignInfo.imageList!
-                                                      .isNotEmpty
-                                              ? ImageResponse.fromJson(
+                                          firstImg:
+                                              campaignInfo.imageList != null &&
                                                       campaignInfo
-                                                          .imageList?[0])
-                                                  .path
-                                              : '',
+                                                          .imageList!.isNotEmpty
+                                                  ? ImageResponse.fromJson(
+                                                          campaignInfo
+                                                              .imageList?[0])
+                                                      .path
+                                                  : '',
                                           adPlatformList:
                                               campaignInfo.adPlatformList!
                                                   .map((e) => Sns2(

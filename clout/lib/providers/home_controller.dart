@@ -11,16 +11,19 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   var scrollController = ScrollController().obs;
 
-  Timer _timer = Timer(Duration(milliseconds: 2000), () {});
+  Timer _timer = Timer(Duration(milliseconds: 3000), () {});
 
   @override
   void onInit() {
     scrollController.value.addListener(() {
-      if (scrollController.value.position.pixels < -200) {
+      print(scrollController.value.position.pixels);
+      if (scrollController.value.position.pixels < -100) {
         if (!_timer.isActive) {
           HapticFeedback.mediumImpact();
+          scrollController.value.animateTo(0,
+              duration: Duration(milliseconds: 2000), curve: Curves.easeInExpo);
           reload();
-          _timer = Timer(Duration(milliseconds: 2000), () {});
+          _timer = Timer(Duration(milliseconds: 3000), () {});
         }
       }
     });
@@ -79,6 +82,7 @@ class HomeController extends GetxController {
     } else {
       campaignData.value = [];
     }
+    isLoading = false;
     update();
   }
 
@@ -116,17 +120,16 @@ class HomeController extends GetxController {
     } else {
       clouterData.value = [];
     }
+    isLoading = false;
     update();
   }
 
   reload() async {
-    isLoading = true;
     campaignData.clear();
     clouterData.clear();
     isLoading = true;
-
+    update();
     fetchCampaigns();
     fetchClouters();
-    update();
   }
 }

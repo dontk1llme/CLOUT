@@ -58,16 +58,26 @@ class _ClouterDetailState extends State<ClouterDetail> {
   bool isItemLiked = false;
 
   _showDetail() async {
-    final NormalApi api = NormalApi();
+    final NormalApi normalApi = NormalApi();
+    final AuthorizedApi authorizedApi = AuthorizedApi();
 
     List<String> imgList = [];
-
-    var campaignResponse =
-        await api.getRequest('/member-service/v1/clouters/', clouterId);
-
-    var bookmarkResponse = await api.getRequest(
-        '/member-service/v1/bookmarks/check',
-        '?memberId=${userController.memberId}&targetId=$clouterId');
+    var campaignResponse;
+    if (userController.memberType == 0) {
+      await normalApi.getRequest(
+          '/member-service/v1/clouters/noneAuth/', clouterId);
+      print(campaignResponse);
+    } else {
+      campaignResponse = await authorizedApi.getRequest(
+          '/member-service/v1/clouters/', clouterId);
+    }
+    print(campaignResponse);
+    var bookmarkResponse;
+    if (userController.memberType != 0) {
+      bookmarkResponse = await authorizedApi.getRequest(
+          '/member-service/v1/bookmarks/check',
+          '?memberId=${userController.memberId}&targetId=$clouterId');
+    }
 
     if (campaignResponse != null) {
       final decodedResponse = jsonDecode(campaignResponse['body']);
