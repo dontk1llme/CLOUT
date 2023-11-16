@@ -50,9 +50,17 @@ class CampaignRegister extends StatelessWidget {
 
   register() async {
     if (campaignRegisterController.category != null &&
+        campaignRegisterController.category.length != 0 &&
         campaignRegisterController.campaignTitle != null &&
+        campaignRegisterController.campaignTitle.length != 0 &&
         campaignRegisterController.offeringItems != null &&
+        campaignRegisterController.offeringItems.length != 0 &&
         campaignRegisterController.itemDetail != null &&
+        campaignRegisterController.itemDetail.length != 0 &&
+        campaignRegisterController.imagePickerController.images.isNotEmpty &&
+        (campaignRegisterController.platformController.platforms[0] ||
+            campaignRegisterController.platformController.platforms[1] ||
+            campaignRegisterController.platformController.platforms[2]) &&
         !campaignRegisterController.isBlank) {
       await campaignRegisterController.setCampaign();
 
@@ -96,7 +104,28 @@ class CampaignRegister extends StatelessWidget {
         Get.offNamed('/home');
       }
     } else {
-      Fluttertoast.showToast(msg: '필수값 입력');
+      if (campaignRegisterController.category == null ||
+          campaignRegisterController.category.length == 0) {
+        Fluttertoast.showToast(msg: '카테고리를 선택해주세요');
+      } else if (campaignRegisterController.campaignTitle == null ||
+          campaignRegisterController.campaignTitle.length == 0) {
+        Fluttertoast.showToast(msg: '캠페인 제목을 입력해주세요');
+      } else if (campaignRegisterController.offeringItems == null ||
+          campaignRegisterController.offeringItems.length == 0) {
+        Fluttertoast.showToast(msg: '제공 내용을 입력해주세요');
+      } else if (campaignRegisterController.itemDetail == null ||
+          campaignRegisterController.itemDetail.length == 0) {
+        Fluttertoast.showToast(msg: '요구 사항을 입력해주세요');
+      } else if (campaignRegisterController
+          .imagePickerController.images.isEmpty) {
+        Fluttertoast.showToast(msg: '제품/서비스 사진을 최소 한장 업로드해주세요');
+      } else if (!campaignRegisterController.platformController.platforms[0] &&
+          !campaignRegisterController.platformController.platforms[1] &&
+          !campaignRegisterController.platformController.platforms[2]) {
+        Fluttertoast.showToast(msg: '광고 희망 플랫폼을 선택해주세요');
+      } else if (campaignRegisterController.isBlank) {
+        Fluttertoast.showToast(msg: '서명을 입력해주세요');
+      }
     }
   }
 
