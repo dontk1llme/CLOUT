@@ -80,6 +80,13 @@ class _CampaignDetailState extends State<CampaignDetail> {
         '/advertisement-service/v1/advertisements/', campaignId);
     // reponse = {'statusCode' : 값, 'body' : 값}
 
+    var bookmarkResponse;
+    if (userController.memberType == -1) {
+      bookmarkResponse = await authorizedApi.getRequest(
+          '/member-service/v1/bookmarks/check',
+          '?memberId=${userController.memberId}&targetId=$campaignId');
+    }
+
     if (response != null) {
       print(CampaignResponse.fromJson(jsonDecode(response['body'])));
       var decodedResponse = jsonDecode(response['body']);
@@ -129,6 +136,25 @@ class _CampaignDetailState extends State<CampaignDetail> {
         isLoading = false;
       });
     }
+
+    if (bookmarkResponse != null) {
+      final decodedResponse = jsonDecode(bookmarkResponse['body']);
+      print(decodedResponse);
+      setState(
+        () {
+          if (decodedResponse['check'] == null) {
+            isItemLiked = false;
+          } else {
+            isItemLiked = decodedResponse['check'];
+          }
+        },
+      );
+    } else {
+      print('clouter bookmark 여부 불러오기 실패 ❌');
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   // 캠페인 삭제 api
@@ -276,7 +302,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          userController.memberType == 0
+                          userController.memberType != -1
                               ? SizedBox(height: 20)
                               : Row(
                                   mainAxisAlignment: MainAxisAlignment.end,

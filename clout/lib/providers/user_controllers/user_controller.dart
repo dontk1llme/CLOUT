@@ -27,15 +27,15 @@ class UserController extends GetxController {
     update();
   }
 
-  setMemberId(input){
+  setMemberId(input) {
     memberId = input;
     update();
   }
 
-  // setUserId(input) {
-  //   userId = input;
-  //   update();
-  // }
+  setUserId(input) {
+    userId = input;
+    update();
+  }
 
   // setPassword(input) {
   //   password = input;
@@ -56,12 +56,12 @@ class UserController extends GetxController {
     update();
   }
 
-  setAccessToken(input){
+  setAccessToken(input) {
     accessToken = input;
     update();
   }
 
-  setRefreshToken(input){
+  setRefreshToken(input) {
     refreshToken = input;
     update();
   }

@@ -1,4 +1,3 @@
-import 'package:clout/widgets/header/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -11,9 +10,6 @@ import 'package:clout/hooks/apis/authorized_api.dart';
 
 // utilities
 import 'package:clout/utilities/category_translator.dart';
-
-// controllers
-import 'package:clout/providers/user_controllers/user_controller.dart';
 
 // widgets
 import 'package:clout/widgets/sns/sns2.dart';
@@ -31,6 +27,12 @@ class InfiniteScrollController extends GetxController {
   var currentPage = 0;
   var endPoint = '';
   var parameter = '';
+  var typeParam = '';
+
+  setTypeParam(input) {
+    typeParam = input;
+    update();
+  }
 
   setEndPoint(input) {
     endPoint = input;
@@ -85,10 +87,11 @@ class InfiniteScrollController extends GetxController {
       print('여기까지 옴1');
       print('여기까지 옴2');
       final AuthorizedApi authorizedApi = AuthorizedApi();
-      await setParameter(userController.memberType == -1
-          ? '?clouterId=${userController.memberId}&page=$currentPage&size=${10}'
-          : '?advertiserId=${userController.memberId}&page=$currentPage&size=${10}');
-      await Future.delayed(Duration(milliseconds: 600));
+      // await setParameter(userController.memberType == -1
+      // ? '?clouterId=${userController.memberId}&type=WAITING&page=$currentPage&size=${10}'
+      // ? '?clouterId=${userController.memberId}&page=$currentPage&size=${10}'
+      // : '?advertiserId=${userController.memberId}&page=$currentPage&size=${10}');
+      // await Future.delayed(Duration(milliseconds: 600));
       var response = await authorizedApi.getRequest(endPoint, parameter);
       print(response);
       var jsonData = jsonDecode(response['body']);
