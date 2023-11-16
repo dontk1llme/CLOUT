@@ -1,5 +1,6 @@
 package com.mmm.clout.advertisementservice.apply.presentation;
 
+import com.mmm.clout.advertisementservice.apply.presentation.response.ApplyCheckResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CustomPageResponse;
 import com.mmm.clout.advertisementservice.apply.application.facade.ApplyFacade;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplicantListByCampaignReader;
@@ -135,5 +136,20 @@ public class ApplyController implements ApplyControllerDocs {
     ) {
         applyFacade.selectForContract(applyId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     *  광고 어플라이 여부 리스폰스 api
+     */
+    @GetMapping("/applyCheck")
+    public ResponseEntity<ApplyCheckResponse> applycheck(
+        @RequestParam("advertisementId") Long advertisementId,
+        @RequestParam("clouterId") Long clouterId
+    ) {
+
+        ApplyCheckResponse response = ApplyCheckResponse.from(
+            applyFacade.applyCheck(advertisementId, clouterId)
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
