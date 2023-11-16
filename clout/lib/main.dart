@@ -1,4 +1,5 @@
 // Global
+import 'package:clout/screens/mypage/advertiser/advertiser_mycampaign.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -166,6 +167,8 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/addcomplete', page: () => AddComplete()),
         GetPage(name: '/applycampaign', page: () => ApplyCampaign()),
         GetPage(name: '/clouterselect', page: () => ClouterSelect()),
+        GetPage(
+            name: '/advertisermycampaign', page: () => AdvertiserMycampaign()),
       ],
     );
   }

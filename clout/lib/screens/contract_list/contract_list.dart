@@ -6,13 +6,10 @@ import 'package:get/get.dart';
 
 // widgets
 import 'package:clout/widgets/common/choicechip.dart';
-import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/header/header.dart';
-import 'package:clout/screens/contract_list/widgets/small_contract.dart';
 
 // controllers
 import 'package:clout/providers/scroll_controllers/contract_infinite_scroll_controller.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 class ContractList extends GetView<ContractInfiniteScrollController> {
   ContractList({super.key});
