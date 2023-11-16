@@ -26,4 +26,6 @@ public interface ApplyRepository {
     JPAQuery<Apply> countByStatus(Long applicantId, ApplyStatus applyStatus);
 
     JPAQuery<Apply> countByAdvertisement(Long advertisementId);
+
+    Optional<Apply> findByCampaign_IdAndApplicant_ApplicantId(Long advertisementId, Long clouterId);
 }

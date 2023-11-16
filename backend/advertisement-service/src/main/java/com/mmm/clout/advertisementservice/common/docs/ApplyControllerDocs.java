@@ -8,11 +8,7 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.response.D
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
 import com.mmm.clout.advertisementservice.apply.presentation.request.CreateApplyRequest;
-import com.mmm.clout.advertisementservice.apply.presentation.response.ApplicantResponse;
-import com.mmm.clout.advertisementservice.apply.presentation.response.ApplyMessageResponse;
-import com.mmm.clout.advertisementservice.apply.presentation.response.CreateApplyResponse;
-import com.mmm.clout.advertisementservice.apply.presentation.response.GetAllByStatusResponse;
-import com.mmm.clout.advertisementservice.apply.presentation.response.GetApplyByStatusResponse;
+import com.mmm.clout.advertisementservice.apply.presentation.response.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -21,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -183,7 +180,33 @@ public interface ApplyControllerDocs {
         @PathVariable Long applyId
     );
 
-
-
-
+    @Operation(summary = "클라우터가 광고를 지원 했는지 여부",
+        description = "신청 id에 해당하는 신청자의 한마디 메시지를 조회합니다.",
+        parameters = {
+            @Parameter(
+                in = ParameterIn.HEADER,
+                name = "Authorization",
+                required = true,
+                schema = @Schema(type = "string"),
+                description = "인증 토큰"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "advertisementId",
+                required = true,
+                description = "광고 id"
+            ),
+            @Parameter(
+                in = ParameterIn.QUERY,
+                name = "clouterId",
+                required = true,
+                description = "클라우터 id"
+            )
+        }
+    )
+    @GetMapping("/applyCheck")
+    public ResponseEntity<ApplyCheckResponse> applycheck(
+        @RequestParam("advertisementId") Long advertisementId,
+        @RequestParam("clouterId") Long clouterId
+    );
 }
