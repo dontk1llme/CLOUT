@@ -19,7 +19,12 @@ void logout() async {
   //       'clout_or_adv': 0,
   // };
   // userController.setUserLogin(null);
-
+  userController.setGuest();
+  userController.setMemberId(-1);
+  userController.setUserLogin(null);
+  userController.setAccessToken(null);
+  userController.setRefreshToken(null);
+  
   // 3. 홈으로 이동
   Get.offAllNamed('/');
 }

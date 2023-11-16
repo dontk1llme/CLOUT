@@ -94,7 +94,7 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                           widget.firstImg!,
                           width: screenWidth / 2 - 40,
                           height: screenHeight / 2 - 270,
-                          fit: BoxFit.fitHeight,
+                          fit: BoxFit.cover,
                         ),
                       )
                     : ClipRRect(

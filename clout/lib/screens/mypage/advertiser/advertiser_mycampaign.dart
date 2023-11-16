@@ -1,5 +1,5 @@
 import 'package:clout/widgets/loading_indicator.dart';
-import 'package:clout/widgets/refreshable_page.dart';
+import 'package:clout/widgets/refreshable_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -41,29 +41,62 @@ class AdvertiserMycampaign extends GetView<InfiniteScrollController> {
               headerTitle: '내 캠페인 목록',
             ),
           ),
-          body: RefreshablePage(
+          body: RefreshableContainer(
             controller: controller.scrollController.value,
             child: Column(
               children: [
-                CampaignInfiniteScrollBody(
-                    controllerTag: 'advertiserMyCampaign'),
-                infiniteController.isLoading
+                !controller.isLoading
                     ? Column(
                         children: [
-                          SizedBox(height: screenHeight / 3),
+                          SizedBox(height: 20),
+                          controller.data.isEmpty
+                              ? Column(
+                                  children: [
+                                    SizedBox(height: 50),
+                                    Image.asset(
+                                      'assets/images/empty_campaign.png',
+                                      width: 70,
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                    SizedBox(height: 20),
+                                    Text(
+                                      '게시한 캠페인이 없어요 😢',
+                                      style: style.textTheme.headlineSmall
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.w400),
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ],
+                                )
+                              : CampaignInfiniteScrollBody(
+                                  controllerTag: 'advertiserMyCampaign'),
+                          controller.dataLoading && controller.hasMore
+                              ? Column(
+                                  children: [
+                                    SizedBox(height: 20),
+                                    SizedBox(
+                                        height: 70,
+                                        child: Center(child: LoadingWidget())),
+                                  ],
+                                )
+                              : SizedBox(height: 100)
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          SizedBox(height: screenHeight / 4),
                           SizedBox(
                               height: 70,
                               child: Center(child: LoadingWidget())),
                           SizedBox(height: 20),
                           Text(
                             '내 켐페인을 불러오는 중입니다.\n잠시만 기다려 주세요.',
-                            style: style.textTheme.headlineLarge
+                            style: style.textTheme.headlineMedium
                                 ?.copyWith(fontWeight: FontWeight.w400),
                             textAlign: TextAlign.center,
-                          )
+                          ),
                         ],
                       )
-                    : Container()
               ],
             ),
           )),

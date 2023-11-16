@@ -1,6 +1,6 @@
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/common/choicechip.dart';
-import 'package:clout/widgets/refreshable_page.dart';
+import 'package:clout/widgets/refreshable_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -41,56 +41,71 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
             headerTitle: '신청한 캠페인',
           ),
         ),
-        body: RefreshablePage(
+        body: RefreshableContainer(
           controller: controller.scrollController.value,
           child: Column(
             children: [
-              BouncingListview(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: ActionChoiceExample(
-                    labels: ['대기중', '채택된 캠페인', '미채택된 캠페인', '신청 취소'],
-                    chipCount: 4,
-                    onChipSelected: (label) {
-                      String typeParam = '';
-                      switch (label) {
-                        case '대기중':
-                          typeParam = '&type=WAITING';
-                          break;
-                        case '채택된 캠페인':
-                          typeParam = '&type=ACCEPTED';
-                          break;
-                        case '미채택된 캠페인':
-                          typeParam = '&type=NOT_ACCEPTED';
-                          break;
-                        case '신청 취소':
-                          typeParam = '&type=CANCEL';
-                          break;
-                      }
-                      infiniteController.setParameter(typeParam);
-                      infiniteController.reload();
-                    },
-                  ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: ActionChoiceExample(
+                  labels: ['대기중', '채택된 캠페인', '미채택된 캠페인', '신청 취소'],
+                  chipCount: 4,
+                  onChipSelected: (label) {
+                    String typeParam = '';
+                    switch (label) {
+                      case '대기중':
+                        typeParam = '&type=WAITING';
+                        break;
+                      case '채택된 캠페인':
+                        typeParam = '&type=ACCEPTED';
+                        break;
+                      case '미채택된 캠페인':
+                        typeParam = '&type=NOT_ACCEPTED';
+                        break;
+                      case '신청 취소':
+                        typeParam = '&type=CANCEL';
+                        break;
+                    }
+                    infiniteController.setParameter(typeParam);
+                    infiniteController.reload();
+                  },
                 ),
               ),
-              CampaignInfiniteScrollBody(controllerTag: 'clouterMyCampaign'),
-              infiniteController.isLoading
+              controller.isLoading
                   ? Column(
                       children: [
-                        SizedBox(height: screenHeight / 3),
+                        SizedBox(height: screenHeight / 4),
                         SizedBox(
                             height: 70, child: Center(child: LoadingWidget())),
                         SizedBox(height: 20),
                         Text(
                           '신청한 캠페인을 불러오는 중입니다.\n잠시만 기다려 주세요.',
-                          style: style.textTheme.headlineLarge
+                          style: style.textTheme.headlineMedium
                               ?.copyWith(fontWeight: FontWeight.w400),
                           textAlign: TextAlign.center,
                         )
                       ],
                     )
-                  : Container()
+                  : controller.data.isEmpty
+                      ? Column(
+                          children: [
+                            SizedBox(height: 50),
+                            Image.asset(
+                              'assets/images/empty_campaign.png',
+                              width: 70,
+                              fit: BoxFit.fitWidth,
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              '게시한 캠페인이 없어요 😢',
+                              style: style.textTheme.headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.w400),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        )
+                      : CampaignInfiniteScrollBody(
+                          controllerTag: 'clouterMyCampaign'),
             ],
           ),
         ),

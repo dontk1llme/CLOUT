@@ -33,7 +33,7 @@ class ContractInfiniteScrollController extends GetxController {
         setCurrentPage(currentPage + 1);
         getData();
       }
-      if (scrollController.value.position.pixels < -150) {
+      if (scrollController.value.position.pixels < -100) {
         if (!_timer.isActive) {
           HapticFeedback.mediumImpact();
           reload();
@@ -119,6 +119,10 @@ class ContractInfiniteScrollController extends GetxController {
         update();
       }
     } else {
+      dataLoading = false;
+      hasMore = false;
+      isLoading = false;
+      update();
       print('에러');
       print(decodedResponse);
     }
