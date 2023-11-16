@@ -1,13 +1,9 @@
 package com.mmm.clout.advertisementservice.apply.application.facade;
 
-import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor;
-import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
-import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
-import com.mmm.clout.advertisementservice.apply.application.ReadApplicantsByCampaignProcessor;
-import com.mmm.clout.advertisementservice.apply.application.GetApplyProcessor;
-import com.mmm.clout.advertisementservice.apply.application.SelectApplyForContractProcessor;
+import com.mmm.clout.advertisementservice.apply.application.*;
 import com.mmm.clout.advertisementservice.apply.application.command.CreateApplyCommand;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplicantListByCampaignReader;
+import com.mmm.clout.advertisementservice.apply.application.reader.ApplyCheckReader;
 import com.mmm.clout.advertisementservice.apply.application.reader.ApplyListByClouterReader;
 import com.mmm.clout.advertisementservice.apply.domain.Apply;
 import com.mmm.clout.advertisementservice.apply.domain.Apply.ApplyStatus;
@@ -27,6 +23,7 @@ public class ApplyFacade {
     private final ReadApplicantsByCampaignProcessor readApplicantsByCampaignProcessor;
     private final GetApplyProcessor getApplyProcessor;
     private final SelectApplyForContractProcessor selectApplyForContractProcessor;
+    private final CheckApplyProcessor checkApplyProcessor;
 
     public Apply create(CreateApplyCommand command) {
         return createApplyProcessor.execute(command);
@@ -50,5 +47,9 @@ public class ApplyFacade {
 
     public void selectForContract(Long applyId) {
         selectApplyForContractProcessor.execute(applyId);
+    }
+
+    public ApplyCheckReader applyCheck(Long advertisementId, Long clouterId) {
+        return checkApplyProcessor.execute(advertisementId, clouterId);
     }
 }

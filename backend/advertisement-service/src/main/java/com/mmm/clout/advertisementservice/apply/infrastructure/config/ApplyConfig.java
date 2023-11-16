@@ -1,16 +1,10 @@
 package com.mmm.clout.advertisementservice.apply.infrastructure.config;
 
-import com.mmm.clout.advertisementservice.advertisements.application.GetCampaignProcessor;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
-import com.mmm.clout.advertisementservice.apply.application.CancelApplyProcessor;
-import com.mmm.clout.advertisementservice.apply.application.CreateApplyProcessor;
-import com.mmm.clout.advertisementservice.apply.application.GetApplyProcessor;
-import com.mmm.clout.advertisementservice.apply.application.ReadAllApplyProcessor;
-import com.mmm.clout.advertisementservice.apply.application.ReadApplicantsByCampaignProcessor;
-import com.mmm.clout.advertisementservice.apply.application.SelectApplyForContractProcessor;
+import com.mmm.clout.advertisementservice.apply.application.*;
+import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import com.mmm.clout.advertisementservice.common.msa.provider.ContractProvider;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
-import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepository;
 import com.mmm.clout.advertisementservice.image.domain.repository.AdvertiseSignRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -83,4 +77,12 @@ public class ApplyConfig {
         );
     }
 
+    @Bean
+    CheckApplyProcessor checkApplyProcessor(
+        ApplyRepository applyRepository
+    ) {
+        return new CheckApplyProcessor(
+            applyRepository
+        );
+    }
 }
