@@ -1,15 +1,22 @@
-import 'dart:convert';
-
-import 'package:clout/hooks/apis/authorized_api.dart';
-import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+// apis
+import 'package:clout/hooks/apis/authorized_api.dart';
+import 'dart:convert';
+
+// controllers
+import 'package:clout/providers/scroll_controllers/select_infinite_scroll_controller.dart';
+
+// utilties
+import 'package:clout/utilities/bouncing_listview.dart';
+
 // widgets
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/buttons/small_button.dart';
+import 'package:clout/widgets/common/custom_snackbar.dart';
 import 'package:clout/screens/campaign_register/widgets/data_title.dart';
 import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
 
@@ -35,11 +42,18 @@ class SelectItemBox extends StatefulWidget {
   State<SelectItemBox> createState() => _SelectItemBoxState();
 }
 
-// 💥 clouter Container 누르면 해당 clouter의 Detail 페이지로 이동시키기
 class _SelectItemBoxState extends State<SelectItemBox> {
   var clouterId = Get.arguments;
 
   var f = NumberFormat('###,###,###,###');
+
+  final AuthorizedApi authorizedApi = AuthorizedApi();
+
+  @override
+  initState() {
+    _showContent();
+    super.initState();
+  }
 
   void _selectClouter() {
     showModalBottomSheet<void>(
@@ -134,8 +148,6 @@ class _SelectItemBoxState extends State<SelectItemBox> {
 
   // 채택 api
   selection() async {
-    final AuthorizedApi authorizedApi = AuthorizedApi();
-
     var requestBody = {
       "applyId": widget.applyId,
     };
@@ -148,33 +160,68 @@ class _SelectItemBoxState extends State<SelectItemBox> {
 
     if (response['statusCode'] == 200) {
       print('클라우터 채택 성공~~ 🎉');
+      final controller =
+          Get.find<SelectInfiniteScrollController>(tag: 'clouterSelect');
+
+      controller
+          .setNumberOfSelectedMembers(controller.numberOfSelectedMembers + 1);
+      CustomSnackbar(
+              title: '🎉 클라우터 채택 완료!',
+              message1: '클라우터에게 계약서가 전달되었어요. 😊',
+              message2: '채택한 클라우터와 좋은 계약이 되길 바라요! 👍')
+          .show();
     } else {
       print('클라우터 채택 실패.. 😥');
     }
   }
 
-  // 한마디 보기 api
+  // 채택 취소 api
+  cancelSelection() async {
+    var requestBody = {
+      "applyId": widget.applyId,
+    };
+
+    var response = authorizedApi.postRequest(
+        '/advertisement-service/v1/applies/${widget.applyId}/cancel',
+        requestBody);
+
+    if (response['statusCode'] == 200) {
+      print('클라우터 채택 취소 성공~~ 🎉');
+      final controller =
+          Get.find<SelectInfiniteScrollController>(tag: 'clouterSelect');
+
+      controller
+          .setNumberOfSelectedMembers(controller.numberOfSelectedMembers - 1);
+
+      CustomSnackbar(
+              title: '클라우터 채택 취소 완료!',
+              message1: '${widget.nickName} 님을 채택 취소했어요.',
+              message2: '더 어울리는 클라우터를 찾길 바라요! 👍')
+          .show();
+    } else {
+      print('클라우터 채택 취소 실패.. ❌');
+    }
+  }
+
   var message = '';
   int applyId = 0;
 
-  _showContent() {
-    getData() async {
-      final AuthorizedApi authorizedApi = AuthorizedApi();
-      var response = await authorizedApi.getRequest(
-          '/advertisement-service/v1/applies/', '${widget.applyId}/msg');
+  // 한마디 보기 api
+  Future<void> getData() async {
+    final AuthorizedApi authorizedApi = AuthorizedApi();
+    var response = await authorizedApi.getRequest(
+        '/advertisement-service/v1/applies/', '${widget.applyId}/msg');
 
-      var jsonData = jsonDecode(response['body']);
+    var jsonData = jsonDecode(response['body']);
+
+    setState(() {
       message = jsonData['message'];
       applyId = jsonData['applyId'];
+    });
+  }
 
-      await Future.delayed(Duration(seconds: 2));
-    }
-
-    initState() {
-      getData();
-      super.initState();
-    }
-
+  void _showContent() async {
+    getData();
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -388,9 +435,12 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                         SizedBox(height: 10),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: platformWidgets,
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: platformWidgets,
+                            ),
                           ),
                         ),
                       ],
@@ -417,7 +467,6 @@ class _SelectItemBoxState extends State<SelectItemBox> {
                       title: '채택하기',
                       function: () {
                         _selectClouter();
-                        Get.back();
                       },
                     ),
                   )
