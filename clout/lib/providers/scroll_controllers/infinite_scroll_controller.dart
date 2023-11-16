@@ -1,3 +1,4 @@
+import 'package:clout/widgets/header/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,7 @@ class InfiniteScrollController extends GetxController {
   var endPoint = '';
   var parameter = '';
   var typeParam = '';
+  var pageType = '';
 
   setTypeParam(input) {
     typeParam = input;
@@ -51,6 +53,11 @@ class InfiniteScrollController extends GetxController {
 
   setIsLoading(input) {
     isLoading = input;
+    update();
+  }
+
+  setPageType(input) {
+    pageType = input;
     update();
   }
 
@@ -87,11 +94,10 @@ class InfiniteScrollController extends GetxController {
       print('여기까지 옴1');
       print('여기까지 옴2');
       final AuthorizedApi authorizedApi = AuthorizedApi();
-      // await setParameter(userController.memberType == -1
-      // ? '?clouterId=${userController.memberId}&type=WAITING&page=$currentPage&size=${10}'
-      // ? '?clouterId=${userController.memberId}&page=$currentPage&size=${10}'
-      // : '?advertiserId=${userController.memberId}&page=$currentPage&size=${10}');
-      // await Future.delayed(Duration(milliseconds: 600));
+      await setParameter(userController.memberType == -1
+          ? '?clouterId=${userController.memberId}&page=$currentPage&size=${10}'
+          : '?advertiserId=${userController.memberId}&page=$currentPage&size=${10}');
+      await Future.delayed(Duration(milliseconds: 600));
       var response = await authorizedApi.getRequest(endPoint, parameter);
       print(response);
       var jsonData = jsonDecode(response['body']);

@@ -13,7 +13,6 @@ import 'package:clout/widgets/header/header.dart';
 // controllers
 import 'package:clout/providers/scroll_controllers/clouter_infinite_scroll_controller.dart';
 import 'package:clout/providers/user_controllers/user_controller.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 class AdvertiserLikedclouters extends GetView<ClouterInfiniteScrollController> {
   AdvertiserLikedclouters({super.key});

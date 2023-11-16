@@ -1,8 +1,5 @@
-import 'package:clout/providers/platform_select_controller.dart';
-import 'package:clout/providers/search_detail_controller.dart';
-import 'package:clout/utilities/bouncing_listview.dart';
-import 'package:clout/widgets/search_detail_bottom_sheet/widgets/fee_range_dialog.dart';
-import 'package:clout/widgets/search_detail_bottom_sheet/widgets/follower_count_dialog.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 
@@ -11,6 +8,14 @@ import 'package:clout/widgets/sns/platform_toggle.dart';
 import 'package:clout/widgets/age_slider.dart';
 import 'package:clout/widgets/region_multiselect.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/search_detail_bottom_sheet/widgets/fee_range_dialog.dart';
+import 'package:clout/widgets/search_detail_bottom_sheet/widgets/follower_count_dialog.dart';
+
+// controllers
+import 'package:clout/providers/search_detail_controller.dart';
+
+// utilties
+import 'package:clout/utilities/bouncing_listview.dart';
 
 // Screens
 import 'package:clout/widgets/list/data_title_thin.dart';
