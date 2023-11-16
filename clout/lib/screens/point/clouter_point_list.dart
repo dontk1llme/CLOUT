@@ -21,6 +21,7 @@ class ClouterPointList extends StatefulWidget {
 
 class _ClouterPointListState extends State<ClouterPointList> {
   final userController = Get.find<UserController>();
+  String selectedCategory = 'ALL';
 
   @override
   void initState() {
@@ -36,7 +37,7 @@ class _ClouterPointListState extends State<ClouterPointList> {
     print(userController.userLogin);
     var requestBody = {
       "memberId": userController.memberId,
-      "category": 'ALL',
+      "category": selectedCategory,
       "page": '0',
       "size": '10',
     };
@@ -99,9 +100,25 @@ class _ClouterPointListState extends State<ClouterPointList> {
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 19)),
                 ),
-                // ActionChoiceExample(
-                //     labels: ['전체 내역', '적립 내역', '출금 내역'], chipCount: 3),
-
+                ActionChoiceExample(
+                  labels: ['전체 내역', '거래 내역', '충전 내역'],
+                  chipCount: 3,
+                  onChipSelected: (label) {
+                    setState(() {
+                      switch (label) {
+                        case '전체 내역':
+                          selectedCategory = 'ALL';
+                          break;
+                        case '거래 내역':
+                          selectedCategory = 'DEAL';
+                          break;
+                        case '충전 내역':
+                          selectedCategory = 'CHARGE';
+                          break;
+                      }
+                    });
+                  },
+                ),
                 Divider(
                   color: style.colors['lightgray'],
                   thickness: 1,
