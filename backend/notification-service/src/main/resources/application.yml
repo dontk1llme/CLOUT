@@ -49,7 +49,7 @@ eureka:
       defaultZone: https://eureka.clouter.kr/eureka
 message:
   topic:
-    name: test-topic-name
+    name: contract_topic_test
 springdoc:
   swagger-ui:
     path: /swagger-ui
