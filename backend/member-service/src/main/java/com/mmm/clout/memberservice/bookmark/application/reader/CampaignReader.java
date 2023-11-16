@@ -2,6 +2,8 @@ package com.mmm.clout.memberservice.bookmark.application.reader;
 
 import com.mmm.clout.memberservice.advertiser.domain.Advertiser;
 import com.mmm.clout.memberservice.bookmark.domain.info.CampaignInfo;
+import com.mmm.clout.memberservice.image.domain.Image;
+import com.mmm.clout.memberservice.image.presentation.ImageResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -56,6 +58,8 @@ public class CampaignReader {
 
     private Long companyAvgScore;
 
+    private List<ImageResponse> imageInfo;//이미지 경로
+
     public CampaignReader(CampaignInfo info, Advertiser advertiser) {
         this.campaignId = info.getCampaignId();
         this.adPlatformList = info.getAdPlatformList();
@@ -79,6 +83,7 @@ public class CampaignReader {
         this.isEnded = info.getIsEnded();
         this.companyName = advertiser.getCompanyInfo().getCompanyName();
         this.companyAvgScore = advertiser.getAvgScore();
+        this.imageInfo = info.getImageList();
     }
 
 }
