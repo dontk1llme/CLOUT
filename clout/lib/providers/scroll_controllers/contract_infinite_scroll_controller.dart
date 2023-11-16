@@ -25,6 +25,7 @@ class ContractInfiniteScrollController extends GetxController {
 
   @override
   void onInit() {
+    getData();
     scrollController.value.addListener(() {
       print(scrollController.value.position.pixels);
       if (scrollController.value.position.pixels ==
