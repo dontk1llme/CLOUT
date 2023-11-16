@@ -1,6 +1,7 @@
 import 'package:clout/screens/mypage/widgets/selected_category.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/common/choicechip.dart';
+import 'package:clout/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
 import 'package:clout/providers/user_controllers/user_controller.dart';
@@ -130,7 +131,7 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
                   future: getPointList(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return LoadingWidget();
                     } else if (snapshot.hasError) {
                       return Text('에러: ${snapshot.error}');
                     } else {

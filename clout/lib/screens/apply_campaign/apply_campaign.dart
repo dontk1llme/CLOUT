@@ -1,15 +1,21 @@
-import 'package:clout/providers/campaign_apply_controller.dart';
-import 'package:clout/providers/fee_controller.dart';
-import 'package:clout/widgets/buttons/big_button.dart';
-import 'package:clout/widgets/pay_dialog.dart';
-import 'package:clout/utilities/bouncing_listview.dart';
-import 'package:clout/widgets/header/header.dart';
-import 'package:clout/widgets/input/input_elements/widgets/text_input.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
+
+// controllers
+import 'package:clout/providers/campaign_apply_controller.dart';
+import 'package:clout/providers/fee_controller.dart';
+
+// widgets
+import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/common/custom_snackbar.dart';
+import 'package:clout/widgets/pay_dialog.dart';
+import 'package:clout/widgets/header/header.dart';
+import 'package:clout/widgets/input/input_elements/widgets/text_input.dart';
+
+// utilties
+import 'package:clout/utilities/bouncing_listview.dart';
 
 class ApplyCampaign extends StatefulWidget {
   ApplyCampaign({super.key});
@@ -28,58 +34,17 @@ class _ApplyCampaignState extends State<ApplyCampaign> {
   doApply() {
     if (applyController.agreed) {
       applyController.applyCampaign().then((_) {
-        showSnackBar();
-      }).catchError((error) {
-        showSnackBar(); // 실패 에러
-      });
+        CustomSnackbar(
+                title: '🎉 캠페인 지원 완료!',
+                message1: '캠페인 지원을 성공적으로 마쳤어요. 😊',
+                message2: '클라우터님께서 채택되시길 바라요! 👍')
+            .show();
+      }).catchError((error) {});
       Get.back();
     } else {
       // showCustomToast();
       Fluttertoast.showToast(msg: '개인정보 수집 및 이용에 동의해주세요');
     }
-  }
-
-  showSnackBar() {
-    Get.snackbar(
-      '',
-      '',
-      // snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 4),
-      titleText: Text(
-        '🎉 캠페인 지원 완료',
-        style: style.textTheme.headlineMedium?.copyWith(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-        ),
-      ),
-      messageText: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '캠페인 지원을 성공적으로 마쳤어요',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            '클라우터님께서 채택되시길 바라요! 👍',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      borderWidth: 5,
-      borderColor: style.colors['main1'],
-      margin: EdgeInsets.only(
-        top: 15,
-        left: 20,
-        right: 20,
-      ),
-    );
   }
 
   @override
