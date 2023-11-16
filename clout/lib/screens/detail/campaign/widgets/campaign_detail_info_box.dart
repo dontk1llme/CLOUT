@@ -181,7 +181,7 @@ class _CampaignDetailInfoBoxState extends State<CampaignDetailInfoBox> {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(widget.campaignInfo.numberOfSelectedMembers.toString(),
+                Text(widget.campaignInfo.numberOfApplicants.toString(),
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
                 Text('명 / ',
