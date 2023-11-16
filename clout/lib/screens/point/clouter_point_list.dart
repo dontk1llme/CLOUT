@@ -57,7 +57,7 @@ class _ClouterPointListState extends State<ClouterPointList> {
       var pointStatus = item['pointStatus'];
       var time = item['time'].substring(0, 10); // Extract date only
       var title = item['counterparty'];
-      var amount = item['amount'].toString();
+      var amount = item['amount'];
 
       var type = (pointStatus == '+') ? '충전' : '사용';
 

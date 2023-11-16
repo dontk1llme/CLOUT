@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class PointItemBox extends StatefulWidget {
-  const PointItemBox({super.key, required this.type, 
-    required this.time, required this.title, required this.point});
+  const PointItemBox(
+      {super.key,
+      required this.type,
+      required this.time,
+      required this.title,
+      required this.point});
 
   final String type;
   final String time;
   final String title;
-  final String point; //string? int?
-
+  final int point; //string? int?
 
   @override
   State<PointItemBox> createState() => _PointItemBoxState();
 }
 
 class _PointItemBoxState extends State<PointItemBox> {
+  var f = NumberFormat('###,###,###,###');
+
   Color getTextColor() {
     // ALL, DEAL, CHARGE, WITHDRAWAL
     switch (widget.type) {
@@ -62,7 +68,7 @@ class _PointItemBoxState extends State<PointItemBox> {
                       fontSize: 17,
                       color: textColor,
                     )),
-                Text(widget.point,
+                Text(f.format(widget.point),
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 17,
