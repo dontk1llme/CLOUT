@@ -1,5 +1,5 @@
 import 'package:clout/widgets/loading_indicator.dart';
-import 'package:clout/widgets/refreshable_page.dart';
+import 'package:clout/widgets/refreshable_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -37,7 +37,7 @@ class ClouterLikedCampaign extends GetView<InfiniteScrollController> {
             headerTitle: '관심있는 캠페인 목록',
           ),
         ),
-        body: RefreshablePage(
+        body: RefreshableContainer(
           controller: controller.scrollController.value,
           child: Column(
             children: [

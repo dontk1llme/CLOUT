@@ -1,5 +1,6 @@
 import 'package:clout/widgets/sns/sns4.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 // api
@@ -59,6 +60,7 @@ class SelectInfiniteScrollController extends GetxController {
     update();
   }
 
+  Timer _timer = Timer(Duration(milliseconds: 3000), () {});
   @override
   void onInit() {
     scrollController.value.addListener(() {
@@ -67,6 +69,13 @@ class SelectInfiniteScrollController extends GetxController {
           hasMore) {
         setCurrentPage(currentPage + 1);
         _getData();
+      }
+      if (scrollController.value.position.pixels < -100) {
+        if (!_timer.isActive) {
+          HapticFeedback.mediumImpact();
+          reload();
+          _timer = Timer(Duration(milliseconds: 3000), () {});
+        }
       }
     });
 
@@ -129,13 +138,11 @@ class SelectInfiniteScrollController extends GetxController {
     }
   }
 
-  
-
   reload() async {
     isLoading = true;
     data.clear();
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
 
     _getData();
     update();
