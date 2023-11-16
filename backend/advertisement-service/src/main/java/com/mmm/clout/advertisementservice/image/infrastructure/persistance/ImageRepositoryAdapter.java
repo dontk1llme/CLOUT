@@ -43,4 +43,14 @@ public class ImageRepositoryAdapter implements ImageRepository {
 
         return image;
     }
+
+    @Override
+    public List<Image> findByCampaignId(Long id) {
+        return jpaImageRepository.findByCampaign_Id(id);
+    }
+
+    @Override
+    public void deleteImage(Long id) {
+        jpaImageRepository.deleteById(id);
+    }
 }
