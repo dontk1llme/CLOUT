@@ -4,13 +4,16 @@ import 'package:clout/style.dart' as style;
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 class Signature extends StatefulWidget {
-  Signature(
-      {super.key,
-      required this.globalKey,
-      required this.signatureKey,
-      required this.setBlank});
+  Signature({
+    super.key,
+    required this.globalKey,
+    required this.signatureKey,
+    required this.setBlank,
+    required this.signatureSubject,
+  });
   final globalKey;
   final signatureKey;
+  final signatureSubject;
   var setBlank;
 
   @override
@@ -79,9 +82,11 @@ class _SignatureState extends State<Signature> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                '( 인 )',
-                                style: style.textTheme.titleLarge?.copyWith(
-                                    color: style.colors['text'], height: 1),
+                                widget.signatureSubject,
+                                style: style.textTheme.titleMedium?.copyWith(
+                                    color: style.colors['text'],
+                                    height: 1,
+                                    fontWeight: FontWeight.w500),
                               ),
                             ],
                           ))),
