@@ -25,21 +25,6 @@ import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/image_carousel.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-final List<String> imgList = [
-  'assets/images/main_carousel_1.jpg',
-  'assets/images/itemImage.jpg',
-  'assets/images/clouterImage.jpg',
-];
-
-final List<Widget> imageSliders = imgList
-    .map((item) => Padding(
-          padding: const EdgeInsets.all(0),
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              child: Image.asset(item, fit: BoxFit.cover)),
-        ))
-    .toList();
-
 String caution =
     '✔ 리뷰 작성기간 미준수시 패널티(제품 비용, 체험 비용 환불 등) 및 계약서에 의거 법적 처벌을 받을 수 있습니다.\n✔ 캠페인 요구사항 및 가이드라인을 확인해서 작성해주시기 바랍니다.\n✔ 수집된 개인정보는 체험단 운영 및 경품 증정 등의 필수 목적으로 사용되고 그 외에 목적으로는 사용되지 않습니다.\n✔ 작성해 주신 리뷰/포스팅/콘텐츠는 최소 6개월 이상 유지를 원칙으로 합니다.\n✔ 제품 발송은 최초 가입 시 등록한 주소지로 발송됩니다.\n✔ 주소 이전 시 회원 정보 미반영으로 인한 피해는 당사에서 책임지지 않습니다.';
 
@@ -57,6 +42,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
   AdvertiserInfo? advertiserInfo;
   bool isLoading = true;
   bool isItemLiked = false;
+  var imageSliders;
 
   @override
   void initState() {
@@ -72,27 +58,57 @@ class _CampaignDetailState extends State<CampaignDetail> {
     // item 정보 api 호출
     final NormalApi api = NormalApi();
 
-    try {
-      var response = await api.getRequest(
-          '/advertisement-service/v1/advertisements/', campaignId);
-      // reponse = {'statusCode' : 값, 'body' : 값}
-      print(response['body']);
-      int statusCode =
-          response['statusCode']; // statusCode에 따라 다르게 결과 나오게 하는거 이걸로 처리
+    List<String> imgList = [];
 
-      final decodedResponse = jsonDecode(response['body']);
+    var response = await api.getRequest(
+        '/advertisement-service/v1/advertisements/', campaignId);
+    // reponse = {'statusCode' : 값, 'body' : 값}
+
+    if (response != null) {
+      print(CampaignResponse.fromJson(jsonDecode(response['body'])));
+      var decodedResponse = jsonDecode(response['body']);
+
+      // 이미지 슬라이더에 이미지 넣는 작업
+      for (var imgInfo in decodedResponse['imageList']) {
+        imgList.add(ImageResponse.fromJson(imgInfo).path!);
+      }
+      if (imgList.isEmpty) {
+        imgList.add('assets/images/blank-profile.png');
+        imageSliders = imgList
+            .map((item) => Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      child: Image.asset(item, fit: BoxFit.cover)),
+                ))
+            .toList();
+      } else {
+        imageSliders = imgList
+            .map(
+              (item) => Padding(
+                padding: const EdgeInsets.all(0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  child: Image.network(
+                    item,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            )
+            .toList();
+      }
+
       // 데이터를 모델 클래스에 매핑
       setState(() {
-        campaignInfo = CampaignInfo.fromJson(decodedResponse['campaignInfo']);
+        campaignInfo = CampaignResponse.fromJson(decodedResponse).campaignInfo;
         advertiserInfo =
-            AdvertiserInfo.fromJson(decodedResponse['advertiserInfo']);
-        isLoading = false;
+            CampaignResponse.fromJson(decodedResponse).advertiserInfo;
       });
-      print(CampaignList.fromJson(jsonDecode(response)));
-      print(CampaignList.fromJson(jsonDecode(response)).advertiserInfo);
-    } catch (e) {
-      // 에러 처리
-      print('Error: $e');
+      // ux 향상을 위해 의도적으로 0.7초 딜레이
+      await Future.delayed(Duration(milliseconds: 700));
       setState(() {
         isLoading = false;
       });
@@ -147,30 +163,21 @@ class _CampaignDetailState extends State<CampaignDetail> {
       body: isLoading
           ? SizedBox(
               height: double.infinity,
-              child: Stack(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Positioned(
-                    left: 160,
-                    right: 160,
-                    top: 0,
-                    bottom: 280,
-                    child: SizedBox(
-                      height: 100,
-                      child: LoadingWidget(),
-                    ),
+                  SizedBox(
+                    height: 70,
+                    child: LoadingWidget(),
                   ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 100,
-                    child: Align(
-                      child: Text(
-                        '캠페인 정보를 불러오는 중입니다.\n잠시만 기다려 주세요',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                  SizedBox(height: 20),
+                  Text(
+                    '캠페인 정보를 불러오는 중입니다.\n잠시만 기다려 주세요',
+                    textAlign: TextAlign.center,
+                    style: style.textTheme.headlineLarge
+                        ?.copyWith(fontWeight: FontWeight.w400),
                   ),
+                  SizedBox(height: 200),
                 ],
               ),
             )
@@ -215,6 +222,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
                           // 사진 캐러셀
                           ImageCarousel(
                               imageSliders: imageSliders,
+                              infiniteScroll: imageSliders.length > 1,
                               aspectRatio: 1.2,
                               enlarge: true),
                           SizedBox(height: 20),
@@ -224,13 +232,15 @@ class _CampaignDetailState extends State<CampaignDetail> {
                                 campaignInfo: campaignInfo!,
                                 advertiserInfo: advertiserInfo!),
                           SizedBox(height: 20),
-                          campaignInfo!.isDeliveryRequired!
-                              ? CampaignDetailContent(
-                                  title: '협찬 제공 방법',
-                                  content: CampaignDetailDeliveryInfo())
-                              : CampaignDetailContent(
-                                  title: '협찬 제공 방법',
-                                  content: CampaignDetailVisit()),
+                          campaignInfo != null
+                              ? campaignInfo!.isDeliveryRequired!
+                                  ? CampaignDetailContent(
+                                      title: '협찬 제공 방법',
+                                      content: CampaignDetailDeliveryInfo())
+                                  : CampaignDetailContent(
+                                      title: '협찬 제공 방법',
+                                      content: CampaignDetailVisit())
+                              : Container(),
                           CampaignDetailContent(
                             title: '제공 내역',
                             content: Text(
@@ -285,9 +295,9 @@ class _CampaignDetailState extends State<CampaignDetail> {
                                       height: 50,
                                       child: BigButton(
                                         title: '신청자 목록보기',
-                                        function: () => Get.to(
-                                          () => ClouterSelect(),
-                                        ),
+                                        function: () => Get.toNamed(
+                                            '/clouterselect',
+                                            arguments: campaignId),
                                       ),
                                     ),
                                   ),

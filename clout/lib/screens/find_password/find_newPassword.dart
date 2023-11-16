@@ -5,19 +5,17 @@ import 'package:clout/style.dart' as style;
 import 'package:get/get.dart';
 import 'package:clout/widgets/input/input.dart';
 
-
 class FindNewPassword extends StatefulWidget {
-  const  FindNewPassword({super.key});
+  const FindNewPassword({super.key});
 
   @override
   State<FindNewPassword> createState() => _FindNewPasswordState();
 }
 
-class _FindNewPasswordState extends State<FindNewPassword>{
-
-    var password;
-    var checkPassword;
-    setPassword(input) {
+class _FindNewPasswordState extends State<FindNewPassword> {
+  var password;
+  var checkPassword;
+  setPassword(input) {
     setState(() {
       password = input;
     });
@@ -28,7 +26,7 @@ class _FindNewPasswordState extends State<FindNewPassword>{
       checkPassword = input;
     });
   }
-  
+
   setObscured() {
     setState(() {
       obscured = !obscured;
@@ -45,11 +43,8 @@ class _FindNewPasswordState extends State<FindNewPassword>{
   Icon suffixIcon = Icon(Icons.visibility); // 예시 값
   var doubleId = 1;
 
-
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(left: 25, top: 100),
@@ -60,8 +55,9 @@ class _FindNewPasswordState extends State<FindNewPassword>{
             Text('새로운 비밀번호 만들고', style: style.textTheme.titleMedium),
             Row(
               children: <Widget>[
-                Text('CLOUT', style: style.textTheme.titleMedium?.copyWith(
-                  color: style.colors['main1'])),
+                Text('CLOUT',
+                    style: style.textTheme.titleMedium
+                        ?.copyWith(color: style.colors['main1'])),
                 Text('와', style: style.textTheme.titleMedium),
               ],
             ),
@@ -72,24 +68,24 @@ class _FindNewPasswordState extends State<FindNewPassword>{
                 children: [
                   SizedBox(height: 20),
                   Input(
-                  placeholder: '패스워드 입력',
-                  setText: setPassword,
-                  obscure: obscured,
-                  suffixIcon: suffixIcon,
-                  setObscured: setObscured,
-                ),
-                SizedBox(height: 20),
-                Input(
-                  placeholder: '패스워드 확인',
-                  setText: setCheckPassword,
-                  obscure: obscured,
-                  suffixIcon: suffixIcon,
-                ),
-                SizedBox(height: 30),
+                    placeholder: '패스워드 입력',
+                    setText: setPassword,
+                    obscure: obscured,
+                    suffixIcon: suffixIcon,
+                    setObscured: setObscured,
+                  ),
+                  SizedBox(height: 20),
+                  Input(
+                    placeholder: '패스워드 확인',
+                    setText: setCheckPassword,
+                    obscure: obscured,
+                    suffixIcon: suffixIcon,
+                  ),
+                  SizedBox(height: 30),
                   BigButton(
                     title: '패스워드 설정',
                     function: () {
-                      Get.to(FindComplete());
+                      Get.to(() => FindComplete());
                     },
                   ),
                 ],
