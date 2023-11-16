@@ -9,6 +9,8 @@ import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepositor
 import com.querydsl.jpa.impl.JPAQuery;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +22,13 @@ public class ReadApplicantsByCampaignProcessor {
 
     private final ApplyRepository applyRepository;
     private final MemberProvider clouterProvider;
+
     @Transactional
     public Page<ApplicantListByCampaignReader> execute(Pageable pageable, Long advertisementId) {
 
         List<Apply> applyList = applyRepository.findApplicantList(advertisementId, pageable);
+        applyList = applyList.stream().filter(v -> v.getApplyStatus() != Apply.ApplyStatus.CANCEL).collect(Collectors.toList());
+
         JPAQuery<Apply> countQuery = applyRepository.countByAdvertisement(advertisementId);
 
         List<ApplicantListByCampaignReader> content = new ArrayList<>();
