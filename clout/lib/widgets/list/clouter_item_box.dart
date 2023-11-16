@@ -118,8 +118,8 @@ class _ClouterItemBoxState extends State<ClouterItemBox> {
                     child: Row(children: widget.adPlatformList),
                   ),
                 ),
-                if (userController.memberType == 1)
-                  LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
+                // if (userController.memberType == 1)
+                // LikeButton(isLiked: isItemLiked, onTap: handleItemTap),
               ],
             ),
             SingleChildScrollView(

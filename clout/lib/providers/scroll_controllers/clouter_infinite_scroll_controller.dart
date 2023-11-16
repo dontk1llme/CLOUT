@@ -73,7 +73,8 @@ class ClouterInfiniteScrollController extends GetxController {
     try {
       isLoading = true;
       hasMore = true;
-
+      await setEndPoint(
+          '/member-service/v1/clouters/search?page=${currentPage}&size=${10}&');
       await Future.delayed(Duration(seconds: 2));
 
       final AuthorizedApi authorizedApi = AuthorizedApi();

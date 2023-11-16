@@ -23,6 +23,7 @@ class ClouterSearchBar extends StatelessWidget {
             _timer = Timer(Duration(milliseconds: 500), () async {
               await controller.setSearchWord(value);
               await controller.fetchSearchResults();
+              // await controller.setSearchWord('');
             });
           },
           decoration: InputDecoration(
