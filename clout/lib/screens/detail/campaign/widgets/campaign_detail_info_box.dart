@@ -140,7 +140,7 @@ class _CampaignDetailInfoBoxState extends State<CampaignDetailInfoBox> {
                   color: style.colors['main1']),
               SizedBox(width: 10),
               Text('지급 포인트', style: TextStyle(fontSize: 15, height: 1.2)),
-              widget.campaignInfo.price == '0'
+              widget.campaignInfo.price != 0
                   ? Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -181,7 +181,7 @@ class _CampaignDetailInfoBoxState extends State<CampaignDetailInfoBox> {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(widget.campaignInfo.numberOfSelectedMembers.toString(),
+                Text(widget.campaignInfo.numberOfApplicants.toString(),
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
                 Text('명 / ',
