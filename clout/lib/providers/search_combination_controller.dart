@@ -55,7 +55,7 @@ class SearchCombinationController extends GetxController {
           .join('&');
     }
     final String requestUrl =
-        '$categoryQueryString${searchDetailController.getSearchUrl()}&keyword=$searchWord';
+        '$categoryQueryString${searchDetailController.getSearchUrl()}&sortKey=POPULARITY&keyword=$searchWord';
 
     infiniteController.setParameter(requestUrl);
     infiniteController.reload();

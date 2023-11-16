@@ -2,7 +2,6 @@ import 'package:clout/providers/scroll_controllers/clouter_infinite_scroll_contr
 import 'package:clout/providers/search_detail_controller.dart';
 import 'package:clout/utilities/category_translator.dart';
 import 'package:get/get.dart';
-import 'package:pinput/pinput.dart';
 
 class ClouterSearchCombinationController extends GetxController {
   var controllerTag;
