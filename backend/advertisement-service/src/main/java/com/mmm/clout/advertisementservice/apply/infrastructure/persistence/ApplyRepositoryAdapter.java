@@ -75,7 +75,8 @@ public class ApplyRepositoryAdapter implements ApplyRepository {
     @Override
     public JPAQuery<Apply> countByAdvertisement(Long advertisementId) {
         return queryFactory.selectFrom(apply)
-            .where(campaignIdEq(advertisementId));
+            .where(campaignIdEq(advertisementId)
+                .and(apply.applyStatus.ne(ApplyStatus.CANCEL)));
     }
 
 
