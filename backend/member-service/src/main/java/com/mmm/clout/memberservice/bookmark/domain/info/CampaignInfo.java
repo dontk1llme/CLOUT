@@ -1,5 +1,6 @@
 package com.mmm.clout.memberservice.bookmark.domain.info;
 
+import com.mmm.clout.memberservice.image.presentation.ImageResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -52,4 +53,6 @@ public class CampaignInfo {
     private Boolean isEnded; // 모집 종료 여부
 
     private Long registerId;
+
+    private List<ImageResponse> imageList;
 }
