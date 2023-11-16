@@ -305,6 +305,7 @@ class CampaignRegister extends StatelessWidget {
                     globalKey: stackGlobalKey,
                     signatureKey: signatureGlobalKey,
                     setBlank: controller.setBlank,
+                    signatureSubject: '( 광고주 서명 )'
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 20),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -88,6 +89,40 @@ class AuthorizedApi {
     );
 
     print('put 통신 실행 완료');
+
+    var statusCode = response.statusCode;
+    var body = utf8.decode(response.bodyBytes);
+    var returnVal = {
+      'statusCode': statusCode,
+      'body': body,
+    };
+    print(body);
+
+    print('상태코드');
+    print(statusCode);
+
+    if (statusCode == 401) {
+      print('만료된 토큰');
+      reissueToken();
+    } else {
+      return returnVal;
+    }
+  }
+
+  patchRequest(apiUrl, parameter) async {
+    var url = Uri.parse('$baseUrl$apiUrl');
+    print(url);
+    print(json.encode(parameter));
+    http.Response response = await http.patch(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': userController.accessToken
+      },
+      body: json.encode(parameter),
+    );
+
+    print('patch 통신 실행 완료');
 
     var statusCode = response.statusCode;
     var body = utf8.decode(response.bodyBytes);
@@ -206,6 +241,31 @@ class AuthorizedApi {
     print(multiPartFiles);
 
     var response = await dio.put('$baseUrl$apiUrl', data: formData);
+    print('여기 바로 아래 뭐가 오나?');
+    print(response.statusCode);
+    print(response.statusMessage);
+    print(response.data);
+    return response;
+  }
+
+  dioPatchRequestSingleFile(apiUrl, File file) async {
+    var dio = Dio();
+    dio.options.contentType = 'multipart/form-data';
+    dio.options.maxRedirects.isFinite;
+    dio.options.headers = {'Authorization': userController.accessToken};
+
+    FormData formData = FormData.fromMap({
+      'files': await MultipartFile.fromFile(
+        file.path,
+        filename: file.path.split('/').last,
+        contentType: MediaType('application', 'pdf'),
+      )
+    });
+
+    print(file.path.split('/').last);
+    print(file.path);
+
+    var response = await dio.patch('$baseUrl$apiUrl', data: formData);
     print('여기 바로 아래 뭐가 오나?');
     print(response.statusCode);
     print(response.statusMessage);

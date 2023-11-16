@@ -20,7 +20,6 @@ class ContractList extends GetView<ContractInfiniteScrollController> {
 
   @override
   Widget build(BuildContext context) {
-    contractController.reload();
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: style.colors['white'],
