@@ -1,3 +1,4 @@
+import 'package:clout/screens/mypage/widgets/selected_category.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/common/choicechip.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class AdvertiserPointList extends StatefulWidget {
 
 class _AdvertiserPointListState extends State<AdvertiserPointList> {
   final userController = Get.find<UserController>();
+  String selectedCategory = 'ALL';
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
     print(userController.userLogin);
     var requestBody = {
       "memberId": userController.memberId,
-      "category": 'ALL',
+      "category": selectedCategory,
       "page": '0',
       "size": '10',
     };
@@ -57,7 +59,7 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
       var pointStatus = item['pointStatus'];
       var time = item['time'].substring(0, 10); // Extract date only
       var title = item['counterparty'];
-      var amount = item['amount'].toString();
+      var amount = item['amount'];
 
       var type = (pointStatus == '+') ? '충전' : '사용';
 
@@ -100,10 +102,25 @@ class _AdvertiserPointListState extends State<AdvertiserPointList> {
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 19),
                   ),
                 ),
-                // ActionChoiceExample(
-                //   labels: ['전체 내역', '사용 내역', '충전 내역'],
-                //   chipCount: 3,
-                // ),
+                ActionChoiceExample(
+                  labels: ['전체 내역', '거래 내역', '충전 내역'],
+                  chipCount: 3,
+                  onChipSelected: (label) {
+                    setState(() {
+                      switch (label) {
+                        case '전체 내역':
+                          selectedCategory = 'ALL';
+                          break;
+                        case '거래 내역':
+                          selectedCategory = 'DEAL';
+                          break;
+                        case '충전 내역':
+                          selectedCategory = 'CHARGE';
+                          break;
+                      }
+                    });
+                  },
+                ),
                 Divider(
                   color: style.colors['lightgray'],
                   thickness: 1,

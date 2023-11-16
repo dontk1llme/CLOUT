@@ -7,9 +7,6 @@ import 'dart:convert';
 
 // widgets
 import 'package:clout/widgets/buttons/small_button.dart';
-import 'package:clout/screens/point/withdraw/widgets/bold_text.dart';
-import 'package:clout/screens/point/withdraw/widgets/medium_text.dart';
-import 'package:clout/widgets/buttons/big_button.dart';
 
 //provider
 import 'package:clout/providers/user_controllers/user_controller.dart';
@@ -27,7 +24,7 @@ class MyWallet extends StatefulWidget {
 class _MyWalletState extends State<MyWallet> {
   var f = NumberFormat('###,###,###,###');
 
-  Future<String> fetchUserPoints() async {
+  Future<int> fetchUserPoints() async {
     // 💥 여기에서 API 호출 사용자 포인트 가져오기
 
     //사용자 ID
@@ -44,7 +41,7 @@ class _MyWalletState extends State<MyWallet> {
     // print('API 응답: $response');
     // print('파싱된 JSON: $json');
 
-    final formattedPoints = json['totalPoint'].toString();
+    final formattedPoints = json['totalPoint'];
     return formattedPoints;
   }
 
@@ -63,14 +60,6 @@ class _MyWalletState extends State<MyWallet> {
               // function: _showModal,
             ),
           ),
-          // SizedBox(width: 5),
-          // Flexible(
-          //   flex: 1,
-          //   child: SmallButton(
-          //     title: '출금하기',
-          //     destination: 'withdrawfirst',
-          //   ),
-          // ),
         ],
       );
     } else if (widget.userType == 'clouter') {
@@ -84,7 +73,7 @@ class _MyWalletState extends State<MyWallet> {
     } else {
       buttons = Text('로그인 후 이용가능합니다');
     }
-    return FutureBuilder<String>(
+    return FutureBuilder<int>(
       future: fetchUserPoints(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -134,7 +123,7 @@ class _MyWalletState extends State<MyWallet> {
         } else if (snapshot.hasError) {
           return Text('에러 발생: ${snapshot.error}');
         } else {
-          final userPoints = snapshot.data ?? '0';
+          final userPoints = snapshot.data ?? 0;
 
           return Container(
             padding: EdgeInsets.fromLTRB(25, 20, 25, 20),
@@ -164,16 +153,18 @@ class _MyWalletState extends State<MyWallet> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(userPoints,
+                    Text(f.format(userPoints),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
                         )),
                     SizedBox(width: 10),
-                    Text('points',
-                        style: TextStyle(
-                          fontSize: 17,
-                        )),
+                    Text(
+                      'points',
+                      style: TextStyle(
+                        fontSize: 17,
+                      ),
+                    ),
                   ],
                 ),
                 buttons,

@@ -1,6 +1,8 @@
+import 'package:clout/hooks/apis/authorized_api.dart';
 import 'package:clout/screens/detail/campaign/widgets/campaign_detail_visit.dart';
 import 'package:clout/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
@@ -43,16 +45,35 @@ class _CampaignDetailState extends State<CampaignDetail> {
   bool isLoading = true;
   bool isItemLiked = false;
   var imageSliders;
+  int? applyId;
+  bool? applyCheck;
 
   @override
   void initState() {
     super.initState();
     _showDetail();
+    applycheck();
   }
 
   final userController = Get.find<UserController>();
 
   var campaignId = Get.arguments; // campaign_item_box에서 argument 가져오기
+
+  final AuthorizedApi authorizedApi = AuthorizedApi();
+
+  // 신청한 캠페인인지 확인하는 api
+  applycheck() async {
+    var response = await authorizedApi.getRequest(
+        '/advertisement-service/v1/applies/applyCheck?',
+        'advertisementId=$campaignId&clouterId=${userController.memberId}');
+
+    var decodedResponse = jsonDecode(response['body']);
+    applyId = decodedResponse['applyId'];
+    applyCheck = decodedResponse['applyCheck'];
+
+    print('applyId 💥💥💥 $applyId');
+    print('applyCheck 💥💥💥 $applyCheck');
+  }
 
   _showDetail() async {
     // item 정보 api 호출
@@ -115,11 +136,125 @@ class _CampaignDetailState extends State<CampaignDetail> {
     }
   }
 
+  showSnackBar() {
+    Get.snackbar(
+      '',
+      '',
+      duration: Duration(seconds: 4),
+      titleText: Text(
+        '캠페인 삭제 완료!',
+        style: style.textTheme.headlineMedium?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+        ),
+      ),
+      messageText: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '캠페인이 삭제되었어요.',
+            style: style.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            '새로운 캠페인으로 다시 만나요! 👍',
+            style: style.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white,
+      borderWidth: 5,
+      borderColor: style.colors['main1'],
+      margin: EdgeInsets.only(
+        top: 15,
+        left: 20,
+        right: 20,
+      ),
+    );
+  }
+
+  showEndSnackBar() {
+    Get.snackbar(
+      '',
+      '',
+      duration: Duration(seconds: 4),
+      titleText: Text(
+        '캠페인 모집 종료!',
+        style: style.textTheme.headlineMedium?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+        ),
+      ),
+      messageText: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '캠페인 모집이 종료되었어요.',
+            style: style.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            '새로운 캠페인으로 다시 만나요! 👍',
+            style: style.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white,
+      borderWidth: 5,
+      borderColor: style.colors['main1'],
+      margin: EdgeInsets.only(
+        top: 15,
+        left: 20,
+        right: 20,
+      ),
+    );
+  }
+
+  // 캠페인 삭제 api
+  deleteCampaign() async {
+    var response = await authorizedApi.postRequest(
+        '/advertisement-service/v1/advertisements/$campaignId', '');
+    print(response);
+    print(campaignId);
+    if (response['statusCode'] == 200) {
+      print('캠페인 삭제 성공~~🎉');
+      Get.back();
+      showSnackBar();
+      Get.toNamed('/home');
+    } else {
+      print('캠페인 삭제 실패.. ❌');
+    }
+  }
+
+  endCampaign() async {
+    var response = await authorizedApi.postRequest(
+        '/advertisement-service/v1/advertisements/$campaignId/end', '');
+
+    if (response['statusCode'] == 200) {
+      print('캠페인 모집 종료 성공 ~~ 🎉');
+      Get.back();
+      showEndSnackBar();
+      Get.toNamed('/home');
+    } else {
+      print('캠페인 모집 종료 실패.. ❌');
+    }
+  }
+
   showBottomSheet() {
     Get.bottomSheet(
       isScrollControlled: true,
       Container(
-        height: 180,
+        height: 220,
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -133,20 +268,85 @@ class _CampaignDetailState extends State<CampaignDetail> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ListTile(
-              leading: Icon(Icons.edit),
+              trailing: Icon(Icons.edit),
               title: Text('수정하기'),
               onTap: () {},
             ),
             Container(color: Colors.grey, width: double.infinity, height: 0.5),
             ListTile(
-              leading: Icon(Icons.delete_forever_rounded),
+              trailing: Icon(Icons.delete_forever_rounded),
               title: Text('삭제하기'),
-              onTap: () {},
+              onTap: () {
+                deleteCampaign();
+              },
+            ),
+            Container(color: Colors.grey, width: double.infinity, height: 0.5),
+            ListTile(
+              trailing: Icon(Icons.close),
+              title: Text('모집 종료하기'),
+              onTap: () {
+                endCampaign();
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  showCancelSnackBar() {
+    Get.snackbar(
+      '',
+      '',
+      duration: Duration(seconds: 4),
+      titleText: Text(
+        '캠페인 신청 취소 완료!',
+        style: style.textTheme.headlineMedium?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+        ),
+      ),
+      messageText: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '캠페인 신청이 취소되었습니다.',
+            style: style.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            '새로운 캠페인으로 다시 만나요! 👍',
+            style: style.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white,
+      borderWidth: 5,
+      borderColor: style.colors['main1'],
+      margin: EdgeInsets.only(
+        top: 15,
+        left: 20,
+        right: 20,
+      ),
+    );
+  }
+
+  // 💥 아래에 applyId 추가하기
+  cancelRegister() async {
+    var response = await authorizedApi.postRequest(
+        '/advertisement-service/v1/applies/$applyId/cancel', '');
+
+    if (response['statusCode'] == 200) {
+      print('캠페인 신청 취소 성공 ~~ 🎉');
+      showCancelSnackBar();
+    } else {
+      print('캠페인 신청 취소 실패.. ❌');
+    }
   }
 
   @override
@@ -274,12 +474,19 @@ class _CampaignDetailState extends State<CampaignDetail> {
                           right: 10,
                           child: SizedBox(
                             height: 50,
-                            child: BigButton(
-                              title:
-                                  '신청하기', // 이미 지원한 캠페인일 경우 title 다르게 설정하고 버튼 비활성화 해야함
-                              function: () => Get.toNamed('/applycampaign',
-                                  arguments: campaignInfo?.campaignId),
-                            ),
+                            child: applyCheck == false
+                                ? BigButton(
+                                    title:
+                                        '신청하기', // 이미 지원한 캠페인일 경우 title 다르게 설정하고 버튼 비활성화 해야함
+                                    function: () => Get.toNamed(
+                                        '/applycampaign',
+                                        arguments: campaignInfo?.campaignId),
+                                  )
+                                : BigButton(
+                                    title: '신청 취소하기',
+                                    function: () {
+                                      cancelRegister();
+                                    }),
                           ),
                         )
                       : userController.memberType == 1
