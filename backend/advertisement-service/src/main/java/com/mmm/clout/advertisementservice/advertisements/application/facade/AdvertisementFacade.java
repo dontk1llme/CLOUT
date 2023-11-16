@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -34,8 +35,8 @@ public class AdvertisementFacade {
         return createCampaignProcessor.execute(command, files, sign);
     }
 
-    public Campaign update(Long advertisementId, UpdateCampaignCommand command) {
-        return updateCampaignProcessor.execute(advertisementId, command);
+    public Campaign update(Long advertisementId, UpdateCampaignCommand command, List<MultipartFile> fileList) throws IOException {
+        return updateCampaignProcessor.execute(advertisementId, command, fileList);
     }
 
     public void delete(Long advertisementId) {

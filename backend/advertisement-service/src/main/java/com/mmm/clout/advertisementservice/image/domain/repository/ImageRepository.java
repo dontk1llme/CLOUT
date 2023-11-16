@@ -15,4 +15,8 @@ public interface ImageRepository {
     Image delete(Long id);
 
     Image find(Long id);
+
+    List<Image> findByCampaignId(Long id);
+
+    void deleteImage(Long id);
 }

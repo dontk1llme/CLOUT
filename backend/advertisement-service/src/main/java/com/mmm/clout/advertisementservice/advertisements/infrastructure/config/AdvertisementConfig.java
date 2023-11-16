@@ -14,6 +14,7 @@ import com.mmm.clout.advertisementservice.apply.domain.repository.ApplyRepositor
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
 import com.mmm.clout.advertisementservice.common.msa.provider.PointProvider;
 import com.mmm.clout.advertisementservice.image.domain.FileUploader;
+import com.mmm.clout.advertisementservice.image.domain.Image;
 import com.mmm.clout.advertisementservice.image.domain.repository.AdvertiseSignRepository;
 import com.mmm.clout.advertisementservice.image.domain.repository.ImageRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -35,9 +36,11 @@ public class AdvertisementConfig {
 
     @Bean
     public UpdateCampaignProcessor updateCampaignProcessor(
-        @Qualifier("CampaignRepository") CampaignRepository campaignRepository
+        @Qualifier("CampaignRepository") CampaignRepository campaignRepository,
+        FileUploader fileUploader,
+        ImageRepository imageRepository
     ) {
-        return new UpdateCampaignProcessor(campaignRepository);
+        return new UpdateCampaignProcessor(campaignRepository, fileUploader, imageRepository);
     }
 
     @Bean
