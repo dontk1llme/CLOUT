@@ -213,15 +213,6 @@ public interface ClouterControllerDocs {
     );
 
     @Operation(summary = "클라우터 둘러보기용 상세 조회",
-        parameters = {
-            @Parameter(
-                in = ParameterIn.HEADER,
-                name = "Authorization",
-                required = true,
-                schema = @Schema(type = "string"),
-                description = "인증 토큰"
-            )
-        },
         responses =
         @ApiResponse(responseCode = "200", description = "둘러보기용 클라우터 상세 정보 리턴",
             content =
