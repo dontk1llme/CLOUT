@@ -31,4 +31,6 @@ public class ApplicantListByCampaignReader {
     private List<ChannelInfo> clouterChannelList;
 
     private Long clouterId;
+
+    private Long applyId;
 }
