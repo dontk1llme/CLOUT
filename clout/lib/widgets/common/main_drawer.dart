@@ -95,11 +95,11 @@ class MyDrawerState extends State<MyDrawer> {
                                 onTap: () => Get.toNamed(
                                     userController.memberType == -1
                                         ? '/cloutermypage'
-                                        : 'advertisermypage'),
+                                        : '/advertisermypage'),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text('김보연님',
+                                    Text(' 님',
                                         style: TextStyle(
                                           fontSize: 22,
                                           fontWeight: FontWeight.bold,

@@ -1,6 +1,3 @@
-import 'package:clout/utilities/bouncing_listview.dart';
-import 'package:clout/widgets/common/choicechip.dart';
-import 'package:clout/widgets/refreshable_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
@@ -9,6 +6,8 @@ import 'package:clout/style.dart' as style;
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/loading_indicator.dart';
 import 'package:clout/screens/list/widgets/campaign_infinite_scroll_body.dart';
+import 'package:clout/widgets/common/choicechip.dart';
+import 'package:clout/widgets/refreshable_container.dart';
 
 // controllers
 import 'package:clout/providers/scroll_controllers/infinite_scroll_controller.dart';
@@ -19,17 +18,19 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
 
   final infiniteController =
       Get.put(InfiniteScrollController(), tag: 'clouterMyCampaign');
+
   final userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
     infiniteController.setCurrentPage(0);
-    infiniteController.setEndPoint(
-        '/advertisement-service/v1/applies/clouters?clouterId=${userController.memberId}&page=${infiniteController.currentPage}&size=${10}');
-    infiniteController.setParameter('&type=WAITING'); // 💥 typeEnum..? 추가하기
+    infiniteController
+        .setEndPoint('/advertisement-service/v1/applies/clouters');
+    infiniteController.setParameter(
+        '?clouterId=${userController.memberId}&type=${infiniteController.typeParam}&page=${infiniteController.currentPage}&size=${10}');
     final screenHeight = MediaQuery.of(context).size.height;
+
     infiniteController.reload();
-    // infiniteController.getData();
     return GetBuilder<InfiniteScrollController>(
       tag: 'clouterMyCampaign',
       builder: (controller) => Scaffold(
@@ -54,58 +55,80 @@ class ClouterMyCampaign extends GetView<InfiniteScrollController> {
                     String typeParam = '';
                     switch (label) {
                       case '대기중':
-                        typeParam = '&type=WAITING';
+                        typeParam = 'WAITING';
                         break;
                       case '채택된 캠페인':
-                        typeParam = '&type=ACCEPTED';
+                        typeParam = 'ACCEPTED';
                         break;
                       case '미채택된 캠페인':
-                        typeParam = '&type=NOT_ACCEPTED';
+                        typeParam = 'NOT_ACCEPTED';
                         break;
                       case '신청 취소':
-                        typeParam = '&type=CANCEL';
+                        typeParam = 'CANCEL';
                         break;
                     }
-                    infiniteController.setParameter(typeParam);
+                    print('Selected typeParam: $typeParam');
+                    infiniteController.setTypeParam(typeParam);
+                    print(
+                        'Updated typeParam in controller: ${infiniteController.typeParam}');
+                    infiniteController.setParameter(
+                        '?clouterId=${userController.memberId}&type=${infiniteController.typeParam}&page=${infiniteController.currentPage}&size=${10}');
+                    print(
+                        'Updated parameter in controller: ${infiniteController.parameter}');
                     infiniteController.reload();
                   },
                 ),
               ),
-              controller.isLoading
+              !controller.isLoading
                   ? Column(
+                      children: [
+                        SizedBox(height: 20),
+                        controller.data.isEmpty
+                            ? Column(
+                                children: [
+                                  SizedBox(height: 50),
+                                  Image.asset(
+                                    'assets/images/empty_campaign.png',
+                                    width: 70,
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                  SizedBox(height: 20),
+                                  Text(
+                                    '신청한 캠페인이 없어요 😢',
+                                    style: style.textTheme.headlineSmall
+                                        ?.copyWith(fontWeight: FontWeight.w400),
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
+                              )
+                            : CampaignInfiniteScrollBody(
+                                controllerTag: 'clouterMyCampaign'),
+                        controller.dataLoading && controller.hasMore
+                            ? Column(
+                                children: [
+                                  SizedBox(height: 20),
+                                  SizedBox(
+                                      height: 70,
+                                      child: Center(child: LoadingWidget())),
+                                ],
+                              )
+                            : SizedBox(height: 100)
+                      ],
+                    )
+                  : Column(
                       children: [
                         SizedBox(height: screenHeight / 4),
                         SizedBox(
                             height: 70, child: Center(child: LoadingWidget())),
                         SizedBox(height: 20),
                         Text(
-                          '신청한 캠페인을 불러오는 중입니다.\n잠시만 기다려 주세요.',
+                          '내 캠페인을 불러오는 중입니다.\n잠시만 기다려 주세요.',
                           style: style.textTheme.headlineMedium
                               ?.copyWith(fontWeight: FontWeight.w400),
                           textAlign: TextAlign.center,
-                        )
+                        ),
                       ],
                     )
-                  : controller.data.isEmpty
-                      ? Column(
-                          children: [
-                            SizedBox(height: 50),
-                            Image.asset(
-                              'assets/images/empty_campaign.png',
-                              width: 70,
-                              fit: BoxFit.fitWidth,
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              '게시한 캠페인이 없어요 😢',
-                              style: style.textTheme.headlineSmall
-                                  ?.copyWith(fontWeight: FontWeight.w400),
-                              textAlign: TextAlign.center,
-                            )
-                          ],
-                        )
-                      : CampaignInfiniteScrollBody(
-                          controllerTag: 'clouterMyCampaign'),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 // api
@@ -6,9 +7,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:clout/type.dart';
 import 'package:clout/hooks/apis/authorized_api.dart';
-
-// controllers
-import 'package:clout/providers/user_controllers/user_controller.dart';
 
 // widgets
 import 'package:clout/widgets/sns/sns2.dart';
@@ -20,7 +18,8 @@ class ClouterInfiniteScrollController extends GetxController {
   List<dynamic> data = [].obs;
 
   int pageSize = 20;
-  var isLoading = false;
+  var isLoading = true;
+  var dataLoading = true;
   var hasMore = true;
   var currentPage = 0;
   var endPoint = '';
@@ -37,85 +36,110 @@ class ClouterInfiniteScrollController extends GetxController {
   }
 
   setCurrentPage(input) {
-    final userController = Get.find<UserController>();
     currentPage = input;
-    parameter =
-        // '?advertiserId=${userController.memberId}&page=${currentPage}&size=${10}';
-        '?page=$currentPage&size=${10}&memberId=${userController.memberId}';
     update();
   }
+
+  setIsLoading(input) {
+    isLoading = input;
+    update();
+  }
+
+  Timer _timer = Timer(Duration(milliseconds: 3000), () {});
 
   @override
   void onInit() {
     scrollController.value.addListener(() {
+      print(scrollController.value.position.pixels);
       if (scrollController.value.position.pixels ==
               scrollController.value.position.maxScrollExtent &&
           hasMore) {
         setCurrentPage(currentPage + 1);
-        _getData();
+        getData();
+      }
+      if (scrollController.value.position.pixels < -100) {
+        if (!_timer.isActive) {
+          HapticFeedback.mediumImpact();
+          reload();
+          _timer = Timer(Duration(milliseconds: 3000), () {});
+        }
       }
     });
 
     super.onInit();
   }
 
-  _getData() async {
-    isLoading = true;
-    hasMore = true;
+  getData() async {
+    try {
+      isLoading = true;
+      hasMore = true;
 
-    await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 2));
 
-    final AuthorizedApi authorizedApi = AuthorizedApi();
+      final AuthorizedApi authorizedApi = AuthorizedApi();
 
-    var response = await authorizedApi.getRequest(endPoint, parameter);
-    print(response);
-    var jsonData = jsonDecode(response['body']);
-    var contentList = jsonData['content'] as List;
+      var response = await authorizedApi.getRequest(endPoint, parameter);
+      print(response);
+      var jsonData = jsonDecode(response['body']);
+      var contentList = jsonData['content'] as List;
 
-    var appendData = [];
+      var appendData = [];
 
-    if (contentList.isNotEmpty) {
-      for (var item in contentList) {
-        var clouterInfo = ClouterInfo.fromJson(item);
+      if (contentList.isNotEmpty) {
+        for (var item in contentList) {
+          var clouterInfo = ClouterInfo.fromJson(item);
 
-        var clouterItemBox = Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ClouterItemBox(
-            clouterId: clouterInfo.clouterId!,
-            userId: clouterInfo.userId!,
-            nickName: clouterInfo.nickName!,
-            avgScore: clouterInfo.avgScore ?? 0,
-            minCost: clouterInfo.minCost ?? 0,
-            categoryList: clouterInfo.categoryList!,
-            adPlatformList: clouterInfo.channelList
-                    ?.map((channel) => Sns2(platform: channel.platform))
-                    .toList() ??
-                [],
-            countOfContract: clouterInfo.countOfContract ?? 0,
-            // firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
-          ),
-        );
-        appendData.add(clouterItemBox);
+          var clouterItemBox = Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ClouterItemBox(
+              clouterId: clouterInfo.clouterId!,
+              userId: clouterInfo.userId!,
+              nickName: clouterInfo.nickName!,
+              avgScore: clouterInfo.avgScore ?? 0,
+              minCost: clouterInfo.minCost ?? 0,
+              categoryList: clouterInfo.categoryList!,
+              adPlatformList: clouterInfo.channelList
+                      ?.map((channel) => Sns2(platform: channel.platform))
+                      .toList() ??
+                  [],
+              countOfContract: clouterInfo.countOfContract ?? 0,
+              firstImg: clouterInfo.imageResponses != null &&
+                      clouterInfo.imageResponses!.isNotEmpty
+                  ? ImageResponse.fromJson(clouterInfo.imageResponses?[0]).path
+                  : '',
+            ),
+          );
+          appendData.add(clouterItemBox);
+        }
+        data.addAll(appendData);
+        dataLoading = false;
+        isLoading = false;
+        update();
+      } else {
+        dataLoading = false;
+        isLoading = false;
+        hasMore = false;
+        update();
       }
-      data.addAll(appendData);
-
+    } catch (e) {
+      print('오류발생');
       isLoading = false;
-      hasMore = contentList.isNotEmpty;
-      update();
-    } else {
+      dataLoading = false;
       hasMore = false;
-      isLoading = false;
       update();
+      print(e);
     }
   }
 
   reload() async {
-    isLoading = true;
+    await setIsLoading(true);
+    dataLoading = true;
+    hasMore = true;
     data.clear();
-
-    await Future.delayed(Duration(seconds: 2));
-
-    _getData();
     update();
+    await setCurrentPage(0);
+    await Future.delayed(Duration(milliseconds: 100));
+
+    await getData();
   }
 }
