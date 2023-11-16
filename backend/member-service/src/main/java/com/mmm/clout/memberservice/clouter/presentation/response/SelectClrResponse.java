@@ -93,4 +93,15 @@ public class SelectClrResponse {
         SelectClrResponse response = new SelectClrResponse(clouterReader);
         return response;
     }
+
+    public void blur() {
+        this.userId = "@@@@@";
+        this.minCost = -1L;
+        this.address.blur();
+        this.countOfContract= -1;
+        this.name = "@@@@@@";
+        this.birthday = LocalDate.now();
+        this.age = -1;
+        this.phoneNumber = "@@@@@@@@";
+    }
 }
