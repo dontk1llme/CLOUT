@@ -22,6 +22,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.io.IOException;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -96,8 +98,9 @@ public interface AdvertisementControllerDocs {
     )
     ResponseEntity<UpdateCampaignResponse> updateCampaign(
         @PathVariable Long advertisementId,
-        @RequestBody UpdateCampaignRequest request
-    );
+        @RequestPart UpdateCampaignRequest request,
+        @RequestPart(value = "files", required = true) List<MultipartFile> fileList
+    ) throws Exception;
 
 
     @Operation(summary = "광고 캠페인 삭제 (soft 삭제)",
