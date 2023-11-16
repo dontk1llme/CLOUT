@@ -5,6 +5,7 @@ import 'package:clout/screens/register_or_modify/advertiser/widgets/advertiser_j
 import 'package:clout/screens/register_or_modify/advertiser/widgets/advertiser_join_or_modify_2.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
+import 'package:clout/widgets/common/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -31,49 +32,6 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
     advertiserController.setControllerTag('advertiserRegister');
     advertiserInfoController.runOtherControllers();
     super.initState();
-  }
-
-  showSnackBar() {
-    Get.snackbar(
-      '',
-      '',
-      // snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 4),
-      titleText: Text(
-        '🥳 회원 가입 완료',
-        style: style.textTheme.headlineMedium?.copyWith(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-        ),
-      ),
-      messageText: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '가입을 진심으로 축하드려요',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            '성공적인 광고 계약을 기원할게요 🙌',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      borderWidth: 5,
-      borderColor: style.colors['main1'],
-      margin: EdgeInsets.only(
-        top: 15,
-        left: 20,
-        right: 20,
-      ),
-    );
   }
 
   goNext() {
@@ -106,7 +64,11 @@ class _AdvertiserJoinState extends State<AdvertiserJoin> {
     registerApi.postRequest('/member-service/v1/advertisers/signup',
         advertiserInfoController.advertiser);
     Get.offNamed('/login');
-    showSnackBar();
+    CustomSnackbar(
+            title: '🥳 회원 가입 완료!',
+            message1: '가입을 진심으로 축하드려요',
+            message2: '성공적인 광고 계약을 기원할게요 🙌')
+        .show();
   }
 
   @override

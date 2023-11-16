@@ -1,8 +1,4 @@
-import 'package:clout/hooks/apis/authorized_api.dart';
-import 'package:clout/screens/detail/campaign/widgets/campaign_detail_visit.dart';
-import 'package:clout/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
 
@@ -11,6 +7,7 @@ import 'dart:convert';
 import 'package:clout/type.dart';
 import 'package:clout/utilities/like_utils.dart';
 import 'package:clout/hooks/apis/normal_api.dart';
+import 'package:clout/hooks/apis/authorized_api.dart';
 
 // controllers
 import 'package:clout/providers/user_controllers/user_controller.dart';
@@ -19,13 +16,14 @@ import 'package:clout/providers/user_controllers/user_controller.dart';
 import 'package:clout/screens/detail/campaign/widgets/campaign_detail_content.dart';
 import 'package:clout/screens/detail/campaign/widgets/campaign_detail_delivery_info.dart';
 import 'package:clout/screens/detail/campaign/widgets/campaign_detail_info_box.dart';
-import 'package:clout/screens/clouter_select/clouter_select.dart';
 import 'package:clout/utilities/bouncing_listview.dart';
 import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:clout/widgets/buttons/like_button.dart';
 import 'package:clout/widgets/header/header.dart';
 import 'package:clout/widgets/image_carousel.dart';
-import 'package:loading_indicator/loading_indicator.dart';
+import 'package:clout/screens/detail/campaign/widgets/campaign_detail_visit.dart';
+import 'package:clout/widgets/common/custom_snackbar.dart';
+import 'package:clout/widgets/loading_indicator.dart';
 
 String caution =
     '✔ 리뷰 작성기간 미준수시 패널티(제품 비용, 체험 비용 환불 등) 및 계약서에 의거 법적 처벌을 받을 수 있습니다.\n✔ 캠페인 요구사항 및 가이드라인을 확인해서 작성해주시기 바랍니다.\n✔ 수집된 개인정보는 체험단 운영 및 경품 증정 등의 필수 목적으로 사용되고 그 외에 목적으로는 사용되지 않습니다.\n✔ 작성해 주신 리뷰/포스팅/콘텐츠는 최소 6개월 이상 유지를 원칙으로 합니다.\n✔ 제품 발송은 최초 가입 시 등록한 주소지로 발송됩니다.\n✔ 주소 이전 시 회원 정보 미반영으로 인한 피해는 당사에서 책임지지 않습니다.';
@@ -70,9 +68,6 @@ class _CampaignDetailState extends State<CampaignDetail> {
     var decodedResponse = jsonDecode(response['body']);
     applyId = decodedResponse['applyId'];
     applyCheck = decodedResponse['applyCheck'];
-
-    print('applyId 💥💥💥 $applyId');
-    print('applyCheck 💥💥💥 $applyCheck');
   }
 
   _showDetail() async {
@@ -136,90 +131,6 @@ class _CampaignDetailState extends State<CampaignDetail> {
     }
   }
 
-  showSnackBar() {
-    Get.snackbar(
-      '',
-      '',
-      duration: Duration(seconds: 4),
-      titleText: Text(
-        '캠페인 삭제 완료!',
-        style: style.textTheme.headlineMedium?.copyWith(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-        ),
-      ),
-      messageText: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '캠페인이 삭제되었어요.',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            '새로운 캠페인으로 다시 만나요! 👍',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      borderWidth: 5,
-      borderColor: style.colors['main1'],
-      margin: EdgeInsets.only(
-        top: 15,
-        left: 20,
-        right: 20,
-      ),
-    );
-  }
-
-  showEndSnackBar() {
-    Get.snackbar(
-      '',
-      '',
-      duration: Duration(seconds: 4),
-      titleText: Text(
-        '캠페인 모집 종료!',
-        style: style.textTheme.headlineMedium?.copyWith(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-        ),
-      ),
-      messageText: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '캠페인 모집이 종료되었어요.',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            '새로운 캠페인으로 다시 만나요! 👍',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      borderWidth: 5,
-      borderColor: style.colors['main1'],
-      margin: EdgeInsets.only(
-        top: 15,
-        left: 20,
-        right: 20,
-      ),
-    );
-  }
-
   // 캠페인 삭제 api
   deleteCampaign() async {
     var response = await authorizedApi.postRequest(
@@ -229,7 +140,12 @@ class _CampaignDetailState extends State<CampaignDetail> {
     if (response['statusCode'] == 200) {
       print('캠페인 삭제 성공~~🎉');
       Get.back();
-      showSnackBar();
+      CustomSnackbar(
+              title: '캠페인 삭제 완료!',
+              message1: '캠페인이 삭제되었어요. 😥',
+              message2: '새로운 캠페인으로 다시 만나요! 👍')
+          .show();
+
       Get.toNamed('/home');
     } else {
       print('캠페인 삭제 실패.. ❌');
@@ -243,7 +159,13 @@ class _CampaignDetailState extends State<CampaignDetail> {
     if (response['statusCode'] == 200) {
       print('캠페인 모집 종료 성공 ~~ 🎉');
       Get.back();
-      showEndSnackBar();
+
+      CustomSnackbar(
+              title: '캠페인 모집 종료!',
+              message1: '캠페인 모집이 종료되었어요. 😊',
+              message2: '새로운 캠페인으로 또 만나요! 👍')
+          .show();
+
       Get.toNamed('/home');
     } else {
       print('캠페인 모집 종료 실패.. ❌');
@@ -294,56 +216,18 @@ class _CampaignDetailState extends State<CampaignDetail> {
     );
   }
 
-  showCancelSnackBar() {
-    Get.snackbar(
-      '',
-      '',
-      duration: Duration(seconds: 4),
-      titleText: Text(
-        '캠페인 신청 취소 완료!',
-        style: style.textTheme.headlineMedium?.copyWith(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-        ),
-      ),
-      messageText: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '캠페인 신청이 취소되었습니다.',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            '새로운 캠페인으로 다시 만나요! 👍',
-            style: style.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      borderWidth: 5,
-      borderColor: style.colors['main1'],
-      margin: EdgeInsets.only(
-        top: 15,
-        left: 20,
-        right: 20,
-      ),
-    );
-  }
-
-  // 💥 아래에 applyId 추가하기
   cancelRegister() async {
     var response = await authorizedApi.postRequest(
         '/advertisement-service/v1/applies/$applyId/cancel', '');
 
     if (response['statusCode'] == 200) {
       print('캠페인 신청 취소 성공 ~~ 🎉');
-      showCancelSnackBar();
+
+      CustomSnackbar(
+              title: '캠페인 신청 취소 완료!',
+              message1: '캠페인 신청이 취소되었습니다. 😥',
+              message2: '새로운 캠페인으로 다시 만나요! 👍')
+          .show();
     } else {
       print('캠페인 신청 취소 실패.. ❌');
     }
