@@ -5,6 +5,8 @@ import com.mmm.clout.memberservice.common.Category;
 import com.mmm.clout.memberservice.common.Region;
 import com.mmm.clout.memberservice.common.Role;
 import com.mmm.clout.memberservice.common.entity.address.response.AddressResponse;
+import com.mmm.clout.memberservice.image.domain.Image;
+import com.mmm.clout.memberservice.image.presentation.ImageResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -58,6 +60,10 @@ public class SelectClrResponse {
 
     private AddressResponse address;
 
+    private Integer countOfContract;
+
+    private List<ImageResponse> imageResponses;
+
     public SelectClrResponse(ClouterReader clouterReader) {
 
         this.clouterId = clouterReader.getClouterId();
@@ -79,10 +85,23 @@ public class SelectClrResponse {
         this.categoryList = clouterReader.getCategoryList();
         this.regionList = clouterReader.getRegionList();
         this.address = new AddressResponse(clouterReader.getAddress());
+        this.countOfContract = clouterReader.getCountOfContract();
+        this.imageResponses = clouterReader.getImageResponses();
     }
 
     public static SelectClrResponse from(ClouterReader clouterReader) {
         SelectClrResponse response = new SelectClrResponse(clouterReader);
         return response;
+    }
+
+    public void blur() {
+        this.userId = "@@@@@";
+        this.minCost = -1L;
+        this.address.blur();
+        this.countOfContract= -1;
+        this.name = "@@@@@@";
+        this.birthday = LocalDate.now();
+        this.age = -1;
+        this.phoneNumber = "@@@@@@@@";
     }
 }

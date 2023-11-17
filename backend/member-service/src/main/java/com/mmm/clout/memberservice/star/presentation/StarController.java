@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/v1/starts")
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class StarController implements StarControllerDocs {
 
     @PostMapping
     public ResponseEntity<CreateStarResponse> createStarScore(
-        @RequestBody createStarDetailRequest requst
+         @Valid @RequestBody createStarDetailRequest requst
     ) {
         CreateStarResponse result = CreateStarResponse.from(
             starFacade.starScoreAdd(requst.toCommand())
