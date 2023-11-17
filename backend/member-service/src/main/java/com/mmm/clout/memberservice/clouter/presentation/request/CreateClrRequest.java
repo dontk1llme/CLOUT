@@ -39,7 +39,7 @@ public class CreateClrRequest {
     @Size(max = 20)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "생일")
     private LocalDate birthday;
 
@@ -58,9 +58,6 @@ public class CreateClrRequest {
     private List<ChannelRequest> channelList;
 
     private Long minCost;
-
-    @Schema(description = "네고 가능 여부")
-    private boolean negoable;
 
     @NotNull
     @Size(min = 1, message = "최소 1개의 카테고리는 선택 해야 합니다.")
