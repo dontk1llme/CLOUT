@@ -21,4 +21,5 @@ public class AdvertiserInfo {
     private AddressInfo addressInfo;
 
     private CompanyInfo companyInfo;
+
 }

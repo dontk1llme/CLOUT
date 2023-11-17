@@ -27,8 +27,11 @@ public class GetAllByStatusResponse {
                     apply.getCampaign().getPrice(),
                     apply.getCampaign().getNumberOfSelectedMembers(),
                     apply.getCampaign().getNumberOfRecruiter(),
+                    apply.getCampaign().getNumberOfApplicants(),
                     r.getCompanyName(),
-                    r.getAdvertiserAvgStar()
+                    r.getAdvertiserAvgStar(),
+                        r.getCampaignId(),
+                        r.getAdPlatformList()
                 )
             );
         }
