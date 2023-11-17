@@ -20,11 +20,10 @@ class NotificationTokenApi {
     var statusCode = response.statusCode;
     var headers = response.headers;
     print(parameter);
-    print('알림토큰 response 헤더');
     print(headers);
 
 
-    if (statusCode == 200) {
+    if (statusCode == 201) {
       print('알림토큰 성공');
     }
     else {
