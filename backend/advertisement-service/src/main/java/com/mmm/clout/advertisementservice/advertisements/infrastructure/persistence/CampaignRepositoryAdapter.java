@@ -68,10 +68,8 @@ public class CampaignRepositoryAdapter implements CampaignRepository {
     }
 
     @Override
-    public List<Campaign> getCampainListByAdvertiserId(Long advertiserId, Pageable pageable) {
-        Page<Campaign> pages = jpaCampaignRepository.findByRegisterIdOrderByCreatedAtDesc(
-            advertiserId, pageable);
-        return pages.getContent();
+    public Page<Campaign> getCampainListByAdvertiserId(Long advertiserId, Pageable pageable) {
+        return jpaCampaignRepository.findByRegisterIdOrderByCreatedAtDesc(advertiserId, pageable);
     }
 
     @Override

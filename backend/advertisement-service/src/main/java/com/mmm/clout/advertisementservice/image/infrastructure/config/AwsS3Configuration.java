@@ -1,4 +1,4 @@
-package com.mmm.clout.imageservice.image.infrastructure.config;
+package com.mmm.clout.advertisementservice.image.infrastructure.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
