@@ -25,6 +25,6 @@ public class CompanyInfo {
     @Column(length = 20)
     private String managerName;
 
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String managerPhoneNumber;
 }
