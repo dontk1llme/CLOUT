@@ -6,9 +6,7 @@ class BigButton extends StatelessWidget {
   BigButton(
       {super.key,
       this.title,
-      this.destination,
       this.function,
-      this.notJustRoute,
       this.textColor,
       this.buttonColor}) {
     textColor ??= style.colors['white'];
@@ -16,10 +14,8 @@ class BigButton extends StatelessWidget {
   }
 
   final title;
-  final destination;
   final function;
   // 단순 페이지 이동이 아니라 조건(로그인, 검색 조건 설정같은 것이 붙을 경우)
-  final notJustRoute;
   Color? textColor;
   Color? buttonColor;
 

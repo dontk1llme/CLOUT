@@ -1,54 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:clout/style.dart' as style;
+
 class BigButton extends StatelessWidget {
-  BigButton(
-      {super.key,
-      this.title,
-      this.destination,
-      this.function,
-      this.notJustRoute,
-      this.textColor,
-      this.buttonColor}) {
+  BigButton({
+    super.key,
+    required this.title,
+    required this.function,
+    this.textColor,
+    this.buttonColor,
+    this.icon,
+  }) {
     textColor ??= style.colors['white'];
     buttonColor ??= style.colors['main1'];
   }
 
   final title;
-  final destination;
   final function;
   // 단순 페이지 이동이 아니라 조건(로그인, 검색 조건 설정같은 것이 붙을 경우)
-  final notJustRoute;
   Color? textColor;
   Color? buttonColor;
+  final icon;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      child: SizedBox(
-        width: double.infinity,
-        height: 50,
-        child: ElevatedButton(
-          onPressed: () => {
-            if (notJustRoute != null && notJustRoute) {function(destination)}
-            else {Get.offAllNamed(destination)}
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: buttonColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          child: Text(
-            title,
-            style: style.textTheme.headlineLarge?.copyWith(
-              color: textColor,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+    return ElevatedButton(
+      onPressed: function,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: buttonColor,
+        padding: EdgeInsets.symmetric(vertical: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
+      child: icon != null
+          ? Row(
+              children: [
+                SizedBox(width: 20),
+                icon,
+                SizedBox(width: 20),
+                Text(
+                  title,
+                  style: style.textTheme.headlineLarge?.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.w600,
+                    height: 1.2,
+                  ),
+                ),
+              ],
+            )
+          : Text(
+              title,
+              style: style.textTheme.headlineLarge?.copyWith(
+                color: textColor,
+                fontWeight: FontWeight.w600,
+                height: 1.2,
+              ),
+            ),
     );
   }
 }

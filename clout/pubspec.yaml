@@ -42,8 +42,44 @@ dependencies:
   syncfusion_flutter_sliders: ^23.1.42
   syncfusion_flutter_core: ^23.1.42
   flutter_launcher_icons: ^0.13.1
-  syncfusion_flutter_datepicker: ^23.1.42
+  syncfusion_flutter_datepicker: ^23.1.43
   dropdown_button2: ^2.3.9
+  multi_select_flutter: ^4.1.3
+  animated_toggle_switch: ^0.8.0
+  image_picker: ^1.0.4
+  multiple_images_picker: ^1.0.1
+  permission_handler: ^11.0.1
+  multi_image_picker: ^4.8.01
+  flutter_riverpod: ^2.4.4
+  fluttertoast: ^8.2.2
+  signature: ^5.4.0
+  syncfusion_flutter_signaturepad: ^23.1.42
+  image_gallery_saver: ^2.0.3
+  change_app_package_name: ^1.1.0
+  url_launcher: ^6.2.1
+  carousel_slider: ^4.2.1
+  flutter_inset_box_shadow: ^1.0.8
+  flutter_animate: ^4.2.0+1
+  stomp_dart_client: ^1.0.0
+  web_socket_channel: ^2.4.0
+  daum_postcode_search: ^0.0.2
+  flutter_inappwebview: ^5.7.2+3
+  infinite_scroll_pagination: ^4.0.0
+  currency_text_input_formatter: ^2.1.10
+  brasil_fields: ^1.14.0
+
+  firebase_core: ^2.21.0
+  firebase_messaging: ^14.7.3
+  flutter_local_notifications: ^16.1.0
+  syncfusion_flutter_pdf: ^23.1.43
+  open_file: ^3.3.2
+  flutter_staggered_grid_view: ^0.7.0
+  loading_indicator: ^3.1.1
+  flutter_dotenv: ^5.1.0
+  http: ^1.1.0
+  pinput: ^3.0.1
+  format: ^1.4.0
+  flutter_animated_icons: ^1.0.1
 
 flutter_icons:
   android: "clout"
@@ -96,6 +132,7 @@ flutter:
     - assets/images/clouter.png
     - assets/images/advertiser.png
     - assets/images/addPhoto.png
+    - assets/config/.env
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
 
