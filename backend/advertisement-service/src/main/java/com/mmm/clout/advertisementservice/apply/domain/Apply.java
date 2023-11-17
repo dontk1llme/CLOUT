@@ -73,6 +73,10 @@ public class Apply extends BaseEntity {
         this.applyStatus = ApplyStatus.WAITING;
     }
 
+    public static boolean invalid(Apply apply) {
+        return apply == null || apply.getApplyStatus() == Apply.ApplyStatus.CANCEL;
+    }
+
 
     public void cancelApply() {
         if (this.applyStatus == ApplyStatus.ACCEPTED) {

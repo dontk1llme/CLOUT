@@ -1,25 +1,30 @@
-package com.mmm.clout.imageservice.image.infrastructure.persistance;
+package com.mmm.clout.advertisementservice.image.infrastructure.persistance;
 
-import com.mmm.clout.imageservice.image.domain.Image;
-import com.mmm.clout.imageservice.image.domain.repository.ImageRepository;
-import com.mmm.clout.imageservice.image.infrastructure.persistance.jpa.JpaImageRepository;
+import com.mmm.clout.advertisementservice.image.domain.Image;
+import com.mmm.clout.advertisementservice.image.domain.repository.ImageRepository;
+import com.mmm.clout.advertisementservice.image.infrastructure.persistance.jpa.JpaImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class ImageRepositoryAdapter implements ImageRepository {
+
     private final JpaImageRepository jpaImageRepository;
 
     @Override
     public Image save(Image image) {return jpaImageRepository.save(image);}
 
     @Override
-    public List<Image> findByTargetIdAndType(Long targetId, String type) {
-        return jpaImageRepository.findByTargetIdAndType(targetId, type);
+    public List<Image> findByAdvertisementId(Long advertisementId) {
+        return jpaImageRepository.findByCampaign_Id(advertisementId);
+    }
+
+    @Override
+    public List<Image> findByCampaignIdIn(List<Long> idList) {
+        return jpaImageRepository.findByCampaign_IdIn(idList);
     }
 
     @Override
@@ -37,5 +42,15 @@ public class ImageRepositoryAdapter implements ImageRepository {
                 .orElseThrow(IllegalAccessError::new);
 
         return image;
+    }
+
+    @Override
+    public List<Image> findByCampaignId(Long id) {
+        return jpaImageRepository.findByCampaign_Id(id);
+    }
+
+    @Override
+    public void deleteImage(Long id) {
+        jpaImageRepository.deleteById(id);
     }
 }

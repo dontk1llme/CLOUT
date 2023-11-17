@@ -1,8 +1,8 @@
-package com.mmm.clout.imageservice.image.infrastructure.config;
+package com.mmm.clout.advertisementservice.image.infrastructure.config;
 
-import com.mmm.clout.imageservice.image.domain.repository.ImageRepository;
-import com.mmm.clout.imageservice.image.infrastructure.persistance.ImageRepositoryAdapter;
-import com.mmm.clout.imageservice.image.infrastructure.persistance.jpa.JpaImageRepository;
+import com.mmm.clout.advertisementservice.image.domain.repository.ImageRepository;
+import com.mmm.clout.advertisementservice.image.infrastructure.persistance.ImageRepositoryAdapter;
+import com.mmm.clout.advertisementservice.image.infrastructure.persistance.jpa.JpaImageRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

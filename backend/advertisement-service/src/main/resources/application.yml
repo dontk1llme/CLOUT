@@ -2,6 +2,8 @@ server:
   port: 8889
 
 spring:
+  config:
+    import: secret/application-secret.yml
   application:
     name: advertisement-service
   datasource:
@@ -19,6 +21,9 @@ spring:
     hibernate:
       ddl-auto: update
     open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
 springdoc:
   swagger-ui:
     path: /swagger-ui

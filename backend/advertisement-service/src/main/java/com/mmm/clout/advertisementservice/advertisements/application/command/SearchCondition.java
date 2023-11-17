@@ -25,32 +25,26 @@ public class SearchCondition {
     private CampaignSort sortKey;
 
     public static SearchCondition from(
-        List<String> category,
-        List<String> platform,
+        List<AdCategory> category,
+        List<AdPlatform> platform,
         Integer minAge,
         Integer maxAge,
         Integer minFollower,
         Integer minPrice,
         Integer maxPrice,
-        List<String> region,
+        List<Region> region,
         String keyword,
         CampaignSort sortKey
     ) {
         return new SearchCondition(
-            category.stream().map(
-                AdCategory::valueOf
-            ).collect(Collectors.toList()),
-            platform.stream().map(
-                AdPlatform::valueOf
-            ).collect(Collectors.toList()),
+            category,
+            platform,
             minAge,
             maxAge,
             minFollower,
             minPrice,
             maxPrice,
-            region.stream().map(
-                Region::valueOf
-            ).collect(Collectors.toList()),
+            region,
             keyword,
             sortKey
         );

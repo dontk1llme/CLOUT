@@ -2,13 +2,19 @@ package com.mmm.clout.advertisementservice.advertisements.persentation;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
+import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
+import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
+import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
+import com.mmm.clout.advertisementservice.advertisements.domain.Region;
 import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.UpdateCampaignRequest;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignReaderResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.CreateCampaignResponse;
+import com.mmm.clout.advertisementservice.advertisements.persentation.response.CustomPageResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.EndedCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampaignAndAdvertiserResponse;
@@ -16,6 +22,9 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.response.G
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetTop10CampainListResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
+import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -24,15 +33,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/v1/advertisements")
@@ -49,12 +53,14 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     /**
      * 광고 캠페인 등록
      */
-    @PostMapping
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<CreateCampaignResponse> createCampaign(
-        @RequestBody @Valid CreateCampaignRequest createCampaignRequest
-    ) {
+        @RequestPart @Valid CreateCampaignRequest createCampaignRequest,
+        @RequestPart(value = "files") List<MultipartFile> fileList
+    )throws Exception {
+        MultipartFile sign = fileList.remove(0);
         CreateCampaignResponse result = CreateCampaignResponse.from(
-            advertisementFacade.create(createCampaignRequest.toCommand())
+            advertisementFacade.create(createCampaignRequest.toCommand(), fileList, sign)
         );
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
@@ -62,14 +68,14 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     /**
      * 캠페인 수정
      */
-
-    @PutMapping("/{advertisementId}")
+    @PostMapping(value = "/{advertisementId}/modify", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<UpdateCampaignResponse> updateCampaign(
         @PathVariable Long advertisementId,
-        @RequestBody @Valid UpdateCampaignRequest updateCampaignRequest
-    ) {
+        @RequestPart @Valid UpdateCampaignRequest updateCampaignRequest,
+        @RequestPart(value = "files") List<MultipartFile> fileList
+    ) throws Exception {
         UpdateCampaignResponse result = UpdateCampaignResponse.from(
-            advertisementFacade.update(advertisementId, updateCampaignRequest.toCommand()));
+            advertisementFacade.update(advertisementId, updateCampaignRequest.toCommand(), fileList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -89,7 +95,6 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     /**
      * 캠페인 캠페인 상세 조회 (광고주 정보 포함)
      */
-
     @GetMapping("/{advertisementId}")
     public ResponseEntity<GetCampaignAndAdvertiserResponse> getCampaignDetails(
         @PathVariable Long advertisementId
@@ -97,7 +102,6 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         GetCampaignAndAdvertiserResponse result = GetCampaignAndAdvertiserResponse.from(
             advertisementFacade.get(advertisementId)
         );
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -116,16 +120,33 @@ public class AdvertisementController implements AdvertisementControllerDocs {
      * 광고주 자신이 올린 광고 목록 조회 (최신순)
      */
     @GetMapping("/advertisements")
-    public ResponseEntity<GetCampainListByAdvertiserResponse> getCampaignsByAdvertisers(
+    public ResponseEntity<CustomPageResponse<CampaignReaderResponse>> getCampaignsByAdvertisers(
         @RequestParam Long advertiserId,
         @RequestParam int page,
         @RequestParam int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        GetCampainListByAdvertiserResponse result =
-            GetCampainListByAdvertiserResponse.from(
-                advertisementFacade.getAllCampaignsByAdvertisers(advertiserId, pageable)
-            );
+        CampaignListReader campaigns = advertisementFacade.getAllCampaignsByAdvertisers(
+            advertiserId, pageable);
+        Page<Campaign> campaignList = campaigns.getCampaignList();
+        AdvertiserInfo advertiserInfo = campaigns.getAdvertiserInfo();
+
+
+        CustomPageResponse<CampaignReaderResponse> result = new CustomPageResponse<>(
+            campaignList.stream().map(
+                campaign -> CampaignReaderResponse.from(
+                    new CampaignReader(campaign,
+                        advertiserInfo,
+                        campaigns.getImageMap().get(campaign.getId()),
+                        campaigns.getSignMap().get(campaign.getId())
+                    )
+                )
+            ).collect(Collectors.toList()),
+            campaigns.getCampaignList().getNumber(),
+            campaigns.getCampaignList().getSize(),
+            campaigns.getCampaignList().getTotalPages(),
+            campaigns.getCampaignList().getTotalElements()
+        );
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -148,22 +169,22 @@ public class AdvertisementController implements AdvertisementControllerDocs {
      * 광고 검색 / 검색 조건별 전체 조회
      */
     @GetMapping("/search")
-    public ResponseEntity<Page<CampaignReader>> searchAndReadCampaignList(
+    public ResponseEntity<CustomPageResponse<CampaignReaderResponse>> searchAndReadCampaignList(
         @RequestParam(defaultValue = "0") Integer page,
         @RequestParam(defaultValue = "10") Integer size,
-        @RequestParam(defaultValue = "ALL") List<String> category,
-        @RequestParam(defaultValue = "INSTAGRAM") List<String> platform,
+        @RequestParam(defaultValue = "ALL") List<AdCategory> category,
+        @RequestParam(defaultValue = "INSTAGRAM") List<AdPlatform> platform,
         @RequestParam(defaultValue = "0") Integer minAge,
         @RequestParam(defaultValue = "100") Integer maxAge,
         @RequestParam(defaultValue = "0") Integer minFollower,
         @RequestParam(defaultValue = "0") Integer minPrice,
         @RequestParam(defaultValue = "1000000000") Integer maxPrice,
-        @RequestParam(defaultValue = "ALL") List<String> region,
+        @RequestParam(defaultValue = "ALL") List<Region> region,
         @RequestParam(required = false) String keyword,
         @RequestParam(defaultValue = "POPULARITY") CampaignSort sortKey
     ) {
 
-        Page<CampaignReader> result = advertisementFacade.search(
+        Page<CampaignReader> searched = advertisementFacade.search(
             PageRequest.of(page, size),
             SearchCondition.from(
                 category,
@@ -178,7 +199,18 @@ public class AdvertisementController implements AdvertisementControllerDocs {
                 sortKey
             )
         );
-        return new ResponseEntity<>(result, HttpStatus.OK);
+
+        CustomPageResponse<CampaignReaderResponse> result = new CustomPageResponse<>(
+            searched.stream().map(
+                CampaignReaderResponse::from
+            ).collect(Collectors.toList()),
+            searched.getNumber(),
+            searched.getSize(),
+            searched.getTotalPages(),
+            searched.getTotalElements()
+        );
+        return new ResponseEntity<>(
+            result, HttpStatus.OK);
     }
 
 
