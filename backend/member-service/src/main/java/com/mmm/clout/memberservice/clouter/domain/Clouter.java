@@ -34,17 +34,14 @@ public class Clouter extends Member {
 
     private Integer age;
 
-    @Column(length = 20)
+    @Column(length = 20, unique = true)
     private String phoneNumber;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "channel", joinColumns = @JoinColumn(name = "member_id"))
     private List<Channel> channelList = new ArrayList<>();
 
-    @Embedded
-    private HopeCost hopeCost;
-
-    private boolean negoable;
+    private Long minCost;
 
     @ElementCollection(targetClass = Category.class, fetch = FetchType.LAZY)
     @JoinTable(name="clouter_categories", joinColumns = @JoinColumn(name = "member_id"))
@@ -62,7 +59,7 @@ public class Clouter extends Member {
     private Address address;
 
     public Clouter(String userid, String pwd, String nickName, String name, LocalDate birthday, Integer age,
-                   String phoneNumber,List<Channel> channelList, HopeCost hopeCost, boolean negoable,
+                   String phoneNumber,List<Channel> channelList, Long minCost,
                    List<Category> categoryList,List<Region> regionList, Address address) {
         super(userid, pwd, Role.CLOUTER);
         this.nickName = nickName;
@@ -71,23 +68,22 @@ public class Clouter extends Member {
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.channelList = channelList;
-        this.hopeCost = hopeCost;
-        this.negoable = negoable;
+        this.minCost = minCost;
         this.categoryList = categoryList;
         this.regionList = regionList;
         this.address = address;
     }
 
     public static Clouter create(String userid, String pwd, String nickName, String name, LocalDate birthday, Integer age,
-                                  String phoneNumber,List<Channel> channelList, HopeCost hopeCost, boolean negoable,
+                                  String phoneNumber,List<Channel> channelList, Long minCost,
                                   List<Category> categoryList,List<Region> regionList, Address address) {
-        Clouter clouter = new Clouter(userid,pwd,nickName,name,birthday,age,phoneNumber,channelList,hopeCost,negoable,
+        Clouter clouter = new Clouter(userid,pwd,nickName,name,birthday,age,phoneNumber,channelList, minCost,
                                      categoryList, regionList, address);
         return clouter;
     }
 
     public Clouter update(String pwd, String nickName, String name, LocalDate birthday, Integer age,
-                                 String phoneNumber, List<Channel> channelList, HopeCost hopeCost, boolean negoable,
+                                 String phoneNumber, List<Channel> channelList, Long minCost ,
                                  List<Category> categoryList, List<Region> regionList, Address address) {
         super.update(pwd);
         this.nickName = nickName;
@@ -96,8 +92,7 @@ public class Clouter extends Member {
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.channelList = channelList;
-        this.hopeCost = hopeCost;
-        this.negoable = negoable;
+        this.minCost = minCost;
         this.categoryList = categoryList;
         this.regionList = regionList;
         this.address = address;

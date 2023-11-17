@@ -29,11 +29,12 @@ public class SelectTop10Response {
                 clouterReader.getPhoneNumber(),
                 clouterReader.getChannelList()
                                 .stream().map(ChannelResponse::new).collect(Collectors.toList()),
-                new HopeCostResponse(clouterReader.getHopeCost()),
-                clouterReader.isNegoable(),
+                clouterReader.getMinCost(),
                 clouterReader.getCategoryList(),
                 clouterReader.getRegionList(),
-                new AddressResponse(clouterReader.getAddress())
+                new AddressResponse(clouterReader.getAddress()),
+                    clouterReader.getCountOfContract(),
+                clouterReader.getImageResponses()
             )
         ).collect(Collectors.toList()));
     }
