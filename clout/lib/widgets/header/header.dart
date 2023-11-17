@@ -25,7 +25,7 @@ class HeaderState extends ConsumerState<Header> {
       toolbarHeight: 70,
       centerTitle: widget.header == 4 ? false : true,
       iconTheme: IconThemeData(color: Colors.black),
-      leading: userController.user != 0
+      leading: userController.memberType != 0
           ? widget.header == 0 || widget.header == 1
               ? IconButton(
                   onPressed: () {
@@ -56,7 +56,7 @@ class HeaderState extends ConsumerState<Header> {
                       fontWeight: FontWeight.w700,
                       height: 1))
               : null,
-      actions: userController.user != 0
+      actions: userController.memberType != 0
           ? widget.header != 3 && widget.header != 4
               ? [
                   IconButton(

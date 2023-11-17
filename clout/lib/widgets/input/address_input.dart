@@ -1,5 +1,5 @@
 import 'package:clout/providers/address_controller.dart';
-import 'package:clout/screens/join/widgets/join_input.dart';
+import 'package:clout/screens/register_or_modify/widgets/join_input.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daum_postcode_search/daum_postcode_search.dart';

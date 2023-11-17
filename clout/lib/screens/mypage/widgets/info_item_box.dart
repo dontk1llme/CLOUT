@@ -16,6 +16,7 @@ class InfoItemBox extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.only(top: 10),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               flex: 1,

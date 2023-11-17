@@ -1,6 +1,6 @@
 import 'package:clout/providers/fee_controller.dart';
-import 'package:clout/screens/join/widgets/big_button.dart';
 import 'package:clout/hooks/numeric_range_formatter.dart';
+import 'package:clout/widgets/buttons/big_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -113,7 +113,7 @@ class FeeRangeDialog extends StatelessWidget {
             SizedBox(height: 30),
             SizedBox(
               width: double.infinity,
-              height: 40,
+              height: 50,
               child: BigButton(
                 title: '확인',
                 function: () => {

@@ -16,7 +16,8 @@ class ImagePickerService {
 
   Future<List<XFile>> pickImage() async {
     try {
-      final pickedFile = await _picker.pickMultiImage();
+      final pickedFile = await _picker.pickMultiImage(
+          maxHeight: 1000, maxWidth: 1000, imageQuality: 50);
       return pickedFile;
     } catch (e) {
       print('ImagePickerService: $e');
@@ -26,7 +27,11 @@ class ImagePickerService {
 
   Future<XFile?> pickSingleImage() async {
     try {
-      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      final pickedFile = await _picker.pickImage(
+          source: ImageSource.gallery,
+          maxHeight: 1000,
+          maxWidth: 1000,
+          imageQuality: 50);
       return pickedFile;
     } catch (e) {
       print('ImagePickerService: $e');
@@ -39,27 +44,7 @@ class ImagePickerService {
 class ImagePickerController extends GetxController {
   final picker = ImagePickerService();
 
-  // List<XFile> images = [];
-  List<XFile> images = [
-    // XFile('assets/images/clouterImage.jpg'),
-    // XFile('assets/images/itemImage.jpg'),
-    // XFile('assets/images/more.png'),
-  ];
-
-  // 기존 사진 가져오는 로직(회원 정보 수정때 사용해야함)
-  // loadPreviousImage() async {
-  //   if (registerController.images.isNotEmpty) {
-  //     var previousImg = registerController.images;
-  //     List<XFile> imgList = [];
-  //     for (int i = 0; i < previousImg.length; i++) {
-  //       final ByteData bytes = await rootBundle.load(previousImg[i]);
-  //       final Uint8List target = bytes.buffer.asUint8List();
-  //       imgList.add(XFile.fromData(target));
-  //       print('따잇');
-  //     }
-  //     state = imgList;
-  //   }
-  // }
+  List<XFile> images = [];
 
   delImage(XFile image) {
     images.remove(image);

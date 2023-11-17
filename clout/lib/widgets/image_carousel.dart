@@ -1,16 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:clout/screens/campaign_detail/campaign_detail.dart';
+import 'package:clout/screens/detail/campaign/campaign_detail.dart';
 import 'package:flutter/material.dart';
 
 class ImageCarousel extends StatefulWidget {
-  ImageCarousel(
-      {super.key,
-      required this.imageSliders,
-      required this.aspectRatio,
-      required this.enlarge});
+  ImageCarousel({
+    super.key,
+    required this.imageSliders,
+    required this.aspectRatio,
+    required this.enlarge,
+    this.infiniteScroll,
+  });
   final List<Widget> imageSliders;
   final double aspectRatio;
   final bool enlarge;
+  final bool? infiniteScroll;
 
   @override
   State<ImageCarousel> createState() => _ImageCarouselState();
@@ -29,6 +32,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
           items: widget.imageSliders,
           carouselController: _controller,
           options: CarouselOptions(
+              enableInfiniteScroll: widget.infiniteScroll ?? true,
               autoPlay: true,
               enlargeCenterPage: widget.enlarge,
               aspectRatio:
