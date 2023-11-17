@@ -26,6 +26,8 @@ public class CreateContractCommand {
 
     private Long advertiserId;
 
+    private String path;
+
     public Contract toEntity(SelectClrInfo clouter, SelectAdrInfo advertiser) {
         return Contract.create(
               this.name,
@@ -34,7 +36,8 @@ public class CreateContractCommand {
               this.contractExpiration,
               this.contents,
               new ClouterInfo(clouter),
-              new AdvertiserInfo(advertiser)
+              new AdvertiserInfo(advertiser),
+              this.path
         );
     }
 }

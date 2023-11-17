@@ -1,16 +1,22 @@
 package com.mmm.clout.contractservice.contract.presentation;
 
 import com.mmm.clout.contractservice.contract.application.facade.ContractFacade;
+import com.mmm.clout.contractservice.contract.application.reader.ContractReader;
 import com.mmm.clout.contractservice.contract.presentation.docs.ContractControllerDocs;
 import com.mmm.clout.contractservice.contract.presentation.request.CreateContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.request.UpdateRRNContractRequest;
 import com.mmm.clout.contractservice.contract.presentation.response.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/contracts")
@@ -40,12 +46,13 @@ public class ContractController implements ContractControllerDocs {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/{contractId}/complete")
+    @PatchMapping(value = "/{contractId}/complete", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<UpdateStateContractResponse> updateState(
-            @PathVariable("contractId") Long id
-    ) {
+            @PathVariable("contractId") Long id,
+            @RequestPart(value = "files", required = false) MultipartFile file
+    ) throws Exception {
         UpdateStateContractResponse response = UpdateStateContractResponse.from(
-                contractFacade.updateState(id)
+                contractFacade.updateState(id, file)
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -61,37 +68,57 @@ public class ContractController implements ContractControllerDocs {
     }
 
     @GetMapping("/{contractId}")
-    public ResponseEntity<SelectContractResponse> select(
+    public ResponseEntity<ContractReader> select(
             @PathVariable("contractId") Long id
     ) {
-        SelectContractResponse response = SelectContractResponse.from(
+        ContractReader response = ContractReader.from(
                 contractFacade.select(id)
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/cloter")
-    public ResponseEntity<AllSelectContractsResponse> selectClouter(
+    @GetMapping("/clouter")
+    public ResponseEntity<CustomPageResponse<ContractReader>> selectClouter(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
             @RequestParam("clouterId") Long clouterId
     ) {
-        AllSelectContractsResponse response = AllSelectContractsResponse.from(
-                contractFacade.selectAllClouter(clouterId)
+        Page<ContractReader> searched = contractFacade.selectAllClouter(clouterId, PageRequest.of(page, size));
+
+        CustomPageResponse response = new CustomPageResponse(
+            searched.toList(),
+            searched.getNumber(),
+            searched.getSize(),
+            searched.getTotalPages(),
+            searched.getTotalElements()
         );
-        return new ResponseEntity<AllSelectContractsResponse>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/advertiser")
-    public ResponseEntity<AllSelectContractsResponse> selectAdvertiser(
+    public ResponseEntity<CustomPageResponse<ContractReader>> selectAdvertiser(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
             @RequestParam("advertiserId") Long advertiserId
     ) {
-        AllSelectContractsResponse response = AllSelectContractsResponse.from(
-                contractFacade.selectAllAdvertiser(advertiserId)
-        );
-        return new ResponseEntity<AllSelectContractsResponse>(response, HttpStatus.OK);
-    }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+        Page<ContractReader> searched = contractFacade.selectAllAdvertiser(advertiserId, PageRequest.of(page, size));
+
+        CustomPageResponse response = new CustomPageResponse(
+            searched.toList(),
+            searched.getNumber(),
+            searched.getSize(),
+            searched.getTotalPages(),
+            searched.getTotalElements()
+        );
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/file/{contractId}")
+    public ResponseEntity<String> selectFile(
+            @PathVariable("contractId") Long id
+    ) {
+        String path = contractFacade.getContractFile(id);
+        return new ResponseEntity<>(path, HttpStatus.OK);
     }
 }
