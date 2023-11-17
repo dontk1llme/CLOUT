@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 
 class PointItemBox extends StatefulWidget {
-  const PointItemBox({super.key});
+  const PointItemBox({super.key, required this.type});
+
+  final String type;
 
   @override
   State<PointItemBox> createState() => _PointItemBoxState();
 }
 
 class _PointItemBoxState extends State<PointItemBox> {
+  Color getTextColor() {
+    switch (widget.type) {
+      case '충전':
+        return Colors.blue[700]!;
+      case '출금':
+        return Colors.red;
+      case '사용':
+        return Colors.black;
+      default:
+        return Colors.black;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final textColor = getTextColor();
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
@@ -33,17 +50,17 @@ class _PointItemBoxState extends State<PointItemBox> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('적립',
+                Text(widget.type,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 17,
-                      color: Colors.blue[700],
+                      color: textColor,
                     )),
                 Text('+ 10,000 포인트',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 17,
-                      color: Colors.blue[700],
+                      color: textColor,
                     ))
               ],
             )
