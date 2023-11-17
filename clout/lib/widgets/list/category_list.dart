@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
+
+// controllers
+import 'package:clout/providers/search_combination_controller.dart';
 
 class CategoryList extends StatefulWidget {
   CategoryList({super.key});
@@ -9,38 +13,29 @@ class CategoryList extends StatefulWidget {
 }
 
 class _CategoryListState extends State<CategoryList> {
-  final List<Map<String, String>> categoryData = [
-    {'path': 'assets/images/all.png', 'name': '전체보기'},
-    {'path': 'assets/images/cosmetics.png', 'name': '패션/뷰티'},
-    {'path': 'assets/images/barbell.png', 'name': '건강/생활'},
-    {'path': 'assets/images/airplane.png', 'name': '여행/레저'},
-    {'path': 'assets/images/baby.png', 'name': '육아'},
-    {'path': 'assets/images/electronics.png', 'name': '전자제품'},
-    {'path': 'assets/images/food.png', 'name': '음식'},
-    {'path': 'assets/images/location.png', 'name': '방문/체험'},
-    {'path': 'assets/images/paw.png', 'name': '반려동물'},
-    {'path': 'assets/images/game.png', 'name': '게임'},
-    {'path': 'assets/images/money.png', 'name': '경제/사업'},
-    {'path': 'assets/images/more.png', 'name': '기타'},
-  ];
-
-  List<int> selectedCategories = [];
+  final searchCombinationController =
+      Get.put(SearchCombinationController(), tag: 'campaignList');
 
   @override
   build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double buttonSize = 50; // 이미지 버튼 크기를 화면 너비에 따라 조정
+    final searchCombinationController =
+        Get.find<SearchCombinationController>(tag: 'campaignList');
 
-    return Container(
-      width: double.infinity,
-      // height: 225,
-      color: Color(0xffF6F4FF),
-      padding: EdgeInsets.all(15),
-      child: Wrap(
-          alignment: WrapAlignment.spaceAround,
-          runSpacing: 10,
-          children: _categoryButtons(context, 0, 11, buttonSize)),
-    );
+    double buttonSize = 50;
+    searchCombinationController.setControllerTag('campaignList');
+    searchCombinationController.runOtherControllers();
+    return GetBuilder<SearchCombinationController>(
+        tag: 'campaignList',
+        builder: (controller) => Container(
+              width: double.infinity,
+              // height: 225,
+              color: Color(0xffF6F4FF),
+              padding: EdgeInsets.all(15),
+              child: Wrap(
+                  alignment: WrapAlignment.spaceAround,
+                  runSpacing: 10,
+                  children: _categoryButtons(context, 0, 11, buttonSize)),
+            ));
   }
 
   List<Widget> _categoryButtons(
@@ -48,16 +43,19 @@ class _CategoryListState extends State<CategoryList> {
     final uniqueIndexes = List.generate(
         lastIndex - startIndex + 1, (index) => startIndex + index);
 
+    final searchCombinationController =
+        Get.find<SearchCombinationController>(tag: 'campaignList');
+
     return uniqueIndexes.map((index) {
       return Column(
         children: [
           _categoryButton(
             context,
-            categoryData[index]['path']!,
+            searchCombinationController.categoryData[index]['path']!,
             buttonSize,
             index,
           ),
-          Text(categoryData[index]['name']!,
+          Text(searchCombinationController.categoryData[index]['name']!,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
               )),
@@ -69,26 +67,29 @@ class _CategoryListState extends State<CategoryList> {
   Widget _categoryButton(
       BuildContext context, String imagePath, double buttonSize, int index) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double imageSize = buttonSize;
-    final double paddingSize = imageSize / 6;
 
-    bool isSelected = selectedCategories.contains(index);
+    final searchCombinationController =
+        Get.find<SearchCombinationController>(tag: 'campaignList');
+
+    bool isSelected =
+        searchCombinationController.selectedCategories.contains(index);
 
     return InkWell(
       onTap: () {
         setState(() {
           if (index == 0) {
-            selectedCategories.clear();
-            selectedCategories.add(0);
+            searchCombinationController.selectedCategories.clear();
+            searchCombinationController.selectedCategories.add(0);
           } else {
-            selectedCategories.remove(0);
-            if (selectedCategories.contains(index)) {
-              selectedCategories.remove(index);
+            searchCombinationController.selectedCategories.remove(0);
+            if (searchCombinationController.selectedCategories
+                .contains(index)) {
+              searchCombinationController.selectedCategories.remove(index);
             } else {
-              selectedCategories.add(index);
+              searchCombinationController.selectedCategories.add(index);
             }
           }
-          _fetchSearchResults();
+          searchCombinationController.fetchSearchResults();
         });
       },
       child: Padding(
@@ -96,7 +97,6 @@ class _CategoryListState extends State<CategoryList> {
         child: Container(
           width: screenWidth / 7,
           height: screenWidth / 7,
-          // padding: EdgeInsets.all(10),
           margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
           decoration: BoxDecoration(
             color: isSelected ? style.colors['main2'] : style.colors['white'],
@@ -106,18 +106,10 @@ class _CategoryListState extends State<CategoryList> {
             padding: const EdgeInsets.all(10),
             child: Image.asset(
               imagePath,
-              // width: imageSize - 2 * paddingSize,
-              // height: imageSize - 2 * paddingSize,
             ),
           ),
         ),
       ),
     );
-  }
-
-  //  💥 API 호출 및 결과 처리 메소드
-  void _fetchSearchResults() {
-    // 여기서
-    print("선택된 카테고리: $selectedCategories");
   }
 }
