@@ -7,9 +7,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ChargePointRequest {
 
     @Schema(description = "사용자 고유 식별자(id)")
