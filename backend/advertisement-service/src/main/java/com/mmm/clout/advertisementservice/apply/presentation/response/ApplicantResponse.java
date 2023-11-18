@@ -23,9 +23,6 @@ public class ApplicantResponse {
     @Schema(description = "채택 인원")
     private Integer numberOfSelectedMembers; // 채택 인원
 
-    // TODO
-//     private Image clouterProfileImage;
-
     @Schema(description = "희망 광고비")
     private Long hopeAdFee;
 
