@@ -49,7 +49,7 @@ public class ApplyController implements ApplyControllerDocs {
     }
 
     /**
-     * 신청 취소
+     * 클라우터가 신청한 캠페인을 취소하기
      */
     @PostMapping("/{applyId}/cancel")
     public ResponseEntity<String> cancelApply(
@@ -136,8 +136,9 @@ public class ApplyController implements ApplyControllerDocs {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     /**
-     *  광고 어플라이 여부 리스폰스 api
+     * 광고 어플라이 여부 리스폰스 api
      */
     @GetMapping("/applyCheck")
     public ResponseEntity<ApplyCheckResponse> applycheck(
