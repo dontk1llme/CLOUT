@@ -17,8 +17,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    // TODO 401, 403, validation error
-
     /*
      * business custom exception 발생
      */

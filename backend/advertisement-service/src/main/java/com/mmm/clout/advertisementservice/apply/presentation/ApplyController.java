@@ -60,8 +60,6 @@ public class ApplyController implements ApplyControllerDocs {
     }
 
 
-    // TODO 이미지, star 기능 만들어지면 추가 필요
-
     /**
      * 클라우터가 신청한 캠페인 목록 (종류 존재)
      */
@@ -128,7 +126,7 @@ public class ApplyController implements ApplyControllerDocs {
     }
 
     /**
-     * 채택 -> TODO 계약 생성
+     * 채택 -> 계약 생성
      */
     @PostMapping("/{applyId}/selection")
     public ResponseEntity<Void> selectForContract(
