@@ -19,6 +19,8 @@ public class Contract extends BaseEntity {
     @Column(name = "contract_id")
     private Long id;
 
+    private Long applyId;
+
     private String name;
 
     private Long price;
@@ -40,8 +42,9 @@ public class Contract extends BaseEntity {
 
     private String path;
 
-    public Contract(String name, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo, String path) {
+    public Contract(String name, Long applyId, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo, String path) {
         this.name = name;
+        this.applyId = applyId;
         this.price = price;
         this.postDeadline = postDeadline;
         this.contractExpiration = contractExpiration;
@@ -51,8 +54,8 @@ public class Contract extends BaseEntity {
         this.state = State.WAITING;
         this.path = path;
     }
-    public static Contract create(String name, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo, String path) {
-        return new Contract(name,price,postDeadline,contractExpiration,contents,clouterInfo,advertiserInfo, path);
+    public static Contract create(String name, Long applyId, Long price, String postDeadline, String contractExpiration, String contents, ClouterInfo clouterInfo, AdvertiserInfo advertiserInfo, String path) {
+        return new Contract(name, applyId, price,postDeadline,contractExpiration,contents,clouterInfo,advertiserInfo, path);
     }
 
     public Contract updateResidentRegistrationNumber(String rnn) {
