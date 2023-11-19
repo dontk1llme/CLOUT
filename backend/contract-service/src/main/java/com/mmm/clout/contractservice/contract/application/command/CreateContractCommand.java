@@ -14,6 +14,8 @@ public class CreateContractCommand {
 
     private String name;
 
+    private Long applyId;
+
     private Long price;
 
     private String postDeadline;
@@ -31,6 +33,7 @@ public class CreateContractCommand {
     public Contract toEntity(SelectClrInfo clouter, SelectAdrInfo advertiser) {
         return Contract.create(
               this.name,
+              this.applyId,
               this.price,
               this.postDeadline,
               this.contractExpiration,
