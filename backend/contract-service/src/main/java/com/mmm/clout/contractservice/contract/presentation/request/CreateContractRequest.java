@@ -16,6 +16,10 @@ public class CreateContractRequest {
     @NotBlank
     private String name;
 
+    @Schema(description = "신청 아이디")
+    @NotBlank
+    private Long applyId;
+
     @Schema(description = "계약의 계약 금액")
     @NotNull
     private Long price;
@@ -47,6 +51,7 @@ public class CreateContractRequest {
     public CreateContractCommand toCommand() {
            return new CreateContractCommand(
                    this.name,
+                   this.applyId,
                    this.price,
                    this.postDeadline,
                    this.contractExpiration,
