@@ -17,7 +17,7 @@ public class CreateContractRequest {
     private String name;
 
     @Schema(description = "신청 아이디")
-    @NotBlank
+    @NotNull
     private Long applyId;
 
     @Schema(description = "계약의 계약 금액")
