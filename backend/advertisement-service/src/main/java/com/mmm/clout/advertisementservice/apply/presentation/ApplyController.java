@@ -49,7 +49,7 @@ public class ApplyController implements ApplyControllerDocs {
     }
 
     /**
-     * 신청 취소
+     * 클라우터가 신청한 캠페인을 취소하기
      */
     @PostMapping("/{applyId}/cancel")
     public ResponseEntity<String> cancelApply(
@@ -59,8 +59,6 @@ public class ApplyController implements ApplyControllerDocs {
         return new ResponseEntity<>("신청 취소 완료", HttpStatus.OK);
     }
 
-
-    // TODO 이미지, star 기능 만들어지면 추가 필요
 
     /**
      * 클라우터가 신청한 캠페인 목록 (종류 존재)
@@ -128,7 +126,7 @@ public class ApplyController implements ApplyControllerDocs {
     }
 
     /**
-     * 채택 -> TODO 계약 생성
+     * 채택 -> 계약 생성
      */
     @PostMapping("/{applyId}/selection")
     public ResponseEntity<Void> selectForContract(
@@ -138,8 +136,9 @@ public class ApplyController implements ApplyControllerDocs {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     /**
-     *  광고 어플라이 여부 리스폰스 api
+     * 광고 어플라이 여부 리스폰스 api
      */
     @GetMapping("/applyCheck")
     public ResponseEntity<ApplyCheckResponse> applycheck(
