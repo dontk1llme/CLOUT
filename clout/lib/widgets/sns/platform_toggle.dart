@@ -21,35 +21,35 @@ class PlatformToggle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(width: 5),
             Expanded(
               child: Sns3SelectBox(
-                img: 'assets/images/Instagram.png',
+                img: 'assets/images/INSTAGRAM.png',
                 index: 0,
                 title: 'Instagram',
                 multiAllowed: multiAllowed,
                 controllerTag: controllerTag,
               ),
             ),
-            SizedBox(width: 10),
             Expanded(
               child: Sns3SelectBox(
-                img: 'assets/images/TikTok.png',
+                img: 'assets/images/TIKTOK.png',
                 index: 1,
                 title: 'Tiktok',
                 multiAllowed: multiAllowed,
                 controllerTag: controllerTag,
               ),
             ),
-            SizedBox(width: 10),
             Expanded(
               child: Sns3SelectBox(
-                img: 'assets/images/YouTube.png',
+                img: 'assets/images/YOUTUBE.png',
                 index: 2,
                 title: 'Youtube',
                 multiAllowed: multiAllowed,
                 controllerTag: controllerTag,
               ),
             ),
+            SizedBox(width: 5),
           ],
         ));
   }

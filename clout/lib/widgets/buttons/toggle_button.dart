@@ -63,9 +63,9 @@ class _ToggleButtonState extends State<ToggleButton> {
             }),
             iconBuilder: (value) => value
                 ? Icon(widget.rightIcon,
-                    color: style.colors['main1'], size: 20.0)
+                    color: style.colors['main1'], size: 18.0)
                 : Icon(widget.leftIcon,
-                    color: style.colors['main1'], size: 20.0),
+                    color: style.colors['main1'], size: 18.0),
             textBuilder: (value) =>
                 value ? Center(child: Text('')) : Center(child: Text('')),
           ),
