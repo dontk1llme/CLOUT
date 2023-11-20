@@ -36,7 +36,7 @@ spring:
             value:
               delegate:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
-      group-id: clout-consumer-group
+      group-id: clout-consumer-test
       auto-offset-reset: earliest
 eureka:
   instance:
@@ -48,4 +48,8 @@ eureka:
       defaultZone: https://eureka.clouter.kr/eureka
 message:
   topic:
-    name: test-topic-name
+    name: contract.topic.test
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    use-root-path: true
