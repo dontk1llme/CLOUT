@@ -12,6 +12,7 @@ class DataTitle extends StatelessWidget {
       text,
       style: style.textTheme.headlineMedium
           ?.copyWith(color: style.colors['text'], fontWeight: FontWeight.w600),
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
