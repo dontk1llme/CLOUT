@@ -17,7 +17,7 @@ class AddComplete extends StatelessWidget {
         alertText: '포인트 충전 완료!',
         buttonText: '포인트 내역으로 이동',
         onPressed: () {},
-        pageName: userController.user == 1
+        pageName: userController.memberType == 1
             ? "advertiserpointlist"
             : "clouterpointlist");
   }

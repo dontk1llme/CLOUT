@@ -40,17 +40,19 @@ class TextInput extends StatelessWidget {
       maxLines: maxLines,
       maxLength: maxLength,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-          counterText: maxLength < 200 ? "" : null,
-          hintText: placeholder,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25),
-            borderSide: BorderSide(
-              width: 2,
-              color: style.colors['main1']!,
-            ),
-          )),
+        contentPadding: EdgeInsets.only(top: 30, left: 15, right: 15),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+        counterText: maxLength < 50 ? "" : null,
+        counterStyle: TextStyle(height: 0.7),
+        hintText: placeholder,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25),
+          borderSide: BorderSide(
+            width: 2,
+            color: style.colors['main1']!,
+          ),
+        ),
+      ),
     );
   }
 }
