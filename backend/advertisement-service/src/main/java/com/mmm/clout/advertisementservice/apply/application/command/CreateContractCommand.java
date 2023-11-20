@@ -14,6 +14,8 @@ public class CreateContractCommand {
 
     private String name;
 
+    private Long applyId;
+
     private Long price;
 
     private String postDeadline;
@@ -31,6 +33,7 @@ public class CreateContractCommand {
     public CreateContractCommand(Apply apply, String path) {
         this.name = apply.getCampaign().getTitle();
         hopeFeeCheck(apply);
+        this.applyId = apply.getId();
         this.postDeadline = DateConstants.ONE_MONTH;
         this.contractExpiration = DateConstants.SIX_MONTH;
         this.contents = apply.getCampaign().getDetails();
