@@ -1,0 +1,47 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: image-service
+  config:
+    import: secret/application-secret.yml
+
+  datasource:
+    url: jdbc:mariadb://localhost:3303/imagedb
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: 1234
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    use-root-path: true
+
+eureka:
+  instance:
+#    hostname: ${EUREKA_HOSTNAME:localhost} # 외부에서 접근 가능한 호스트 이름 또는 IP
+  instance-id: ${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+logging.level:
+  root: info
+  org.hibernate.SQL: debug
+# org.hibernate.type: trace          #Spring boot 2.x, hibernate5
+# org.hibernate.orm.jdbc.bind: trace #Spring boot 3.x, hibernate6
+

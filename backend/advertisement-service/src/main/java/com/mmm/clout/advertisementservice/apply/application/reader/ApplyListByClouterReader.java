@@ -12,7 +12,6 @@ import java.util.List;
 public class ApplyListByClouterReader {
 
     private Apply apply;
-    //    private List<ImageResponse> imageList; // TODO
     private String companyName;
     private Long advertiserAvgStar;
 
