@@ -1,75 +1,40 @@
+import 'package:clout/widgets/header/header.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+
+// api
 import 'dart:convert';
 import 'dart:async';
 import 'package:clout/type.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:clout/style.dart' as style;
+import 'package:clout/hooks/apis/authorized_api.dart';
+
+// utilities
+import 'package:clout/utilities/category_translator.dart';
 
 // widgets
+import 'package:clout/widgets/sns/sns2.dart';
 import 'package:clout/widgets/list/campaign_item_box.dart';
-import 'package:loading_indicator/loading_indicator.dart';
-
-class Clouter {
-  int clouterId = 1;
-  String nickname = '모카우유';
-  int starRating = 20;
-  int fee = 500000;
-  String category = '반려동물';
-  int contractCount = 5;
-  List<String> selectedPlatform = [
-    "YouTube",
-    "Instagram",
-    "TikTok",
-  ];
-  String firstImg = 'assets/images/clouterImage.jpg';
-}
-
-String baseUrl = dotenv.env['CLOUT_APP_BASE_URL']!;
-
-// Future<Campaign> fetchCampaign(String endPoint, String parameter) async {
-//   final response =
-//       await http.get(Uri.parse('${baseUrl}/v1/${endPoint}${parameter}'));
-
-//   if (response.statusCode == 200) {
-//     print('👻✨ response body: ${response.body}');
-//     return Campaign.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw Exception('캠페인 불러오기 실패 💨');
-//   }
-// }
-
-getRequest(endPoint, parameter) async {
-  var url = Uri.parse('${baseUrl}${endPoint}${parameter}');
-  print('2️⃣');
-  print(url);
-  print(json.encode(parameter));
-  final response = await http.get(
-    url,
-    headers: {"Content-Type": "application/json"},
-  );
-
-  print('3️⃣');
-  if (response.statusCode == 200) {
-    print(
-        '👻✨ response body: ${response.body} // 👉 infinite_scroll_controller.dart');
-  }
-  return response.body;
-}
 
 class InfiniteScrollController extends GetxController {
   var scrollController = ScrollController().obs;
 
-  var isClouterData = true; // 클라우터 정보인지 아닌지
   List<dynamic> data = [].obs;
 
   int pageSize = 20;
-  var isLoading = false;
+  var isLoading = true;
+  var dataLoading = true;
   var hasMore = true;
   var currentPage = 0;
   var endPoint = '';
   var parameter = '';
+  var typeParam = '';
+  var pageType = '';
+
+  setTypeParam(input) {
+    typeParam = input;
+    update();
+  }
 
   setEndPoint(input) {
     endPoint = input;
@@ -81,93 +46,153 @@ class InfiniteScrollController extends GetxController {
     update();
   }
 
-  // late Future<Campaign> futureCampaign;
+  setCurrentPage(input) {
+    currentPage = input;
+    update();
+  }
+
+  setIsLoading(input) {
+    isLoading = input;
+    update();
+  }
+
+  setPageType(input) {
+    pageType = input;
+    update();
+  }
+
+  // final userController = Get.find<UserController>();
+  Timer _timer = Timer(Duration(milliseconds: 3000), () {});
 
   @override
   void onInit() {
     scrollController.value.addListener(() {
+      print(scrollController.value.position.pixels);
       if (scrollController.value.position.pixels ==
               scrollController.value.position.maxScrollExtent &&
           hasMore) {
-        currentPage += 1;
-        // currentPage = currentPage + 1;
-
-        _getData();
+        setCurrentPage(currentPage + 1);
+        getData();
+      }
+      if (scrollController.value.position.pixels < -100) {
+        if (!_timer.isActive) {
+          HapticFeedback.mediumImpact();
+          reload();
+          _timer = Timer(Duration(milliseconds: 3000), () {});
+        }
       }
     });
 
     super.onInit();
   }
 
-  _getData() async {
-    isLoading = true;
+  getData() async {
+    try {
+      dataLoading = true;
+      hasMore = true;
+      update();
+      print('여기까지 옴1');
+      print('여기까지 옴2');
+      final AuthorizedApi authorizedApi = AuthorizedApi();
+      await setParameter(userController.memberType == -1
+          ? '?clouterId=${userController.memberId}&page=$currentPage&size=${10}'
+          : '?advertiserId=${userController.memberId}&page=$currentPage&size=${10}');
+      await Future.delayed(Duration(milliseconds: 600));
+      var response = await authorizedApi.getRequest(endPoint, parameter);
+      print(response);
+      var jsonData = jsonDecode(response['body']);
+      var contentList = jsonData['content'] as List;
 
-    await Future.delayed(Duration(seconds: 2));
+      var appendData = [];
 
-    int offset = data.length;
+      if (contentList.isNotEmpty) {
+        print('여기까지 옴3');
+        for (var item in contentList) {
+          print('여기까지 옴4');
+          print(contentList[0]);
+          if (item.containsKey('applyId')) {
+            var campaignData = ApplyContent.fromJson(item);
+            // var imageList = item['imageList'];
+            print('🌟 계약으로 오나..?');
 
-    print('4️⃣');
-    var response = await getRequest(endPoint, parameter);
-    print('여기까지 오나요? 👉 infinite_scroll_controller.dart');
-    var campaignData = Campaign.fromJson(json.decode(response));
-    print('5️⃣');
-    print(response);
-
-    var campaignItemBox = CampaignItemBox(
-      adCategory: campaignData.adCategory ?? "",
-      title: campaignData.title ?? "제목없음",
-      price: campaignData.price ?? 0,
-      companyInfo: CompanyInfo(
-        campaignData.companyInfo?.companyName,
-        campaignData.companyInfo?.regNum,
-        campaignData.companyInfo?.ceoName,
-        campaignData.companyInfo?.managerName,
-        campaignData.companyInfo?.managerPhoneNumber,
-      ),
-      numberOfSelectedMembers: campaignData.numberOfSelectedMembers ?? 0,
-      numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
-      adPlatformList: campaignData.adPlatformList ?? [],
-      advertiserInfo: AdvertiserInfo(
-        campaignData.advertiserInfo?.advertiserId,
-        campaignData.advertiserInfo?.userId,
-        campaignData.advertiserInfo?.totalPoint,
-        campaignData.advertiserInfo?.role,
-        campaignData.advertiserInfo?.advertiserAvgStar,
-        campaignData.advertiserInfo?.address,
-        campaignData.advertiserInfo?.companyInfo,
-      ),
-      firstImg: 'images/assets/itemImage.jpg', // 💥 이미지 수정하기
-    );
-
-    var appendData = isClouterData
-        ? List<Clouter>.generate(10, (i) {
-            var clouter = Clouter();
-            clouter.clouterId = i + 1 + offset;
-            return clouter;
-          })
-        : [campaignItemBox];
-    data.addAll(appendData);
-
-    isLoading = false;
-    // hasMore = data.length < 30;
-    hasMore = appendData.isNotEmpty;
-    update();
+            var campaignItemBox = Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CampaignItemBox(
+                applyId: campaignData.applyId,
+                campaignId: campaignData.campaignId,
+                adCategory: AdCategoryTranslator.translateAdCategory(
+                    campaignData.adCategory!),
+                title: campaignData.title,
+                price: campaignData.price,
+                companyName: campaignData.companyName!,
+                numberOfSelectedMembers: campaignData.numberOfSelectedMembers,
+                numberOfRecruiter: campaignData.numberOfRecruiter,
+                // firstImg: ImageResponse.fromJson(imageList[0]).path,
+                advertiserAvgStar: campaignData.advertiserAvgStar,
+                adPlatformList: campaignData.adPlatformList
+                    ?.map((platform) => Sns2(platform: platform))
+                    .toList(),
+              ),
+            );
+            appendData.add(campaignItemBox);
+          } else {
+            var campaignData = CampaignInfo.fromJson(item['campaign']);
+            var advertiserData =
+                AdvertiserInfo.fromJson(item['advertiserInfo']);
+            var imageList = item['imageList'];
+            print('❌ 캠페인으로 가나..?');
+            var campaignItemBox = Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CampaignItemBox(
+                campaignId: campaignData.campaignId ?? 0,
+                adCategory: AdCategoryTranslator.translateAdCategory(
+                    campaignData.adCategory!),
+                title: campaignData.title ?? "제목없음",
+                price: campaignData.price ?? 0,
+                companyInfo: advertiserData.companyInfo!,
+                numberOfSelectedMembers:
+                    campaignData.numberOfSelectedMembers ?? 0,
+                numberOfRecruiter: campaignData.numberOfRecruiter ?? 0,
+                firstImg: ImageResponse.fromJson(imageList[0]).path,
+                adPlatformList: campaignData.adPlatformList
+                        ?.map((platform) => Sns2(platform: platform))
+                        .toList() ??
+                    [],
+                advertiserInfo: advertiserData,
+              ),
+            );
+            appendData.add(campaignItemBox);
+          }
+        }
+        data.addAll(appendData);
+        dataLoading = false;
+        isLoading = false;
+        update();
+      } else {
+        dataLoading = false;
+        isLoading = false;
+        hasMore = false;
+        update();
+      }
+    } catch (e) {
+      print('오류발생');
+      isLoading = false;
+      dataLoading = false;
+      hasMore = false;
+      update();
+      print(e);
+    }
   }
 
   reload() async {
-    isLoading = true;
+    await setIsLoading(true);
+    dataLoading = true;
+    hasMore = true;
     data.clear();
-
-    await Future.delayed(Duration(seconds: 2));
-
-    _getData();
     update();
-  }
+    await setCurrentPage(0);
+    await Future.delayed(Duration(milliseconds: 100));
 
-  toggleData(input) {
-    isClouterData = input;
-    data = [];
-    _getData();
-    update();
+    await getData();
   }
 }

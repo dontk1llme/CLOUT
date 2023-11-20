@@ -5,7 +5,7 @@ class FeeController extends GetxController {
   var maxFee;
   var minFeeString = '0 원';
   var maxFeeString = '10억원';
-  var pay;
+  var pay = '0';
   var payString = '0 원';
 
   numbering(value, division) {
@@ -51,6 +51,9 @@ class FeeController extends GetxController {
     if (maxFee != null) {
       setMaxFeeString(feeConverter(input));
     }
+    if (input == '') {
+      setMaxFeeString(feeConverter('0'));
+    }
     update();
   }
 
@@ -63,6 +66,10 @@ class FeeController extends GetxController {
     pay = input;
     if (pay != null) {
       setPayString(feeConverter(input));
+    }
+    if (input.length == 0) {
+      pay = '0';
+      setPayString(feeConverter('0'));
     }
     update();
   }

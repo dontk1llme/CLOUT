@@ -55,7 +55,7 @@ class _AddFirstState extends State<AddFirst> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 10),
-                MainText(textTitle: '출금할 계좌를'),
+                MainText(textTitle: '충전할 계좌를'),
                 MainText(textTitle: '입력해주세요'),
                 SizedBox(height: 20),
                 // BankDropdown(bank: category, setBank: setCategory),
