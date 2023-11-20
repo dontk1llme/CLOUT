@@ -17,9 +17,6 @@ public class ApplicantListByCampaignReader {
 
     private Integer numberOfSelectedMembers; // 채택 인원
 
-    // TODO
-    // private Image clouterProfileImage;
-
     private Long hopeAdFee;
 
     private String applyStatus;
