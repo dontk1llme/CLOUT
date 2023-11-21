@@ -4,6 +4,7 @@ import com.mmm.clout.advertisementservice.advertisements.application.reader.Camp
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.common.msa.provider.MemberProvider;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,24 +27,22 @@ public class GetTop10CampaignListProcessor {
     @Transactional
     public List<CampaignReader> execute() {
         List<Campaign> top10List = campaignRepository.getTop10List();
-        List<Long> advertisementIdList = top10List.stream().map(v -> v.getId()).collect(Collectors.toList());
 
-        List<Image> imageList = imageRepository.findByCampaignIdIn(advertisementIdList);
-        Map<Long, List<Image>> imageMap = imageList.stream()
-            .collect(Collectors.groupingBy(image -> image.getCampaign().getId()));
+        // TODO n+1 성능 최적화 필요
+        List<CampaignReader> content = new ArrayList<>();
+        for (Campaign campaign : top10List) {
+            List<Image> images = imageRepository.findByCampaignId(campaign.getId());
+            AdvertiseSign sign = advertiseSignRepository.findByAdvertisementId(campaign.getId());
+            content.add(
+                new CampaignReader(
+                    campaign.initialize(),
+                    memberProvider.getAdvertiserInfoByMemberId(campaign.getAdvertiserId()),
+                    images,
+                    sign
+                )
+            );
+        }
 
-        List<AdvertiseSign> signList = advertiseSignRepository.findByCampaignIdIn(advertisementIdList);
-        Map<Long, AdvertiseSign> signMap = signList.stream().collect(Collectors.toMap(
-            sign -> sign.getCampaign().getId(),
-            sign -> sign));
-
-        return top10List.stream().map(
-            campaign -> new CampaignReader(
-                campaign.initialize(),
-                memberProvider.getAdvertiserInfoByMemberId(campaign.getAdvertiserId()),
-                imageMap.get(campaign.getId()),
-                signMap.get(campaign.getId())
-            )
-        ).collect(Collectors.toList());
+        return content;
     }
 }

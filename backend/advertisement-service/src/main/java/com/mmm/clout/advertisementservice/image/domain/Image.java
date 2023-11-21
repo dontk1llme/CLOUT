@@ -39,7 +39,7 @@ public class Image {
     //시간 + 난수생성 + 오리지널
 
     @NotNull
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name="advertisement_id", referencedColumnName = "advertisement_id")
     private Campaign campaign;
 
