@@ -31,11 +31,11 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
-
-eureka:
-  instance:
-    hostname: ${EUREKA_HOSTNAME:localhost}
-#    instance-id: ${spring.application.instance_id:${random.value}}
+#
+#eureka:
+#  instance:
+#    hostname: ${EUREKA_HOSTNAME:localhost}
+##    instance-id: ${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true
