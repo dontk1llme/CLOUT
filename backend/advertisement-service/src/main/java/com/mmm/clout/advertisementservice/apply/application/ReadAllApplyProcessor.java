@@ -30,6 +30,7 @@ public class ReadAllApplyProcessor {
         List<Apply> applyList = applyRepository.getAllByStatus(pageable, applicantId, applyStatus);
         JPAQuery<Apply> countQuery = applyRepository.countByStatus(applicantId, applyStatus);
 
+        // TODO n+1문제
         List<ApplyListByClouterReader> content = new ArrayList<>();
         for (Apply apply: applyList) {
             Long advertiserId = apply.getCampaign().getAdvertiserId();

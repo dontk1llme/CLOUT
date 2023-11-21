@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class UpdateCampaignProcessor {
@@ -21,8 +20,11 @@ public class UpdateCampaignProcessor {
     private final CampaignRepository campaignRepository;
     private final FileUploader fileUploader;
     private final ImageRepository imageRepository;
+
     @Transactional
-    public Campaign execute(Long advertisementId, UpdateCampaignCommand command, List<MultipartFile> fileList) throws IOException {
+    public Campaign execute(Long advertisementId, UpdateCampaignCommand command, List<MultipartFile> fileList)
+        throws IOException {
+
         Campaign campaign = campaignRepository.findById(advertisementId)
             .orElseThrow(CampaignNotFoundException::new);
 
@@ -42,18 +44,10 @@ public class UpdateCampaignProcessor {
             command.getMinFollower(),
             command.getRegionList()
         );
-        //사진 검색해서 삭제
 
         List<Image> images = imageRepository.findByCampaignId(campaign.getId());
-        images.stream()
-                .map(v->fileUploader.delete(v.getPath()))
-                .collect(Collectors.toList());
-        //db에서 사진 삭제
-        for(Image a : images){
-            imageRepository.deleteImage(a.getId());
-        }
+        fileUploader.updateCampaignImages(images, fileList, campaign);
 
-        fileUploader.uploadList(fileList, campaign);
         return campaign;
     }
 }
