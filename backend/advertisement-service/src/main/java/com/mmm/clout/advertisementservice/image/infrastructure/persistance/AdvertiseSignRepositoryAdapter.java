@@ -21,7 +21,7 @@ public class AdvertiseSignRepositoryAdapter implements AdvertiseSignRepository {
     public AdvertiseSign save(AdvertiseSign advertiseSign) {return jpaAdvertiseSignRepository.save(advertiseSign);}
 
     @Override
-    public List<AdvertiseSign> findByAdvertisementId(Long advertisementId) {
+    public AdvertiseSign findByAdvertisementId(Long advertisementId) {
         return jpaAdvertiseSignRepository.findByCampaign_Id(advertisementId);
     }
 

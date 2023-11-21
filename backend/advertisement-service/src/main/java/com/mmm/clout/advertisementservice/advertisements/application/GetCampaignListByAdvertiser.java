@@ -2,6 +2,7 @@ package com.mmm.clout.advertisementservice.advertisements.application;
 
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
+import com.mmm.clout.advertisementservice.advertisements.domain.Advertisement;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;
 import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
@@ -28,6 +29,7 @@ public class GetCampaignListByAdvertiser {
     private final ImageRepository imageRepository;
     private final AdvertiseSignRepository advertiseSignRepository;
 
+    // TODO n+1
     @Transactional
     public CampaignListReader execute(Long advertiserId, Pageable pageable) {
         AdvertiserInfo advertiserInfo = memberProvider.getAdvertiserInfoByMemberId(advertiserId);
@@ -36,15 +38,18 @@ public class GetCampaignListByAdvertiser {
         for (Campaign campaign : campainList.getContent()) {
             campaign.initialize();
         }
-        List<Long> idList = campainList.stream().map(v -> v.getId()).collect(Collectors.toList());
+
+        List<Long> idList = campainList.stream().map(Advertisement::getId).collect(Collectors.toList());
 
         Map<Long, List<Image>> imageMap = imageRepository.findByCampaignIdIn(idList).stream()
-            .collect(Collectors.groupingBy(image -> image.getCampaign().getId()));
+            .collect(Collectors.groupingBy(image -> image.getCampaign().getId())
+            );
 
         Map<Long, AdvertiseSign> signMap = advertiseSignRepository.findByCampaignIdIn(idList)
             .stream().collect(Collectors.toMap(
             sign -> sign.getCampaign().getId(),
-            sign -> sign));
+            sign -> sign)
+            );
 
         return new CampaignListReader(campainList, advertiserInfo, imageMap, signMap);
     }
