@@ -24,7 +24,7 @@ public class SelectApplyForContractProcessor {
         Apply apply = applyRepository.findById(applyId).orElseThrow(ApplyNotFoundException::new);
         apply.askForContract();
 
-        String imagePath = advertiseSignRepository.findByAdvertisementId(apply.getCampaign().getId()).get(0).getPath();
+        String imagePath = advertiseSignRepository.findByAdvertisementId(apply.getCampaign().getId()).getPath();
         contractProvider.create(new CreateContractCommand(apply, imagePath));
     }
 }

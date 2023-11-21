@@ -48,7 +48,7 @@ public class ReadApplicantsByCampaignProcessor {
                     info.getAvgScore(),
                     info.getChannelList(),
                     apply.getApplicant().getApplicantId(),
-                        apply.getId()
+                    apply.getId()
                 )
             );
         }

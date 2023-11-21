@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface JpaAdvertiseSignRepository extends JpaRepository<AdvertiseSign, Long> {
 
-        List<AdvertiseSign> findByCampaign_Id(Long Id);
+        AdvertiseSign findByCampaign_Id(Long Id);
 
         List<AdvertiseSign> findByCampaign_IdIn(List<Long> idList);
 }
