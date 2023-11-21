@@ -1,80 +1,114 @@
 import 'package:flutter/material.dart';
+import 'package:clout/style.dart' as style;
+import 'package:get/get.dart';
 
-class CategoryList extends StatelessWidget {
+// controllers
+import 'package:clout/providers/search_combination_controller.dart';
+
+class CategoryList extends StatefulWidget {
   CategoryList({super.key});
 
-  // 이미지 파일 경로, 제목 리스트
-  final List<Map<String, String>> categoryData = [
-    {'path': 'assets/images/all.png', 'name': '전체보기'},
-    {'path': 'assets/images/cosmetics.png', 'name': '패션/뷰티'},
-    {'path': 'assets/images/barbell.png', 'name': '건강/생활'},
-    {'path': 'assets/images/airplane.png', 'name': '여행/레저'},
-    {'path': 'assets/images/baby.png', 'name': '육아'},
-    {'path': 'assets/images/electronics.png', 'name': '전자제품'},
-    {'path': 'assets/images/food.png', 'name': '음식'},
-    {'path': 'assets/images/location.png', 'name': '방문/체험'},
-    {'path': 'assets/images/paw.png', 'name': '반려동물'},
-    {'path': 'assets/images/game.png', 'name': '게임'},
-    {'path': 'assets/images/money.png', 'name': '경제/사업'},
-    {'path': 'assets/images/more.png', 'name': '기타'},
-  ];
+  @override
+  State<CategoryList> createState() => _CategoryListState();
+}
+
+class _CategoryListState extends State<CategoryList> {
+  final searchCombinationController =
+      Get.put(SearchCombinationController(), tag: 'campaignList');
 
   @override
   build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 225,
-      color: Color(0xffF6F4FF),
-      padding: EdgeInsets.all(15),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            // 첫 번째 행의 이미지 버튼
-            children: _categoryButtons(0, 5),
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            // 두 번째 행 이미지 버튼
-            children: _categoryButtons(6, 11),
-          )
-        ],
-      ),
-    );
+    final searchCombinationController =
+        Get.find<SearchCombinationController>(tag: 'campaignList');
+
+    double buttonSize = 50;
+    searchCombinationController.setControllerTag('campaignList');
+    searchCombinationController.runOtherControllers();
+    return GetBuilder<SearchCombinationController>(
+        tag: 'campaignList',
+        builder: (controller) => Container(
+              width: double.infinity,
+              // height: 225,
+              color: Color(0xffF6F4FF),
+              padding: EdgeInsets.all(15),
+              child: Wrap(
+                  alignment: WrapAlignment.spaceAround,
+                  runSpacing: 10,
+                  children: _categoryButtons(context, 0, 11, buttonSize)),
+            ));
   }
 
-  List<Widget> _categoryButtons(int startIndex, int lastIndex) {
-    // 이미지 버튼 위젯 리스트 생성
-    return List.generate(
-      lastIndex - startIndex + 1,
-      (index) => Column(
+  List<Widget> _categoryButtons(
+      BuildContext context, int startIndex, int lastIndex, double buttonSize) {
+    final uniqueIndexes = List.generate(
+        lastIndex - startIndex + 1, (index) => startIndex + index);
+
+    final searchCombinationController =
+        Get.find<SearchCombinationController>(tag: 'campaignList');
+
+    return uniqueIndexes.map((index) {
+      return Column(
         children: [
-          _categoryButton(categoryData[startIndex + index]['path']!),
-          Text(categoryData[startIndex + index]['name']!,
+          _categoryButton(
+            context,
+            searchCombinationController.categoryData[index]['path']!,
+            buttonSize,
+            index,
+          ),
+          Text(searchCombinationController.categoryData[index]['name']!,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
               )),
         ],
-      ),
-    );
+      );
+    }).toList();
   }
 
-  Widget _categoryButton(String imagePath) {
+  Widget _categoryButton(
+      BuildContext context, String imagePath, double buttonSize, int index) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+    final searchCombinationController =
+        Get.find<SearchCombinationController>(tag: 'campaignList');
+
+    bool isSelected =
+        searchCombinationController.selectedCategories.contains(index);
+
     return InkWell(
       onTap: () {
-        // 버튼 눌렀을 때 실행
+        setState(() {
+          if (index == 0) {
+            searchCombinationController.selectedCategories.clear();
+            searchCombinationController.selectedCategories.add(0);
+          } else {
+            searchCombinationController.selectedCategories.remove(0);
+            if (searchCombinationController.selectedCategories
+                .contains(index)) {
+              searchCombinationController.selectedCategories.remove(index);
+            } else {
+              searchCombinationController.selectedCategories.add(index);
+            }
+          }
+          searchCombinationController.fetchSearchResults();
+        });
       },
-      child: Container(
-        width: 60, // 이미지버튼 너비
-        height: 60, // 이미지버튼 높이
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-        decoration: BoxDecoration(
-          color: Colors.white, // 버튼 배경색
-          borderRadius: BorderRadius.circular(13), // 버튼 모서리
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: Container(
+          width: screenWidth / 7,
+          height: screenWidth / 7,
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
+          decoration: BoxDecoration(
+            color: isSelected ? style.colors['main2'] : style.colors['white'],
+            borderRadius: BorderRadius.circular(13),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Image.asset(
+              imagePath,
+            ),
+          ),
         ),
-        child: Image.asset(imagePath), // 이미지 불러오기
       ),
     );
   }

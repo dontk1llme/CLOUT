@@ -16,6 +16,10 @@ public class CreateContractRequest {
     @NotBlank
     private String name;
 
+    @Schema(description = "신청 아이디")
+    @NotNull
+    private Long applyId;
+
     @Schema(description = "계약의 계약 금액")
     @NotNull
     private Long price;
@@ -32,19 +36,29 @@ public class CreateContractRequest {
     @NotBlank
     private String contents;
 
+    @Schema(description = "광고주 아이디")
+    @NotNull
+    private Long advertiserId;
+
+    @Schema(description = "클라우터 아이디")
+    @NotNull
     private Long clouterId;
 
-    private Long advertiserId;
+    @Schema(description = "광고주 사인")
+    @NotNull
+    private String path;
 
     public CreateContractCommand toCommand() {
            return new CreateContractCommand(
                    this.name,
+                   this.applyId,
                    this.price,
                    this.postDeadline,
                    this.contractExpiration,
                    this.contents,
                    this.clouterId,
-                   this.advertiserId
+                   this.advertiserId,
+                   this.path
            );
     }
 }
