@@ -1,6 +1,5 @@
 package com.mmm.clout.advertisementservice.advertisements.application;
 
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.FeignCampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.repository.CampaignRepository;

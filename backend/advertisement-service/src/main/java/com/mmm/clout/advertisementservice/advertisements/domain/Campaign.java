@@ -68,6 +68,8 @@ public class Campaign extends Advertisement {
     @Column(name = "region")
     private List<Region> regionList = new ArrayList<>();
 
+
+
     @Transactional(readOnly = true)
     public Campaign initialize() {
         Hibernate.initialize(this.getRegionList());
