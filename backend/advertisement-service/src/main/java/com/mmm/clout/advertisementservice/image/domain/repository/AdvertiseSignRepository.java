@@ -9,7 +9,7 @@ public interface AdvertiseSignRepository {
 
     AdvertiseSign save(AdvertiseSign advertiseSign);
 
-    List<AdvertiseSign> findByAdvertisementId(Long advertisementId);
+    AdvertiseSign findByAdvertisementId(Long advertisementId);
 
     List<AdvertiseSign> findByCampaignIdIn(List<Long> idList);
 

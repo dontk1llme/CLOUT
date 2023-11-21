@@ -23,17 +23,19 @@ public class GetCampaignProcessor {
     private final ImageRepository imageRepository;
     private final AdvertiseSignRepository advertiseSignRepository;
 
+    // TODO n+1 리팩토링 필요
     @Transactional(readOnly = true)
     public CampaignReader execute(Long advertisementId) {
         Campaign campaign = campaignRepository.findById(advertisementId)
             .orElseThrow(CampaignNotFoundException::new);
+
         campaign.initialize();
+
         AdvertiserInfo advertiserInfo = memberProvider.getAdvertiserInfoByMemberId(
             campaign.getAdvertiserId());
 
         List<Image> findImage = imageRepository.findByAdvertisementId(advertisementId);
-
-        AdvertiseSign signImage = advertiseSignRepository.findByAdvertisementId(advertisementId).get(0);
+        AdvertiseSign signImage = advertiseSignRepository.findByAdvertisementId(advertisementId);
 
         return new CampaignReader(campaign, advertiserInfo, findImage, signImage);
     }
