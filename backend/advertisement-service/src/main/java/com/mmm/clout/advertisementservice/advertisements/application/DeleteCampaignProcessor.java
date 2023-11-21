@@ -25,12 +25,7 @@ public class DeleteCampaignProcessor {
             .orElseThrow(CampaignNotFoundException::new);
 
         List<Image> images = imageRepository.findByCampaignId(campaign.getId());
-        images.stream()
-                .map(v->fileUploader.delete(v.getPath()))
-                .collect(Collectors.toList());
-        for(Image a : images){
-            imageRepository.deleteImage(a.getId());
-        }
+        fileUploader.delete(images);
 
         campaign.softDelete();
     }

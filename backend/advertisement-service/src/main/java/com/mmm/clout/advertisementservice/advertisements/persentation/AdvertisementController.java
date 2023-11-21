@@ -2,11 +2,9 @@ package com.mmm.clout.advertisementservice.advertisements.persentation;
 
 import com.mmm.clout.advertisementservice.advertisements.application.command.SearchCondition;
 import com.mmm.clout.advertisementservice.advertisements.application.facade.AdvertisementFacade;
-import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignListReader;
 import com.mmm.clout.advertisementservice.advertisements.application.reader.CampaignReader;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdCategory;
 import com.mmm.clout.advertisementservice.advertisements.domain.AdPlatform;
-import com.mmm.clout.advertisementservice.advertisements.domain.Campaign;
 import com.mmm.clout.advertisementservice.advertisements.domain.Region;
 import com.mmm.clout.advertisementservice.advertisements.domain.search.CampaignSort;
 import com.mmm.clout.advertisementservice.advertisements.persentation.request.CreateCampaignRequest;
@@ -18,12 +16,9 @@ import com.mmm.clout.advertisementservice.advertisements.persentation.response.C
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.DeleteCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.EndedCampaignResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampaignAndAdvertiserResponse;
-import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetCampainListByAdvertiserResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.GetTop10CampainListResponse;
 import com.mmm.clout.advertisementservice.advertisements.persentation.response.UpdateCampaignResponse;
 import com.mmm.clout.advertisementservice.common.docs.AdvertisementControllerDocs;
-import com.mmm.clout.advertisementservice.common.msa.info.AdvertiserInfo;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +30,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -53,7 +54,7 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     public ResponseEntity<CreateCampaignResponse> createCampaign(
         @RequestPart @Valid CreateCampaignRequest createCampaignRequest,
         @RequestPart(value = "files") List<MultipartFile> fileList
-    )throws Exception {
+    ) throws Exception {
         MultipartFile sign = fileList.remove(0);
         CreateCampaignResponse result = CreateCampaignResponse.from(
             advertisementFacade.create(createCampaignRequest.toCommand(), fileList, sign)
@@ -64,14 +65,18 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     /**
      * 캠페인 수정
      */
-    @PostMapping(value = "/{advertisementId}/modify", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(
+        value = "/{advertisementId}/modify",
+        consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}
+    )
     public ResponseEntity<UpdateCampaignResponse> updateCampaign(
         @PathVariable Long advertisementId,
         @RequestPart @Valid UpdateCampaignRequest updateCampaignRequest,
         @RequestPart(value = "files") List<MultipartFile> fileList
-    ) throws Exception {
+    ) throws IOException {
         UpdateCampaignResponse result = UpdateCampaignResponse.from(
-            advertisementFacade.update(advertisementId, updateCampaignRequest.toCommand(), fileList));
+            advertisementFacade.update(advertisementId, updateCampaignRequest.toCommand(),
+                fileList));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -122,33 +127,18 @@ public class AdvertisementController implements AdvertisementControllerDocs {
         @RequestParam int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        CampaignListReader campaigns = advertisementFacade.getAllCampaignsByAdvertisers(
-            advertiserId, pageable);
-        Page<Campaign> campaignList = campaigns.getCampaignList();
-        AdvertiserInfo advertiserInfo = campaigns.getAdvertiserInfo();
 
+        CustomPageResponse<CampaignReaderResponse> response =
+            CampaignReaderResponse.of(
+                advertisementFacade.getAllCampaignsByAdvertisers(advertiserId, pageable)
+            );
 
-        CustomPageResponse<CampaignReaderResponse> result = new CustomPageResponse<>(
-            campaignList.stream().map(
-                campaign -> CampaignReaderResponse.from(
-                    new CampaignReader(campaign,
-                        advertiserInfo,
-                        campaigns.getImageMap().get(campaign.getId()),
-                        campaigns.getSignMap().get(campaign.getId())
-                    )
-                )
-            ).collect(Collectors.toList()),
-            campaigns.getCampaignList().getNumber(),
-            campaigns.getCampaignList().getSize(),
-            campaigns.getCampaignList().getTotalPages(),
-            campaigns.getCampaignList().getTotalElements()
-        );
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
      * 캠페인 모집 종료
-     * TODO 배치로 종료된 광고 종료 설정하기
+     * TODO 배치로 종료된 광고 종료 설정
      * 전체 조회 / 탑텐에서만 안보임
      */
     @PostMapping("/{advertisementId}/end")
@@ -219,7 +209,9 @@ public class AdvertisementController implements AdvertisementControllerDocs {
     ) {
         List<CampaignResponse> result =
             advertisementFacade.getCampaignListByIdList(adIdList).stream()
-                .map(CampaignResponse::from).collect(Collectors.toList());
+                .map(CampaignResponse::from)
+                .collect(Collectors.toList());
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
